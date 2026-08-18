@@ -45,7 +45,7 @@ Updated: 2026-08-18
 - Genie long-form recordings: G1 business/multi-use 61.25s, G2 authoring/Monitor/Benchmark 82.75s, G3 embedded/API/multi-Agent architecture 71.00s.
 - Cloud-database architecture recording: D1 capability stack/integration routes/embedded-vs-external/G0–G8 78.80s; explicitly labeled as architecture demonstration, not production database validation.
 - Huawei Cloud RDS direction recording: H1 customer story/reuse-connect-build/target architecture/scenarios/MySQL-PG slices/six Gates/KPIs 127.16s; explicitly labeled as a public-source architecture proposal, not Huawei Cloud production validation.
-- Official and independent external-video candidates curated by module.
+- Official and independent external-video candidates curated by module；华为云 RDS 专题另提供 MySQL 产品介绍、MySQL/PostgreSQL 视频帮助和数据库开发者实验入口，并与拟议 Agent 闭环明确分层。
 - Fourteen Mandarin narrated derivatives generated from 73 timed segments; silent originals remain unchanged, and the site now defaults to the narrated files.
 
 ## Finalization result

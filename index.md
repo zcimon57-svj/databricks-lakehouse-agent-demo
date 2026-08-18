@@ -9,7 +9,7 @@
 1. [领导演示首页](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/index.html)：先建立“接入、Delta、治理、计算、消费”的全景；
 2. [Genie 深度演示](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/genie.html)：讲业务问答、实现、Monitor/Benchmark 和多种入口；
 3. [云数据库到数据 Agent](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/database-agent.html)：回答 RDS、PolarDB、TaurusDB 类产品还缺什么；
-4. [华为云 RDS 受治理智能层](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/huawei-rds-agent.html)：用客户故事讲清 RDS MySQL/PG 怎么补能力、怎么做 90 天 MVP；
+4. [华为云 RDS 受治理智能层](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/huawei-rds-agent.html)：用客户故事讲清 RDS MySQL/PG 怎么补能力、怎么做 90 天 MVP，并配套 H1 中文录屏与华为云官方视频入口；
 5. [录屏与中文讲稿](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/details/recordings.html)：按模块选择 14 段有声视频；
 6. [外部视频索引](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/details/external-videos.html)：按听众选取官方或独立讲解片段。
 

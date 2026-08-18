@@ -1,6 +1,6 @@
 # 外部视频索引
 
-信息截止：2026-08-17  
+信息截止：2026-08-18
 状态：主选链接、发布者、发布日期、时长和适用模块已核验；Delta Lake 视频章节已逐段定位。其余视频在正式公开汇报前仍应由讲解人完整观看一次，避免 2024–2025 画面与 2026 UI 名称差异。
 
 ## 选择原则
@@ -27,6 +27,8 @@
 | Lakebase | [Introduction to Lakebase: OLTP for Data Apps and AI Agents](https://www.youtube.com/watch?v=UQynsu6qklw) | Databricks | 2025-12-22 / 9:49 | Lakebase 定位、Serverless Postgres 与实际应用 | 元数据已核验；待完整观看 |
 | Delta Lake | [Delta Lake on Databricks Demo](https://www.youtube.com/watch?v=BMO90DI82Dc) | Databricks | 约 8 分钟 | Delta 转换、流、ACID、Schema、Time Travel、DML 和优化 | 链接与章节已核验 |
 | Federation | [Lakehouse Federation](https://www.youtube.com/watch?v=vGyXpHTYgrQ) | Databricks | 公开演示 | 不搬数据访问外部数据库/仓库 | 链接已核验；正式使用前复看 UI/产品状态 |
+| 华为云 RDS MySQL | [RDS for MySQL 产品介绍](https://support.huaweicloud.com/video/mysql-zh.html) | 华为云 | 页面更新 2025-07-01 | 领导快速理解产品定位、优势和典型应用 | 官方页面 HTTP 200；正式播放前复看 |
+| 华为云 RDS 视频总览 | [RDS 视频帮助](https://support.huaweicloud.com/rds_video/index.html) | 华为云 | 页面更新 2025-05-15 | MySQL / PostgreSQL 官方视频入口 | 官方页面 HTTP 200；目录可能更新 |
 
 ## 已发现的独立候选
 
@@ -67,6 +69,17 @@
 5. 最后用 [What is AI/BI Genie?](https://www.youtube.com/watch?v=3_TpRj3z_Gs) 展示业务用户最终看到的自然语言分析体验。
 
 这四段外部视频分别说明治理、联邦、CDC 和问答，不代表已经连接本项目账号之外的 RDS、PolarDB 或 TaurusDB。厂商数据库本身的 HA、只读节点和监控边界以对应官方产品文档为准。
+
+### 华为云 RDS 专题的播放组合
+
+华为云 RDS 专题按“方案故事 → 官方底座 → 动手验证”组织，避免把一个产品视频包装成完整 Agent 方案：
+
+1. 先播本地 H1（约 127 秒、中文有声），讲海岚零售事故、双引擎架构、五个拟建产品面、六个 Gate 和建议 KPI；
+2. 领导版接华为云官方 [RDS for MySQL 产品介绍](https://support.huaweicloud.com/video/mysql-zh.html)，用官方叙事确认现有数据库服务的定位；
+3. 技术版分别打开 [RDS for MySQL 视频帮助](https://support.huaweicloud.com/rds-mysql_video/index.html) 和 [RDS for PostgreSQL 视频帮助](https://support.huaweicloud.com/rds-pg_video/index.html)，按当前目录选择操作内容；
+4. 需要实验时进入 [华为云数据库开发者中心](https://developer.huaweicloud.com/techfield/db.html)，选择 RDS 连接、快速入门或 DRS 迁移类课程。
+
+这些华为云官方视频和课程只覆盖当前公开的产品定位、功能与操作材料，不证明 Policy Adapter、Semantic Contract、Query Gateway、Evidence Composer 或 Benchmark/Monitor 已作为统一产品存在。该闭环由本项目提出，并须在目标租户按 G0–G5 验收。
 
 ## 按模块的外部视频播放建议
 

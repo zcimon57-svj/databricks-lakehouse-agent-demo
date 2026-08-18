@@ -23,7 +23,8 @@
   <main class="shell detail-layout">
     <article class="markdown-body">
 <h1>外部视频索引</h1>
-<p>信息截止：2026-08-17<br>状态：主选链接、发布者、发布日期、时长和适用模块已核验；Delta Lake 视频章节已逐段定位。其余视频在正式公开汇报前仍应由讲解人完整观看一次，避免 2024–2025 画面与 2026 UI 名称差异。</p>
+<p>信息截止：2026-08-18
+状态：主选链接、发布者、发布日期、时长和适用模块已核验；Delta Lake 视频章节已逐段定位。其余视频在正式公开汇报前仍应由讲解人完整观看一次，避免 2024–2025 画面与 2026 UI 名称差异。</p>
 <h2>选择原则</h2>
 <p>每个主要模块优先保留两类视频：</p>
 <ol>
@@ -116,6 +117,22 @@
 <td>不搬数据访问外部数据库/仓库</td>
 <td>链接已核验；正式使用前复看 UI/产品状态</td>
 </tr>
+<tr>
+<td>华为云 RDS MySQL</td>
+<td><a href="https://support.huaweicloud.com/video/mysql-zh.html" target="_blank" rel="noreferrer">RDS for MySQL 产品介绍</a></td>
+<td>华为云</td>
+<td>页面更新 2025-07-01</td>
+<td>领导快速理解产品定位、优势和典型应用</td>
+<td>官方页面 HTTP 200；正式播放前复看</td>
+</tr>
+<tr>
+<td>华为云 RDS 视频总览</td>
+<td><a href="https://support.huaweicloud.com/rds_video/index.html" target="_blank" rel="noreferrer">RDS 视频帮助</a></td>
+<td>华为云</td>
+<td>页面更新 2025-05-15</td>
+<td>MySQL / PostgreSQL 官方视频入口</td>
+<td>官方页面 HTTP 200；目录可能更新</td>
+</tr>
 </tbody></table>
 <h2>已发现的独立候选</h2>
 <table>
@@ -175,6 +192,15 @@
 <li>最后用 <a href="https://www.youtube.com/watch?v=3_TpRj3z_Gs" target="_blank" rel="noreferrer">What is AI/BI Genie?</a> 展示业务用户最终看到的自然语言分析体验。</li>
 </ol>
 <p>这四段外部视频分别说明治理、联邦、CDC 和问答，不代表已经连接本项目账号之外的 RDS、PolarDB 或 TaurusDB。厂商数据库本身的 HA、只读节点和监控边界以对应官方产品文档为准。</p>
+<h3>华为云 RDS 专题的播放组合</h3>
+<p>华为云 RDS 专题按“方案故事 → 官方底座 → 动手验证”组织，避免把一个产品视频包装成完整 Agent 方案：</p>
+<ol>
+<li>先播本地 H1（约 127 秒、中文有声），讲海岚零售事故、双引擎架构、五个拟建产品面、六个 Gate 和建议 KPI；</li>
+<li>领导版接华为云官方 <a href="https://support.huaweicloud.com/video/mysql-zh.html" target="_blank" rel="noreferrer">RDS for MySQL 产品介绍</a>，用官方叙事确认现有数据库服务的定位；</li>
+<li>技术版分别打开 <a href="https://support.huaweicloud.com/rds-mysql_video/index.html" target="_blank" rel="noreferrer">RDS for MySQL 视频帮助</a> 和 <a href="https://support.huaweicloud.com/rds-pg_video/index.html" target="_blank" rel="noreferrer">RDS for PostgreSQL 视频帮助</a>，按当前目录选择操作内容；</li>
+<li>需要实验时进入 <a href="https://developer.huaweicloud.com/techfield/db.html" target="_blank" rel="noreferrer">华为云数据库开发者中心</a>，选择 RDS 连接、快速入门或 DRS 迁移类课程。</li>
+</ol>
+<p>这些华为云官方视频和课程只覆盖当前公开的产品定位、功能与操作材料，不证明 Policy Adapter、Semantic Contract、Query Gateway、Evidence Composer 或 Benchmark/Monitor 已作为统一产品存在。该闭环由本项目提出，并须在目标租户按 G0–G5 验收。</p>
 <h2>按模块的外部视频播放建议</h2>
 <p>同一视频可以覆盖多个模块；“每个模块有外部讲解”不等于必须准备 15 个不同视频。领导会只播放短片段，技术同事可打开完整视频。</p>
 <table>

@@ -19,7 +19,7 @@
 - Genie 的业务问答、Sources、Instructions、可信示例、Monitor、Benchmark 和多轮使用方式；
 - 工作区内嵌、iframe、Conversation API、Agent API/SSE 与外部多 Agent 的能力和责任差异；
 - RDS MySQL/PostgreSQL、PolarDB、TaurusDB 类产品接入 Genie 类能力时，需要补齐的 Unity Catalog-like、语义、可信 SQL、评测、审计和动作网关。
-- 华为云 RDS MySQL / PostgreSQL 专项：以客户事故故事串起 RDS、DAS、DRS、DataArts、智能体平台、IAM 与 APIG，给出复用/打通/新建矩阵、双引擎切片、六个 Gate 和 90 天 MVP 目标。
+- 华为云 RDS MySQL / PostgreSQL 专项：以客户事故故事串起 RDS、DAS、DRS、DataArts、智能体平台、IAM 与 APIG，给出复用/打通/新建矩阵、双引擎切片、六个 Gate、90 天 MVP 目标和华为云官方外部视频组合。
 
 ## 主要入口
 

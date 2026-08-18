@@ -12,7 +12,8 @@
 - `site/assets/diagrams/huawei-rds-agent-target-architecture.svg`：目标架构；
 - `site/assets/diagrams/huawei-rds-agent-90-day-roadmap.svg`：90 天六 Gate 路线；
 - `videos/recordings/H1-huawei-rds-governed-agent.mp4`：127.16 秒无声原版；
-- `videos/recordings/zh-voice/H1-huawei-rds-governed-agent.mp4`：127.16 秒普通话有声版。
+- `videos/recordings/zh-voice/H1-huawei-rds-governed-agent.mp4`：127.16 秒普通话有声版；
+- 专题页、完整手册和 `videos/external/README.md`：华为云 RDS MySQL/PostgreSQL 官方视频与数据库实验入口，并明确“产品底座证据 ≠ 拟议 Agent 闭环已上线”。
 
 ## 内容边界检查
 
@@ -45,6 +46,18 @@ node scripts/validate_site.mjs http://127.0.0.1:8765/site/details/huawei-rds-age
 - 1440px 页面无横向溢出；390px 手机页面 `scrollWidth=clientWidth=390`；
 - 页面正文未发现原始 `**` Markdown 标记；
 - 页面正文未发现用户邮箱或私有 Databricks 工作区主机名。
+
+## 华为云官方外部视频入口检查
+
+2026-08-18 以 `curl -L --max-time 20` 检查，以下五个官方页面全部返回 HTTP 200：
+
+- `https://support.huaweicloud.com/rds_video/index.html`；
+- `https://support.huaweicloud.com/video/mysql-zh.html`；
+- `https://support.huaweicloud.com/rds-mysql_video/index.html`；
+- `https://support.huaweicloud.com/rds-pg_video/index.html`；
+- `https://developer.huaweicloud.com/techfield/db.html`。
+
+新增视频区经浏览器检查包含 4 个外部官方链接；1440px 和 390px 页面均无横向溢出，手机端 `scrollWidth=clientWidth=390`。这些外部链接只作为现有 RDS 产品定位、操作帮助和实验入口，不作为 Policy / Semantic / Query / Evidence / Eval 平面已交付的证据。
 
 ## H1 中文音轨检查
 
