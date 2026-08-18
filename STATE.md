@@ -64,7 +64,8 @@ Updated: 2026-08-18
 
 - Public repository: `https://github.com/zcimon57-svj/databricks-lakehouse-agent-demo`.
 - GitHub Pages: `https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/`; HTTPS is enforced and the build type is GitHub Actions.
-- The public Pages artifact contains the root redirect, presentation site, all 13 narrated clips, all 13 silent originals, and voiceover manifests/checksums.
-- Online browser validation passed for the leadership page, 10 embedded narrated videos, all 26 recording links, SVGs, voiceover evidence links and privacy checks.
+- The public Pages artifact contains the root redirect, presentation site, all 14 narrated clips, all 14 silent originals, and voiceover manifests/checksums.
+- Online browser validation passed for the leadership page, 11 embedded narrated videos, all 28 recording links, SVGs, voiceover evidence links and privacy checks.
+- Huawei Cloud RDS public extension commit `187b5b7` deployed successfully in Pages run `32147285340`; the dedicated page, complete guide, two SVGs and 127.16-second H1 narrated MP4 all returned HTTP 200 and loaded without media errors.
 - Local dependency and tool directories remain excluded: `node_modules/`, `.tools/` and `_site/`.
 - Publication evidence is recorded in `evidence/workspace/github-publication-validation.md`.

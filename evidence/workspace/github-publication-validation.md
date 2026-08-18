@@ -12,6 +12,8 @@
 - Pages 构建方式：GitHub Actions
 - HTTPS：强制启用
 - 首次成功部署工作流：`32139581379`
+- 华为云 RDS 扩展提交：`187b5b70b9931b532260371af6e3ad18869b899d`
+- 最新扩展部署工作流：`32147285340`，结论 `success`
 
 ## 公开前审计
 
@@ -50,10 +52,11 @@ Pages 发布包只组装根入口、`site/`、`videos/recordings/` 以及配音�
 | Pages 根地址 | HTTP 200 |
 | 主演示 HTML | HTTP 200，`text/html; charset=utf-8` |
 | G1 MP4 Range 请求 | HTTP 206，`video/mp4` |
-| 主页面本地链接 | 5/5 为 HTTP 200 |
+| 主页面本地链接 | 6/6 为 HTTP 200 |
 | SVG | 2/2 解码成功，宽度 1600 |
-| 首页嵌入有声视频 | 10/10，`readyState=4`、时长正确、无媒体错误 |
-| 录屏索引 | 13 个有声和 13 个无声原版全部 HTTP 200 |
+| 首页嵌入有声视频 | 11/11，`readyState=4`、时长正确、无媒体错误 |
+| 录屏索引 | 14 个有声和 14 个无声原版全部 HTTP 200 |
+| 华为云 RDS 专题 | HTML/完整手册/2 张 SVG/H1 有声 MP4 全部 HTTP 200；H1 为 127.16 秒且无媒体错误 |
 | 配音证据 | JSON、构建报告、SHA256SUMS 和验证 HTML 全部 HTTP 200 |
 | 页面隐私扫描 | 未发现邮箱或私有 Databricks Host |
 
@@ -64,6 +67,8 @@ Pages 发布包只组装根入口、`site/`、`videos/recordings/` 以及配音�
 - `evidence/workspace/public-pages-online.png`
 - `evidence/workspace/public-pages-recordings-online.png`
 - `evidence/workspace/public-pages-voiceover-online.png`
+- `evidence/workspace/huawei-rds-agent-online.png`
+- `evidence/workspace/huawei-rds-agent-guide-online.png`
 
 这些截图来自 GitHub Pages 公网地址，不是本地 HTTP Server。
 

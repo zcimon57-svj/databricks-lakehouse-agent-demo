@@ -65,6 +65,18 @@ cd videos/voiceover && sha256sum -c SHA256SUMS
 - H1 无声原版 SHA-256：`d81b30dc262132e7fa75b16cf5913dda1cd81c4a0a3b12fdb73b91923166a6f1`；
 - H1 有声版 SHA-256：`723b071fdf4ec2419dc2032a796fe0359da15c6b3b74f0277a92302bdd2865bf`。
 
+## GitHub Pages 公网检查
+
+- 发布提交：`187b5b70b9931b532260371af6e3ad18869b899d`；
+- GitHub Actions Pages 运行：`32147285340`，结论 `success`，耗时 2 分 28 秒；
+- 在线专题：`https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/huawei-rds-agent.html`，HTTP 200；
+- 在线完整手册：`https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/details/huawei-rds-agent-guide.html`，HTTP 200；
+- 两张在线 SVG 均成功解码，浏览器自然宽度 1600；
+- 在线 H1 为 `video/mp4`，`content-length=6939947`，浏览器 `readyState=4`、时长 127.16 秒、媒体错误为 0；
+- 专题页与完整手册的站内链接全部为 200，正文隐私扫描无邮箱和私有 Databricks Host。
+
+公网截图保存在 `evidence/workspace/huawei-rds-agent-online.png` 和 `evidence/workspace/huawei-rds-agent-guide-online.png`。
+
 ## 仍未验证
 
 - 任何华为云账号、RDS 实例、DAS/DRS/DataArts/Agent 平台的目标区域与实际权益；
