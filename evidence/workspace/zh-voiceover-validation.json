@@ -1,8 +1,8 @@
 {
-  "validatedAt": "2026-08-18T12:35:22.540Z",
+  "validatedAt": "2026-08-18T14:07:50.497Z",
   "status": "PASS",
-  "videoCount": 13,
-  "segmentCount": 62,
+  "videoCount": 14,
+  "segmentCount": 73,
   "voice": "zh-CN-YunyangNeural",
   "rate": "+8%",
   "maximumTempo": 1.3317,
@@ -428,6 +428,39 @@
         "integratedLufs": -17.96,
         "truePeakDbtp": -4.07,
         "loudnessRangeLu": 4.6
+      },
+      "checks": {
+        "durationMatches": true,
+        "videoStreamMatches": true,
+        "h264Video": true,
+        "aacAudio": true,
+        "sampleRate48k": true,
+        "stereoAudio": true,
+        "chineseLanguageMetadata": true,
+        "loudnessInPresentationRange": true,
+        "peakHasHeadroom": true
+      }
+    },
+    {
+      "file": "H1-huawei-rds-governed-agent.mp4",
+      "sha256": "723b071fdf4ec2419dc2032a796fe0359da15c6b3b74f0277a92302bdd2865bf",
+      "durationSeconds": 127.16,
+      "durationDeltaSeconds": 0,
+      "video": {
+        "codec": "h264",
+        "width": 1440,
+        "height": 900,
+        "streamMd5": "e6a69037370da50927d6dc190d9c1d2f",
+        "matchesSilentOriginal": true
+      },
+      "audio": {
+        "codec": "aac",
+        "sampleRate": 48000,
+        "channelLayout": "stereo",
+        "language": "zho",
+        "integratedLufs": -18.54,
+        "truePeakDbtp": -4.24,
+        "loudnessRangeLu": 3.5
       },
       "checks": {
         "durationMatches": true,

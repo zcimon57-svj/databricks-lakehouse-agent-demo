@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="华为云 RDS MySQL 与 PostgreSQL 落地受治理的数据与运维 Agent：客户故事、能力差距、目标架构、场景和 90 天计划">
+  <title>华为云 RDS 受治理智能层：从故事到 90 天落地</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="huawei-rds-agent.css">
+</head>
+<body>
+  <header class="hwr-hero" id="top">
+    <nav class="nav shell" aria-label="华为云 RDS Agent 导航">
+      <a class="brand" href="index.html">← DBX Explore</a>
+      <div class="nav-links">
+        <a href="#story">客户故事</a>
+        <a href="#direction">产品方向</a>
+        <a href="#architecture">架构</a>
+        <a href="#scenarios">场景</a>
+        <a href="#engines">双引擎</a>
+        <a href="#roadmap">90 天</a>
+        <a href="#decision">立项</a>
+      </div>
+    </nav>
+    <div class="shell hwr-hero-content">
+      <div class="status-pills" aria-label="材料状态">
+        <span>方向建议</span><span>公开资料核准</span><span>非现网产品声明</span>
+      </div>
+      <p class="eyebrow">HUAWEI CLOUD RDS MYSQL / POSTGRESQL</p>
+      <h1>不是给 RDS 加聊天框，<br><span>而是交付受治理的智能服务</span></h1>
+      <p class="lead">复用 RDS、DAS、DRS、DataArts、智能体平台、IAM 与 APIG，重点补齐身份策略、业务语义、安全查询、双方言、证据回答和评测运营。</p>
+      <div class="hero-actions">
+        <a class="button primary" href="#story">先听客户故事</a>
+        <a class="button secondary" href="#roadmap">看 90 天计划</a>
+        <a class="button secondary" href="details/huawei-rds-agent-guide.html">打开完整研究稿</a>
+      </div>
+      <div class="hwr-proof" aria-label="建议方向摘要">
+        <div><strong>2</strong><span>MySQL / PostgreSQL 独立方言与评测</span></div>
+        <div><strong>3</strong><span>P0 场景：运维、售后、业务问答</span></div>
+        <div><strong>5</strong><span>核心新增服务，而非重复造数据库</span></div>
+        <div><strong>90d</strong><span>六个 Gate 的只读 MVP</span></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section shell" id="story" aria-labelledby="story-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">先讲故事，再讲组件</p><h2 id="story-title">10:05，退款增长与收银变慢同时发生</h2></div>
+        <p>“海岚零售”是合成案例，不是真实客户背书；故事用于固定产品目标、演示问题与可测真值。</p>
+      </div>
+      <div class="story-layout">
+        <article class="story-before">
+          <span>BEFORE · 60–90 MIN</span>
+          <h3>数据都在，答案散落</h3>
+          <ol>
+            <li>客服从 PostgreSQL 工单系统筛 P1</li>
+            <li>研发去 MySQL 只读实例写临时 SQL</li>
+            <li>DBA 在 RDS、DAS、日志和变更系统找证据</li>
+            <li>群里拼截图，却无法确认口径和时间窗口</li>
+          </ol>
+        </article>
+        <div class="story-arrow" aria-hidden="true"><span>→</span></div>
+        <article class="story-after">
+          <span>TARGET · ≤5 MIN EVIDENCE</span>
+          <h3>同一事实，服务两个角色</h3>
+          <div class="question-card"><b>客服主管问</b><p>华南未解决 P1 工单涉及哪些订单？按“已批准退款”口径，总额多少？</p></div>
+          <div class="question-card"><b>DBA 问</b><p>10:00–10:20 哪些慢 SQL、变更、复制延迟和告警同时出现？</p></div>
+        </article>
+      </div>
+      <div class="answer-contract">
+        <div><b>01 · 身份</b><span>最终用户、租户、用途</span></div>
+        <div><b>02 · 语义</b><span>状态、时间、币种、Join</span></div>
+        <div><b>03 · 路由</b><span>只读实例 / DRS / DAS</span></div>
+        <div><b>04 · 防护</b><span>只读、预算、超时、取消</span></div>
+        <div><b>05 · 证据</b><span>SQL、来源、水位、Query ID</span></div>
+        <div><b>06 · 动作</b><span>提案 → 审批 → 验证</span></div>
+      </div>
+      <p class="story-outcome"><strong>故事的真正价值：</strong>不是 AI 替代客服或 DBA，而是把现有云服务组织成一条可验证、可复用、可对外提供的客户工作流。</p>
+    </section>
+
+    <section class="section section-tint" id="direction" aria-labelledby="direction-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div><p class="eyebrow">产品方向</p><h2 id="direction-title">保留底座，打通断点，新增闭环</h2></div>
+          <p>方向代号“RDS 受治理智能层”是本研究建议，不是华为云现有产品名称或发布承诺。</p>
+        </div>
+        <div class="build-map">
+          <article class="reuse-card">
+            <span>直接复用</span><h3>数据库与云服务地基</h3>
+            <ul><li>RDS SQL / HA / Backup / Replica</li><li>DAS 慢 SQL / 诊断</li><li>DRS 全量 / 增量同步</li><li>DataArts 目录 / 质量 / 数据服务</li><li>智能体编排、IAM、APIG、CTS</li></ul>
+          </article>
+          <article class="connect-card">
+            <span>重点打通</span><h3>从组件变成一条路径</h3>
+            <ul><li>最终用户身份 → 数据策略</li><li>RDS / DRS / DAS 统一资产与时间线</li><li>目录策略 → 实际查询强制执行</li><li>DRS 水位 → 答案新鲜度</li><li>UI / Widget / API 权限结果一致</li></ul>
+          </article>
+          <article class="build-card">
+            <span>必须新建</span><h3>五个产品化服务</h3>
+            <ol><li>Agent Policy Adapter</li><li>Semantic Contract Service</li><li>Query Gateway / Governor</li><li>Trusted SQL + 双方言包</li><li>Evidence + Benchmark / Monitor</li></ol>
+          </article>
+        </div>
+        <div class="direction-line"><strong>不复制 Databricks 全栈：</strong>RDS 保持交易与数据库专业能力；新增层只负责把治理、语义、安全执行、Agent 与质量闭环串起来。</div>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="architecture" aria-labelledby="architecture-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div><p class="eyebrow">目标架构</p><h2 id="architecture-title">三个查询路径，一个权威合同</h2></div>
+          <p>实时窄查走只读实例；跨域历史走 DRS 分析副本；运维诊断走 RDS/DAS/日志 API。三条路共享身份、语义、证据与评测。</p>
+        </div>
+        <figure class="diagram-frame hwr-diagram">
+          <img src="assets/diagrams/huawei-rds-agent-target-architecture.svg" alt="华为云 RDS MySQL PostgreSQL 受治理智能层目标架构图">
+          <figcaption>绿色区域是建议新增的产品闭环；底部是可复用的华为云数据与运维基础。右侧动作网关故意与只读分析面隔离。</figcaption>
+        </figure>
+        <div class="route-summary">
+          <article><span>A · 实时</span><h3>RDS 专用只读实例</h3><p>单订单、当前状态、小结果；必须返回复制延迟并限制负载。</p></article>
+          <article><span>B · 历史</span><h3>DRS → 分析副本</h3><p>跨 MySQL/PG、长窗口、大聚合；必须处理水位、Schema 演进和失败。</p></article>
+          <article class="route-recommended"><span>C · 推荐</span><h3>按问题混合路由</h3><p>路由可解释、可配置、可评测，不能由模型随意选择数据库。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell" id="scenarios" aria-labelledby="scenarios-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">客户场景</p><h2 id="scenarios-title">先卖结果，不卖“一个大模型”</h2></div>
+        <p>前三项可在只读边界内形成首批产品包；SaaS 内嵌和多租户运维价值高，但需要更成熟的身份、配额与隔离。</p>
+      </div>
+      <div class="scenario-priority">
+        <article class="priority-card featured-priority"><span>P0 · RDS ENTERPRISE ADD-ON</span><h3>DBA Copilot</h3><p>在 RDS/DAS 控制台把指标、慢 SQL、日志、告警、变更和 Runbook 组织成事故证据包。</p><strong>目标：首个证据包 ≤5 分钟，MTTR -30%</strong></article>
+        <article class="priority-card"><span>P0 · INDUSTRY TEMPLATE</span><h3>智能售后</h3><p>联查订单、退款、客户、工单与 SLA；给解释和建议，不直接退款或改订单。</p><strong>目标：首次取数/答复时间 -50%</strong></article>
+        <article class="priority-card"><span>P0 · DATA AGENT WORKSPACE</span><h3>受治理业务问答</h3><p>运营与财务在本人权限下使用统一指标和可信 SQL，减少临时取数与口径争议。</p><strong>目标：转研发率 -30%</strong></article>
+        <article class="priority-card"><span>P1 · DEVELOPER PACK</span><h3>SQL / Schema 助手</h3><p>解释 Schema、生成受控只读查询并结合 DAS 诊断优化建议。</p><strong>边界：不直接执行 DDL/DML</strong></article>
+        <article class="priority-card"><span>P1 · EMBEDDED DATA AGENT</span><h3>SaaS 内嵌</h3><p>API、SDK、Widget 提供租户隔离的问数能力，避免每个 ISV 重建 NL2SQL 与审计。</p><strong>前置：on-behalf-of + 配额 + SLA</strong></article>
+        <article class="priority-card"><span>P2 · FLEET OPERATIONS</span><h3>MSP / 集团多实例运维</h3><p>跨账号汇总容量、风险和事故模式，但绝不使用共享高权限账号。</p><strong>前置：跨租户隔离和委托审计</strong></article>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="engines" aria-labelledby="engines-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div><p class="eyebrow">双引擎不是一个 Prompt</p><h2 id="engines-title">MySQL 做售后，PostgreSQL 做工单与运维证据</h2></div>
+          <p>共享产品框架，但技术元数据、SQL 方言、权限、审计和性能基线分别建设与验收。</p>
+        </div>
+        <div class="engine-compare">
+          <article class="mysql-card">
+            <div class="engine-head"><span>RDS FOR MYSQL</span><h3>交易与售后切片</h3></div>
+            <dl>
+              <div><dt>业务域</dt><dd>订单、支付、退款、库存</dd></div>
+              <div><dt>读取</dt><dd>专用只读实例 / DRS 分析副本</dd></div>
+              <div><dt>语义</dt><dd>8 个视图、15 个指标</dd></div>
+              <div><dt>真值</dt><dd>≥25 问、≥10 个可信查询</dd></div>
+              <div><dt>重点</dt><dd>时间、JSON、字符串、隐式转换、代理/复制</dd></div>
+            </dl>
+          </article>
+          <article class="pg-card">
+            <div class="engine-head"><span>RDS FOR POSTGRESQL</span><h3>客服与运维切片</h3></div>
+            <dl>
+              <div><dt>业务域</dt><dd>工单、SLA、告警、变更、Runbook</dd></div>
+              <div><dt>读取</dt><dd>独立只读连接 / 隔离分析副本</dd></div>
+              <div><dt>语义</dt><dd>7 个视图、12 个指标</dd></div>
+              <div><dt>真值</dt><dd>≥25 问、≥10 个可信查询</dd></div>
+              <div><dt>重点</dt><dd>Schema/Role、类型、JSON/数组、窗口、审计成本</dd></div>
+            </dl>
+          </article>
+        </div>
+        <p class="engine-bottom"><strong>共同底线：</strong>Agent 不连接主写端点；两个方言包独立 Benchmark；支持矩阵、区域、版本、审计负载和 DRS 拓扑在 G1 实测。</p>
+      </div>
+    </section>
+
+    <section class="section shell" id="roadmap" aria-labelledby="roadmap-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">90 天落地</p><h2 id="roadmap-title">每两周交一份可判定证据</h2></div>
+        <p>Gate 是停止条件，不是汇报标题：没有安全路径，不做真实数据；没有语义真值，不发布 Agent；没有业务改善，不扩外部 API。</p>
+      </div>
+      <figure class="diagram-frame light hwr-diagram roadmap-diagram">
+        <img src="assets/diagrams/huawei-rds-agent-90-day-roadmap.svg" alt="华为云 RDS 受治理智能层 90 天分阶段落地路线图">
+      </figure>
+      <div class="gate-detail">
+        <article><b>G0 · W0–2</b><h3>价值合同</h3><p>3 家伙伴、Top 30 问题、基线、Owner、分析只读。</p></article>
+        <article><b>G1 · W3–4</b><h3>安全路径</h3><p>双方只读、DRS PoC、Query Gateway；危险查询全拒绝。</p></article>
+        <article><b>G2 · W5–6</b><h3>治理闭环</h3><p>资产、分类、策略与最终执行绑定；暴露字段覆盖 100%。</p></article>
+        <article><b>G3 · W7–8</b><h3>语义真值</h3><p>10–15 视图、15–25 指标、≥50 Golden Questions。</p></article>
+        <article><b>G4 · W9–10</b><h3>证据 Agent</h3><p>内嵌原型与 Widget；答案都带 SQL、来源和水位。</p></article>
+        <article><b>G5 · W11–13</b><h3>伙伴试点</h3><p>3–5 隔离租户；至少两家达到业务改善目标再继续。</p></article>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="scorecard" aria-labelledby="scorecard-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div><p class="eyebrow">建议目标，不是实测承诺</p><h2 id="scorecard-title">上线验收看正确、安全和业务结果</h2></div>
+          <p>“回答很流畅”和“调用量很高”不能证明数据 Agent 可用；数字答案必须先验证结果与权限。</p>
+        </div>
+        <div class="score-grid">
+          <article><span>安全</span><strong>0</strong><p>分析面生产写入、高严重度越权与敏感泄露</p></article>
+          <article><span>治理</span><strong>100%</strong><p>暴露字段有 Owner、分类、策略；回答展示新鲜度</p></article>
+          <article><span>质量</span><strong>≥85%</strong><p>≥50 个 Golden Questions 的 MVP 严格结果正确率</p></article>
+          <article><span>执行</span><strong>≥95%</strong><p>受控 SQL 执行成功率；失败有稳定错误契约</p></article>
+          <article><span>体验</span><strong>≤8s</strong><p>窄查询 p95；混合跨源建议目标 ≤30s</p></article>
+          <article><span>业务</span><strong>-30%</strong><p>DBA MTTR；客服首次答复建议目标 -50%</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell" id="delivery" aria-labelledby="delivery-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">内嵌 vs 外部 Agent</p><h2 id="delivery-title">能力同源，集成责任不同</h2></div>
+        <p>一套服务端 Capability Contract，三个入口做身份、语义、权限、结果一致性回归。</p>
+      </div>
+      <div class="delivery-compare">
+        <article><span>RDS / DAS 内嵌</span><h3>上下文最完整</h3><ul><li>自动带入实例、告警、时间窗口</li><li>原生展示指标、SQL 和深链</li><li>最快形成 DBA Copilot</li></ul></article>
+        <article><span>企业 Widget</span><h3>最贴近业务流程</h3><ul><li>SSO + 订单/客户上下文</li><li>适合客服、运营与统一门户</li><li>仍由服务端执行权限</li></ul></article>
+        <article><span>API / Agent Tool</span><h3>组合能力最强</h3><ul><li>调用方传最终用户、租户和用途</li><li>负责异步、取消、配额、重试</li><li>API Key 不能替代最终用户权限</li></ul></article>
+        <article class="action-card"><span>ACTION GATEWAY</span><h3>写动作单独治理</h3><ul><li>提案、预演、影响范围</li><li>审批、幂等、执行、验证</li><li>退款 / Kill / 改参数不直连</li></ul></article>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="decision" aria-labelledby="decision-title">
+      <div class="shell decision-layout">
+        <div>
+          <p class="eyebrow">GO / NO-GO</p>
+          <h2 id="decision-title">什么条件下值得立项</h2>
+          <p>立项重点不是模型选型，而是设计伙伴、只读路径、业务 Owner 和跨产品小队是否真实存在。</p>
+          <a class="button dark" href="details/huawei-rds-agent-guide.html">查看 Epic、团队、风险与官方来源</a>
+        </div>
+        <div class="decision-list">
+          <div class="go-list"><b>GO</b><ul><li>≥3 家设计伙伴提供问题和基线</li><li>双引擎有隔离只读/分析路径</li><li>领域 Owner 负责指标和可信 SQL</li><li>DataArts/IAM 策略可落到执行层</li><li>接受 MVP 只读和六个 Gate</li></ul></div>
+          <div class="stop-list"><b>STOP / SHRINK</b><ul><li>目标只是快速做聊天 Demo</li><li>只能使用共享高权限账号</li><li>无口径 Owner 或无安全查询路径</li><li>要求 MVP 自动退款或修库</li><li>成功指标只有调用量</li></ul></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell" id="demo" aria-labelledby="demo-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">演示与完整材料</p><h2 id="demo-title">8 分钟故事线 + 完整执行手册</h2></div>
+        <p>H1 是本页的华为云 RDS 专项中文有声录屏；D1 仍保留为通用云数据库能力全景。两者都是架构材料，不冒充华为云生产实调。</p>
+      </div>
+      <div class="demo-layout">
+        <article class="recording-card">
+          <video controls preload="metadata" src="../videos/recordings/zh-voice/H1-huawei-rds-governed-agent.mp4"></video>
+          <div><span>H1 · 127s · 中文有声</span><h3>华为云 RDS：故事、架构与 90 天落地</h3><p>客户事故、复用/打通/新建、双引擎、六个 Gate、KPI、立项条件和证据边界。</p></div>
+        </article>
+        <div class="demo-script">
+          <b>建议现场节奏</b>
+          <ol><li>45 秒讲 10:05 事故和 90 分钟现状</li><li>45 秒讲客服与 DBA 的五分钟证据包</li><li>75 秒讲“复用—打通—新建”</li><li>75 秒讲混合路由和动作隔离</li><li>60 秒讲 MySQL / PG 双切片</li><li>90 秒讲六个 Gate 和量化目标</li><li>30 秒用 GO / NO-GO 收口</li></ol>
+          <a class="button outline" href="details/huawei-rds-agent-guide.html">打开逐项研究与来源</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section hwr-sources" id="sources" aria-labelledby="sources-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div><p class="eyebrow">官方事实底座</p><h2 id="sources-title">已有能力与建议能力分开</h2></div>
+          <p>链接是当前公开资料；具体区域、版本、计费、白名单、负载和 SLA 必须在 G0/G1 核验。</p>
+        </div>
+        <div class="source-grid">
+          <a href="https://support.huaweicloud.com/usermanual-rds-mysql/rds-mysql-usermanual-pdf.pdf"><b>RDS for MySQL</b><span>备份、只读、代理、监控与 DBA 能力</span></a>
+          <a href="https://support.huaweicloud.com/usermanual-rds-pg/rds-pg-usermanual-pdf.pdf"><b>RDS for PostgreSQL</b><span>只读、备份、日志、审计与诊断</span></a>
+          <a href="https://support.huaweicloud.com/realtimesyn-drs/drs_05_0005.html"><b>DRS 实时同步</b><span>全量/增量和实时分析路径</span></a>
+          <a href="https://support.huaweicloud.com/productdesc-dataartsstudio/dataartsstudio_07_001.html"><b>DataArts Studio</b><span>集成、目录、质量、服务与安全</span></a>
+          <a href="https://support.huaweicloud.com/usermanual-das/das_30_1011.html"><b>DAS SQL 诊断</b><span>MySQL 诊断能力与使用约束</span></a>
+          <a href="https://support.huaweicloud.com/usermanual-pangulm/pangulm_04_0423.html"><b>智能体开发流程</b><span>知识、插件、工作流、发布与 API</span></a>
+          <a href="https://support.huaweicloud.com/intl/zh-cn/api-iam5/AssumeAgency.html"><b>IAM 临时身份</b><span>委托与短期安全凭证</span></a>
+          <a href="https://support.huaweicloud.com/productdesc-apig/apig-productdesc-pdf.pdf"><b>APIG</b><span>认证、流控与后端保护</span></a>
+        </div>
+        <p class="source-boundary">当前完成的是公开资料核准、架构设计和执行计划；没有连接华为云 RDS 租户，没有做版本/区域/性能/成本实测，也没有真实客户数据。所有 KPI 均为试点建议目标。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-content">
+      <div><strong>华为云 RDS 受治理智能层 · 方向探索</strong><p>客户故事、产品差距与 90 天落地计划；资料截止 2026-08-18。</p></div>
+      <a href="#top">返回顶部 ↑</a>
+    </div>
+  </footer>
+</body>
+</html>

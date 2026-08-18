@@ -82,12 +82,13 @@ async function sha256(path) {
 
 const voicedFiles = (await readdir(voicedDirectory)).filter((name) => name.endsWith(".mp4")).sort();
 const expectedFiles = manifest.videos.map((video) => video.file).sort();
+const expectedSegmentCount = manifest.videos.reduce((sum, video) => sum + video.segments.length, 0);
 const failures = [];
 if (JSON.stringify(voicedFiles) !== JSON.stringify(expectedFiles)) {
   failures.push(`Voiced file set differs: expected ${expectedFiles.length}, found ${voicedFiles.length}`);
 }
-if (buildReport.videoCount !== manifest.videos.length || buildReport.segmentCount !== 62) {
-  failures.push("Build report does not describe 13 videos and 62 segments");
+if (buildReport.videoCount !== manifest.videos.length || buildReport.segmentCount !== expectedSegmentCount) {
+  failures.push(`Build report does not describe ${manifest.videos.length} videos and ${expectedSegmentCount} segments`);
 }
 
 const results = [];

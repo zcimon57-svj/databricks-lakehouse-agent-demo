@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "capture:site": "node scripts/record_page.mjs http://127.0.0.1:8765 evidence/workspace/site-v0.webm",
+    "record:huawei-rds": "node scripts/record_huawei_rds_agent.mjs http://127.0.0.1:8765/site/huawei-rds-agent.html videos/recordings/H1-huawei-rds-governed-agent.mp4",
     "build:zh-voiceovers": "node scripts/build_zh_voiceovers.mjs",
     "render:details": "node scripts/render_markdown_pages.mjs",
     "validate:zh-voiceovers": "node scripts/validate_zh_voiceovers.mjs"

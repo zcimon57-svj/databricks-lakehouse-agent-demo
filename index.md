@@ -9,8 +9,9 @@
 1. [领导演示首页](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/index.html)：先建立“接入、Delta、治理、计算、消费”的全景；
 2. [Genie 深度演示](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/genie.html)：讲业务问答、实现、Monitor/Benchmark 和多种入口；
 3. [云数据库到数据 Agent](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/database-agent.html)：回答 RDS、PolarDB、TaurusDB 类产品还缺什么；
-4. [录屏与中文讲稿](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/details/recordings.html)：按模块选择 13 段有声视频；
-5. [外部视频索引](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/details/external-videos.html)：按听众选取官方或独立讲解片段。
+4. [华为云 RDS 受治理智能层](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/huawei-rds-agent.html)：用客户故事讲清 RDS MySQL/PG 怎么补能力、怎么做 90 天 MVP；
+5. [录屏与中文讲稿](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/details/recordings.html)：按模块选择 14 段有声视频；
+6. [外部视频索引](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/details/external-videos.html)：按听众选取官方或独立讲解片段。
 
 ## 三个核心案例
 
@@ -18,7 +19,7 @@
 |---|---|---|
 | 对已有数据自然语言分析 | Genie G1、M09、C2 | 先建立可信 SQL 和语义口径，Genie 不绕过权限与 SQL 执行 |
 | 智能售后 | Genie G1、C3 | 分析和建议可以自动化，退款、改订单和发消息必须进入审批工具 |
-| 数据库智能运维 | Genie G1、C4、D1 | 指标和事故证据可以统一诊断，真实修复需要独立动作网关 |
+| 数据库智能运维 | Genie G1、C4、D1、H1 | 指标和事故证据可以统一诊断，真实修复需要独立动作网关 |
 
 ## 关键架构图
 
@@ -28,6 +29,8 @@
 - [Genie 多种使用方式](site/assets/diagrams/genie-usage-modes.svg)
 - [云数据库 Agent 能力栈](site/assets/diagrams/cloud-database-agent-capability-stack.svg)
 - [云数据库三条接入路线](site/assets/diagrams/cloud-database-integration-routes.svg)
+- [华为云 RDS 受治理智能层目标架构](site/assets/diagrams/huawei-rds-agent-target-architecture.svg)
+- [华为云 RDS 90 天落地路线](site/assets/diagrams/huawei-rds-agent-90-day-roadmap.svg)
 
 ## 完整研究
 
@@ -37,11 +40,13 @@
 - [真实工作区验证](docs/research/03-live-workspace-validation.md)
 - [Genie 实现与多种用法](docs/research/04-genie-implementation-and-usage.md)
 - [云数据库如何具备 Genie 类能力](docs/research/05-cloud-database-to-governed-data-agent.md)
+- [华为云 RDS MySQL / PostgreSQL 受治理智能层落地手册](docs/research/06-huawei-cloud-rds-mysql-postgresql-governed-agent.md)
 
 ## 验证记录
 
 - [当前交付状态](STATE.md)
 - [站点与云数据库专题校验](evidence/workspace/site-v4-cloud-database-validation.md)
+- [华为云 RDS 专题与 H1 有声录屏校验](evidence/workspace/huawei-rds-agent-validation.md)
 - [中文配音校验](evidence/workspace/zh-voiceover-validation.md)
 - [GitHub 公开发布与 Pages 校验](evidence/workspace/github-publication-validation.md)
 - [录屏文件与 SHA-256](videos/recordings/README.md)

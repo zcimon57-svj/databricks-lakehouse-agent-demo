@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="920" viewBox="0 0 1600 920" role="img" aria-labelledby="title desc">
+  <title id="title">华为云 RDS 受治理智能层 90 天落地路线图</title>
+  <desc id="desc">从第零到二周的价值与安全合同开始，依次完成安全数据路径、治理闭环、语义和可信 SQL、Agent 与证据回答以及设计伙伴试点。每阶段都有不能跳过的 Gate。</desc>
+  <defs>
+    <linearGradient id="road-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f9f7f2"/>
+      <stop offset="1" stop-color="#e8f0ec"/>
+    </linearGradient>
+    <filter id="road-shadow" x="-25%" y="-25%" width="150%" height="160%">
+      <feDropShadow dx="0" dy="9" stdDeviation="10" flood-color="#173238" flood-opacity=".13"/>
+    </filter>
+    <marker id="road-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#39786a"/>
+    </marker>
+    <style>
+      text { font-family: Inter, "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .phase { font-size: 13px; font-weight: 900; letter-spacing: .06em; }
+      .title { font-size: 21px; font-weight: 850; fill: #142126; }
+      .copy { font-size: 14px; fill: #596a6e; }
+      .gate { font-size: 13px; font-weight: 800; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="920" rx="28" fill="url(#road-bg)"/>
+  <text x="66" y="64" fill="#142126" font-size="35" font-weight="850">90 天不是“做聊天框”：六个 Gate 把价值、安全和产品化串起来</text>
+  <text x="66" y="100" fill="#5f6c70" font-size="17">建议目标，不是现网承诺 · 任何 Gate 未通过都不进入下一阶段 · 分析面全程只读</text>
+
+  <path d="M105 196 H1490" stroke="#8db7ac" stroke-width="4" marker-end="url(#road-arrow)"/>
+  <g fill="#39786a">
+    <circle cx="130" cy="196" r="10"/><circle cx="388" cy="196" r="10"/><circle cx="646" cy="196" r="10"/>
+    <circle cx="904" cy="196" r="10"/><circle cx="1162" cy="196" r="10"/><circle cx="1420" cy="196" r="10"/>
+  </g>
+
+  <g filter="url(#road-shadow)">
+    <rect x="66" y="236" width="230" height="344" rx="19" fill="#ffffff"/>
+    <rect x="66" y="236" width="230" height="68" rx="19" fill="#18383e"/>
+    <text x="88" y="262" class="phase" fill="#8ee0ca">W0–2 · G0</text>
+    <text x="88" y="289" fill="#ffffff" font-size="19" font-weight="850">价值与安全合同</text>
+    <text x="88" y="337" class="copy">3 家设计伙伴</text>
+    <text x="88" y="365" class="copy">每家 Top 30 问题</text>
+    <text x="88" y="393" class="copy">基线 / Owner / 数据分级</text>
+    <text x="88" y="421" class="copy">分析只读，动作退出 MVP</text>
+    <line x1="88" y1="454" x2="274" y2="454" stroke="#e1e6e3"/>
+    <text x="88" y="482" class="gate" fill="#df563f">PASS</text>
+    <text x="88" y="509" class="copy">≥2 家确认价值问题</text>
+    <text x="88" y="535" class="copy">跨产品 Owner 共同签字</text>
+
+    <rect x="324" y="236" width="230" height="344" rx="19" fill="#ffffff"/>
+    <rect x="324" y="236" width="230" height="68" rx="19" fill="#286f60"/>
+    <text x="346" y="262" class="phase" fill="#d5f6ec">W3–4 · G1</text>
+    <text x="346" y="289" fill="#ffffff" font-size="19" font-weight="850">安全数据路径</text>
+    <text x="346" y="337" class="copy">MySQL / PG 专用只读</text>
+    <text x="346" y="365" class="copy">DRS 拓扑 / 水位 PoC</text>
+    <text x="346" y="393" class="copy">Query Gateway v0</text>
+    <text x="346" y="421" class="copy">IAM 身份与租户映射</text>
+    <line x1="346" y1="454" x2="532" y2="454" stroke="#e1e6e3"/>
+    <text x="346" y="482" class="gate" fill="#df563f">PASS</text>
+    <text x="346" y="509" class="copy">写 SQL / 越权 / 超预算</text>
+    <text x="346" y="535" class="copy">全部拒绝，可取消熔断</text>
+
+    <rect x="582" y="236" width="230" height="344" rx="19" fill="#ffffff"/>
+    <rect x="582" y="236" width="230" height="68" rx="19" fill="#3c8d7a"/>
+    <text x="604" y="262" class="phase" fill="#e4faf4">W5–6 · G2</text>
+    <text x="604" y="289" fill="#ffffff" font-size="19" font-weight="850">目录治理闭环</text>
+    <text x="604" y="337" class="copy">稳定资产 ID</text>
+    <text x="604" y="365" class="copy">DataArts Owner / 分类</text>
+    <text x="604" y="393" class="copy">策略绑定实际执行</text>
+    <text x="604" y="421" class="copy">水位 / Schema / 血缘</text>
+    <line x1="604" y1="454" x2="790" y2="454" stroke="#e1e6e3"/>
+    <text x="604" y="482" class="gate" fill="#df563f">PASS</text>
+    <text x="604" y="509" class="copy">暴露字段治理覆盖 100%</text>
+    <text x="604" y="535" class="copy">UI / API 权限结果一致</text>
+
+    <rect x="840" y="236" width="230" height="344" rx="19" fill="#ffffff"/>
+    <rect x="840" y="236" width="230" height="68" rx="19" fill="#e15d45"/>
+    <text x="862" y="262" class="phase" fill="#fff0eb">W7–8 · G3</text>
+    <text x="862" y="289" fill="#ffffff" font-size="19" font-weight="850">语义与可信 SQL</text>
+    <text x="862" y="337" class="copy">10–15 个权威视图</text>
+    <text x="862" y="365" class="copy">15–25 个指标 / 实体</text>
+    <text x="862" y="393" class="copy">MySQL / PG 双方言</text>
+    <text x="862" y="421" class="copy">≥50 Golden Questions</text>
+    <line x1="862" y1="454" x2="1048" y2="454" stroke="#e1e6e3"/>
+    <text x="862" y="482" class="gate" fill="#df563f">PASS</text>
+    <text x="862" y="509" class="copy">问题有真值 / Owner / 权限</text>
+    <text x="862" y="535" class="copy">口径变更自动触发回归</text>
+
+    <rect x="1098" y="236" width="230" height="344" rx="19" fill="#ffffff"/>
+    <rect x="1098" y="236" width="230" height="68" rx="19" fill="#74619d"/>
+    <text x="1120" y="262" class="phase" fill="#f0ebff">W9–10 · G4</text>
+    <text x="1120" y="289" fill="#ffffff" font-size="19" font-weight="850">Agent 与证据</text>
+    <text x="1120" y="337" class="copy">编排 / 工具合同</text>
+    <text x="1120" y="365" class="copy">RDS Copilot + Widget</text>
+    <text x="1120" y="393" class="copy">SQL / 来源 / 水位</text>
+    <text x="1120" y="421" class="copy">事实与推断分开</text>
+    <line x1="1120" y1="454" x2="1306" y2="454" stroke="#e1e6e3"/>
+    <text x="1120" y="482" class="gate" fill="#df563f">PASS</text>
+    <text x="1120" y="509" class="copy">严格正确率建议 ≥85%</text>
+    <text x="1120" y="535" class="copy">高严重度越权 = 0</text>
+
+    <rect x="1356" y="236" width="178" height="344" rx="19" fill="#ffffff"/>
+    <rect x="1356" y="236" width="178" height="68" rx="19" fill="#d49a35"/>
+    <text x="1378" y="262" class="phase" fill="#fff6e4">W11–13 · G5</text>
+    <text x="1378" y="289" fill="#ffffff" font-size="19" font-weight="850">伙伴试点</text>
+    <text x="1378" y="337" class="copy">3–5 隔离租户</text>
+    <text x="1378" y="365" class="copy">Monitor / 红队</text>
+    <text x="1378" y="393" class="copy">故障 / 降级演练</text>
+    <text x="1378" y="421" class="copy">价值 / 成本 / SLA</text>
+    <line x1="1378" y1="454" x2="1512" y2="454" stroke="#e1e6e3"/>
+    <text x="1378" y="482" class="gate" fill="#df563f">GO / NO-GO</text>
+    <text x="1378" y="509" class="copy">≥2 家达到</text>
+    <text x="1378" y="535" class="copy">业务改善目标</text>
+  </g>
+
+  <rect x="66" y="620" width="1468" height="118" rx="20" fill="#10272c"/>
+  <text x="92" y="652" class="phase" fill="#8ee0ca">PROPOSED MVP SCORECARD</text>
+  <g fill="#ffffff" font-size="18" font-weight="800">
+    <text x="92" y="692">安全</text><text x="310" y="692">质量</text><text x="548" y="692">体验</text><text x="796" y="692">客服价值</text><text x="1070" y="692">运维价值</text><text x="1328" y="692">运营</text>
+  </g>
+  <g fill="#b8c9cc" font-size="14">
+    <text x="92" y="718">写入 0 / 越权 0</text><text x="310" y="718">50 问 / ≥85%</text><text x="548" y="718">窄查 p95 ≤8s</text><text x="796" y="718">首次答复 -50%</text><text x="1070" y="718">证据 ≤5m / MTTR -30%</text><text x="1328" y="718">可监控 / 可回滚</text>
+  </g>
+
+  <rect x="66" y="762" width="1468" height="110" rx="20" fill="#fff0e9" stroke="#edc9bc"/>
+  <text x="92" y="796" class="phase" fill="#df563f">NEXT 90 DAYS · 只有 G5 通过才启动</text>
+  <text x="92" y="832" fill="#142126" font-size="19" font-weight="800">APIG 外部 API / SDK / Agent Tool</text>
+  <text x="495" y="832" fill="#142126" font-size="19" font-weight="800">多租户配额 / 计费 / SLA</text>
+  <text x="850" y="832" fill="#142126" font-size="19" font-weight="800">低风险动作网关试点</text>
+  <text x="1195" y="832" fill="#142126" font-size="19" font-weight="800">逐动作审批 / 幂等 / 回滚</text>
+  <text x="92" y="858" fill="#6a5a54" font-size="14">先开放创建工单和采集诊断包；退款、Kill、改参数、扩容和切主不因 Agent 能“建议”就自动获得执行权。</text>
+</svg>

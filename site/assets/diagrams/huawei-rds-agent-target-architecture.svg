@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">华为云 RDS MySQL PostgreSQL 受治理智能层目标架构</title>
+  <desc id="desc">展示 RDS 和 DAS 内嵌入口、企业应用和外部 Agent，通过统一身份策略、语义、可信 SQL、混合路由、查询网关和证据评测访问 RDS MySQL、PostgreSQL、DRS 分析副本及运维证据；所有写动作进入独立审批网关。</desc>
+  <defs>
+    <linearGradient id="arch-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#081a20"/>
+      <stop offset=".58" stop-color="#12363c"/>
+      <stop offset="1" stop-color="#162a34"/>
+    </linearGradient>
+    <linearGradient id="plane-bg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#d9f4ea"/>
+      <stop offset="1" stop-color="#b9e8d9"/>
+    </linearGradient>
+    <filter id="arch-shadow" x="-20%" y="-30%" width="140%" height="170%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#020d10" flood-opacity=".34"/>
+    </filter>
+    <marker id="arch-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#7bd2bd"/>
+    </marker>
+    <style>
+      text { font-family: Inter, "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .kicker { font-size: 13px; font-weight: 900; letter-spacing: .08em; }
+      .card-title { font-size: 19px; font-weight: 800; }
+      .card-copy { font-size: 13px; fill: #5a696d; }
+      .light-copy { font-size: 13px; fill: #b8c9cc; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1000" rx="28" fill="url(#arch-bg)"/>
+  <text x="68" y="62" fill="#ffffff" font-size="35" font-weight="850">华为云 RDS 受治理智能层：复用云服务，补齐一条产品闭环</text>
+  <text x="68" y="98" fill="#afc2c5" font-size="17">建议架构，不代表已发布产品 · MySQL / PostgreSQL 双方言 · 分析面只读 · 写动作隔离</text>
+
+  <g filter="url(#arch-shadow)">
+    <rect x="68" y="130" width="1464" height="138" rx="20" fill="#f8f6f1"/>
+    <text x="96" y="161" class="kicker" fill="#df563f">CUSTOMER ENTRY · 四种入口，共享同一服务端合同</text>
+    <rect x="96" y="181" width="322" height="62" rx="13" fill="#ffffff" stroke="#d8dfdc"/>
+    <text x="117" y="207" class="card-title" fill="#142126">RDS / DAS 控制台 Copilot</text>
+    <text x="117" y="229" class="card-copy">实例、告警、时间窗口自动带入</text>
+    <rect x="442" y="181" width="322" height="62" rx="13" fill="#ffffff" stroke="#d8dfdc"/>
+    <text x="463" y="207" class="card-title" fill="#142126">DataArts / 数据工作台</text>
+    <text x="463" y="229" class="card-copy">目录、质量、数据服务上下文</text>
+    <rect x="788" y="181" width="322" height="62" rx="13" fill="#ffffff" stroke="#d8dfdc"/>
+    <text x="809" y="207" class="card-title" fill="#142126">客服 / 企业门户 Widget</text>
+    <text x="809" y="229" class="card-copy">最终用户身份 + 订单/客户上下文</text>
+    <rect x="1134" y="181" width="370" height="62" rx="13" fill="#ffffff" stroke="#d8dfdc"/>
+    <text x="1155" y="207" class="card-title" fill="#142126">APIG · SDK · 外部 Agent Tool</text>
+    <text x="1155" y="229" class="card-copy">异步、配额、取消、on-behalf-of</text>
+  </g>
+
+  <path d="M800 270 V304" stroke="#7bd2bd" stroke-width="4" marker-end="url(#arch-arrow)"/>
+
+  <g filter="url(#arch-shadow)">
+    <rect x="68" y="312" width="1130" height="362" rx="24" fill="url(#plane-bg)"/>
+    <text x="98" y="350" class="kicker" fill="#245f52">PROPOSED · RDS GOVERNED INTELLIGENCE PLANE</text>
+    <text x="98" y="378" fill="#18362f" font-size="15">统一执行策略，不能只是把现有组件并排摆放</text>
+
+    <rect x="98" y="405" width="326" height="104" rx="16" fill="#ffffff"/>
+    <text x="120" y="434" class="kicker" fill="#df563f">01 · IDENTITY &amp; POLICY</text>
+    <text x="120" y="462" class="card-title" fill="#142126">Agent Policy Adapter</text>
+    <text x="120" y="486" class="card-copy">IAM 最终用户 · 租户 · 用途</text>
+    <text x="120" y="504" class="card-copy">DataArts 标签 → 行列策略 / 脱敏</text>
+
+    <rect x="447" y="405" width="326" height="104" rx="16" fill="#ffffff"/>
+    <text x="469" y="434" class="kicker" fill="#df563f">02 · BUSINESS MEANING</text>
+    <text x="469" y="462" class="card-title" fill="#142126">Semantic Contract</text>
+    <text x="469" y="486" class="card-copy">指标 · 实体 · Join · 同义词</text>
+    <text x="469" y="504" class="card-copy">时间 / 状态 / 币种 · Owner · 版本</text>
+
+    <rect x="796" y="405" width="372" height="104" rx="16" fill="#ffffff"/>
+    <text x="818" y="434" class="kicker" fill="#df563f">03 · TRUSTED KNOWLEDGE</text>
+    <text x="818" y="462" class="card-title" fill="#142126">可信 SQL + 双方言包</text>
+    <text x="818" y="486" class="card-copy">MySQL / PostgreSQL 独立 Benchmark</text>
+    <text x="818" y="504" class="card-copy">高频问题优先走已 Review 资产</text>
+
+    <rect x="98" y="531" width="326" height="109" rx="16" fill="#15363b"/>
+    <text x="120" y="560" class="kicker" fill="#8be0ca">04 · PLAN &amp; ROUTE</text>
+    <text x="120" y="588" class="card-title" fill="#ffffff">Planner + Hybrid Router</text>
+    <text x="120" y="613" class="light-copy">实时窄查 / 跨域历史 / 运维证据</text>
+    <text x="120" y="632" class="light-copy">路径选择可解释、可配置、可评测</text>
+
+    <rect x="447" y="531" width="326" height="109" rx="16" fill="#15363b"/>
+    <text x="469" y="560" class="kicker" fill="#8be0ca">05 · SAFE EXECUTION</text>
+    <text x="469" y="588" class="card-title" fill="#ffffff">Query Gateway</text>
+    <text x="469" y="613" class="light-copy">只读 AST · 租户过滤 · timeout</text>
+    <text x="469" y="632" class="light-copy">预算 · 取消 · 熔断 · Query ID</text>
+
+    <rect x="796" y="531" width="372" height="109" rx="16" fill="#15363b"/>
+    <text x="818" y="560" class="kicker" fill="#8be0ca">06 · EVIDENCE &amp; QUALITY</text>
+    <text x="818" y="588" class="card-title" fill="#ffffff">Evidence + Benchmark / Monitor</text>
+    <text x="818" y="613" class="light-copy">SQL · 来源 · 水位 · 语义版本 · 权限</text>
+    <text x="818" y="632" class="light-copy">离线回归 · 线上漂移 · 发布回滚</text>
+  </g>
+
+  <g filter="url(#arch-shadow)">
+    <rect x="1224" y="312" width="308" height="362" rx="24" fill="#482521" stroke="#d76d5b"/>
+    <text x="1252" y="350" class="kicker" fill="#ffad9e">SEPARATE · ACTION GATEWAY</text>
+    <text x="1252" y="384" fill="#ffffff" font-size="22" font-weight="850">建议不等于执行</text>
+    <line x1="1252" y1="404" x2="1504" y2="404" stroke="#84443b"/>
+    <text x="1252" y="440" fill="#f4c4bb" font-size="16">① typed action / Runbook</text>
+    <text x="1252" y="475" fill="#f4c4bb" font-size="16">② preview / 影响范围</text>
+    <text x="1252" y="510" fill="#f4c4bb" font-size="16">③ 人工 / 策略审批</text>
+    <text x="1252" y="545" fill="#f4c4bb" font-size="16">④ 幂等执行</text>
+    <text x="1252" y="580" fill="#f4c4bb" font-size="16">⑤ verify / rollback</text>
+    <rect x="1252" y="605" width="252" height="43" rx="10" fill="#672f29"/>
+    <text x="1378" y="632" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="800">退款 · Kill · 改参数 · 扩容 · 切主</text>
+  </g>
+
+  <path d="M1198 490 H1216" stroke="#f3917f" stroke-width="4" stroke-dasharray="7 7" marker-end="url(#arch-arrow)"/>
+
+  <path d="M633 680 V713" stroke="#7bd2bd" stroke-width="4" marker-end="url(#arch-arrow)"/>
+  <g filter="url(#arch-shadow)">
+    <rect x="68" y="721" width="1464" height="196" rx="22" fill="#f8f6f1"/>
+    <text x="98" y="757" class="kicker" fill="#df563f">REUSE HUAWEI CLOUD DATA &amp; OPERATIONS FOUNDATION</text>
+
+    <rect x="98" y="782" width="317" height="105" rx="15" fill="#ffffff" stroke="#d9dfdc"/>
+    <text x="120" y="812" class="kicker" fill="#27715f">LIVE NARROW QUERY</text>
+    <text x="120" y="842" class="card-title" fill="#142126">RDS for MySQL 只读实例</text>
+    <text x="120" y="866" class="card-copy">订单 · 支付 · 退款 · 当前状态</text>
+
+    <rect x="439" y="782" width="317" height="105" rx="15" fill="#ffffff" stroke="#d9dfdc"/>
+    <text x="461" y="812" class="kicker" fill="#27715f">LIVE NARROW QUERY</text>
+    <text x="461" y="842" class="card-title" fill="#142126">RDS for PostgreSQL 只读实例</text>
+    <text x="461" y="866" class="card-copy">工单 · SLA · 变更 · 平台数据</text>
+
+    <rect x="780" y="782" width="317" height="105" rx="15" fill="#fff0e9" stroke="#edcabc"/>
+    <text x="802" y="812" class="kicker" fill="#df563f">CROSS-DOMAIN / HISTORY</text>
+    <text x="802" y="842" class="card-title" fill="#142126">DRS → 隔离分析副本</text>
+    <text x="802" y="866" class="card-copy">全量/增量 · 水位 · 历史 · 跨源</text>
+
+    <rect x="1121" y="782" width="383" height="105" rx="15" fill="#eee9ff" stroke="#d6caee"/>
+    <text x="1143" y="812" class="kicker" fill="#6c5798">OPERATIONS EVIDENCE</text>
+    <text x="1143" y="842" class="card-title" fill="#142126">DAS · 指标 · 日志 · 告警 · 变更</text>
+    <text x="1143" y="866" class="card-copy">慢 SQL / 诊断 / 复制延迟 / Runbook</text>
+  </g>
+
+  <rect x="68" y="938" width="1464" height="38" rx="10" fill="#0a171b" stroke="#34525a"/>
+  <text x="800" y="963" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="750">横切底座：DataArts 目录/血缘/质量/安全 · IAM 临时身份 · APIG 配额与保护 · CTS/RDS 审计 · 统一 SLO 与成本</text>
+</svg>

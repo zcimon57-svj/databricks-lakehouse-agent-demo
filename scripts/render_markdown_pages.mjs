@@ -63,6 +63,14 @@ const pages = [
     backHref: "../database-agent.html",
     backLabel: "返回云数据库专题",
   },
+  {
+    source: "docs/research/06-huawei-cloud-rds-mysql-postgresql-governed-agent.md",
+    output: "site/details/huawei-rds-agent-guide.html",
+    pageTitle: "华为云 RDS 受治理智能层落地手册",
+    eyebrow: "HUAWEI CLOUD RDS DELIVERY GUIDE",
+    backHref: "../huawei-rds-agent.html",
+    backLabel: "返回华为云 RDS 专题",
+  },
 ];
 
 function escapeHtml(value) {

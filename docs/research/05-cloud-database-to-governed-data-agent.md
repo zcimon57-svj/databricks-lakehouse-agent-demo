@@ -69,7 +69,7 @@
 - “GMV”“退款金额”“活跃用户”等业务指标的唯一口径；
 - 面向 Agent 的同义词、Join 关系、实体匹配和可信查询资产。
 
-**架构推断：**系统目录可以作为统一目录的自动采集源，但不能直接替代统一治理和业务语义产品。
+**架构推断：** 系统目录可以作为统一目录的自动采集源，但不能直接替代统一治理和业务语义产品。
 
 ## 3. Unity Catalog-like 层到底要具备什么
 
@@ -109,7 +109,7 @@ Unity Catalog 的公开能力包含对象级 privileges、基于受治理标签�
 - Agent 生成 SQL 后，策略在哪一层强制执行；
 - 权限变化多久传播，缓存结果是否同步失效。
 
-**实施建议：**策略必须在可信查询执行层再次强制执行，不能只靠 Prompt 告诉模型“不要看”。
+**实施建议：** 策略必须在可信查询执行层再次强制执行，不能只靠 Prompt 告诉模型“不要看”。
 
 ### 3.3 发现、分类和 Owner
 
@@ -178,7 +178,7 @@ Databricks 官方说明 Unity Catalog 可自动捕获在 Databricks 上运行的
 - Query ID、取消查询、熔断和 kill switch；
 - 复制延迟和数据新鲜度随答案返回。
 
-**实施建议：**仅把账号命名为 `readonly_agent` 不够；必须验证视图、函数、临时表、外部函数和存储过程是否能绕过限制。
+**实施建议：** 仅把账号命名为 `readonly_agent` 不够；必须验证视图、函数、临时表、外部函数和存储过程是否能绕过限制。
 
 ### L2. 统一目录与治理
 
@@ -190,8 +190,8 @@ Databricks 对照：Unity Catalog。
 
 两条主路径：
 
-1. **联邦/直连：**数据留在源库，查询下推；新鲜、上线快，但受源库负载、网络、连接数和远端方言限制。
-2. **CDC 入湖/仓：**从 MySQL binlog、PostgreSQL WAL 等增量同步到分析存储；隔离生产、保留历史、适合跨源 Join，但增加链路、延迟和成本。
+1. **联邦/直连：** 数据留在源库，查询下推；新鲜、上线快，但受源库负载、网络、连接数和远端方言限制。
+2. **CDC 入湖/仓：** 从 MySQL binlog、PostgreSQL WAL 等增量同步到分析存储；隔离生产、保留历史、适合跨源 Join，但增加链路、延迟和成本。
 
 Databricks 的 Lakehouse Federation 会通过 JDBC 把查询下推到 MySQL、PostgreSQL 等外部数据库；官方明确其典型场景包括按需报表、PoC 和迁移过渡，并列出了只读、缓存和大结果集等限制。[Databricks query federation](https://docs.databricks.com/aws/en/query-federation/database-federation)
 
@@ -210,7 +210,7 @@ Lakeflow Connect 的托管数据库 Connector 使用 CDC 把 MySQL、PostgreSQL�
 
 Databricks Metric Views 把表/视图转成标准化业务指标，定义 source、field、measure、filter 和 join，使不同用户对同一 KPI 使用同一口径。[Model metric views](https://docs.databricks.com/aws/en/business-semantics/metric-views/basic-modeling)
 
-**关键区别：**Catalog 说“`refund_amount` 是 DECIMAL”；语义层说“退款总额默认包含哪些状态、按申请日还是批准日、使用哪种币种、是否扣除冲正”。
+**关键区别：** Catalog 说“`refund_amount` 是 DECIMAL”；语义层说“退款总额默认包含哪些状态、按申请日还是批准日、使用哪种币种、是否扣除冲正”。
 
 ### L5. 可信查询与函数资产
 
@@ -255,9 +255,9 @@ Genie 公开的 Example SQL、Trusted Assets 和 Unity Catalog SQL Functions 就
 
 需要三类评测：
 
-1. **SQL / 结果正确性：**和 Ground-truth SQL 的结果比较；
-2. **输出契约：**列、行、单位、排序、范围和引用是否符合要求；
-3. **任务质量：**多步骤报告是否覆盖必要事实、证据和不确定性。
+1. **SQL / 结果正确性：** 和 Ground-truth SQL 的结果比较；
+2. **输出契约：** 列、行、单位、排序、范围和引用是否符合要求；
+3. **任务质量：** 多步骤报告是否覆盖必要事实、证据和不确定性。
 
 还要持续收集真实问题、失败、用户反馈、Schema 漂移、成本和延迟，回流到语义、Examples 和回归集。Genie Benchmark 与 Monitor 的公开边界正是评测集和真实会话改进；官方明确 Benchmark 不会作为回答上下文让 Agent“背答案”。[Test and monitor a Genie Agent](https://docs.databricks.com/aws/en/genie/monitor)
 
@@ -322,7 +322,7 @@ Agent 建议
 
 但官方也明确 Lake Formation 的 `SELECT` 数据权限面向 S3 中的数据，不直接等同于 RDS 对象权限；因此把 RDS、Glue、Lake Formation、Athena/Redshift、BI/Agent 组合起来，仍需明确每个查询路径的最终策略执行点。[Lake Formation permissions reference](https://docs.aws.amazon.com/lake-formation/latest/dg/lf-permissions-reference.html)
 
-**架构推断：**云厂商组合能够提供许多零件，但“一套对象模型、一致身份、统一语义、同一评测闭环和内外部交付体验”仍是产品集成工作，不会因服务都属于同一云而自动成立。
+**架构推断：** 云厂商组合能够提供许多零件，但“一套对象模型、一致身份、统一语义、同一评测闭环和内外部交付体验”仍是产品集成工作，不会因服务都属于同一云而自动成立。
 
 ## 6. 四种接入路线
 

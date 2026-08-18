@@ -6,7 +6,7 @@
 
 ## 使用说明
 
-这些不是产品宣传片，而是本项目真实工作区的操作证据。`zh-voice/` 保存 13 段普通话有声版，站点默认播放这一版本；当前目录根部保留逐帧画面一致的无声原版。中文配音使用合成神经语音，不冒充真人录音；逐段讲稿、时间轴、构建方式与哈希见 [配音说明](../../site/details/voiceover.html)，补充材料见 [外部视频索引](../../site/details/external-videos.html)。
+这些不是产品宣传片，而是本项目的工作区操作证据和明确标注的本地架构演示。`zh-voice/` 保存 14 段普通话有声版，站点默认播放这一版本；当前目录根部保留逐帧画面一致的无声原版。中文配音使用合成神经语音，不冒充真人录音；逐段讲稿、时间轴、构建方式与哈希见 [配音说明](../../site/details/voiceover.html)，补充材料见 [外部视频索引](../../site/details/external-videos.html)。
 
 隐私处理：录制脚本会替换邮箱和 UUID，模糊账号/头像控件；所有抽检画面均未发现邮箱。数据全部为 `samples` 或 `.invalid` 保留域的确定性合成数据。
 
@@ -18,6 +18,7 @@
 | [有声](zh-voice/G2-genie-authoring-monitor-benchmark.mp4) · [无声](G2-genie-authoring-monitor-benchmark.mp4) | 82.75s | Genie 实现与质量闭环 | 7 Sources、Instructions、Curated Example、Monitor、3 个 Benchmark、三次 33% 运行及失败分类 | `b4f7bf896f8c0a87b695a2355bfb3adf5655002c773cb8e7729a514acb140fa7` |
 | [有声](zh-voice/G3-genie-embedded-vs-api-architecture.mp4) · [无声](G3-genie-embedded-vs-api-architecture.mp4) | 71.00s | Genie 外部集成 | 工作区、iframe、Conversation API、Agent API/SSE、多 Agent 与审批 Gate；架构演示，非本账号 API 实调 | `170b368e23e3fa5e955559991c9d53056389cf87ff1ce10b16c1411bf39732c2` |
 | [有声](zh-voice/D1-cloud-database-governed-agent-architecture.mp4) · [无声](D1-cloud-database-governed-agent-architecture.mp4) | 78.80s | 云数据库接入专题 | 数据库已有能力、Unity Catalog-like、语义/评测、三条接入路线、内外部责任与 G0–G8；架构演示，非生产实调 | `a6961aab6416b626a3e55d3ecf9ce09bc675d4a1ec37cf86eb5343001c9834ba` |
+| [有声](zh-voice/H1-huawei-rds-governed-agent.mp4) · [无声](H1-huawei-rds-governed-agent.mp4) | 127.16s | 华为云 RDS 专项 | 合成客户事故、RDS/DAS/DRS/DataArts 复用、五个新增服务、MySQL/PG 双切片、六个 Gate 与 KPI；架构建议，非华为云生产实调 | `d81b30dc262132e7fa75b16cf5913dda1cd81c4a0a3b12fdb73b91923166a6f1` |
 | [有声](zh-voice/M01-workspace-free-edition-entrypoints.mp4) · [无声](M01-workspace-free-edition-entrypoints.mp4) | 9.50s | M01、M14 | Free Edition 版本证据；New 菜单里的数据、SQL、Dashboard、Genie、Job、Pipeline、App 入口 | `b0c26bf46c4cc28cc25a27c49be0bebe427a923ff3a10853c80acf46aca6ea0b` |
 | [有声](zh-voice/M02-catalog-delta-lineage.mp4) · [无声](M02-catalog-delta-lineage.mp4) | 25.00s | M02、M03、M04、C1 | Catalog→Schema→MANAGED Delta 表→Details→自动 Lineage | `e6c61c9aef49c680332ff95e1034b860be424d30699ec193d05262feaadf09f8` |
 | [有声](zh-voice/M05-data-ingestion-paths.mp4) · [无声](M05-data-ingestion-paths.mp4) | 13.50s | M05、C1 | 文件/Volume 与托管数据库/SaaS Connector；本次实测 Files API 路径 | `3be9e0e5e330476048188cc7b04cc888ca6f466a042f35f02f02306fa1e4586a` |
@@ -28,7 +29,7 @@
 | [有声](zh-voice/C3-intelligent-after-sales.mp4) · [无声](C3-intelligent-after-sales.mp4) | 15.50s | C3 | 700 条售后数据→18 条行动队列→政策/建议→写动作人工审批 | `8d7c1d3a2e93c152cad09861abe8923127e48c01507221454d0c0aee4048f5eb` |
 | [有声](zh-voice/C4-database-intelligent-operations.mp4) · [无声](C4-database-intelligent-operations.mp4) | 16.00s | C4 | 指标/慢 SQL/告警/变更/事故/Runbook→诊断；不连接或修改生产库 | `57809da28269d29aab1a946ef1a55edfea8c60ff6a2f54e781b0833708cb5692` |
 
-总时长约 7 分 32 秒。全部 13 段现在都有逐画面对齐的普通话解说；旧 9 段适合按模块短插播，G1/G2/G3 是 Genie 专题长讲，D1 是云数据库接入专题。
+总时长约 9 分 39 秒。全部 14 段现在都有逐画面对齐的普通话解说；旧 9 段适合按模块短插播，G1/G2/G3 是 Genie 专题长讲，D1 是通用云数据库接入专题，H1 是华为云 RDS MySQL/PostgreSQL 落地专题。
 
 ## 建议演示顺序
 
@@ -38,7 +39,8 @@
 4. 播 G2，展示实现面和真实 Benchmark：不能把真值错误、输出契约失败和评测器异常都算给模型。
 5. 播 G3 并展示两张 Genie SVG，总结工作区、iframe、API 与多 Agent 的责任差异。
 6. 播 D1 并展示两张云数据库 SVG，解释 RDS / PolarDB / TaurusDB 类产品要补的前置治理、语义、评测和三条接入路线。
-7. C3/C4 作为售后和运维的短版 SQL 证据；G1 已把二者放入同一个连续 Agent 会话。
+7. 对华为云方向评审时接着播 H1，用客户故事串起 RDS、DAS、DRS、DataArts、双引擎切片和 90 天六个 Gate。
+8. C3/C4 作为售后和运维的短版 SQL 证据；G1 已把二者放入同一个连续 Agent 会话。
 
 ## 领导版口述提纲
 
