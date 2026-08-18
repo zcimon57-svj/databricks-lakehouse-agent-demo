@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Genie Agent 实现架构</title>
+  <desc id="desc">从领域专家配置到 Chat 和 Agent mode 执行，再到 Unity Catalog 治理、Monitor 和 Benchmark 回归的闭环。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b2025"/>
+      <stop offset="1" stop-color="#17373e"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#051215" flood-opacity="0.30"/>
+    </filter>
+    <marker id="arrowMint" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9de0cd"/>
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#e6533c"/>
+    </marker>
+    <style>
+      .cn { font-family: Inter, "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .small { font-size: 20px; fill: #a9c1c5; }
+      .label { font-size: 22px; font-weight: 750; fill: #ffffff; }
+      .body { font-size: 18px; fill: #c5d5d7; }
+      .darkLabel { font-size: 21px; font-weight: 800; fill: #142126; }
+      .darkBody { font-size: 17px; fill: #41575c; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="900" rx="28" fill="url(#bg)"/>
+  <g class="cn">
+    <text x="70" y="72" font-size="38" font-weight="850" fill="#ffffff">Genie Agent 如何实现：配置、执行、治理、回归</text>
+    <text x="70" y="108" class="small">Benchmark 是评测，不进入回答上下文；分析自动化不等于写动作自动化</text>
+
+    <rect x="56" y="145" width="1488" height="166" rx="22" fill="#ffffff" fill-opacity="0.055" stroke="#ffffff" stroke-opacity="0.13"/>
+    <text x="82" y="180" font-size="16" font-weight="850" letter-spacing="2.2" fill="#9de0cd">AUTHORING · 领域专家配置面</text>
+
+    <g filter="url(#shadow)">
+      <rect x="82" y="202" width="258" height="82" rx="14" fill="#ffffff"/>
+      <rect x="362" y="202" width="258" height="82" rx="14" fill="#ffffff"/>
+      <rect x="642" y="202" width="258" height="82" rx="14" fill="#ffffff"/>
+      <rect x="922" y="202" width="258" height="82" rx="14" fill="#ffffff"/>
+      <rect x="1202" y="202" width="258" height="82" rx="14" fill="#ffffff"/>
+    </g>
+    <text x="105" y="235" class="darkLabel">01 · Sources</text><text x="105" y="263" class="darkBody">表 / View / Metric / 文件</text>
+    <text x="385" y="235" class="darkLabel">02 · Knowledge</text><text x="385" y="263" class="darkBody">术语 / Join / 口径 / 指令</text>
+    <text x="665" y="235" class="darkLabel">03 · Trusted</text><text x="665" y="263" class="darkBody">Example SQL / Function</text>
+    <text x="945" y="235" class="darkLabel">04 · Benchmark</text><text x="945" y="263" class="darkBody">真值 SQL / 评测备注</text>
+    <text x="1225" y="235" class="darkLabel">05 · Monitor</text><text x="1225" y="263" class="darkBody">会话 / 反馈 / 错误审查</text>
+
+    <path d="M 770 311 L 770 352" stroke="#9de0cd" stroke-width="4" marker-end="url(#arrowMint)"/>
+
+    <rect x="56" y="356" width="1488" height="376" rx="22" fill="#ffffff" fill-opacity="0.045" stroke="#ffffff" stroke-opacity="0.13"/>
+    <text x="82" y="393" font-size="16" font-weight="850" letter-spacing="2.2" fill="#9de0cd">RUNTIME · 业务用户执行面</text>
+
+    <rect x="84" y="436" width="235" height="104" rx="18" fill="#e6533c"/>
+    <text x="112" y="477" class="label">用户问题 + 历史</text>
+    <text x="112" y="509" font-size="17" fill="#ffece7">沿用用户身份与权限</text>
+    <path d="M 319 488 L 405 488" stroke="#9de0cd" stroke-width="4" marker-end="url(#arrowMint)"/>
+
+    <rect x="410" y="414" width="320" height="148" rx="18" fill="#17373e" stroke="#9de0cd" stroke-width="2"/>
+    <text x="441" y="453" class="label">上下文选择与 SQL 规划</text>
+    <text x="441" y="489" class="body">元数据 · 指令 · 示例 · 权限</text>
+    <text x="441" y="521" class="body">只选择与当前问题相关的上下文</text>
+
+    <path d="M 730 458 L 815 438" stroke="#9de0cd" stroke-width="4" marker-end="url(#arrowMint)"/>
+    <path d="M 730 520 L 815 542" stroke="#9de0cd" stroke-width="4" marker-end="url(#arrowMint)"/>
+
+    <rect x="820" y="398" width="300" height="100" rx="18" fill="#ffffff"/>
+    <text x="848" y="437" class="darkLabel">Chat mode</text>
+    <text x="848" y="468" class="darkBody">直接问答 · SQL · 表格 / 图表</text>
+    <rect x="820" y="518" width="300" height="116" rx="18" fill="#ffffff"/>
+    <text x="848" y="557" class="darkLabel">Agent mode</text>
+    <text x="848" y="588" class="darkBody">规划 · 多次 SQL / 检索 · 报告</text>
+    <text x="848" y="613" font-size="15" fill="#e6533c">复杂分析仍保持只读动作边界</text>
+
+    <path d="M 1120 448 L 1193 476" stroke="#9de0cd" stroke-width="4" marker-end="url(#arrowMint)"/>
+    <path d="M 1120 576 L 1193 520" stroke="#9de0cd" stroke-width="4" marker-end="url(#arrowMint)"/>
+    <rect x="1198" y="430" width="266" height="132" rx="18" fill="#9de0cd"/>
+    <text x="1227" y="470" class="darkLabel">SQL Warehouse</text>
+    <text x="1227" y="501" class="darkBody">执行只读 SQL / 返回结果</text>
+    <text x="1227" y="531" class="darkBody">表格 · 图表 · 引用 · SQL</text>
+
+    <rect x="410" y="650" width="1054" height="54" rx="14" fill="#0b2025" stroke="#ffffff" stroke-opacity="0.16"/>
+    <text x="438" y="684" font-size="18" fill="#c5d5d7">Unity Catalog：表/列权限 · Row Filter · Column Mask · Lineage · 审计</text>
+
+    <path d="M 1330 732 C 1330 812, 1070 824, 1070 292" fill="none" stroke="#e6533c" stroke-width="4" stroke-dasharray="10 9" marker-end="url(#arrowRed)"/>
+    <text x="1114" y="810" font-size="17" font-weight="750" fill="#ff9f8f">反馈闭环：Monitor → 人工审查 → 配置修改 → Benchmark 回归</text>
+
+    <rect x="56" y="770" width="790" height="80" rx="18" fill="#ffffff" fill-opacity="0.07" stroke="#ffffff" stroke-opacity="0.13"/>
+    <text x="82" y="804" class="label">写动作另设 Gate</text>
+    <text x="250" y="804" class="body">退款 / 改订单 / 发消息 / 修库 → 人工审批、幂等、审计、回滚</text>
+    <text x="82" y="835" font-size="16" fill="#9de0cd">本项目实测：7 Sources · 1 Curated Example · 3 Agent-mode Benchmarks</text>
+  </g>
+</svg>

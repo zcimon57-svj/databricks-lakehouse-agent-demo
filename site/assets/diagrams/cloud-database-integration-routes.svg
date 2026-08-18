@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">云数据库接入数据 Agent 的三条路线</title>
+  <desc id="desc">对比只读副本联邦、CDC 入湖仓和混合路由三种接入路线，以及它们共享的目录治理、语义和评测层。</desc>
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8f6f1"/>
+      <stop offset="1" stop-color="#e8eee9"/>
+    </linearGradient>
+    <marker id="a2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#316c61"/>
+    </marker>
+    <filter id="s2" x="-15%" y="-25%" width="130%" height="150%">
+      <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#142126" flood-opacity=".12"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" rx="26" fill="url(#bg2)"/>
+  <text x="62" y="64" fill="#142126" font-size="34" font-weight="800" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif">三条接入路线：实时、历史和企业混合</text>
+  <text x="62" y="98" fill="#5f6c70" font-size="17" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif">三条路都必须经过同一套 Catalog / Policy / Semantic Contract，不能让入口决定业务口径</text>
+
+  <g font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif">
+    <rect x="52" y="132" width="1496" height="204" rx="22" fill="#ffffff" stroke="#d9dfdc"/>
+    <rect x="52" y="132" width="172" height="204" rx="22" fill="#17373e"/>
+    <text x="78" y="174" fill="#9de0cd" font-size="13" font-weight="900">ROUTE A</text>
+    <text x="78" y="204" fill="#ffffff" font-size="23" font-weight="800">只读 / 联邦</text>
+    <text x="78" y="235" fill="#b7c7ca" font-size="14">PoC · 实时 · 少搬数据</text>
+    <text x="78" y="284" fill="#ffb9aa" font-size="13">风险：源库负载</text>
+    <text x="78" y="304" fill="#ffb9aa" font-size="13">远端延迟 / 连接数</text>
+
+    <g filter="url(#s2)">
+      <rect x="264" y="181" width="210" height="104" rx="16" fill="#f4f1ea"/>
+      <text x="289" y="215" fill="#e6533c" font-size="13" font-weight="800">SOURCE</text>
+      <text x="289" y="244" fill="#142126" font-size="19" font-weight="800">专用只读副本</text>
+      <text x="289" y="269" fill="#5f6c70" font-size="13">复制延迟随答案返回</text>
+
+      <rect x="543" y="181" width="220" height="104" rx="16" fill="#e7f4ef"/>
+      <text x="568" y="215" fill="#316c61" font-size="13" font-weight="800">QUERY PATH</text>
+      <text x="568" y="244" fill="#142126" font-size="19" font-weight="800">Federation / JDBC</text>
+      <text x="568" y="269" fill="#5f6c70" font-size="13">下推 · timeout · row cap</text>
+
+      <rect x="832" y="181" width="254" height="104" rx="16" fill="#cfece3"/>
+      <text x="857" y="215" fill="#205a4f" font-size="13" font-weight="800">COMMON CONTROL</text>
+      <text x="857" y="244" fill="#142126" font-size="19" font-weight="800">Catalog + Policy</text>
+      <text x="857" y="269" fill="#5f6c70" font-size="13">Owner · 权限 · 血缘 · 审计</text>
+
+      <rect x="1155" y="181" width="154" height="104" rx="16" fill="#fff0e9"/>
+      <text x="1180" y="215" fill="#e6533c" font-size="13" font-weight="800">SEMANTIC</text>
+      <text x="1180" y="244" fill="#142126" font-size="19" font-weight="800">业务口径</text>
+      <text x="1180" y="269" fill="#5f6c70" font-size="13">Metric / Join</text>
+
+      <rect x="1375" y="181" width="125" height="104" rx="16" fill="#10252b"/>
+      <text x="1437" y="222" text-anchor="middle" fill="#9de0cd" font-size="13" font-weight="800">DATA</text>
+      <text x="1437" y="251" text-anchor="middle" fill="#ffffff" font-size="20" font-weight="800">Agent</text>
+      <text x="1437" y="273" text-anchor="middle" fill="#b7c7ca" font-size="12">UI / API</text>
+    </g>
+    <path d="M474 233 H535 M763 233 H824 M1086 233 H1147 M1309 233 H1367" fill="none" stroke="#316c61" stroke-width="3" marker-end="url(#a2)"/>
+
+    <rect x="52" y="354" width="1496" height="204" rx="22" fill="#ffffff" stroke="#d9dfdc"/>
+    <rect x="52" y="354" width="172" height="204" rx="22" fill="#e6533c"/>
+    <text x="78" y="396" fill="#fff0e9" font-size="13" font-weight="900">ROUTE B</text>
+    <text x="78" y="426" fill="#ffffff" font-size="23" font-weight="800">CDC 入湖仓</text>
+    <text x="78" y="457" fill="#ffe0d8" font-size="14">历史 · 跨域 · 大分析</text>
+    <text x="78" y="506" fill="#ffffff" font-size="13">代价：链路与延迟</text>
+    <text x="78" y="526" fill="#ffffff" font-size="13">存储 / Schema 演进</text>
+
+    <g filter="url(#s2)">
+      <rect x="264" y="403" width="210" height="104" rx="16" fill="#f4f1ea"/>
+      <text x="289" y="437" fill="#e6533c" font-size="13" font-weight="800">SOURCE LOG</text>
+      <text x="289" y="466" fill="#142126" font-size="19" font-weight="800">binlog / WAL</text>
+      <text x="289" y="491" fill="#5f6c70" font-size="13">Snapshot + incremental</text>
+
+      <rect x="543" y="403" width="220" height="104" rx="16" fill="#fff0e9"/>
+      <text x="568" y="437" fill="#e6533c" font-size="13" font-weight="800">PIPELINE</text>
+      <text x="568" y="466" fill="#142126" font-size="19" font-weight="800">CDC + Quality</text>
+      <text x="568" y="491" fill="#5f6c70" font-size="13">DDL · 去重 · 重放 · 新鲜度</text>
+
+      <rect x="832" y="403" width="254" height="104" rx="16" fill="#cfece3"/>
+      <text x="857" y="437" fill="#205a4f" font-size="13" font-weight="800">LAKEHOUSE / DWH</text>
+      <text x="857" y="466" fill="#142126" font-size="19" font-weight="800">Bronze → Silver → Gold</text>
+      <text x="857" y="491" fill="#5f6c70" font-size="13">Catalog · Policy · Lineage</text>
+
+      <rect x="1155" y="403" width="154" height="104" rx="16" fill="#fff0e9"/>
+      <text x="1180" y="437" fill="#e6533c" font-size="13" font-weight="800">SEMANTIC</text>
+      <text x="1180" y="466" fill="#142126" font-size="19" font-weight="800">Metric View</text>
+      <text x="1180" y="491" fill="#5f6c70" font-size="13">历史统一口径</text>
+
+      <rect x="1375" y="403" width="125" height="104" rx="16" fill="#10252b"/>
+      <text x="1437" y="444" text-anchor="middle" fill="#9de0cd" font-size="13" font-weight="800">DATA</text>
+      <text x="1437" y="473" text-anchor="middle" fill="#ffffff" font-size="20" font-weight="800">Agent</text>
+      <text x="1437" y="495" text-anchor="middle" fill="#b7c7ca" font-size="12">UI / API</text>
+    </g>
+    <path d="M474 455 H535 M763 455 H824 M1086 455 H1147 M1309 455 H1367" fill="none" stroke="#316c61" stroke-width="3" marker-end="url(#a2)"/>
+
+    <rect x="52" y="576" width="1496" height="204" rx="22" fill="#ffffff" stroke="#d9dfdc"/>
+    <rect x="52" y="576" width="172" height="204" rx="22" fill="#695996"/>
+    <text x="78" y="618" fill="#eee9ff" font-size="13" font-weight="900">ROUTE D</text>
+    <text x="78" y="648" fill="#ffffff" font-size="23" font-weight="800">混合路由</text>
+    <text x="78" y="679" fill="#ded7f5" font-size="14">企业推荐 · 按问题选路</text>
+    <text x="78" y="728" fill="#ffffff" font-size="13">关键：共享语义</text>
+    <text x="78" y="748" fill="#ffffff" font-size="13">权限 / 证据 / 评测</text>
+
+    <g filter="url(#s2)">
+      <rect x="264" y="625" width="210" height="104" rx="16" fill="#f4f1ea"/>
+      <text x="289" y="659" fill="#695996" font-size="13" font-weight="800">BOTH SOURCES</text>
+      <text x="289" y="688" fill="#142126" font-size="18" font-weight="800">实时源 + 历史湖仓</text>
+      <text x="289" y="713" fill="#5f6c70" font-size="13">监控事实与长期趋势</text>
+
+      <rect x="543" y="625" width="220" height="104" rx="16" fill="#eee9ff"/>
+      <text x="568" y="659" fill="#695996" font-size="13" font-weight="800">DOMAIN ROUTER</text>
+      <text x="568" y="688" fill="#142126" font-size="19" font-weight="800">按域 / 时效 / 成本</text>
+      <text x="568" y="713" fill="#5f6c70" font-size="13">选择查询路径并解释</text>
+
+      <rect x="832" y="625" width="254" height="104" rx="16" fill="#cfece3"/>
+      <text x="857" y="659" fill="#205a4f" font-size="13" font-weight="800">COMMON CONTRACT</text>
+      <text x="857" y="685" fill="#142126" font-size="17" font-weight="800">Catalog + Semantic</text>
+      <text x="857" y="712" fill="#5f6c70" font-size="13">Evidence · 权限 · Query ID</text>
+
+      <rect x="1155" y="625" width="154" height="104" rx="16" fill="#fff0e9"/>
+      <text x="1180" y="659" fill="#e6533c" font-size="13" font-weight="800">EVAL</text>
+      <text x="1180" y="688" fill="#142126" font-size="18" font-weight="800">统一回归</text>
+      <text x="1180" y="713" fill="#5f6c70" font-size="13">跨路径一致性</text>
+
+      <rect x="1375" y="625" width="125" height="104" rx="16" fill="#10252b"/>
+      <text x="1437" y="666" text-anchor="middle" fill="#9de0cd" font-size="13" font-weight="800">DATA</text>
+      <text x="1437" y="695" text-anchor="middle" fill="#ffffff" font-size="20" font-weight="800">Agent</text>
+      <text x="1437" y="717" text-anchor="middle" fill="#b7c7ca" font-size="12">UI / API</text>
+    </g>
+    <path d="M474 677 H535 M763 677 H824 M1086 677 H1147 M1309 677 H1367" fill="none" stroke="#316c61" stroke-width="3" marker-end="url(#a2)"/>
+
+    <rect x="52" y="807" width="1496" height="52" rx="13" fill="#10252b"/>
+    <text x="800" y="840" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="700">共同底线：最终用户身份与行列权限不绕过 · SQL/来源/新鲜度可解释 · 写动作走独立审批网关</text>
+  </g>
+</svg>

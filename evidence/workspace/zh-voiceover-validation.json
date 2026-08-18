@@ -1,0 +1,445 @@
+{
+  "validatedAt": "2026-08-18T12:35:22.540Z",
+  "status": "PASS",
+  "videoCount": 13,
+  "segmentCount": 62,
+  "voice": "zh-CN-YunyangNeural",
+  "rate": "+8%",
+  "maximumTempo": 1.3317,
+  "loudnessRangeLufs": {
+    "minimum": -18.69,
+    "maximum": -17.84
+  },
+  "failures": [],
+  "results": [
+    {
+      "file": "M01-workspace-free-edition-entrypoints.mp4",
+      "sha256": "2e3d3e43450d2fbf177eca12e536c3f641481587ffe7ff0c82c0456094d28faa",
+      "durationSeconds": 9.5,
+      "durationDeltaSeconds": 0,
+      "video": {
+        "codec": "h264",
+        "width": 1440,
+        "height": 758,
+        "streamMd5": "d2c2dcd1aebc233e833daa6f15f2c283",
+        "matchesSilentOriginal": true
+      },
+      "audio": {
+        "codec": "aac",
+        "sampleRate": 48000,
+        "channelLayout": "stereo",
+        "language": "zho",
+        "integratedLufs": -18.56,
+        "truePeakDbtp": -4.32,
+        "loudnessRangeLu": 2.7
+      },
+      "checks": {
+        "durationMatches": true,
+        "videoStreamMatches": true,
+        "h264Video": true,
+        "aacAudio": true,
+        "sampleRate48k": true,
+        "stereoAudio": true,
+        "chineseLanguageMetadata": true,
+        "loudnessInPresentationRange": true,
+        "peakHasHeadroom": true
+      }
+    },
+    {
+      "file": "M02-catalog-delta-lineage.mp4",
+      "sha256": "4b52dbb9392c82af72b0ad214af140cb1dce90ae7f7a13d5114a99a002abe18a",
+      "durationSeconds": 25,
+      "durationDeltaSeconds": 0,
+      "video": {
+        "codec": "h264",
+        "width": 1440,
+        "height": 758,
+        "streamMd5": "c0fc309b66afcc8dc814d99e785f74ef",
+        "matchesSilentOriginal": true
+      },
+      "audio": {
+        "codec": "aac",
+        "sampleRate": 48000,
+        "channelLayout": "stereo",
+        "language": "zho",
+        "integratedLufs": -18.62,
+        "truePeakDbtp": -4.2,
+        "loudnessRangeLu": 2.8
+      },
+      "checks": {
+        "durationMatches": true,
+        "videoStreamMatches": true,
+        "h264Video": true,
+        "aacAudio": true,
+        "sampleRate48k": true,
+        "stereoAudio": true,
+        "chineseLanguageMetadata": true,
+        "loudnessInPresentationRange": true,
+        "peakHasHeadroom": true
+      }
+    },
+    {
+      "file": "M05-data-ingestion-paths.mp4",
+      "sha256": "058cf21708a8802a02af0471a2e3c49c6d630a933769f90c31a004da72706855",
+      "durationSeconds": 13.5,
+      "durationDeltaSeconds": 0,
+      "video": {
+        "codec": "h264",
+        "width": 1440,
+        "height": 758,
+        "streamMd5": "71198592d96d7104a37c94cb4ad0e91b",
+        "matchesSilentOriginal": true
+      },
+      "audio": {
+        "codec": "aac",
+        "sampleRate": 48000,
+        "channelLayout": "stereo",
+        "language": "zho",
+        "integratedLufs": -18.32,
+        "truePeakDbtp": -4.19,
+        "loudnessRangeLu": 2.8
+      },
+      "checks": {
+        "durationMatches": true,
+        "videoStreamMatches": true,
+        "h264Video": true,
+        "aacAudio": true,
+        "sampleRate48k": true,
+        "stereoAudio": true,
+        "chineseLanguageMetadata": true,
+        "loudnessInPresentationRange": true,
+        "peakHasHeadroom": true
+      }
+    },
+    {
+      "file": "M06-jobs-and-pipelines.mp4",
+      "sha256": "21af3935621a6427ea6bf85ec9f6b1150f7d59ca957d1fde13a42d08be638229",
+      "durationSeconds": 13.75,
+      "durationDeltaSeconds": 0,
+      "video": {
+        "codec": "h264",
+        "width": 1440,
+        "height": 758,
+        "streamMd5": "eebc3ec025cf4fa2df49c5455ed74d52",
+        "matchesSilentOriginal": true
+      },
+      "audio": {
+        "codec": "aac",
+        "sampleRate": 48000,
+        "channelLayout": "stereo",
+        "language": "zho",
+        "integratedLufs": -18.69,
+        "truePeakDbtp": -4.26,
+        "loudnessRangeLu": 2.5
+      },
+      "checks": {
+        "durationMatches": true,
+        "videoStreamMatches": true,
+        "h264Video": true,
+        "aacAudio": true,
+        "sampleRate48k": true,
+        "stereoAudio": true,
+        "chineseLanguageMetadata": true,
+        "loudnessInPresentationRange": true,
+        "peakHasHeadroom": true
+      }
+    },
+    {
+      "file": "M07-sql-warehouse-and-lakebase.mp4",
+      "sha256": "b92782e5f0ffebdb8a473bd49b821905ed3dda8054955546d68fe0bf8968e03d",
+      "durationSeconds": 14.25,
+      "durationDeltaSeconds": 0,
+      "video": {
+        "codec": "h264",
+        "width": 1440,
+        "height": 758,
+        "streamMd5": "222173c927b465c635fbf61ada35f92c",
+        "matchesSilentOriginal": true
+      },
+      "audio": {
+        "codec": "aac",
+        "sampleRate": 48000,
+        "channelLayout": "stereo",
+        "language": "zho",
+        "integratedLufs": -17.84,
+        "truePeakDbtp": -4.41,
+        "loudnessRangeLu": 2.8
+      },
+      "checks": {
+        "durationMatches": true,
+        "videoStreamMatches": true,
+        "h264Video": true,
+        "aacAudio": true,
+        "sampleRate48k": true,
+        "stereoAudio": true,
+        "chineseLanguageMetadata": true,
+        "loudnessInPresentationRange": true,
+        "peakHasHeadroom": true
+      }
+    },
+    {
+      "file": "C2-natural-language-trusted-sql.mp4",
+      "sha256": "d22d824f3ea36ceb4c951842c857ce1ec4317a40988bd7db8911c56465823965",
+      "durationSeconds": 16.25,
+      "durationDeltaSeconds": 0,
+      "video": {
+        "codec": "h264",
+        "width": 1440,
+        "height": 758,
+        "streamMd5": "d12ece554890ee1171fa514d1ee87cbb",
+        "matchesSilentOriginal": true
+      },
+      "audio": {
+        "codec": "aac",
+        "sampleRate": 48000,
+        "channelLayout": "stereo",
+        "language": "zho",
+        "integratedLufs": -18.63,
+        "truePeakDbtp": -4.35,
+        "loudnessRangeLu": 3.1
+      },
+      "checks": {
+        "durationMatches": true,
+        "videoStreamMatches": true,
+        "h264Video": true,
+        "aacAudio": true,
+        "sampleRate48k": true,
+        "stereoAudio": true,
+        "chineseLanguageMetadata": true,
+        "loudnessInPresentationRange": true,
+        "peakHasHeadroom": true
+      }
+    },
+    {
+      "file": "C3-intelligent-after-sales.mp4",
+      "sha256": "ad07952295f71208fc7d2625b9db2a5d79cb0e36dc06b90384f397323fab1133",
+      "durationSeconds": 15.5,
+      "durationDeltaSeconds": 0,
+      "video": {
+        "codec": "h264",
+        "width": 1440,
+        "height": 758,
+        "streamMd5": "c578356afb29044ae2fdd25965aebda7",
+        "matchesSilentOriginal": true
+      },
+      "audio": {
+        "codec": "aac",
+        "sampleRate": 48000,
+        "channelLayout": "stereo",
+        "language": "zho",
+        "integratedLufs": -18.65,
+        "truePeakDbtp": -4.28,
+        "loudnessRangeLu": 1.7
+      },
+      "checks": {
+        "durationMatches": true,
+        "videoStreamMatches": true,
+        "h264Video": true,
+        "aacAudio": true,
+        "sampleRate48k": true,
+        "stereoAudio": true,
+        "chineseLanguageMetadata": true,
+        "loudnessInPresentationRange": true,
+        "peakHasHeadroom": true
+      }
+    },
+    {
+      "file": "C4-database-intelligent-operations.mp4",
+      "sha256": "ec1b9716fc4d6758ff02a8da5d40a722f4cb6eb0c1dd10d325687d1318c443a8",
+      "durationSeconds": 16,
+      "durationDeltaSeconds": 0,
+      "video": {
+        "codec": "h264",
+        "width": 1440,
+        "height": 758,
+        "streamMd5": "99d647536997c0633e5ece430c524e8a",
+        "matchesSilentOriginal": true
+      },
+      "audio": {
+        "codec": "aac",
+        "sampleRate": 48000,
+        "channelLayout": "stereo",
+        "language": "zho",
+        "integratedLufs": -18.39,
+        "truePeakDbtp": -4.07,
+        "loudnessRangeLu": 2.3
+      },
+      "checks": {
+        "durationMatches": true,
+        "videoStreamMatches": true,
+        "h264Video": true,
+        "aacAudio": true,
+        "sampleRate48k": true,
+        "stereoAudio": true,
+        "chineseLanguageMetadata": true,
+        "loudnessInPresentationRange": true,
+        "peakHasHeadroom": true
+      }
+    },
+    {
+      "file": "M09-genie-embedded-natural-language.mp4",
+      "sha256": "31773e5334f7614cfa48bce5f81dc717f0b70fdc2b6299878de82d8ac4b76db0",
+      "durationSeconds": 34.25,
+      "durationDeltaSeconds": 0,
+      "video": {
+        "codec": "h264",
+        "width": 1440,
+        "height": 758,
+        "streamMd5": "bfa443d2fc08208fe0ec7153c01540e7",
+        "matchesSilentOriginal": true
+      },
+      "audio": {
+        "codec": "aac",
+        "sampleRate": 48000,
+        "channelLayout": "stereo",
+        "language": "zho",
+        "integratedLufs": -18.13,
+        "truePeakDbtp": -4.09,
+        "loudnessRangeLu": 3.8
+      },
+      "checks": {
+        "durationMatches": true,
+        "videoStreamMatches": true,
+        "h264Video": true,
+        "aacAudio": true,
+        "sampleRate48k": true,
+        "stereoAudio": true,
+        "chineseLanguageMetadata": true,
+        "loudnessInPresentationRange": true,
+        "peakHasHeadroom": true
+      }
+    },
+    {
+      "file": "G1-genie-business-user-multi-use.mp4",
+      "sha256": "49efaf4b959d49da079d7c257a43d59b200e8a733f40a932b33817c1a81befd4",
+      "durationSeconds": 61.25,
+      "durationDeltaSeconds": 0,
+      "video": {
+        "codec": "h264",
+        "width": 1440,
+        "height": 758,
+        "streamMd5": "0b7295b54cc7ac66f5b3722beeb5cf66",
+        "matchesSilentOriginal": true
+      },
+      "audio": {
+        "codec": "aac",
+        "sampleRate": 48000,
+        "channelLayout": "stereo",
+        "language": "zho",
+        "integratedLufs": -17.84,
+        "truePeakDbtp": -4.06,
+        "loudnessRangeLu": 5.7
+      },
+      "checks": {
+        "durationMatches": true,
+        "videoStreamMatches": true,
+        "h264Video": true,
+        "aacAudio": true,
+        "sampleRate48k": true,
+        "stereoAudio": true,
+        "chineseLanguageMetadata": true,
+        "loudnessInPresentationRange": true,
+        "peakHasHeadroom": true
+      }
+    },
+    {
+      "file": "G2-genie-authoring-monitor-benchmark.mp4",
+      "sha256": "10337d9b1d52c83de76051d4b7b347a369d49aec727dec71797eb77e93ada8d8",
+      "durationSeconds": 82.75,
+      "durationDeltaSeconds": 0,
+      "video": {
+        "codec": "h264",
+        "width": 1440,
+        "height": 758,
+        "streamMd5": "2be60c8f821d1488bfaaf4d4ecaa1df4",
+        "matchesSilentOriginal": true
+      },
+      "audio": {
+        "codec": "aac",
+        "sampleRate": 48000,
+        "channelLayout": "stereo",
+        "language": "zho",
+        "integratedLufs": -18.14,
+        "truePeakDbtp": -4.27,
+        "loudnessRangeLu": 6.5
+      },
+      "checks": {
+        "durationMatches": true,
+        "videoStreamMatches": true,
+        "h264Video": true,
+        "aacAudio": true,
+        "sampleRate48k": true,
+        "stereoAudio": true,
+        "chineseLanguageMetadata": true,
+        "loudnessInPresentationRange": true,
+        "peakHasHeadroom": true
+      }
+    },
+    {
+      "file": "G3-genie-embedded-vs-api-architecture.mp4",
+      "sha256": "c9de99d6d1a091fba12a876f7ae778cc2c4f7a6fc7ec6ad2b019642fce37beeb",
+      "durationSeconds": 71,
+      "durationDeltaSeconds": 0,
+      "video": {
+        "codec": "h264",
+        "width": 1440,
+        "height": 900,
+        "streamMd5": "8486c69dda3682e94b1301bd7610ee7a",
+        "matchesSilentOriginal": true
+      },
+      "audio": {
+        "codec": "aac",
+        "sampleRate": 48000,
+        "channelLayout": "stereo",
+        "language": "zho",
+        "integratedLufs": -17.92,
+        "truePeakDbtp": -4.2,
+        "loudnessRangeLu": 5.6
+      },
+      "checks": {
+        "durationMatches": true,
+        "videoStreamMatches": true,
+        "h264Video": true,
+        "aacAudio": true,
+        "sampleRate48k": true,
+        "stereoAudio": true,
+        "chineseLanguageMetadata": true,
+        "loudnessInPresentationRange": true,
+        "peakHasHeadroom": true
+      }
+    },
+    {
+      "file": "D1-cloud-database-governed-agent-architecture.mp4",
+      "sha256": "776e743bb35f0eedf4a953d543ac19bcdf8641691bdbb29ddd88dbddc2a6095a",
+      "durationSeconds": 78.8,
+      "durationDeltaSeconds": 0,
+      "video": {
+        "codec": "h264",
+        "width": 1440,
+        "height": 900,
+        "streamMd5": "8d359a15914a284c261bacddeba235c1",
+        "matchesSilentOriginal": true
+      },
+      "audio": {
+        "codec": "aac",
+        "sampleRate": 48000,
+        "channelLayout": "stereo",
+        "language": "zho",
+        "integratedLufs": -17.96,
+        "truePeakDbtp": -4.07,
+        "loudnessRangeLu": 4.6
+      },
+      "checks": {
+        "durationMatches": true,
+        "videoStreamMatches": true,
+        "h264Video": true,
+        "aacAudio": true,
+        "sampleRate48k": true,
+        "stereoAudio": true,
+        "chineseLanguageMetadata": true,
+        "loudnessInPresentationRange": true,
+        "peakHasHeadroom": true
+      }
+    }
+  ]
+}

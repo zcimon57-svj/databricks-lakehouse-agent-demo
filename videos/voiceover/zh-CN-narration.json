@@ -1,0 +1,148 @@
+{
+  "language": "zh-CN",
+  "voice": "zh-CN-YunyangNeural",
+  "rate": "+8%",
+  "description": "专业、可靠的普通话男声。每段语音按画面分镜独立生成并对齐。",
+  "videos": [
+    {
+      "file": "M01-workspace-free-edition-entrypoints.mp4",
+      "duration": 9.5,
+      "segments": [
+        { "start": 0.2, "end": 4.7, "text": "当前工作区是 Databricks Free Edition，适合学习和原型演示。" },
+        { "start": 4.8, "end": 9.4, "text": "新建入口覆盖数据、查询、Genie、任务、流水线和应用。" }
+      ]
+    },
+    {
+      "file": "M02-catalog-delta-lineage.mp4",
+      "duration": 25.0,
+      "segments": [
+        { "start": 0.2, "end": 3.4, "text": "Catalog Explorer 展示目录、模式和数据表。" },
+        { "start": 3.7, "end": 8.0, "text": "演示数据独立放在专用模式中，全部是非敏感合成数据。" },
+        { "start": 8.3, "end": 13.0, "text": "订单是受治理的 Delta 表，列、描述和权限挂在同一对象上。" },
+        { "start": 13.4, "end": 18.6, "text": "详情页确认表类型为 Managed，并显示 Delta 的存储属性。" },
+        { "start": 19.0, "end": 24.8, "text": "血缘连接上游 Volume、订单表和下游视图，便于影响分析和追溯。" }
+      ]
+    },
+    {
+      "file": "M05-data-ingestion-paths.mp4",
+      "duration": 13.5,
+      "segments": [
+        { "start": 0.2, "end": 4.0, "text": "这里汇总文件、对象存储、数据库和 SaaS 接入。" },
+        { "start": 4.2, "end": 8.3, "text": "实测路径是 Files API、Volume，再生成十四张 Delta 表。" },
+        { "start": 8.5, "end": 13.3, "text": "持续摄取可使用 Lakeflow Connect，并统一管理连接、目标表和运行状态。" }
+      ]
+    },
+    {
+      "file": "M06-jobs-and-pipelines.mp4",
+      "duration": 13.75,
+      "segments": [
+        { "start": 0.2, "end": 4.1, "text": "Ingestion Pipeline 负责持续连接源系统并落表。" },
+        { "start": 4.3, "end": 8.5, "text": "ETL Pipeline 用 SQL 或 Python 定义转换和质量规则。" },
+        { "start": 8.7, "end": 13.6, "text": "Job 把查询、Notebook 和 Pipeline 编排成定时或事件驱动流程。" }
+      ]
+    },
+    {
+      "file": "M07-sql-warehouse-and-lakebase.mp4",
+      "duration": 14.25,
+      "segments": [
+        { "start": 0.2, "end": 4.5, "text": "分析查询由 Serverless SQL Warehouse 执行。" },
+        { "start": 4.7, "end": 9.1, "text": "Lakehouse 面向分析，Lakebase Postgres 面向低延迟事务应用。" },
+        { "start": 9.3, "end": 14.1, "text": "外部连接要显式管理 OAuth、重试和审计，内嵌编辑器由平台承接。" }
+      ]
+    },
+    {
+      "file": "C2-natural-language-trusted-sql.mp4",
+      "duration": 16.25,
+      "segments": [
+        { "start": 0.2, "end": 4.0, "text": "先用可信 SQL 固定 P1 售后问题的正确答案。" },
+        { "start": 4.2, "end": 11.0, "text": "查询在 SQL Warehouse 执行，沿用同一 Unity Catalog 权限，并保留运行记录。" },
+        { "start": 11.3, "end": 16.1, "text": "可信答案是西南三、华南二、东北一、华北一，Genie 必须一致。" }
+      ]
+    },
+    {
+      "file": "C3-intelligent-after-sales.mp4",
+      "duration": 15.5,
+      "segments": [
+        { "start": 0.2, "end": 4.3, "text": "从七百条工单筛出负面、高优先级且未解决的售后队列。" },
+        { "start": 4.5, "end": 10.3, "text": "Agent 读取客户、订单和退款，再结合政策生成建议与工单草稿。" },
+        { "start": 10.5, "end": 15.4, "text": "分析可以自动化；退款、改订单、发消息和变更工单状态必须审批。" }
+      ]
+    },
+    {
+      "file": "C4-database-intelligent-operations.mp4",
+      "duration": 16.0,
+      "segments": [
+        { "start": 0.2, "end": 4.0, "text": "运维场景关联指标、慢 SQL、告警、变更和事故。" },
+        { "start": 4.2, "end": 10.8, "text": "只读查询在 Unity Catalog 权限下运行，本例没有连接生产数据库。" },
+        { "start": 11.0, "end": 15.9, "text": "Agent 可以总结根因和推荐步骤，真实修复必须经过审批与幂等校验。" }
+      ]
+    },
+    {
+      "file": "M09-genie-embedded-natural-language.mp4",
+      "duration": 34.25,
+      "segments": [
+        { "start": 0.2, "end": 4.4, "text": "业务用户可以直接用中文提问，身份、权限和计算由工作区承接。" },
+        { "start": 4.6, "end": 9.2, "text": "回答与可信 SQL 一致，并提供图表、来源、反馈和下载。" },
+        { "start": 9.5, "end": 15.0, "text": "展开 Show code，可以核对 Genie 生成的只读 SQL。" },
+        { "start": 15.3, "end": 21.0, "text": "领域专家只选择七个高质量数据源，覆盖售后和数据库运维。" },
+        { "start": 21.3, "end": 27.5, "text": "Instructions 固化业务口径、选表优先级和写操作审批边界。" },
+        { "start": 27.8, "end": 34.1, "text": "审查过的 SQL 可以收录为 Example，让正确口径被后续问题复用。" }
+      ]
+    },
+    {
+      "file": "G1-genie-business-user-multi-use.mp4",
+      "duration": 61.25,
+      "segments": [
+        { "start": 0.2, "end": 7.2, "text": "第一种用法是明确口径的业务问答；这里统计所有状态，避免误解退款总额。" },
+        { "start": 7.6, "end": 15.8, "text": "结果显示，与描述不符的退款金额最高，共八万零一百三十五元三角五分，并给出数据来源。" },
+        { "start": 16.3, "end": 23.8, "text": "第二种用法是展开生成的只读 SQL，核对字段、过滤、聚合和排序。" },
+        { "start": 24.3, "end": 32.0, "text": "第三种用法是切换到数据库运维域，按事故编号汇总根因、处置和证据。" },
+        { "start": 32.5, "end": 41.8, "text": "Agent mode 会执行多步查询并形成结构化报告，但分析报告不等于自动修复。" },
+        { "start": 42.3, "end": 51.2, "text": "第四种用法是沿用会话上下文，继续区分建议、草稿和真实动作。" },
+        { "start": 51.7, "end": 61.0, "text": "工作区内嵌的独特点，是串起身份、权限、计算、SQL、图表、来源、追问和反馈；所有写动作仍交给审批工具。" }
+      ]
+    },
+    {
+      "file": "G2-genie-authoring-monitor-benchmark.mp4",
+      "duration": 82.75,
+      "segments": [
+        { "start": 0.2, "end": 8.5, "text": "实现第一步，只选择七个高质量受治理数据源，不把整个 Catalog 交给 Agent。" },
+        { "start": 9.0, "end": 17.5, "text": "第二步写清中文口径、选表优先级、未知处理，以及真实写操作必须审批。" },
+        { "start": 18.0, "end": 26.5, "text": "第三步把人工审查过的 SQL 收录成可信示例，让正确逻辑可以复用。" },
+        { "start": 28.0, "end": 37.5, "text": "Monitor 用于观察真实用户问题和反馈，并区分数据、口径、SQL 与权限错误。" },
+        { "start": 38.0, "end": 46.5, "text": "Benchmark 是离线回归，不是训练材料；这里覆盖售后、退款和数据库事故。" },
+        { "start": 47.0, "end": 56.5, "text": "每个问题都配置真值 SQL 或评测说明，用来检查事实和报告契约。" },
+        { "start": 57.0, "end": 66.5, "text": "三次历史运行都为百分之三十三，但失败原因不同，不能简单归因给模型。" },
+        { "start": 67.0, "end": 82.5, "text": "最后一次有效运行中，P1 通过；退款题违反输出契约；运维题需要人工复核评测器。" }
+      ]
+    },
+    {
+      "file": "G3-genie-embedded-vs-api-architecture.mp4",
+      "duration": 71.0,
+      "segments": [
+        { "start": 0.2, "end": 6.8, "text": "Genie 是可被工作区、iframe、API 和多 Agent 复用的受治理分析能力。" },
+        { "start": 7.2, "end": 16.6, "text": "实现面由数据源和业务规则、SQL 执行，以及 Monitor 与 Benchmark 三层组成。" },
+        { "start": 17.0, "end": 26.5, "text": "自然语言不会绕过治理；查询仍在 SQL Warehouse 执行，Unity Catalog 权限继续生效。" },
+        { "start": 27.0, "end": 36.5, "text": "四种入口分别适合原生自助、门户嵌入、自定义应用和跨系统编排。" },
+        { "start": 37.0, "end": 45.5, "text": "外部 API 更可组合，但调用方要负责身份、异步、重试、限流、渲染和审计。" },
+        { "start": 46.0, "end": 55.5, "text": "分析工具与动作工具必须分离；退款、改订单和修库要经过审批、幂等和回滚。" },
+        { "start": 56.0, "end": 70.8, "text": "本段解释官方集成架构。iframe 和 API 没有在这个 Free Edition 账号中做生产调用。" }
+      ]
+    },
+    {
+      "file": "D1-cloud-database-governed-agent-architecture.mp4",
+      "duration": 78.8,
+      "segments": [
+        { "start": 0.2, "end": 7.0, "text": "云数据库接上大模型，还不等于 Genie；缺口主要在治理、语义、评测和动作审批。" },
+        { "start": 7.1, "end": 14.0, "text": "数据库已有 SQL、事务、只读节点和监控，应复用这些底座，再补平台产品层。" },
+        { "start": 14.1, "end": 25.0, "text": "十层能力栈中，Unity Catalog-like 负责对象、身份、权限、血缘和审计，但不能替代语义和评测。" },
+        { "start": 25.1, "end": 35.0, "text": "系统目录只能说明库表列；跨源 Owner、行列策略、运行时血缘和回答审计仍要统一建设。" },
+        { "start": 35.1, "end": 46.0, "text": "实时小查询走只读副本或联邦，历史跨域走 CDC 入湖仓，企业场景推荐混合路由。" },
+        { "start": 46.1, "end": 55.0, "text": "内嵌由平台承接身份与上下文；外部 API 更灵活，但要负责重试、取消、审计和渲染。" },
+        { "start": 55.1, "end": 63.0, "text": "自然语言分析、智能售后和数据库运维共享治理底座，但真实写操作必须离开只读分析面。" },
+        { "start": 63.1, "end": 72.0, "text": "实施从用例、安全通路、权威视图和 Catalog 开始，再进入 Agent、回归评测、外部集成和动作网关。" },
+        { "start": 72.1, "end": 78.7, "text": "这是架构演示，没有连接或修改任何 RDS、PolarDB 或 TaurusDB 生产实例。" }
+      ]
+    }
+  ]
+}

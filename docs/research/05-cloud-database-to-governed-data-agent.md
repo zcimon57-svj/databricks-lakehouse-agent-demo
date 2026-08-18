@@ -1,0 +1,635 @@
+# 云数据库如何接入 Genie 类能力：从 RDS / PolarDB / TaurusDB 到治理型数据 Agent
+
+信息截止：2026-08-17  
+定位：架构研究与产品能力拆解，不代表已经连接任何生产数据库  
+重点：自然语言分析、智能售后、数据库智能运维；不展开模型训练与通用推理基础设施
+
+## 0. 结论先行
+
+如果一个云数据库产品希望具备类似 Databricks Genie 的能力，缺的通常不是“再接一个大模型”，而是一整套从数据库到可信答案的产品系统：
+
+```text
+云数据库底座
+  + 安全查询边界
+  + 统一目录与治理（Unity Catalog-like）
+  + CDC / 联邦查询 / 历史数据层
+  + 业务语义层
+  + 可信 SQL / 函数资产
+  + 自然语言到 SQL 的 Agent Runtime
+  + Benchmark / Monitor / 反馈闭环
+  + 工作区、嵌入和 API 交付面
+  + 独立的写动作审批网关
+= 可面向企业用户交付的治理型数据 Agent
+```
+
+**Unity Catalog-like 层是必要前置，但不是充分条件。** 它回答“有哪些数据、谁能看、来自哪里、谁用过、怎么受控”；语义层回答“退款金额、活跃客户、故障根因到底是什么意思”；Agent Runtime 才回答“如何把问题转成计划和 SQL”；评测闭环回答“上线后怎么知道它仍然答得对”。
+
+还要区分产品边界：RDS、PolarDB、TaurusDB 等数据库内核/托管服务已经具备事务、SQL、备份、高可用、只读节点和监控等重要能力；同一云厂商的其他数据产品也可能补齐目录、湖治理、ETL、BI 或问答能力。本文说的“缺口”是指**从一个数据库产品核心能力到一个跨数据源、受治理、可评测的数据 Agent 产品的差距**，不是断言整个云厂商产品组合没有相应组件。
+
+## 1. 本文怎样区分事实与建议
+
+| 标签 | 含义 |
+|---|---|
+| **官方事实** | 当前官方文档明确描述的产品能力或限制 |
+| **架构推断** | 根据不同组件的已公开边界做出的组合判断，不冒充厂商承诺 |
+| **实施建议** | 面向 RDS / MySQL / PostgreSQL / PolarDB / TaurusDB 类产品的推荐设计 |
+| **待验证** | 必须在目标云、具体版本、区域、网络和权限环境中实测 |
+
+## 2. 云数据库已经有什么：不要重复造数据库底座
+
+### 2.1 典型已有能力
+
+| 能力 | RDS / PolarDB / TaurusDB 类产品通常已有 | 对 Agent 的价值 | 仍未解决的问题 |
+|---|---|---|---|
+| SQL 与事务 | ACID、索引、优化器、视图、存储过程 | 提供确定性查询与业务事实 | 不知道自然语言中的业务口径 |
+| 主备与只读节点 | 读副本、只读节点、故障切换 | 隔离 Agent 分析流量 | 不能自动限制错误或超大查询 |
+| 身份和数据库权限 | 用户、角色、GRANT；部分云支持短期身份令牌 | 建立最小权限连接 | 跨实例身份、代表用户和统一策略仍需设计 |
+| 备份与恢复 | 快照、PITR、跨区容灾等 | 写动作出错时有恢复基础 | 不能替代动作审批、幂等和回滚验证 |
+| 监控与诊断 | 指标、慢 SQL、日志、会话/负载分析 | 为智能运维提供实时事实 | 指标、变更、拓扑、Runbook 尚未自动关联 |
+| 系统目录 | `information_schema`、`pg_catalog` 等 | 枚举库表列、类型、约束、权限 | 缺业务术语、跨系统所有权、端到端血缘和统一指标 |
+
+**官方事实示例：**
+
+- Amazon RDS 将 Read Replica 定义为 DB 实例的只读副本，可把读密集查询和报表从主实例卸载；复制通常是异步的，因此使用时必须考虑陈旧度。[AWS RDS Read Replicas](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html)
+- RDS 的 IAM 数据库认证可用短期认证 Token 代替密码，但数据库用户本身的对象权限仍然生效。[AWS RDS IAM database authentication](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.Connecting.html)
+- CloudWatch Database Insights 能按等待、SQL、主机和用户分析 RDS 的 DB Load，属于运维观察面，不等于业务数据语义层。[AWS RDS Database Insights](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_DatabaseInsights.html)
+- PolarDB Cluster Edition 公开架构包含读写节点与多个只读节点；数据库代理负责认证、读写分离、连接池和过载保护。[PolarDB product overview](https://www.alibabacloud.com/help/en/polardb/product-introduction)
+- TaurusDB 官方用户指南描述了主节点与只读副本的集群形态和故障切换。[TaurusDB User Guide](https://support.huaweicloud.com/intl/en-us/usermanual-taurusdb/)
+- MySQL `INFORMATION_SCHEMA` 提供当前 MySQL Server 内的数据库、表、列、类型和访问权限元数据；PostgreSQL System Catalog 保存当前集群的 schema 元数据与内部记录。[MySQL INFORMATION_SCHEMA](https://dev.mysql.com/doc/refman/8.4/en/information-schema-introduction.html)、[PostgreSQL System Catalogs](https://www.postgresql.org/docs/current/catalogs.html)
+
+### 2.2 为什么数据库系统目录不是 Unity Catalog
+
+`information_schema` 和 `pg_catalog` 很重要，但它们的主要边界是一个数据库实例或集群内的技术元数据。一个企业级数据 Agent 还需要：
+
+- 跨账号、区域、实例、引擎和湖仓的统一命名与发现；
+- 数据 Owner、业务域、敏感等级、用途、保留期和质量状态；
+- 统一身份映射、最小权限和行/列级动态策略；
+- 从源表、CDC、清洗、业务视图到报表和 Agent 回答的血缘；
+- 谁在何时通过 UI、SQL、API 或 Agent 访问了哪些资产的审计；
+- “GMV”“退款金额”“活跃用户”等业务指标的唯一口径；
+- 面向 Agent 的同义词、Join 关系、实体匹配和可信查询资产。
+
+**架构推断：**系统目录可以作为统一目录的自动采集源，但不能直接替代统一治理和业务语义产品。
+
+## 3. Unity Catalog-like 层到底要具备什么
+
+Databricks 官方把 Unity Catalog 定义为数据与 AI 的统一治理层：它在数据/AI 交互下方执行访问控制、记录血缘和活动审计，并通过 Catalog Explorer、SQL、CLI 和 REST API 暴露受治理对象。[What is Unity Catalog](https://docs.databricks.com/aws/en/data-governance/unity-catalog/)
+
+### 3.1 对象与命名
+
+最低需要一个稳定、全局唯一的资源模型，例如：
+
+```text
+organization / tenant
+  └─ domain or catalog
+      └─ database / schema
+          └─ table / view / metric / function / connection
+              └─ column / field
+```
+
+每个对象至少要记录：稳定 ID、物理位置、逻辑名称、Owner、描述、标签、Schema 版本、生命周期、可见范围、数据质量状态和最后更新时间。不要让 Agent 把连接串、临时表名或实例 IP 当作长期业务标识。
+
+### 3.2 身份、授权与策略执行
+
+需要同时处理四类身份：
+
+1. 浏览器中的真实员工；
+2. 外部应用代表用户调用；
+3. 后台服务身份；
+4. 自动化 Agent 身份。
+
+Unity Catalog 的公开能力包含对象级 privileges、基于受治理标签的 ABAC、行过滤器、列掩码和 workspace bindings。[Unity Catalog access control](https://docs.databricks.com/aws/en/data-governance/unity-catalog/access-control/)、[Row filters and column masks](https://docs.databricks.com/aws/en/data-governance/unity-catalog/filters-and-masks/)
+
+云数据库方案至少要回答：
+
+- 用户的问题由谁的数据库权限执行；
+- 外部应用能否代表用户，而不是让所有人共享一个高权限服务账号；
+- 目录中的“可发现”是否等同于“可读取”；
+- PII、财务、区域和租户数据如何做行列裁剪；
+- Agent 生成 SQL 后，策略在哪一层强制执行；
+- 权限变化多久传播，缓存结果是否同步失效。
+
+**实施建议：**策略必须在可信查询执行层再次强制执行，不能只靠 Prompt 告诉模型“不要看”。
+
+### 3.3 发现、分类和 Owner
+
+目录不仅要能列出表，还要让业务用户和 Agent 判断：
+
+- 这张表是否权威、是否过期、是否为生产数据；
+- 哪些字段是手机号、身份证、客户 ID 或密钥；
+- 该找谁确认口径；
+- 哪张 Gold View / Metric View 优先于原始 OLTP 表；
+- 数据质量异常时是否应停止回答。
+
+### 3.4 运行时血缘
+
+Databricks 官方说明 Unity Catalog 可自动捕获在 Databricks 上运行的查询血缘，细化到列，并跨挂接同一 Metastore 的工作区聚合。[Lineage in Unity Catalog](https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-lineage)
+
+云数据库 Agent 需要至少追踪：
+
+```text
+源库表/列
+  → CDC 或联邦连接
+  → 清洗/聚合 SQL
+  → 业务视图/指标
+  → Agent 生成 SQL
+  → 答案/图表/工单草稿
+```
+
+只有静态 DDL 依赖而没有运行时 Query ID、输入列、输出资产和回答 ID，事后很难解释“这个数字从哪里来”。
+
+### 3.5 审计与证据
+
+审计事件至少应包含：调用人、代表的最终用户、Agent/应用版本、问题、命中的语义资产、生成 SQL、查询目标、策略判定、Query ID、结果摘要、耗时、成本、错误、反馈和后续动作。Databricks 通过 system tables 暴露审计、血缘、使用量等账户运行数据。[Databricks system tables](https://docs.databricks.com/aws/en/admin/system-tables)
+
+注意：不要无差别把完整查询结果或敏感 Prompt 写进日志；审计层也要有脱敏、分级访问和保留期。
+
+### 3.6 Unity Catalog-like 层的必要/非必要边界
+
+| 问题 | Unity Catalog-like 能解决 | 仍需其他层 |
+|---|---|---|
+| 有哪些表、谁拥有 | 是 | — |
+| 谁可以读哪一行/列 | 是，前提是执行引擎真正接入策略 | — |
+| 这张表来自哪里 | 是，前提是采集运行时血缘 | — |
+| “退款总额”怎么算 | 只能保存定义 | 语义层与指标资产负责 |
+| 用户问题如何变成 SQL | 否 | Agent Runtime 负责 |
+| 生成 SQL 是否答对 | 否 | Benchmark / evaluator 负责 |
+| 是否允许自动退款或修库 | 否 | 动作网关、审批和回滚负责 |
+
+## 4. 完整能力栈：从数据库到可信 Agent 的十层
+
+### L0. 数据库与事务底座
+
+目标：可靠存储、SQL、事务、HA、备份、PITR、只读节点、监控。  
+可复用：RDS / PolarDB / TaurusDB 原生能力。  
+关键验收：明确主库、只读节点、复制延迟、维护窗口和恢复责任。
+
+### L1. 安全查询执行边界
+
+目标：即使 Agent 生成了错误 SQL，也不拖垮生产或越权。
+
+最低控制：
+
+- 默认连接专用只读副本、分析节点或受控联邦引擎；
+- 数据库角色只允许 `SELECT` / 已审查函数；
+- statement timeout、结果行数、扫描量、并发和成本上限；
+- SQL 解析与 allowlist，禁止 DDL/DML、危险函数、多语句和注释逃逸；
+- 可选 `EXPLAIN` / 估算先行，超过阈值拒绝；
+- Query ID、取消查询、熔断和 kill switch；
+- 复制延迟和数据新鲜度随答案返回。
+
+**实施建议：**仅把账号命名为 `readonly_agent` 不够；必须验证视图、函数、临时表、外部函数和存储过程是否能绕过限制。
+
+### L2. 统一目录与治理
+
+目标：跨源发现、Owner、身份、权限、分类、策略、血缘和审计。  
+Databricks 对照：Unity Catalog。  
+云数据库实现：可自建 Catalog Service，也可组合云厂商目录/湖治理产品；必须确保查询引擎真正执行策略。
+
+### L3. 数据集成与历史层
+
+两条主路径：
+
+1. **联邦/直连：**数据留在源库，查询下推；新鲜、上线快，但受源库负载、网络、连接数和远端方言限制。
+2. **CDC 入湖/仓：**从 MySQL binlog、PostgreSQL WAL 等增量同步到分析存储；隔离生产、保留历史、适合跨源 Join，但增加链路、延迟和成本。
+
+Databricks 的 Lakehouse Federation 会通过 JDBC 把查询下推到 MySQL、PostgreSQL 等外部数据库；官方明确其典型场景包括按需报表、PoC 和迁移过渡，并列出了只读、缓存和大结果集等限制。[Databricks query federation](https://docs.databricks.com/aws/en/query-federation/database-federation)
+
+Lakeflow Connect 的托管数据库 Connector 使用 CDC 把 MySQL、PostgreSQL、SQL Server 等变化增量写入 Delta 表；连接本身是 Unity Catalog securable object。[Lakeflow Connect database connectors](https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/cdc-overview)
+
+### L4. 业务语义层
+
+这是很多“数据库 + LLM”方案最容易漏掉的一层。至少要维护：
+
+- 权威业务视图与事实表；
+- 指标名称、聚合公式、过滤条件和时间粒度；
+- 维度、层级、PK/FK、Join 图和多对多风险；
+- 同义词、缩写、实体匹配和枚举值解释；
+- 时区、币种、财年、状态和删除/退款口径；
+- 适用域、Owner、版本、生效时间和测试。
+
+Databricks Metric Views 把表/视图转成标准化业务指标，定义 source、field、measure、filter 和 join，使不同用户对同一 KPI 使用同一口径。[Model metric views](https://docs.databricks.com/aws/en/business-semantics/metric-views/basic-modeling)
+
+**关键区别：**Catalog 说“`refund_amount` 是 DECIMAL”；语义层说“退款总额默认包含哪些状态、按申请日还是批准日、使用哪种币种、是否扣除冲正”。
+
+### L5. 可信查询与函数资产
+
+目标：把高频、高风险、复杂或受监管逻辑固化成可审查资产，而不是每次让模型自由生成。
+
+包括：
+
+- 经过 Review 的示例 SQL；
+- 参数化查询模板；
+- 只读 Stored Procedure / Table Function；
+- 指标查询 API；
+- 可版本化的 capability contract：输入 Schema、输出 Schema、错误码、权限、成本等级和 Owner。
+
+Genie 公开的 Example SQL、Trusted Assets 和 Unity Catalog SQL Functions 就承担这一作用；Knowledge Store 还保存 Agent 范围内的描述、同义词、Join 和 SQL expressions。[Tune Genie Agent quality](https://docs.databricks.com/aws/en/genie-agents/tune-quality)
+
+### L6. Agent Runtime
+
+一个可用的自然语言数据 Agent 至少包含：
+
+```text
+用户问题
+  → 身份/域/会话解析
+  → 目录与语义检索
+  → 选表/选指标/选可信资产
+  → 生成查询计划
+  → SQL 生成 + 静态检查
+  → 受控执行
+  → 错误修复或澄清
+  → 表格/图表/报告 + SQL/来源/新鲜度
+```
+
+复杂问题还需多步规划、多次 SQL、结果间推理和引用。Databricks 官方将 Genie Agent 描述为 compound AI system；Agent mode 会拆分子任务、运行多条 SQL 并形成结构化报告。[Genie Agents concepts](https://docs.databricks.com/aws/en/genie-agents/concepts)
+
+不应省略的行为：
+
+- 口径不明确时先澄清，而不是静默猜测；
+- 无数据、无权限、数据过期、查询失败要分开表达；
+- 答案展示 SQL、来源、Query ID、口径和时间范围；
+- 绝不把“模型解释”冒充数据库返回的事实。
+
+### L7. 质量评测与运营闭环
+
+需要三类评测：
+
+1. **SQL / 结果正确性：**和 Ground-truth SQL 的结果比较；
+2. **输出契约：**列、行、单位、排序、范围和引用是否符合要求；
+3. **任务质量：**多步骤报告是否覆盖必要事实、证据和不确定性。
+
+还要持续收集真实问题、失败、用户反馈、Schema 漂移、成本和延迟，回流到语义、Examples 和回归集。Genie Benchmark 与 Monitor 的公开边界正是评测集和真实会话改进；官方明确 Benchmark 不会作为回答上下文让 Agent“背答案”。[Test and monitor a Genie Agent](https://docs.databricks.com/aws/en/genie/monitor)
+
+本项目真实 Genie 评测也证明：事实正确仍可能因额外行列违反输出契约；评测器异常也不能直接算作模型失败。Agent 产品必须保留逐题证据和人工复核通道。
+
+### L8. 交付入口与外部集成
+
+至少支持：
+
+- 数据工作区内的原生聊天；
+- Dashboard 中的上下文问答；
+- 企业门户 iframe；
+- Conversation API；
+- 流式多步 Agent API；
+- 作为 Supervisor / 多 Agent 的数据工具。
+
+Databricks 当前公开的 Genie iframe 要求管理员允许目标域、终端用户登录 Databricks，并保留对 Agent 与底层数据的显式权限。[Embed a Genie Agent](https://docs.databricks.com/aws/en/genie/embed)
+
+Conversation API 返回结构化查询结果；Agent mode API 可用 SSE 流式返回计划、SQL 和报告事件。[Genie Conversation API](https://docs.databricks.com/aws/en/genie/conversation-api)、[Genie Agent mode APIs](https://docs.databricks.com/aws/en/genie-agents/api)
+
+### L9. 动作网关：分析与改变必须拆开
+
+自然语言分析可以默认只读；退款、关闭工单、改订单、扩容、Kill Session、改参数、Failover 等动作必须走独立网关：
+
+```text
+Agent 建议
+  → typed action / Runbook
+  → preview / dry-run
+  → 风险与影响范围
+  → 人工或策略审批
+  → 幂等执行
+  → verify
+  → 失败回滚 / 补偿
+  → 证据归档
+```
+
+动作工具只接受固定 Schema 和受控目标，不接受模型拼接的任意 Shell、SQL 或 HTTP。高风险动作不应与分析查询共享同一凭据。
+
+## 5. 差距矩阵：数据库核心、云组合与完整数据 Agent
+
+下表是通用架构判断，具体厂商/版本必须重新核验。
+
+| 能力层 | 云数据库核心服务 | 同云周边产品可补 | 完整治理型数据 Agent 要求 | Databricks 对照 |
+|---|---|---|---|---|
+| 事务/SQL/HA | **强** | — | 直接复用 | RDBMS / Lakebase 或外部数据库 |
+| 只读隔离/监控 | **中到强** | Observability / Proxy | 再加超时、扫描量、熔断 | SQL Warehouse + federation 限制 |
+| 单库技术元数据 | **有** | Crawler / 元数据服务 | 扩展成跨源资产模型 | Unity Catalog object model |
+| 统一身份/细粒度策略 | **局部** | IAM / 湖治理 | 代表用户、跨源策略与执行一致性 | UC privileges / ABAC / masks |
+| 跨源发现/Owner/分类 | **通常不足** | Data Catalog / Governance | 全域 Owner、标签、质量与生命周期 | Catalog Explorer / classification |
+| 端到端运行时血缘 | **通常局部** | ETL / Lineage 产品 | 覆盖源→语义→查询→回答 | Unity Catalog lineage |
+| CDC / 联邦查询 | **引擎依赖** | DMS/DTS/CDM/ETL/查询引擎 | Schema 演进、重放、新鲜度和错误证据 | Lakeflow Connect / Federation |
+| 业务语义/指标 | **基本没有统一层** | BI semantic layer | 指标、维度、Join、同义词、版本 | Metric Views / Knowledge Store |
+| NL2SQL / 多步 Agent | **可能有助手或插件** | BI Q&A / Agent 平台 | 受治理执行、可解释结果、会话 | Genie Chat / Agent mode |
+| 可信 SQL / Functions | **可用视图/过程承载** | API / Function 平台 | Review、版本、授权、输入输出契约 | Examples / Trusted Assets / UC Functions |
+| Benchmark / Monitor | **通常不是 DB 核心能力** | AI Eval / Observability | 真实问题、真值、回归 Gate、反馈 | Genie Benchmark / Monitor |
+| iframe / API / 多 Agent | **不是 DB 核心入口** | App / API Gateway | OAuth、代表用户、异步、SSE、审计 | Genie iframe / API / Apps |
+| 写动作安全闭环 | **具备执行能力但不具备 Agent 决策治理** | Workflow / ITSM / Automation | typed action、审批、幂等、verify、rollback | 外部 Action Tool / UC Function + policy |
+
+### 5.1 AWS 组合是一个有用的反例
+
+不要把“RDS 核心没有统一 Catalog”误写成“AWS 没有 Catalog”。AWS Glue Data Catalog 是跨数据源的集中元数据仓库，可由 Crawler 发现 RDS、MySQL、PostgreSQL 等数据源；Lake Formation 在 Glue Data Catalog 之上提供权限，并可对湖中表做行列过滤。[AWS Glue Data Catalog](https://docs.aws.amazon.com/glue/latest/dg/catalog-and-crawler.html)、[AWS Lake Formation permissions](https://docs.aws.amazon.com/lake-formation/latest/dg/lf-permissions-overview.html)
+
+但官方也明确 Lake Formation 的 `SELECT` 数据权限面向 S3 中的数据，不直接等同于 RDS 对象权限；因此把 RDS、Glue、Lake Formation、Athena/Redshift、BI/Agent 组合起来，仍需明确每个查询路径的最终策略执行点。[Lake Formation permissions reference](https://docs.aws.amazon.com/lake-formation/latest/dg/lf-permissions-reference.html)
+
+**架构推断：**云厂商组合能够提供许多零件，但“一套对象模型、一致身份、统一语义、同一评测闭环和内外部交付体验”仍是产品集成工作，不会因服务都属于同一云而自动成立。
+
+## 6. 四种接入路线
+
+### 路线 A：直连只读副本 / 联邦查询
+
+```text
+RDS / PolarDB / TaurusDB 主库
+             │ replication
+             ▼
+      专用只读副本 / 分析节点
+             │ JDBC / federation
+             ▼
+Catalog + Policy → Semantic Views → Agent Runtime → UI / API
+```
+
+适合：实时性高、数据量可控、少量数据库、PoC 或迁移期。  
+优点：不搬数据、部署快、接近实时。  
+风险：远端负载、连接数、复杂 Join、大结果集、网络抖动、方言差异、复制延迟。  
+生产要求：只读隔离、成本上限、timeout、Query ID、熔断、新鲜度提示。
+
+### 路线 B：CDC 进入湖仓/分析仓
+
+```text
+主库 binlog / WAL
+      │
+      ▼
+CDC Gateway → Raw/Bronze → Clean/Silver → Business/Gold / Metric
+                                             │
+                                  Catalog + Policy + Lineage
+                                             │
+                                             ▼
+                                       Data Agent
+```
+
+适合：跨库历史分析、大扫描、售后/订单域关联、合规审计。  
+优点：隔离生产、可重放、保留历史、跨源 Join、统一质量。  
+风险：增加延迟、存储和运维；必须处理 DDL、删除、重复、乱序和 Schema 演进。
+
+### 路线 C：数据库原生独立 Agent
+
+```text
+Cloud DB
+  + 自研 Catalog/Governance
+  + 自研 Semantic Service
+  + 自研 NL2SQL Runtime
+  + 自研 Eval/Monitor
+  + 自研 UI/API/Action Gateway
+```
+
+适合：数据库厂商做产品级能力、强数据库原生体验、不能依赖外部湖仓。  
+优点：低延迟、上下文贴近数据库、可深度利用优化器和诊断能力。  
+代价：要补齐的不是一个聊天插件，而是本文 L1–L9 的完整产品面。
+
+### 路线 D：混合路由（企业推荐）
+
+```text
+                           ┌─ 实时/单库 → 只读副本 / Federation
+问题 → Domain Router ──────┤
+                           └─ 历史/跨域 → Lakehouse / Warehouse
+                                      │
+                      统一 Catalog + Semantic Contract
+                                      │
+                              Agent + Evidence
+```
+
+把“最近 5 分钟连接数”路由到实时监控/只读源，把“过去一年退款与版本变更的关系”路由到历史湖仓。两条路径必须共享业务实体、指标定义、权限和回答证据，不允许相同问题在不同入口得到无解释的不同口径。
+
+## 7. 内嵌能力与外部用户 / Agent 使用的差异
+
+| 维度 | 数据库/数据平台内嵌 | 企业门户 iframe | 外部 API | 外部 Supervisor / Agent Tool |
+|---|---|---|---|---|
+| 上线速度 | 最快 | 快 | 中 | 慢 |
+| 上下文 | 当前库、Schema、查询历史、用户权限容易自动带入 | 复用原生 UI，上下文较完整 | 调用方显式传会话、域、语言 | Router 还要选择目标和工具 |
+| 身份 | 浏览器用户 | 仍需平台用户身份 | OAuth / service identity / on-behalf-of | 多系统身份传播最复杂 |
+| SQL/图表 | 平台原生展示 | 原生 | 客户端自行渲染 | 需要规范化工具结果 |
+| 失败恢复 | 平台承担较多 | 双方 | 调用方负责轮询、重试、取消、幂等 | Orchestrator 负责 partial/failed 语义 |
+| 治理 | 容易保持同一策略路径 | 仍可保持 | 必须验证 API 是否代表最终用户 | 不得因工具化而绕过授权 |
+| 多系统组合 | 较弱 | 较弱 | 强 | 最强 |
+| 写动作 | 应保持只读 | 外部流程另接 | 必须单独 Action API | 必须独立审批网关 |
+
+### 7.1 内嵌的独特点
+
+- 用户、Catalog、查询目标和可见数据天然在同一工作区；
+- SQL、结果、图表、反馈和 Authoring 配置在一个产品面中；
+- 数据 Owner 能直接从真实对话修语义和回归集；
+- 更适合业务自助问答与领域专家调优。
+
+### 7.2 外部的独特点
+
+- 能进入售后系统、数据库控制台、ChatOps、工单和移动端；
+- 能把数据分析与规则、文档、监控和动作工具组合；
+- 可自定义 UI、审批、SLA 和企业身份；
+- 但调用方必须承担 OAuth、代表用户、会话、异步、重试、限流、取消、审计和数据渲染。
+
+### 7.3 共同底线
+
+换成 API、MCP 或 Agent Tool 不会自动获得额外数据权限。外部 Agent 的可发现工具面应该是少量、稳定、带 Schema 的领域能力，例如 `query_metric`、`diagnose_incident`、`get_customer_order_context`，而不是把任意 SQL、Shell 或云 API 全部暴露给模型。
+
+## 8. 三个重点场景如何落地
+
+### 8.1 对已有业务数据做自然语言分析
+
+最小数据域：3–8 个权威视图，而不是直接开放几百张 OLTP 表。  
+必备语义：指标、日期、状态、Join、同义词、空值和时区。  
+可信资产：Top N、趋势、同比/环比、明细钻取的模板。  
+评测：20–50 个真实问题，覆盖直接查询、歧义、无权限、无数据和越界问题。
+
+推荐回答格式：
+
+```text
+结论 + 数值
+口径与时间范围
+来源表/指标
+可展开 SQL / Query ID
+数据新鲜度
+不确定性或权限缺口
+```
+
+### 8.2 智能售后
+
+分析数据：客户、订单、商品、支付、退款、工单、政策与历史处理。  
+语义重点：退款状态、责任方、SLA、P1/P2、可退款范围、地区和渠道。  
+典型流程：
+
+```text
+客户/客服问题
+  → 只读查询客户与订单上下文
+  → Policy Tool 检索当前政策
+  → Agent 生成事实摘要与建议
+  → 人工确认
+  → Ticket/Refund Action 执行
+  → 回读状态并留证
+```
+
+数据 Agent 只提供事实和建议；退款、补偿、改地址、取消订单、发客户消息应由独立动作服务执行。
+
+### 8.3 数据库智能运维
+
+数据源不只有业务表，还包括：
+
+- 实例、拓扑、主从和连接信息；
+- CPU、内存、I/O、连接、锁、复制延迟；
+- 慢 SQL、执行计划、等待事件；
+- 告警、变更、发布、事件和 Runbook；
+- 当前数据库版本、参数与已知限制。
+
+推荐链路：
+
+```text
+告警 / 用户问题
+  → 解析 target + time range
+  → 读取当前指标/日志/拓扑
+  → 查询历史事件和变更
+  → 检索带版本与来源的 Runbook
+  → 输出证据化诊断、置信度和下一步
+  → 如需动作：preview → approval → apply → verify
+```
+
+智能运维的 Catalog 不应只登记业务表，还要登记实例、集群、服务、环境、Owner、版本、拓扑关系、监控数据集和 Runbook applicability。实时指标必须来自监控 API/SQL，而不是让模型从旧文档猜当前状态。
+
+## 9. 推荐实施 Gate
+
+### G0：用例和动作边界
+
+- 选定 1 个业务域和 20–50 个真实问题；
+- 明确只读分析与写动作的分界；
+- 约定正确率、P95 延迟、数据新鲜度和成本目标。
+
+### G1：安全数据通路
+
+- 建立专用只读副本/分析节点或 CDC；
+- 验证网络、身份、最小权限、timeout、row limit、cancel；
+- 证明 Agent 不能执行 DDL/DML。
+
+### G2：权威数据产品
+
+- 只开放少量 Gold Views / data products；
+- 每个对象有 Owner、描述、质量和版本；
+- 对关键查询固定可信 SQL 基线。
+
+### G3：目录与治理
+
+- 统一资产 ID、发现、分类和 Owner；
+- 接入身份与行列策略；
+- 记录源→语义→回答的血缘和审计。
+
+### G4：语义与可信资产
+
+- 统一指标、维度、Join、同义词、枚举和时间口径；
+- 建立参数化 SQL / Function / capability contract；
+- Schema 变更可触发影响分析和回归。
+
+### G5：Agent Runtime
+
+- 目录/语义检索、计划、SQL 检查、受控执行、澄清和引用；
+- 区分无权限、无数据、过期、超时和内部错误；
+- 保留 Query ID 和答案证据。
+
+### G6：评测与小流量试用
+
+- 建 Ground-truth SQL 和输出契约；
+- 覆盖歧义、攻击、越权、成本和 Schema 漂移；
+- 真实用户 Monitor + 人工 Review + 回归 Gate。
+
+### G7：外部集成
+
+- OAuth / on-behalf-of、tenant 隔离、限流、异步和 SSE；
+- 客户端渲染 SQL/表格/图表/引用；
+- 明确定义 partial、failed、cancelled 和 retryable。
+
+### G8：动作闭环
+
+- typed action、dry-run、审批、幂等、verify、rollback；
+- 分离查询凭据与动作凭据；
+- 将完整证据写入审计/工单系统。
+
+## 10. MVP 与产品化边界
+
+### 10.1 8–12 周可验证的最小范围
+
+- 一个真实业务域；
+- 1 个只读数据库目标或 1 条 CDC 链路；
+- 3–8 个权威视图；
+- 10–20 个指标/语义定义；
+- 5–10 个可信查询能力；
+- 30–50 个回归问题；
+- 一个内嵌 UI 和一个只读 API；
+- 结果/权限/成本/延迟审计；
+- 不做自动写生产。
+
+这个 MVP 可以证明“自然语言分析是否可信、治理路径是否闭合”，不能证明跨云多租户、生产 SLA 或自动修库已经就绪。
+
+### 10.2 产品化还需补齐
+
+- 多账号/多租户/跨区域 Catalog；
+- 连接与凭据托管、轮换和网络私有化；
+- 大规模 Metadata/Embedding/Query Cache 的一致性；
+- Schema 漂移与语义版本治理；
+- 跨引擎 SQL 方言、成本模型和 Query Router；
+- 评测集治理、发布门禁与灰度回滚；
+- 数据驻留、审计保留、合规与法务；
+- 多语言、可访问性、客服/DBA 工作流集成；
+- 动作运行器和长期任务状态。
+
+## 11. 常见错误
+
+1. **只接大模型和只读账号。** 能 Demo，不等于有统一语义、策略、血缘和回归。
+2. **把所有 OLTP 表直接喂给 Agent。** 表多、命名差、Join 复杂会明显降低可靠性，也放大越权面。
+3. **把 Catalog 当语义层。** 技术元数据不能自动定义退款、GMV、活跃和故障根因。
+4. **把 Prompt 当权限。** 模型指令不是强制访问控制。
+5. **用主库跑自由分析。** 可能拖慢交易、耗尽连接或造成锁争用。
+6. **只测十个正向问题。** 必须测歧义、无权限、无数据、Schema 漂移、成本和 Prompt Injection。
+7. **只看最终文本。** 必须保存 SQL、Query ID、来源、时间范围、策略判定和新鲜度。
+8. **把评测失败都归给模型。** 真值 SQL、Schema、输出契约和 evaluator 自身都可能错。
+9. **分析与写动作共用权限。** 一次错误推理就可能变成生产事故。
+10. **把同云厂商组件当成自动集成。** 身份、语义、策略执行点和审计证据仍需逐路径验证。
+
+## 12. 最终建议
+
+如果目标是给现有 RDS MySQL / PostgreSQL / PolarDB / TaurusDB 快速接入能力，优先采用混合路线：
+
+1. 复用数据库的 HA、读副本、认证、监控和 SQL；
+2. 建一个统一 Catalog/Governance 层，先解决 Owner、身份、策略、血缘和审计；
+3. 用 CDC 构建历史/跨域分析面，用只读副本或联邦满足实时查询；
+4. 在 Catalog 之上增加独立业务语义和可信 SQL 层；
+5. 再接自然语言 Agent Runtime，并要求 SQL/来源/口径可解释；
+6. 用真实问题和 Ground-truth SQL 建 Benchmark/Monitor 闭环；
+7. 先交付内嵌只读分析，再开放代表用户的外部 API；
+8. 最后才接带审批、幂等、验证和回滚的动作网关。
+
+一句话：**数据库负责“事实可可靠执行”，Catalog 负责“事实可治理”，语义层负责“事实可理解”，Agent 负责“事实可对话”，评测与动作网关负责“事实可相信、变化可控制”。**
+
+## 13. 主要官方来源
+
+### Databricks
+
+- [What is Unity Catalog?](https://docs.databricks.com/aws/en/data-governance/unity-catalog/)
+- [Access control in Unity Catalog](https://docs.databricks.com/aws/en/data-governance/unity-catalog/access-control/)
+- [Row filters and column masks](https://docs.databricks.com/aws/en/data-governance/unity-catalog/filters-and-masks/)
+- [Lineage in Unity Catalog](https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-lineage)
+- [System tables](https://docs.databricks.com/aws/en/admin/system-tables)
+- [Model metric views](https://docs.databricks.com/aws/en/business-semantics/metric-views/basic-modeling)
+- [Query federation](https://docs.databricks.com/aws/en/query-federation/database-federation)
+- [Lakeflow Connect database connectors](https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/cdc-overview)
+- [Genie Agents concepts](https://docs.databricks.com/aws/en/genie-agents/concepts)
+- [Tune Genie Agent quality](https://docs.databricks.com/aws/en/genie-agents/tune-quality)
+- [Test and monitor a Genie Agent](https://docs.databricks.com/aws/en/genie/monitor)
+- [Embed a Genie Agent](https://docs.databricks.com/aws/en/genie/embed)
+- [Genie Conversation API](https://docs.databricks.com/aws/en/genie/conversation-api)
+- [Genie Agent mode APIs](https://docs.databricks.com/aws/en/genie-agents/api)
+
+### 数据库与云治理对照
+
+- [Amazon RDS Read Replicas](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html)
+- [Amazon RDS IAM database authentication](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.Connecting.html)
+- [Amazon RDS Database Insights](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_DatabaseInsights.html)
+- [AWS Glue Data Catalog](https://docs.aws.amazon.com/glue/latest/dg/catalog-and-crawler.html)
+- [AWS Lake Formation permissions](https://docs.aws.amazon.com/lake-formation/latest/dg/lf-permissions-overview.html)
+- [PolarDB product overview](https://www.alibabacloud.com/help/en/polardb/product-introduction)
+- [TaurusDB User Guide](https://support.huaweicloud.com/intl/en-us/usermanual-taurusdb/)
+- [MySQL INFORMATION_SCHEMA](https://dev.mysql.com/doc/refman/8.4/en/information-schema-introduction.html)
+- [PostgreSQL System Catalogs](https://www.postgresql.org/docs/current/catalogs.html)
+
+## 14. 尚未实测的边界
+
+- 本项目没有连接用户的 RDS、PolarDB、TaurusDB 或其他生产数据库；
+- 没有在目标云验证私网、跨区域、复制延迟、审计、费用或服务配额；
+- 没有验证具体厂商当前的自然语言数据库助手或全云组合产品；
+- 没有执行任何写生产、自动退款、参数变更、Failover 或修库动作；
+- 以上路线必须在确定云、引擎、版本、区域和合规要求后做最小真实环境 PoC。

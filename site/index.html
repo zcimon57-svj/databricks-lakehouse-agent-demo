@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Databricks 数据湖、数据库、自然语言分析与内外部使用方式演示">
+  <title>Databricks 数据湖与数据库演示</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="hero" id="top">
+    <nav class="nav shell" aria-label="主导航">
+      <a class="brand" href="#top">DBX Explore</a>
+      <div class="nav-links">
+        <a href="#proof">实测</a>
+        <a href="#architecture">架构</a>
+        <a href="#agent-evolution">Agent 新能力</a>
+        <a href="genie.html">Genie 深讲</a>
+        <a href="database-agent.html">云数据库 Agent</a>
+        <a href="#access">内外部使用</a>
+        <a href="#cases">案例</a>
+        <a href="#videos">视频</a>
+      </div>
+    </nav>
+    <div class="hero-content shell">
+      <p class="eyebrow">数据湖 · 数据库 · 自然语言分析</p>
+      <h1>一份受治理的数据，<br><span>服务分析、应用与 Agent</span></h1>
+      <p class="lead">从数据进入 Lakehouse，到 SQL、Genie、Lakebase 和外部应用，解释 Databricks 的高频路径、独特点与适用边界。</p>
+      <div class="hero-actions">
+        <a class="button primary" href="#architecture">从全景图开始</a>
+        <a class="button secondary" href="genie.html">Genie 深度演示</a>
+        <a class="button secondary" href="database-agent.html">云数据库怎么接</a>
+        <a class="button secondary" href="details/project-brief.html">查看完整研究约定</a>
+      </div>
+      <div class="status-bar" role="status">
+        <span class="status-dot"></span>
+        AWS Free Edition 已实测 · 13 段录屏 · Warehouse 已停止
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section proof-section" id="proof" aria-labelledby="proof-title">
+      <div class="shell">
+        <div class="section-heading compact">
+          <p class="eyebrow">2026-08-14 真实工作区结果</p>
+          <h2 id="proof-title">不是产品设想，关键链路已经跑通</h2>
+        </div>
+        <div class="proof-grid">
+          <article><strong>21,932</strong><span>内置 NY Taxi 样例行数</span></article>
+          <article><strong>14</strong><span>从 Volume 落成的 Delta 表</span></article>
+          <article><strong>18,498</strong><span>合成数据远端核对通过</span></article>
+          <article><strong>9 / 9</strong><span>业务与运维基线查询成功</span></article>
+          <article><strong>7 + 1</strong><span>Genie 数据源 + 受信示例</span></article>
+          <article><strong>3</strong><span>可解释数据库事故真值</span></article>
+        </div>
+        <p class="proof-note">OAuth Token 仅驻留内存；Starter Warehouse 已确认停止。录屏隐藏邮箱、头像和对象 ID，数据全部为内置样例或合成数据。</p>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="agent-evolution" aria-labelledby="agent-evolution-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">AI Agent 之后新增了什么</p>
+            <h2 id="agent-evolution-title">从“帮人写代码”走向“受治理的数据入口”</h2>
+          </div>
+          <p>本项目只关注 Agent 如何读取、解释和操作数据，不展开模型训练与推理基础设施。</p>
+        </div>
+        <div class="evolution-grid">
+          <article><span>业务提问</span><h3>Genie Agents</h3><p>自然语言 → 只读 SQL → 表格/图表；领域专家维护 Sources、Instructions、Examples 与 Benchmark。</p></article>
+          <article><span>开发协作</span><h3>Genie Code</h3><p>在 Notebook、SQL、Pipeline 和 Dashboard 中利用当前上下文解释、生成与修复内容。</p></article>
+          <article><span>事务与状态</span><h3>Lakebase + Apps</h3><p>Lakehouse 保存分析事实；Postgres 承接低延迟事务、应用状态和 Agent state。</p></article>
+          <article><span>外部组合</span><h3>API / Agent Tool</h3><p>Conversation、Statement、Files API 与标准驱动把同一能力嵌入售后、运维和企业门户。</p></article>
+        </div>
+        <p class="boundary-note">关键变化不是 Agent 绕过 SQL/权限，而是把语义、治理、执行、反馈和外部工具连接起来；任何退款、改订单、发消息或数据库修复仍需审批。</p>
+        <div class="video-actions">
+          <a class="button dark" href="genie.html">进入 Genie 实现与多用法专题</a>
+          <a class="button outline" href="database-agent.html">RDS / PolarDB / TaurusDB 如何接入</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell" aria-labelledby="key-title">
+      <div class="section-heading compact">
+        <p class="eyebrow">领导先记住这五点</p>
+        <h2 id="key-title">Databricks 的核心价值</h2>
+      </div>
+      <div class="key-grid">
+        <article class="key-card">
+          <span>01</span>
+          <h3>不是单纯的数据湖</h3>
+          <p>Delta 为湖上数据增加可靠表语义，Unity Catalog 统一治理。</p>
+        </article>
+        <article class="key-card">
+          <span>02</span>
+          <h3>一份数据，多种入口</h3>
+          <p>SQL、Notebook、Dashboard、Genie、App 与外部工具共享数据基础。</p>
+        </article>
+        <article class="key-card">
+          <span>03</span>
+          <h3>分析与事务分工</h3>
+          <p>Lakehouse 做大规模分析；Lakebase 用 Postgres 承接低延迟事务。</p>
+        </article>
+        <article class="key-card">
+          <span>04</span>
+          <h3>自然语言仍是 SQL</h3>
+          <p>Genie 利用业务语义生成只读 SQL，权限仍由 Unity Catalog 控制。</p>
+        </article>
+        <article class="key-card">
+          <span>05</span>
+          <h3>内嵌快，外部可组合</h3>
+          <p>工作区减少配置；API、驱动和 Agent 工具适合自动化与系统集成。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="architecture" aria-labelledby="architecture-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">一张图看懂</p>
+            <h2 id="architecture-title">数据从哪里来，最终到哪里去</h2>
+          </div>
+          <p>Unity Catalog 不是末端组件，而是横跨接入、处理、查询、分享与应用的治理层。</p>
+        </div>
+        <figure class="diagram-frame">
+          <img src="assets/diagrams/platform-data-paths.svg" alt="Databricks 数据湖、Lakebase、Genie 与外部使用的数据路径架构图">
+          <figcaption>实测：Files API → managed Volume → 14 个 Delta 表 → 3 个业务视图 → SQL/Genie。Federation、Sharing、Lakebase 只验证资料或入口。</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section shell" id="access" aria-labelledby="access-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">最重要的对照</p>
+          <h2 id="access-title">同一能力：工作区内嵌 vs 外部调用</h2>
+        </div>
+        <p>差异不在“能不能调用”，而在身份、上下文、自动化责任和失败处理由谁承担。</p>
+      </div>
+      <figure class="diagram-frame light">
+        <img src="assets/diagrams/embedded-vs-external.svg" alt="Databricks 工作区内嵌使用和外部应用或 Agent 调用对比图">
+      </figure>
+      <div class="comparison-strip">
+        <div>
+          <strong>内嵌独特点</strong>
+          <p>浏览器身份、Catalog 上下文、计算选择、SQL/图表和反馈体验由平台串联。</p>
+        </div>
+        <div>
+          <strong>外部独特点</strong>
+          <p>可嵌入门户、脚本、CI/CD 和 Agent，但必须显式管理 OAuth、连接、重试和审计。</p>
+        </div>
+        <div>
+          <strong>共同底线</strong>
+          <p>Unity Catalog 权限不能因换成 API 或 Agent 而绕过；写动作必须增加审批边界。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="database-agent" aria-labelledby="database-agent-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">如果底座是 RDS / PolarDB / TaurusDB</p>
+            <h2 id="database-agent-title">缺的不是一个聊天框</h2>
+          </div>
+          <p>云数据库已有 SQL、事务、只读节点与监控；要达到 Genie 类可信分析，还要补旧的平台前置层和新的 Agent 运营层。</p>
+        </div>
+        <div class="comparison-strip">
+          <div><strong>平台前置</strong><p>统一 Catalog、身份、行列策略、Owner、分类、血缘、审计，以及 CDC / 联邦查询。</p></div>
+          <div><strong>业务语义</strong><p>权威视图、Metric、Join、同义词、时间/状态口径和经过 Review 的可信 SQL。</p></div>
+          <div><strong>Agent 产品化</strong><p>安全执行、可解释回答、Benchmark/Monitor、iframe/API，以及独立写动作审批网关。</p></div>
+        </div>
+        <p class="boundary-note"><strong>关键判断：</strong>Unity Catalog-like 是必要但不充分；Catalog 管治理，Semantic 管口径，Agent 管对话，Eval 与 Action Gateway 管可信和变更安全。</p>
+        <div class="video-actions"><a class="button dark" href="database-agent.html">查看十层架构、差距矩阵与三条接入路线</a></div>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="cases" aria-labelledby="cases-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">四条真实故事线</p>
+            <h2 id="cases-title">演示案例</h2>
+          </div>
+          <p>每个案例都将提供真实录屏、SVG、中文讲稿、外部视频和可复现步骤。</p>
+        </div>
+        <div class="case-grid">
+          <article class="case-card featured">
+            <p class="tag">C1 · 平台主线</p>
+            <h3>高频 Lakehouse 流程</h3>
+            <p>样例或文件数据进入 Bronze，经清洗形成 Silver，再产出可查询与可分享的 Gold 数据。</p>
+            <ul>
+              <li>Lakeflow / SQL / Notebook</li>
+              <li>Delta 表与 Unity Catalog</li>
+              <li>Dashboard 与外部 SQL</li>
+            </ul>
+            <span class="verified">数据、SQL、Catalog、Lineage 与录屏已完成</span>
+          </article>
+          <article class="case-card">
+            <p class="tag">C2 · 自然语言</p>
+            <h3>对已有数据直接问问题</h3>
+            <p>对比手写 SQL、工作区 Genie 和外部 API/Agent，验证口径、SQL 与权限是否一致。</p>
+            <ul>
+              <li>中文问题与业务术语</li>
+              <li>Metric View / 元数据</li>
+              <li>错误问题与无权限边界</li>
+            </ul>
+            <span class="verified">可信 SQL + Genie 中文回答一致</span>
+          </article>
+          <article class="case-card">
+            <p class="tag">C3 · 智能售后</p>
+            <h3>订单、退款与售后政策</h3>
+            <p>用结构化数据回答售后问题，生成处理建议；任何写动作都经过人工确认。</p>
+            <ul>
+              <li>订单与客服工单</li>
+              <li>退款异常与趋势</li>
+              <li>App / Agent 外部入口</li>
+            </ul>
+            <span class="verified">700 条案例 · 18 条行动队列 · 已录屏</span>
+          </article>
+          <article class="case-card">
+            <p class="tag">C4 · 数据库运维</p>
+            <h3>指标、慢 SQL 与事件诊断</h3>
+            <p>关联监控、告警、变更和 Runbook，生成可追溯的诊断建议，而不是自动修改生产。</p>
+            <ul>
+              <li>异常时段与根因线索</li>
+              <li>慢查询与变更关联</li>
+              <li>工单草稿与审批边界</li>
+            </ul>
+            <span class="verified">3 个事故真值 · 已录屏</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell" id="videos" aria-labelledby="videos-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">不是只有文档</p>
+          <h2 id="videos-title">每个模块都有真实录屏与外部讲解</h2>
+        </div>
+        <p>真实录屏用于证明“怎么做”；页面默认播放中文有声版，无声原版仍保留；外部视频补充官方定位和不同视角。</p>
+      </div>
+      <div class="recording-grid">
+        <article class="recording-card">
+          <video controls preload="metadata" src="../videos/recordings/zh-voice/G1-genie-business-user-multi-use.mp4"></video>
+          <div><span>G1 · 61s · 真实 UI</span><h3>Genie 业务用户多种用法</h3><p>退款聚合、Show code、DBOps 报告、连续追问与审批边界</p></div>
+        </article>
+        <article class="recording-card">
+          <video controls preload="metadata" src="../videos/recordings/zh-voice/G2-genie-authoring-monitor-benchmark.mp4"></video>
+          <div><span>G2 · 83s · 真实 UI</span><h3>Genie 配置、Monitor 与 Benchmark</h3><p>7 Sources、Instructions、Example、3 个回归问题与严格失败分析</p></div>
+        </article>
+        <article class="recording-card">
+          <video controls preload="metadata" src="../videos/recordings/zh-voice/G3-genie-embedded-vs-api-architecture.mp4"></video>
+          <div><span>G3 · 71s · 架构演示</span><h3>工作区、iframe、API 与多 Agent</h3><p>外部可组合性、身份/重试/审计责任与写动作 Gate；不冒充 API 实调</p></div>
+        </article>
+        <article class="recording-card">
+          <video controls preload="metadata" src="../videos/recordings/zh-voice/D1-cloud-database-governed-agent-architecture.mp4"></video>
+          <div><span>D1 · 79s · 架构演示</span><h3>云数据库如何接入 Genie 类能力</h3><p>数据库底座、Unity Catalog-like、语义、评测、三条接入路线与动作审批</p></div>
+        </article>
+        <article class="recording-card">
+          <video controls preload="metadata" src="../videos/recordings/zh-voice/M02-catalog-delta-lineage.mp4"></video>
+          <div><span>M02 · 25s</span><h3>Delta 表与自动血缘</h3><p>Catalog → Schema → MANAGED Table → Details → Lineage</p></div>
+        </article>
+        <article class="recording-card">
+          <video controls preload="metadata" src="../videos/recordings/zh-voice/M05-data-ingestion-paths.mp4"></video>
+          <div><span>M05 · 14s</span><h3>数据接入入口</h3><p>文件/Volume、对象存储、数据库与 SaaS Connector</p></div>
+        </article>
+        <article class="recording-card">
+          <video controls preload="metadata" src="../videos/recordings/zh-voice/M09-genie-embedded-natural-language.mp4"></video>
+          <div><span>M09 · 34s</span><h3>内嵌 Genie Agent</h3><p>答案、SQL、Sources、Instructions 与 Example</p></div>
+        </article>
+        <article class="recording-card">
+          <video controls preload="metadata" src="../videos/recordings/zh-voice/C2-natural-language-trusted-sql.mp4"></video>
+          <div><span>C2 · 16s</span><h3>自然语言可信基线</h3><p>先固定 SQL 真值，再判断 Agent 是否答对</p></div>
+        </article>
+        <article class="recording-card">
+          <video controls preload="metadata" src="../videos/recordings/zh-voice/C3-intelligent-after-sales.mp4"></video>
+          <div><span>C3 · 16s</span><h3>智能售后</h3><p>18 条行动队列，分析自动化、写动作审批</p></div>
+        </article>
+        <article class="recording-card">
+          <video controls preload="metadata" src="../videos/recordings/zh-voice/C4-database-intelligent-operations.mp4"></video>
+          <div><span>C4 · 16s</span><h3>数据库智能运维</h3><p>事故上下文与 Runbook；只读诊断，不自动修库</p></div>
+        </article>
+      </div>
+      <div class="video-actions">
+        <a class="button dark" href="details/recordings.html">13 段录屏与讲稿</a>
+        <a class="button outline" href="details/external-videos.html">外部视频与建议片段</a>
+      </div>
+      <div class="external-strip" aria-label="主选外部视频">
+        <a href="https://www.youtube.com/watch?v=BMO90DI82Dc">Delta Lake 官方 Demo</a>
+        <a href="https://www.youtube.com/watch?v=TT-O-s28mGI">Lakeflow Connect</a>
+        <a href="https://www.youtube.com/watch?v=3_TpRj3z_Gs">AI/BI Genie</a>
+        <a href="https://www.youtube.com/watch?v=UQynsu6qklw">Lakebase Postgres</a>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="scope" aria-labelledby="scope-title">
+      <div class="shell scope-grid">
+        <div><p class="eyebrow">一句话边界</p><h2 id="scope-title">已跑通核心链路，未虚构生产验证</h2></div>
+        <ul>
+          <li>已实测：Volume、Delta、Catalog/Lineage、SQL、Genie、售后与运维分析。</li>
+          <li>只看入口：Job/Pipeline、Lakebase；没有创建资源。</li>
+          <li>资料覆盖：Dashboard、Apps、Federation、Sharing；没有现场对象。</li>
+          <li>不可推出：生产 SLA、私网、合规、容量、成本与无人审批写操作。</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-content">
+      <div>
+        <strong>Databricks Explore</strong>
+        <p>完整证据与简化演示分离，所有时间敏感内容标注截止日。</p>
+      </div>
+      <a href="#top">返回顶部 ↑</a>
+    </div>
+  </footer>
+</body>
+</html>

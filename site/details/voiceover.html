@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="中文配音说明">
+  <title>中文配音说明</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../details.css">
+</head>
+<body class="detail-page">
+  <header class="detail-header">
+    <nav class="detail-nav shell" aria-label="详情页导航">
+      <a class="brand" href="recordings.html">← 返回录屏索引</a>
+      <a href="../index.html">DBX Explore 首页</a>
+    </nav>
+    <div class="shell detail-heading">
+      <p class="eyebrow">MANDARIN VOICEOVER</p>
+      <h1>中文配音说明</h1>
+      <p>这是完整研究层；演示页保持精简，证据、边界、步骤和来源在这里展开。</p>
+    </div>
+  </header>
+  <main class="shell detail-layout">
+    <article class="markdown-body">
+<h1>中文配音说明</h1>
+<p>更新：2026-08-18</p>
+<h2>交付结果</h2>
+<ul>
+<li>13 段录屏均已生成普通话有声版，输出位于 <code>../recordings/zh-voice/</code>。</li>
+<li>站点默认播放有声版；<code>../recordings/</code> 根目录中的无声原版保持不变。</li>
+<li>画面中的中文字幕继续保留，声音是补充轨道，不会遮挡或改动画面。</li>
+<li>有声版是合成神经语音，不冒充真人录音。使用 <code>zh-CN-YunyangNeural</code> 普通话男声，合成速率为 <code>+8%</code>。</li>
+</ul>
+<h2>讲稿与时间轴</h2>
+<p>完整的 13 段视频、62 个语音片段、开始/结束时间和中文讲稿保存在 <a href="../../videos/voiceover/zh-CN-narration.json">zh-CN-narration.json</a>。讲稿按已有字幕和画面转场重新编排，不是把一整段文字机械铺满全片；每个片段之间保留短暂停顿，方便观众看界面。</p>
+<p>构建报告见 <a href="../../videos/voiceover/build-report.json">build-report.json</a>。最长的必要语速调整是 <code>1.3317x</code>，低于脚本设置的 <code>1.35x</code> 质量门槛。</p>
+<h2>媒体规格与验证</h2>
+<ul>
+<li>视频：直接复制无声原版 H.264 码流，不重新编码；13/13 个视频流 MD5 均与原版一致。</li>
+<li>音频：AAC-LC、48 kHz、双声道、目标码率 160 kbit/s，语言元数据为 <code>zho</code>。</li>
+<li>时长：13/13 与原版一致，允许误差小于 0.08 秒。</li>
+<li>响度：全片实测约 <code>-18.69</code> 至 <code>-17.84 LUFS</code>；峰值低于 <code>-4.0 dBTP</code>，给会议室和系统音量留有余量。</li>
+<li>完整性：有声版 SHA-256 见 <a href="../../videos/voiceover/SHA256SUMS">SHA256SUMS</a>。</li>
+</ul>
+<p>验证报告见 <a href="voiceover-validation.html">中文配音校验记录</a>。</p>
+<h2>重新生成</h2>
+<p>在项目根目录执行：</p>
+<pre><code class="language-bash">npm run build:zh-voiceovers
+</code></pre>
+<p>脚本会优先使用 <code>cache/</code> 中已经生成的逐段语音。缺失缓存时，会通过 <code>uvx edge-tts</code> 获取指定语音，因此需要可访问对应语音服务的网络环境。也可以只重建指定文件：</p>
+<pre><code class="language-bash">node scripts/build_zh_voiceovers.mjs --only=G1-genie-business-user-multi-use.mp4
+</code></pre>
+<p>若要改成女声、降低语速或使用真人录音，只需保持 <code>zh-CN-narration.json</code> 的时间窗口，并替换逐段音频；无须重录 Databricks 画面。</p>
+
+    </article>
+  </main>
+  <footer>
+    <div class="shell footer-content">
+      <div><strong>中文配音说明</strong><p>由项目内 Markdown 源文件生成；UTF-8 静态页面，可离线阅读。</p></div>
+      <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">返回顶部 ↑</a>
+    </div>
+  </footer>
+</body>
+</html>

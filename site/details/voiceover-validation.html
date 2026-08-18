@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="中文配音校验记录">
+  <title>中文配音校验记录</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../details.css">
+</head>
+<body class="detail-page">
+  <header class="detail-header">
+    <nav class="detail-nav shell" aria-label="详情页导航">
+      <a class="brand" href="voiceover.html">← 返回配音说明</a>
+      <a href="../index.html">DBX Explore 首页</a>
+    </nav>
+    <div class="shell detail-heading">
+      <p class="eyebrow">VOICEOVER VALIDATION</p>
+      <h1>中文配音校验记录</h1>
+      <p>这是完整研究层；演示页保持精简，证据、边界、步骤和来源在这里展开。</p>
+    </div>
+  </header>
+  <main class="shell detail-layout">
+    <article class="markdown-body">
+<h1>中文配音校验记录</h1>
+<p>校验时间：2026-08-18<br>结论：<code>PASS</code></p>
+<h2>校验对象</h2>
+<ul>
+<li>13 段普通话有声 MP4；</li>
+<li>62 个按画面转场对齐的解说片段；</li>
+<li><code>zh-CN-YunyangNeural</code> 合成神经语音，基础生成速率 <code>+8%</code>；</li>
+<li>无声原版位于 <code>videos/recordings/</code>，有声派生版位于 <code>videos/recordings/zh-voice/</code>。</li>
+</ul>
+<h2>自动化结果</h2>
+<table>
+<thead>
+<tr>
+<th>校验项</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>有声文件集合</td>
+<td>13/13，与讲稿清单完全一致</td>
+</tr>
+<tr>
+<td>视频格式</td>
+<td>13/13 为 H.264</td>
+</tr>
+<tr>
+<td>画面完整性</td>
+<td>13/13 的压缩视频流 MD5 与无声原版一致</td>
+</tr>
+<tr>
+<td>音频格式</td>
+<td>13/13 为 AAC-LC、48 kHz、双声道、<code>zho</code> 元数据</td>
+</tr>
+<tr>
+<td>时长</td>
+<td>13/13 与原版一致，误差不超过 0.08 秒</td>
+</tr>
+<tr>
+<td>全片积分响度</td>
+<td><code>-18.69</code> 至 <code>-17.84 LUFS</code></td>
+</tr>
+<tr>
+<td>最高真峰值</td>
+<td>不高于 <code>-4.06 dBTP</code>，无削波风险</td>
+</tr>
+<tr>
+<td>最大时间压缩</td>
+<td><code>1.3317x</code>，通过 <code>1.35x</code> 质量门槛</td>
+</tr>
+<tr>
+<td>SHA-256</td>
+<td>13/13 通过 <code>SHA256SUMS</code> 复核</td>
+</tr>
+<tr>
+<td>失败项</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p>逐文件的编解码、分辨率、时长、视频流 MD5、响度、峰值和 SHA-256 机器报告保存在 <code>evidence/workspace/zh-voiceover-validation.json</code>。</p>
+<h2>执行命令</h2>
+<pre><code class="language-bash">npm run validate:zh-voiceovers
+cd videos/voiceover
+sha256sum -c SHA256SUMS
+</code></pre>
+<h2>浏览器集成结果</h2>
+<ul>
+<li>演示首页：10 个嵌入式视频全部加载 <code>zh-voice/</code> 有声版，<code>readyState=4</code>，时长正确且无媒体错误；</li>
+<li>Genie 专题：G1、G2、G3 三段有声视频均可加载；</li>
+<li>G1 浏览器播放探针实际推进到 2.13 秒，解码 45,187 字节音频与 250,306 字节视频，媒体错误为 0；</li>
+<li>云数据库专题：D1 有声视频可加载；</li>
+<li>录屏索引：13 个有声链接和 13 个无声原版链接全部返回 HTTP 200；</li>
+<li>配音说明与本校验记录：均渲染为 UTF-8 中文 HTML，所有本地链接返回 HTTP 200；</li>
+<li>站内 HTML 未发现跳转到 <code>.md</code> 源文件的链接；</li>
+<li>页面文本未发现邮箱或私有 Databricks 工作区域名。</li>
+</ul>
+<p>浏览器校验截图保存在 <code>evidence/workspace/site-voice-*.png</code>。已抽查录屏索引和配音说明的实际渲染，未发现乱码。</p>
+<h2>校验边界</h2>
+<p>自动化校验可以证明文件可解码、确有非静音音轨、音量处于演示区间、讲稿生成链路可追溯，并证明画面未被重新压缩。它不能替代人在最终会议室扬声器上的主观听感确认。正式汇报前应从 G1、G2、G3 和 D1 各试听一段，并根据现场音响调节播放器音量。</p>
+<p>此次操作没有重新登录 Databricks，没有连接生产数据库，也没有使用账号凭据或工作区数据生成声音。</p>
+
+    </article>
+  </main>
+  <footer>
+    <div class="shell footer-content">
+      <div><strong>中文配音校验记录</strong><p>由项目内 Markdown 源文件生成；UTF-8 静态页面，可离线阅读。</p></div>
+      <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">返回顶部 ↑</a>
+    </div>
+  </footer>
+</body>
+</html>

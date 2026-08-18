@@ -1,0 +1,13 @@
+instance_id,instance_name,engine,version,region,service_tier,owner_team,cpu_cores,memory_gb,production
+DB001,db-demo-01.invalid,PostgreSQL,16.3,cn-demo-east,bronze,订单平台,4,16,false
+DB002,db-demo-02.invalid,MySQL,8.4,cn-demo-south,bronze,用户平台,16,32,false
+DB003,db-demo-03.invalid,Cassandra,5.0,cn-demo-north,gold,数据服务,16,128,false
+DB004,db-demo-04.invalid,PostgreSQL,16.3,cn-demo-east,silver,订单平台,32,64,false
+DB005,db-demo-05.invalid,MySQL,8.4,cn-demo-south,bronze,用户平台,4,128,false
+DB006,db-demo-06.invalid,Cassandra,5.0,cn-demo-north,gold,支付平台,32,32,false
+DB007,db-demo-07.invalid,PostgreSQL,16.3,cn-demo-east,gold,支付平台,16,64,false
+DB008,db-demo-08.invalid,MySQL,8.4,cn-demo-south,gold,数据服务,32,16,false
+DB009,db-demo-09.invalid,Cassandra,5.0,cn-demo-north,bronze,订单平台,8,64,false
+DB010,db-demo-10.invalid,PostgreSQL,16.3,cn-demo-east,bronze,数据服务,8,128,false
+DB011,db-demo-11.invalid,MySQL,8.4,cn-demo-south,gold,用户平台,4,128,false
+DB012,db-demo-12.invalid,Cassandra,5.0,cn-demo-north,gold,订单平台,8,32,false

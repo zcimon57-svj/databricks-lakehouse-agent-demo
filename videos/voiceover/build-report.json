@@ -1,0 +1,698 @@
+{
+  "generatedAt": "2026-08-18T12:34:36.874Z",
+  "voice": "zh-CN-YunyangNeural",
+  "rate": "+8%",
+  "language": "zh-CN",
+  "videoCount": 13,
+  "segmentCount": 62,
+  "outputs": [
+    {
+      "file": "M01-workspace-free-edition-entrypoints.mp4",
+      "source": "videos/recordings/M01-workspace-free-edition-entrypoints.mp4",
+      "output": "videos/recordings/zh-voice/M01-workspace-free-edition-entrypoints.mp4",
+      "duration": 9.5,
+      "bytes": 305610,
+      "maximumTempo": 1.1786,
+      "segments": [
+        {
+          "index": 1,
+          "start": 0.2,
+          "end": 4.7,
+          "text": "当前工作区是 Databricks Free Edition，适合学习和原型演示。",
+          "synthesizedDuration": 5.04,
+          "tempo": 1.1507,
+          "cached": true
+        },
+        {
+          "index": 2,
+          "start": 4.8,
+          "end": 9.4,
+          "text": "新建入口覆盖数据、查询、Genie、任务、流水线和应用。",
+          "synthesizedDuration": 5.28,
+          "tempo": 1.1786,
+          "cached": true
+        }
+      ]
+    },
+    {
+      "file": "M02-catalog-delta-lineage.mp4",
+      "source": "videos/recordings/M02-catalog-delta-lineage.mp4",
+      "output": "videos/recordings/zh-voice/M02-catalog-delta-lineage.mp4",
+      "duration": 25,
+      "bytes": 776310,
+      "maximumTempo": 1.224,
+      "segments": [
+        {
+          "index": 1,
+          "start": 0.2,
+          "end": 3.4,
+          "text": "Catalog Explorer 展示目录、模式和数据表。",
+          "synthesizedDuration": 3.77,
+          "tempo": 1.224,
+          "cached": true
+        },
+        {
+          "index": 2,
+          "start": 3.7,
+          "end": 8,
+          "text": "演示数据独立放在专用模式中，全部是非敏感合成数据。",
+          "synthesizedDuration": 4.92,
+          "tempo": 1.177,
+          "cached": true
+        },
+        {
+          "index": 3,
+          "start": 8.3,
+          "end": 13,
+          "text": "订单是受治理的 Delta 表，列、描述和权限挂在同一对象上。",
+          "synthesizedDuration": 5.52,
+          "tempo": 1.2052,
+          "cached": true
+        },
+        {
+          "index": 4,
+          "start": 13.4,
+          "end": 18.6,
+          "text": "详情页确认表类型为 Managed，并显示 Delta 的存储属性。",
+          "synthesizedDuration": 4.97,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 5,
+          "start": 19,
+          "end": 24.8,
+          "text": "血缘连接上游 Volume、订单表和下游视图，便于影响分析和追溯。",
+          "synthesizedDuration": 5.81,
+          "tempo": 1.0229,
+          "cached": true
+        }
+      ]
+    },
+    {
+      "file": "M05-data-ingestion-paths.mp4",
+      "source": "videos/recordings/M05-data-ingestion-paths.mp4",
+      "output": "videos/recordings/zh-voice/M05-data-ingestion-paths.mp4",
+      "duration": 13.5,
+      "bytes": 368436,
+      "maximumTempo": 1.3317,
+      "segments": [
+        {
+          "index": 1,
+          "start": 0.2,
+          "end": 4,
+          "text": "这里汇总文件、对象存储、数据库和 SaaS 接入。",
+          "synthesizedDuration": 4.49,
+          "tempo": 1.2201,
+          "cached": true
+        },
+        {
+          "index": 2,
+          "start": 4.2,
+          "end": 8.3,
+          "text": "实测路径是 Files API、Volume，再生成十四张 Delta 表。",
+          "synthesizedDuration": 5.3,
+          "tempo": 1.3317,
+          "cached": true
+        },
+        {
+          "index": 3,
+          "start": 8.5,
+          "end": 13.3,
+          "text": "持续摄取可使用 Lakeflow Connect，并统一管理连接、目标表和运行状态。",
+          "synthesizedDuration": 5.93,
+          "tempo": 1.2671,
+          "cached": true
+        }
+      ]
+    },
+    {
+      "file": "M06-jobs-and-pipelines.mp4",
+      "source": "videos/recordings/M06-jobs-and-pipelines.mp4",
+      "output": "videos/recordings/zh-voice/M06-jobs-and-pipelines.mp4",
+      "duration": 13.75,
+      "bytes": 358115,
+      "maximumTempo": 1.1005,
+      "segments": [
+        {
+          "index": 1,
+          "start": 0.2,
+          "end": 4.1,
+          "text": "Ingestion Pipeline 负责持续连接源系统并落表。",
+          "synthesizedDuration": 3.72,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 2,
+          "start": 4.3,
+          "end": 8.5,
+          "text": "ETL Pipeline 用 SQL 或 Python 定义转换和质量规则。",
+          "synthesizedDuration": 4.49,
+          "tempo": 1.1005,
+          "cached": true
+        },
+        {
+          "index": 3,
+          "start": 8.7,
+          "end": 13.6,
+          "text": "Job 把查询、Notebook 和 Pipeline 编排成定时或事件驱动流程。",
+          "synthesizedDuration": 5.18,
+          "tempo": 1.0837,
+          "cached": true
+        }
+      ]
+    },
+    {
+      "file": "M07-sql-warehouse-and-lakebase.mp4",
+      "source": "videos/recordings/M07-sql-warehouse-and-lakebase.mp4",
+      "output": "videos/recordings/zh-voice/M07-sql-warehouse-and-lakebase.mp4",
+      "duration": 14.25,
+      "bytes": 347117,
+      "maximumTempo": 1.297,
+      "segments": [
+        {
+          "index": 1,
+          "start": 0.2,
+          "end": 4.5,
+          "text": "分析查询由 Serverless SQL Warehouse 执行。",
+          "synthesizedDuration": 3.65,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 2,
+          "start": 4.7,
+          "end": 9.1,
+          "text": "Lakehouse 面向分析，Lakebase Postgres 面向低延迟事务应用。",
+          "synthesizedDuration": 4.75,
+          "tempo": 1.1098,
+          "cached": true
+        },
+        {
+          "index": 3,
+          "start": 9.3,
+          "end": 14.1,
+          "text": "外部连接要显式管理 OAuth、重试和审计，内嵌编辑器由平台承接。",
+          "synthesizedDuration": 6.07,
+          "tempo": 1.297,
+          "cached": true
+        }
+      ]
+    },
+    {
+      "file": "C2-natural-language-trusted-sql.mp4",
+      "source": "videos/recordings/C2-natural-language-trusted-sql.mp4",
+      "output": "videos/recordings/zh-voice/C2-natural-language-trusted-sql.mp4",
+      "duration": 16.25,
+      "bytes": 454346,
+      "maximumTempo": 1.2094,
+      "segments": [
+        {
+          "index": 1,
+          "start": 0.2,
+          "end": 4,
+          "text": "先用可信 SQL 固定 P1 售后问题的正确答案。",
+          "synthesizedDuration": 4.08,
+          "tempo": 1.1087,
+          "cached": true
+        },
+        {
+          "index": 2,
+          "start": 4.2,
+          "end": 11,
+          "text": "查询在 SQL Warehouse 执行，沿用同一 Unity Catalog 权限，并保留运行记录。",
+          "synthesizedDuration": 6.26,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 3,
+          "start": 11.3,
+          "end": 16.1,
+          "text": "可信答案是西南三、华南二、东北一、华北一，Genie 必须一致。",
+          "synthesizedDuration": 5.66,
+          "tempo": 1.2094,
+          "cached": true
+        }
+      ]
+    },
+    {
+      "file": "C3-intelligent-after-sales.mp4",
+      "source": "videos/recordings/C3-intelligent-after-sales.mp4",
+      "output": "videos/recordings/zh-voice/C3-intelligent-after-sales.mp4",
+      "duration": 15.5,
+      "bytes": 521155,
+      "maximumTempo": 1.3159,
+      "segments": [
+        {
+          "index": 1,
+          "start": 0.2,
+          "end": 4.3,
+          "text": "从七百条工单筛出负面、高优先级且未解决的售后队列。",
+          "synthesizedDuration": 5.23,
+          "tempo": 1.3141,
+          "cached": true
+        },
+        {
+          "index": 2,
+          "start": 4.5,
+          "end": 10.3,
+          "text": "Agent 读取客户、订单和退款，再结合政策生成建议与工单草稿。",
+          "synthesizedDuration": 5.95,
+          "tempo": 1.0475,
+          "cached": true
+        },
+        {
+          "index": 3,
+          "start": 10.5,
+          "end": 15.4,
+          "text": "分析可以自动化；退款、改订单、发消息和变更工单状态必须审批。",
+          "synthesizedDuration": 6.29,
+          "tempo": 1.3159,
+          "cached": true
+        }
+      ]
+    },
+    {
+      "file": "C4-database-intelligent-operations.mp4",
+      "source": "videos/recordings/C4-database-intelligent-operations.mp4",
+      "output": "videos/recordings/zh-voice/C4-database-intelligent-operations.mp4",
+      "duration": 16,
+      "bytes": 491914,
+      "maximumTempo": 1.2853,
+      "segments": [
+        {
+          "index": 1,
+          "start": 0.2,
+          "end": 4,
+          "text": "运维场景关联指标、慢 SQL、告警、变更和事故。",
+          "synthesizedDuration": 4.73,
+          "tempo": 1.2853,
+          "cached": true
+        },
+        {
+          "index": 2,
+          "start": 4.2,
+          "end": 10.8,
+          "text": "只读查询在 Unity Catalog 权限下运行，本例没有连接生产数据库。",
+          "synthesizedDuration": 5.54,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 3,
+          "start": 11,
+          "end": 15.9,
+          "text": "Agent 可以总结根因和推荐步骤，真实修复必须经过审批与幂等校验。",
+          "synthesizedDuration": 6,
+          "tempo": 1.2552,
+          "cached": true
+        }
+      ]
+    },
+    {
+      "file": "M09-genie-embedded-natural-language.mp4",
+      "source": "videos/recordings/M09-genie-embedded-natural-language.mp4",
+      "output": "videos/recordings/zh-voice/M09-genie-embedded-natural-language.mp4",
+      "duration": 34.25,
+      "bytes": 879723,
+      "maximumTempo": 1.3235,
+      "segments": [
+        {
+          "index": 1,
+          "start": 0.2,
+          "end": 4.4,
+          "text": "业务用户可以直接用中文提问，身份、权限和计算由工作区承接。",
+          "synthesizedDuration": 5.4,
+          "tempo": 1.3235,
+          "cached": true
+        },
+        {
+          "index": 2,
+          "start": 4.6,
+          "end": 9.2,
+          "text": "回答与可信 SQL 一致，并提供图表、来源、反馈和下载。",
+          "synthesizedDuration": 5.42,
+          "tempo": 1.2098,
+          "cached": true
+        },
+        {
+          "index": 3,
+          "start": 9.5,
+          "end": 15,
+          "text": "展开 Show code，可以核对 Genie 生成的只读 SQL。",
+          "synthesizedDuration": 4.13,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 4,
+          "start": 15.3,
+          "end": 21,
+          "text": "领域专家只选择七个高质量数据源，覆盖售后和数据库运维。",
+          "synthesizedDuration": 5.06,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 5,
+          "start": 21.3,
+          "end": 27.5,
+          "text": "Instructions 固化业务口径、选表优先级和写操作审批边界。",
+          "synthesizedDuration": 5.28,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 6,
+          "start": 27.8,
+          "end": 34.1,
+          "text": "审查过的 SQL 可以收录为 Example，让正确口径被后续问题复用。",
+          "synthesizedDuration": 5.74,
+          "tempo": 1,
+          "cached": true
+        }
+      ]
+    },
+    {
+      "file": "G1-genie-business-user-multi-use.mp4",
+      "source": "videos/recordings/G1-genie-business-user-multi-use.mp4",
+      "output": "videos/recordings/zh-voice/G1-genie-business-user-multi-use.mp4",
+      "duration": 61.25,
+      "bytes": 1497495,
+      "maximumTempo": 1.1133,
+      "segments": [
+        {
+          "index": 1,
+          "start": 0.2,
+          "end": 7.2,
+          "text": "第一种用法是明确口径的业务问答；这里统计所有状态，避免误解退款总额。",
+          "synthesizedDuration": 6.41,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 2,
+          "start": 7.6,
+          "end": 15.8,
+          "text": "结果显示，与描述不符的退款金额最高，共八万零一百三十五元三角五分，并给出数据来源。",
+          "synthesizedDuration": 7.56,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 3,
+          "start": 16.3,
+          "end": 23.8,
+          "text": "第二种用法是展开生成的只读 SQL，核对字段、过滤、聚合和排序。",
+          "synthesizedDuration": 6.17,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 4,
+          "start": 24.3,
+          "end": 32,
+          "text": "第三种用法是切换到数据库运维域，按事故编号汇总根因、处置和证据。",
+          "synthesizedDuration": 6.19,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 5,
+          "start": 32.5,
+          "end": 41.8,
+          "text": "Agent mode 会执行多步查询并形成结构化报告，但分析报告不等于自动修复。",
+          "synthesizedDuration": 6.36,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 6,
+          "start": 42.3,
+          "end": 51.2,
+          "text": "第四种用法是沿用会话上下文，继续区分建议、草稿和真实动作。",
+          "synthesizedDuration": 5.93,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 7,
+          "start": 51.7,
+          "end": 61,
+          "text": "工作区内嵌的独特点，是串起身份、权限、计算、SQL、图表、来源、追问和反馈；所有写动作仍交给审批工具。",
+          "synthesizedDuration": 10.22,
+          "tempo": 1.1133,
+          "cached": true
+        }
+      ]
+    },
+    {
+      "file": "G2-genie-authoring-monitor-benchmark.mp4",
+      "source": "videos/recordings/G2-genie-authoring-monitor-benchmark.mp4",
+      "output": "videos/recordings/zh-voice/G2-genie-authoring-monitor-benchmark.mp4",
+      "duration": 82.75,
+      "bytes": 1850048,
+      "maximumTempo": 1,
+      "segments": [
+        {
+          "index": 1,
+          "start": 0.2,
+          "end": 8.5,
+          "text": "实现第一步，只选择七个高质量受治理数据源，不把整个 Catalog 交给 Agent。",
+          "synthesizedDuration": 6.12,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 2,
+          "start": 9,
+          "end": 17.5,
+          "text": "第二步写清中文口径、选表优先级、未知处理，以及真实写操作必须审批。",
+          "synthesizedDuration": 6.7,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 3,
+          "start": 18,
+          "end": 26.5,
+          "text": "第三步把人工审查过的 SQL 收录成可信示例，让正确逻辑可以复用。",
+          "synthesizedDuration": 6.14,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 4,
+          "start": 28,
+          "end": 37.5,
+          "text": "Monitor 用于观察真实用户问题和反馈，并区分数据、口径、SQL 与权限错误。",
+          "synthesizedDuration": 6.48,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 5,
+          "start": 38,
+          "end": 46.5,
+          "text": "Benchmark 是离线回归，不是训练材料；这里覆盖售后、退款和数据库事故。",
+          "synthesizedDuration": 6.22,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 6,
+          "start": 47,
+          "end": 56.5,
+          "text": "每个问题都配置真值 SQL 或评测说明，用来检查事实和报告契约。",
+          "synthesizedDuration": 5.93,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 7,
+          "start": 57,
+          "end": 66.5,
+          "text": "三次历史运行都为百分之三十三，但失败原因不同，不能简单归因给模型。",
+          "synthesizedDuration": 6.17,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 8,
+          "start": 67,
+          "end": 82.5,
+          "text": "最后一次有效运行中，P1 通过；退款题违反输出契约；运维题需要人工复核评测器。",
+          "synthesizedDuration": 6.94,
+          "tempo": 1,
+          "cached": true
+        }
+      ]
+    },
+    {
+      "file": "G3-genie-embedded-vs-api-architecture.mp4",
+      "source": "videos/recordings/G3-genie-embedded-vs-api-architecture.mp4",
+      "output": "videos/recordings/zh-voice/G3-genie-embedded-vs-api-architecture.mp4",
+      "duration": 71,
+      "bytes": 3223761,
+      "maximumTempo": 1,
+      "segments": [
+        {
+          "index": 1,
+          "start": 0.2,
+          "end": 6.8,
+          "text": "Genie 是可被工作区、iframe、API 和多 Agent 复用的受治理分析能力。",
+          "synthesizedDuration": 5.76,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 2,
+          "start": 7.2,
+          "end": 16.6,
+          "text": "实现面由数据源和业务规则、SQL 执行，以及 Monitor 与 Benchmark 三层组成。",
+          "synthesizedDuration": 6.46,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 3,
+          "start": 17,
+          "end": 26.5,
+          "text": "自然语言不会绕过治理；查询仍在 SQL Warehouse 执行，Unity Catalog 权限继续生效。",
+          "synthesizedDuration": 7.18,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 4,
+          "start": 27,
+          "end": 36.5,
+          "text": "四种入口分别适合原生自助、门户嵌入、自定义应用和跨系统编排。",
+          "synthesizedDuration": 6.19,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 5,
+          "start": 37,
+          "end": 45.5,
+          "text": "外部 API 更可组合，但调用方要负责身份、异步、重试、限流、渲染和审计。",
+          "synthesizedDuration": 7.03,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 6,
+          "start": 46,
+          "end": 55.5,
+          "text": "分析工具与动作工具必须分离；退款、改订单和修库要经过审批、幂等和回滚。",
+          "synthesizedDuration": 7.3,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 7,
+          "start": 56,
+          "end": 70.8,
+          "text": "本段解释官方集成架构。iframe 和 API 没有在这个 Free Edition 账号中做生产调用。",
+          "synthesizedDuration": 7.25,
+          "tempo": 1,
+          "cached": true
+        }
+      ]
+    },
+    {
+      "file": "D1-cloud-database-governed-agent-architecture.mp4",
+      "source": "videos/recordings/D1-cloud-database-governed-agent-architecture.mp4",
+      "output": "videos/recordings/zh-voice/D1-cloud-database-governed-agent-architecture.mp4",
+      "duration": 78.8,
+      "bytes": 4264865,
+      "maximumTempo": 1.1168,
+      "segments": [
+        {
+          "index": 1,
+          "start": 0.2,
+          "end": 7,
+          "text": "云数据库接上大模型，还不等于 Genie；缺口主要在治理、语义、评测和动作审批。",
+          "synthesizedDuration": 7.46,
+          "tempo": 1.1168,
+          "cached": true
+        },
+        {
+          "index": 2,
+          "start": 7.1,
+          "end": 14,
+          "text": "数据库已有 SQL、事务、只读节点和监控，应复用这些底座，再补平台产品层。",
+          "synthesizedDuration": 7.22,
+          "tempo": 1.0649,
+          "cached": true
+        },
+        {
+          "index": 3,
+          "start": 14.1,
+          "end": 25,
+          "text": "十层能力栈中，Unity Catalog-like 负责对象、身份、权限、血缘和审计，但不能替代语义和评测。",
+          "synthesizedDuration": 8.26,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 4,
+          "start": 25.1,
+          "end": 35,
+          "text": "系统目录只能说明库表列；跨源 Owner、行列策略、运行时血缘和回答审计仍要统一建设。",
+          "synthesizedDuration": 7.58,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 5,
+          "start": 35.1,
+          "end": 46,
+          "text": "实时小查询走只读副本或联邦，历史跨域走 CDC 入湖仓，企业场景推荐混合路由。",
+          "synthesizedDuration": 7.68,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 6,
+          "start": 46.1,
+          "end": 55,
+          "text": "内嵌由平台承接身份与上下文；外部 API 更灵活，但要负责重试、取消、审计和渲染。",
+          "synthesizedDuration": 7.63,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 7,
+          "start": 55.1,
+          "end": 63,
+          "text": "自然语言分析、智能售后和数据库运维共享治理底座，但真实写操作必须离开只读分析面。",
+          "synthesizedDuration": 7.94,
+          "tempo": 1.0206,
+          "cached": true
+        },
+        {
+          "index": 8,
+          "start": 63.1,
+          "end": 72,
+          "text": "实施从用例、安全通路、权威视图和 Catalog 开始，再进入 Agent、回归评测、外部集成和动作网关。",
+          "synthesizedDuration": 8.45,
+          "tempo": 1,
+          "cached": true
+        },
+        {
+          "index": 9,
+          "start": 72.1,
+          "end": 78.7,
+          "text": "这是架构演示，没有连接或修改任何 RDS、PolarDB 或 TaurusDB 生产实例。",
+          "synthesizedDuration": 6.79,
+          "tempo": 1.0478,
+          "cached": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Databricks 数据湖与数据库数据路径</title>
+  <desc id="desc">外部数据经过接入进入 Bronze Silver Gold，受 Unity Catalog 治理，再由 SQL Genie Lakebase Apps API 和 Sharing 消费。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#122e35"/>
+      <stop offset="1" stop-color="#0c2228"/>
+    </linearGradient>
+    <linearGradient id="lake" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#183e46"/>
+      <stop offset="1" stop-color="#1b4b53"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#000" flood-opacity=".18"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10Z" fill="#9de0cd"/>
+    </marker>
+    <style>
+      text{font-family:Inter,system-ui,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+      .label{font-size:22px;font-weight:750;fill:#fff}
+      .small{font-size:16px;fill:#adc0c4}
+      .tiny{font-size:14px;fill:#82999e}
+      .cap{font-size:13px;font-weight:800;letter-spacing:2px;fill:#9de0cd}
+      .box{fill:#173840;stroke:#2b5962;stroke-width:1.5}
+      .soft{fill:#fff;fill-opacity:.055;stroke:#fff;stroke-opacity:.12;stroke-width:1.4}
+      .flow{fill:none;stroke:#9de0cd;stroke-width:3;marker-end:url(#arrow)}
+      .dash{fill:none;stroke:#9de0cd;stroke-width:2;stroke-dasharray:8 9;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1600" height="900" rx="28" fill="url(#bg)"/>
+
+  <text x="70" y="72" class="cap">DATA → GOVERN → SERVE</text>
+  <text x="70" y="116" class="label" font-size="32">一份受治理的数据，多种使用路径</text>
+
+  <g transform="translate(70 175)">
+    <text x="0" y="0" class="cap">外部数据源</text>
+    <g transform="translate(0 32)">
+      <rect class="soft" width="215" height="82" rx="14"/>
+      <text x="22" y="34" class="label">文件与对象存储</text><text x="22" y="59" class="tiny">CSV · JSON · Parquet · 日志</text>
+    </g>
+    <g transform="translate(0 128)">
+      <rect class="soft" width="215" height="82" rx="14"/>
+      <text x="22" y="34" class="label">业务数据库</text><text x="22" y="59" class="tiny">MySQL · PostgreSQL · SQL Server</text>
+    </g>
+    <g transform="translate(0 224)">
+      <rect class="soft" width="215" height="82" rx="14"/>
+      <text x="22" y="34" class="label">SaaS 与事件流</text><text x="22" y="59" class="tiny">CRM · ERP · Kafka · CDC</text>
+    </g>
+    <g transform="translate(0 320)">
+      <rect class="soft" width="215" height="82" rx="14"/>
+      <text x="22" y="34" class="label">外部 Catalog</text><text x="22" y="59" class="tiny">Glue · Hive · Snowflake</text>
+    </g>
+  </g>
+
+  <path d="M300 327H375" class="flow"/>
+  <path d="M300 423C340 423 340 385 375 385" class="flow"/>
+  <path d="M300 519C340 519 340 443 375 443" class="flow"/>
+  <path d="M300 615C340 615 340 665 375 665" class="dash"/>
+
+  <g transform="translate(375 175)" filter="url(#shadow)">
+    <rect width="710" height="505" rx="24" fill="url(#lake)" stroke="#39717a"/>
+    <text x="34" y="46" class="cap">LAKEHOUSE · 分析主路径</text>
+    <g transform="translate(34 77)">
+      <rect class="box" width="642" height="76" rx="14"/>
+      <text x="24" y="32" class="label">接入与编排</text><text x="24" y="57" class="small">Lakeflow Connect · Auto Loader · Pipelines · Jobs</text>
+    </g>
+    <path d="M355 230V262" class="flow"/>
+    <g transform="translate(34 187)">
+      <rect x="0" y="0" width="194" height="126" rx="16" fill="#314f55" stroke="#5c7377"/>
+      <text x="22" y="38" class="cap" fill="#d3b28c">BRONZE</text><text x="22" y="70" class="label">原始、可回放</text><text x="22" y="99" class="tiny">保留来源与摄取时间</text>
+      <rect x="224" y="0" width="194" height="126" rx="16" fill="#284b52" stroke="#5c858b"/>
+      <text x="246" y="38" class="cap">SILVER</text><text x="246" y="70" class="label">清洗、关联</text><text x="246" y="99" class="tiny">Schema 与质量规则</text>
+      <rect x="448" y="0" width="194" height="126" rx="16" fill="#31584f" stroke="#70a596"/>
+      <text x="470" y="38" class="cap">GOLD</text><text x="470" y="70" class="label">业务数据产品</text><text x="470" y="99" class="tiny">指标、主题、数据集</text>
+      <path d="M194 63H220" class="flow"/><path d="M418 63H444" class="flow"/>
+    </g>
+    <g transform="translate(34 341)">
+      <rect width="642" height="128" rx="16" fill="#0d272d" stroke="#e6533c" stroke-width="2"/>
+      <text x="24" y="38" class="cap" fill="#ff8b74">贯穿治理层</text>
+      <text x="24" y="74" class="label">Unity Catalog</text>
+      <text x="184" y="74" class="small">对象 · 权限 · 发现 · 血缘 · 审计 · 共享</text>
+      <text x="24" y="103" class="tiny">catalog.schema.object · Managed / External / Foreign · Tables / Views / Volumes</text>
+    </g>
+  </g>
+
+  <g transform="translate(1150 175)">
+    <text x="0" y="0" class="cap">分析、应用与外部消费</text>
+    <g transform="translate(0 32)"><rect class="soft" width="380" height="82" rx="14"/><text x="22" y="34" class="label">SQL / BI / Dashboard</text><text x="22" y="59" class="tiny">SQL Warehouse · JDBC/ODBC · API</text></g>
+    <g transform="translate(0 128)"><rect class="soft" width="380" height="82" rx="14"/><text x="22" y="34" class="label">Genie 自然语言分析</text><text x="22" y="59" class="tiny">业务语义 → 只读 SQL → 图表</text></g>
+    <g transform="translate(0 224)"><rect class="soft" width="380" height="82" rx="14"/><text x="22" y="34" class="label">OpenSharing / Marketplace</text><text x="22" y="59" class="tiny">跨组织、跨云、非 Databricks 用户</text></g>
+    <g transform="translate(0 320)"><rect width="380" height="82" rx="14" fill="#263c4b" stroke="#6d8fa1"/><text x="22" y="34" class="label">Lakebase Postgres</text><text x="22" y="59" class="tiny">事务 · 低延迟点查 · 应用/Agent 状态</text></g>
+    <g transform="translate(0 416)"><rect class="soft" width="380" height="82" rx="14"/><text x="22" y="34" class="label">Apps / 外部应用 / Agent</text><text x="22" y="59" class="tiny">SDK · REST · Postgres Driver · Tool</text></g>
+  </g>
+
+  <path d="M1085 302H1140" class="flow"/><path d="M1085 398H1140" class="flow"/><path d="M1085 494H1140" class="flow"/>
+  <path d="M1085 588H1140" class="dash"/><path d="M1340 578V506" class="dash"/>
+
+  <g transform="translate(70 780)">
+    <rect width="1460" height="64" rx="14" fill="#fff" fill-opacity=".045" stroke="#fff" stroke-opacity=".1"/>
+    <circle cx="30" cy="32" r="7" fill="#9de0cd"/><text x="48" y="38" class="small">实线：数据进入或分析消费</text>
+    <circle cx="360" cy="32" r="7" fill="#9de0cd" opacity=".5"/><text x="378" y="38" class="small">虚线：Federation、同步或应用集成路径</text>
+    <text x="1418" y="38" class="tiny" text-anchor="end">概念图 · 2026-08-14</text>
+  </g>
+</svg>
+

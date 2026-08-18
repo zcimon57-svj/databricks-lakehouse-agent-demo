@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="RDS、MySQL、PostgreSQL、PolarDB、TaurusDB 接入 Genie 类治理型数据 Agent 的能力栈、架构与流程">
+  <title>云数据库如何具备 Genie 类能力</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="database-agent.css">
+</head>
+<body>
+  <header class="db-agent-hero" id="top">
+    <nav class="nav shell" aria-label="云数据库 Agent 导航">
+      <a class="brand" href="index.html">← DBX Explore</a>
+      <div class="nav-links">
+        <a href="#answer">结论</a>
+        <a href="#stack">能力栈</a>
+        <a href="#catalog">治理前置</a>
+        <a href="#routes">接入路线</a>
+        <a href="#delivery">内外部</a>
+        <a href="#gates">实施</a>
+        <a href="#db-agent-videos">视频</a>
+      </div>
+    </nav>
+    <div class="shell db-agent-hero-content">
+      <p class="eyebrow">CLOUD DATABASE → GOVERNED DATA AGENT</p>
+      <h1>云数据库接上大模型，<br><span>还不是 Genie</span></h1>
+      <p class="lead">RDS MySQL / PostgreSQL、PolarDB、TaurusDB 已经有可靠数据库底座；真正缺口是统一治理、业务语义、安全执行、Agent Runtime、评测运营和动作审批。</p>
+      <div class="hero-actions">
+        <a class="button primary" href="#stack">看完整能力栈</a>
+        <a class="button secondary" href="details/cloud-database-agent-guide.html">打开详细研究稿</a>
+      </div>
+      <div class="db-agent-proof" aria-label="核心判断">
+        <div><strong>DB</strong><span>已有 SQL / HA / Replica / Monitor</span></div>
+        <div><strong>UC-like</strong><span>必要：身份、策略、血缘、审计</span></div>
+        <div><strong>Semantic</strong><span>必要：指标、Join、同义词、口径</span></div>
+        <div><strong>Eval + Gate</strong><span>必要：回归、监控、写动作审批</span></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section shell" id="answer" aria-labelledby="answer-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">先回答你的问题</p><h2 id="answer-title">不是只补 AI Agent 新功能</h2></div>
+        <p>要先补平台多年前就形成的目录、权限、数据工程和 SQL 执行基础，再叠加近年的语义、Agent 和评测能力。</p>
+      </div>
+      <div class="answer-grid">
+        <article class="has-card"><span>云数据库已经有</span><h3>可靠事实底座</h3><p>SQL、事务、索引、备份、HA、只读节点、系统目录、指标和慢 SQL。</p></article>
+        <article class="need-card"><span>第一类缺口</span><h3>平台前置能力</h3><p>跨源 Catalog、统一身份、行列策略、Owner、分类、血缘、审计、CDC 与分析计算。</p></article>
+        <article class="need-card"><span>第二类缺口</span><h3>业务可理解</h3><p>权威视图、指标、维度、Join 图、同义词、状态/时间/币种口径和可信 SQL。</p></article>
+        <article class="need-card"><span>第三类缺口</span><h3>Agent 可运营</h3><p>规划、NL2SQL、安全执行、引用、Benchmark、Monitor、API、SLA 和反馈闭环。</p></article>
+      </div>
+      <div class="core-statement"><strong>一句话：</strong>数据库保证“事实可执行”，Catalog 保证“事实可治理”，语义层保证“事实可理解”，Agent 保证“事实可对话”，评测与动作网关保证“答案可相信、变化可控制”。</div>
+    </section>
+
+    <section class="section section-dark" id="stack" aria-labelledby="stack-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div><p class="eyebrow">十层架构</p><h2 id="stack-title">从数据库到可信回答</h2></div>
+          <p>红色动作网关与只读分析面故意分开：能诊断并不等于能直接退款、改订单或修库。</p>
+        </div>
+        <figure class="diagram-frame">
+          <img src="assets/diagrams/cloud-database-agent-capability-stack.svg" alt="云数据库到治理型数据 Agent 的十层能力栈，包括统一目录治理、语义、评测和动作网关">
+          <figcaption>产品能力顺序：先治理和安全执行，再语义和可信资产，再 Agent、评测与外部集成。</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section shell" id="catalog" aria-labelledby="catalog-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">为什么需要 Unity Catalog-like</p><h2 id="catalog-title">系统表告诉你“有什么”，治理层告诉你“能不能信、谁能用”</h2></div>
+        <p><code>information_schema</code> / <code>pg_catalog</code> 是重要采集源，但主要是单实例技术元数据，不是跨源企业治理和业务语义产品。</p>
+      </div>
+      <div class="catalog-grid">
+        <article><b>01</b><h3>统一对象</h3><p>跨账号、区域、实例和引擎的稳定资产 ID、Owner、版本与生命周期。</p></article>
+        <article><b>02</b><h3>身份与权限</h3><p>浏览器用户、代表用户、服务与 Agent 身份；策略在执行层强制。</p></article>
+        <article><b>03</b><h3>细粒度策略</h3><p>对象权限、ABAC、行过滤和列掩码，不靠 Prompt 约束敏感数据。</p></article>
+        <article><b>04</b><h3>发现与分类</h3><p>权威/过期/敏感/生产标签、业务域、质量状态和数据 Owner。</p></article>
+        <article><b>05</b><h3>运行时血缘</h3><p>源表 → CDC/联邦 → 业务指标 → Agent SQL → 答案/图表。</p></article>
+        <article><b>06</b><h3>审计与证据</h3><p>谁问、命中什么、生成何 SQL、策略判定、Query ID、成本与反馈。</p></article>
+      </div>
+      <div class="necessary-box">
+        <div><strong>必要</strong><p>没有统一治理，外部 Agent 很容易变成共享高权限账号 + 不可追溯 SQL。</p></div>
+        <div><strong>不充分</strong><p>Catalog 不会自动定义“退款总额”，也不会自动完成 NL2SQL 或判定答案正确。</p></div>
+        <div><strong>还需要</strong><p>语义层、可信 SQL、受控执行、Benchmark/Monitor，以及独立动作网关。</p></div>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="gap" aria-labelledby="gap-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div><p class="eyebrow">差距地图</p><h2 id="gap-title">已有、可组合、仍需产品化</h2></div>
+          <p>这是数据库核心服务到完整数据 Agent 的通用判断，不等于任何一家云厂商的全产品组合缺失。</p>
+        </div>
+        <div class="gap-table" role="table" aria-label="云数据库到数据 Agent 的能力差距">
+          <div class="gap-row gap-head" role="row"><span>能力</span><span>数据库核心</span><span>要补的产品层</span><span>Databricks 对照</span></div>
+          <div class="gap-row" role="row"><strong>SQL / HA / Replica</strong><span class="pill ready-pill">已有</span><span>查询限额、取消、熔断</span><span>SQL Warehouse / 外部 DB</span></div>
+          <div class="gap-row" role="row"><strong>技术元数据</strong><span class="pill partial-pill">单库已有</span><span>跨源对象、Owner、分类</span><span>Unity Catalog</span></div>
+          <div class="gap-row" role="row"><strong>身份与策略</strong><span class="pill partial-pill">局部</span><span>代表用户、统一行列策略</span><span>UC privileges / ABAC</span></div>
+          <div class="gap-row" role="row"><strong>历史 / 跨源</strong><span class="pill partial-pill">引擎依赖</span><span>CDC、Schema 演进、联邦</span><span>Lakeflow / Federation</span></div>
+          <div class="gap-row" role="row"><strong>业务语义</strong><span class="pill missing-pill">核心缺口</span><span>Metric、Join、同义词、口径</span><span>Metric Views / Knowledge Store</span></div>
+          <div class="gap-row" role="row"><strong>自然语言 Agent</strong><span class="pill missing-pill">非 DB 核心</span><span>计划、NL2SQL、引用、会话</span><span>Genie Chat / Agent mode</span></div>
+          <div class="gap-row" role="row"><strong>质量与发布</strong><span class="pill missing-pill">核心缺口</span><span>真值、输出契约、回归 Gate</span><span>Benchmark / Monitor</span></div>
+          <div class="gap-row" role="row"><strong>写动作</strong><span class="pill danger-pill">必须隔离</span><span>typed action、审批、幂等、回滚</span><span>外部 Action Gateway</span></div>
+        </div>
+        <p class="gap-note">AWS 例子：Glue Data Catalog 与 Lake Formation 能补充集中元数据和湖治理，但 RDS 权限、S3 湖权限和最终查询引擎策略仍需逐路径打通；“同一家云”不等于“自动是一套治理面”。</p>
+      </div>
+    </section>
+
+    <section class="section shell" id="routes" aria-labelledby="routes-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">接入路线</p><h2 id="routes-title">不要只有“直连数据库”一个答案</h2></div>
+        <p>实时问题、历史分析和跨域问题的最佳路径不同；企业方案通常需要按时效、域和成本路由。</p>
+      </div>
+      <figure class="diagram-frame light route-diagram">
+        <img src="assets/diagrams/cloud-database-integration-routes.svg" alt="云数据库通过只读联邦、CDC 入湖仓和混合路由接入数据 Agent 的三条路线">
+      </figure>
+      <div class="route-cards">
+        <article><span>A</span><h3>只读副本 / Federation</h3><p>上线快、新鲜；适合 PoC 和实时小查询。必须限制连接、扫描、超时，并返回复制延迟。</p></article>
+        <article><span>B</span><h3>CDC 入湖仓</h3><p>隔离生产、保留历史、跨域 Join；适合售后和长期趋势。要处理 DDL、去重、重放和新鲜度。</p></article>
+        <article class="recommended"><span>D · 推荐</span><h3>混合路由</h3><p>实时监控走只读/监控 API，历史趋势走湖仓；共享 Catalog、指标、权限和回答证据。</p></article>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="delivery" aria-labelledby="delivery-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div><p class="eyebrow">内嵌 vs 外部</p><h2 id="delivery-title">能力相同，责任不相同</h2></div>
+          <p>换成 iframe、API 或 Agent Tool 不能绕过最终用户的数据权限；外部调用方还要承担身份、会话和失败恢复。</p>
+        </div>
+        <div class="delivery-grid">
+          <article><span>数据平台内嵌</span><h3>最快自助分析</h3><ul><li>自动带入用户、Catalog、查询上下文</li><li>原生 SQL、表格、图表与反馈</li><li>适合业务用户与领域专家调优</li></ul></article>
+          <article><span>企业门户 / iframe</span><h3>复用原生体验</h3><ul><li>用户仍需平台身份和底层权限</li><li>管理员控制允许嵌入的域</li><li>适合内部统一门户</li></ul></article>
+          <article><span>外部 API</span><h3>自定义 UI 与流程</h3><ul><li>调用方负责 OAuth / on-behalf-of</li><li>负责异步、SSE、重试、取消和渲染</li><li>适合售后系统、ChatOps 与移动端</li></ul></article>
+          <article><span>Supervisor / 多 Agent</span><h3>跨系统组合最强</h3><ul><li>数据 Agent 只提供受治理分析</li><li>规则、文档、工单与动作分工具化</li><li>写动作走独立审批网关</li></ul></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell" id="cases" aria-labelledby="cases-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">三个落地场景</p><h2 id="cases-title">同一底座，不同数据与动作边界</h2></div>
+        <p>先用只读分析证明正确性和治理，再接外部业务动作。</p>
+      </div>
+      <div class="scenario-grid">
+        <article><span>01 · 自然语言分析</span><h3>3–8 个权威视图起步</h3><p>固化指标、日期、状态、Join 和同义词；用 20–50 个真实问题验证 SQL 结果、输出契约和越权边界。</p></article>
+        <article><span>02 · 智能售后</span><h3>事实 + 政策 + 人工确认</h3><p>订单/退款/工单走数据查询，政策走受版本控制的检索；退款、改订单和发消息由独立 Action Tool 执行。</p></article>
+        <article><span>03 · 数据库智能运维</span><h3>实时事实 + 历史证据 + Runbook</h3><p>关联指标、慢 SQL、等待、拓扑、告警、变更和事件；参数修改、Kill、扩容与 Failover 必须 preview → approval → verify。</p></article>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="gates" aria-labelledby="gates-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div><p class="eyebrow">实施顺序</p><h2 id="gates-title">先做可信 MVP，再做自动动作</h2></div>
+          <p>一个垂直切片只能证明连通；只有相同权限、语义、证据和错误契约跨场景复用，才能证明平台能力。</p>
+        </div>
+        <div class="gate-flow" aria-label="云数据库数据 Agent 实施 Gate">
+          <div><b>G0</b><span>用例 / SLA / 动作边界</span></div>
+          <div><b>G1</b><span>只读副本 / 身份 / Query Guard</span></div>
+          <div><b>G2</b><span>权威视图 / 可信 SQL</span></div>
+          <div><b>G3</b><span>Catalog / Policy / Lineage</span></div>
+          <div><b>G4</b><span>Semantic / Metric / Join</span></div>
+          <div><b>G5</b><span>Agent Runtime / Evidence</span></div>
+          <div><b>G6</b><span>Benchmark / Monitor / 灰度</span></div>
+          <div><b>G7</b><span>iframe / API / 外部 Agent</span></div>
+          <div class="danger-gate"><b>G8</b><span>Action Gateway / Approval / Rollback</span></div>
+        </div>
+        <div class="mvp-box">
+          <div><span>推荐 MVP</span><strong>1 个域 · 1 条只读/CDC 路径 · 3–8 个视图 · 5–10 个可信能力 · 30–50 个问题</strong></div>
+          <a class="button dark" href="details/cloud-database-agent-guide.html">查看完整差距矩阵、Gate 与来源</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell" id="sources" aria-labelledby="sources-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">官方依据</p><h2 id="sources-title">当前资料与产品边界</h2></div>
+        <p>核心结论使用官方文档校准；厂商具体版本、区域、费用和 Preview 状态仍需在目标环境实测。</p>
+      </div>
+      <div class="source-links database-sources">
+        <a href="https://docs.databricks.com/aws/en/data-governance/unity-catalog/">Databricks · Unity Catalog</a>
+        <a href="https://docs.databricks.com/aws/en/business-semantics/metric-views/basic-modeling">Databricks · Metric Views</a>
+        <a href="https://docs.databricks.com/aws/en/query-federation/database-federation">Databricks · Federation</a>
+        <a href="https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/cdc-overview">Databricks · CDC Connectors</a>
+        <a href="https://docs.databricks.com/aws/en/genie-agents/concepts">Databricks · Genie Concepts</a>
+        <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html">AWS · RDS Read Replicas</a>
+        <a href="https://docs.aws.amazon.com/glue/latest/dg/catalog-and-crawler.html">AWS · Glue Data Catalog</a>
+        <a href="https://www.alibabacloud.com/help/en/polardb/product-introduction">Alibaba Cloud · PolarDB</a>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="db-agent-videos" aria-labelledby="db-agent-videos-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div><p class="eyebrow">录屏 + 外部讲解</p><h2 id="db-agent-videos-title">一段完整架构演示，四段分层深挖</h2></div>
+          <p>D1 默认播放中文有声版，是本地架构演示，不冒充生产数据库实调；外部视频分别补治理、直连、CDC 和自然语言体验。</p>
+        </div>
+        <div class="database-video-layout">
+          <article class="recording-card">
+            <video controls preload="metadata" src="../videos/recordings/zh-voice/D1-cloud-database-governed-agent-architecture.mp4"></video>
+            <div><span>D1 · 79s · 架构演示</span><h3>云数据库到治理型数据 Agent</h3><p>数据库已有能力 → Unity Catalog-like → 三条接入路线 → 内外部责任 → G0–G8；非生产实调。</p></div>
+          </article>
+          <div class="external-playlist">
+            <a href="https://www.youtube.com/watch?v=iMGG1Ng7sy4"><b>01 · 治理前置</b><span>Unity Catalog from A-Z · 官方技术深挖；注意 2024 UI 差异</span></a>
+            <a href="https://www.youtube.com/watch?v=vGyXpHTYgrQ"><b>02 · 不搬数据</b><span>Lakehouse Federation · 说明只读联邦路径</span></a>
+            <a href="https://www.youtube.com/watch?v=TT-O-s28mGI"><b>03 · CDC 入湖仓</b><span>Getting Started With Lakeflow Connect · 36:43</span></a>
+            <a href="https://www.youtube.com/watch?v=3_TpRj3z_Gs"><b>04 · 最终体验</b><span>What is AI/BI Genie? · 5:19</span></a>
+          </div>
+        </div>
+        <p class="gap-note">建议顺序：先播 D1 建立全景，再按听众选择 01–04。外部视频证明产品定位，不证明本账号或目标云数据库已经开通。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-content">
+      <div><strong>云数据库到治理型数据 Agent</strong><p>架构建议与厂商事实分开；本项目未连接或修改任何生产数据库。信息截止 2026-08-17。</p></div>
+      <a href="#top">返回顶部 ↑</a>
+    </div>
+  </footer>
+</body>
+</html>

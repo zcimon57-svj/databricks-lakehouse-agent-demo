@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">云数据库到治理型数据 Agent 的完整能力栈</title>
+  <desc id="desc">展示从数据库、查询安全、数据集成、统一目录治理、语义、Agent Runtime、评测和交付入口到独立动作网关的十层架构。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b2025"/>
+      <stop offset="1" stop-color="#17373e"/>
+    </linearGradient>
+    <linearGradient id="govern" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#79cbb7"/>
+      <stop offset="1" stop-color="#b8eadc"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#061416" flood-opacity=".35"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9de0cd"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="900" rx="26" fill="url(#bg)"/>
+  <text x="70" y="62" fill="#ffffff" font-size="34" font-weight="800" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif">云数据库 → 治理型数据 Agent：不是一个模型，而是十层产品系统</text>
+  <text x="70" y="96" fill="#a9bbc0" font-size="17" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif">Unity Catalog-like 是贯穿身份、权限、资产、血缘和审计的关键前置层；语义、运行时和评测仍需独立建设</text>
+
+  <g filter="url(#shadow)" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif">
+    <rect x="80" y="130" width="1060" height="58" rx="14" fill="#ffffff"/>
+    <text x="110" y="154" fill="#e6533c" font-size="13" font-weight="800">L8 · DELIVERY</text>
+    <text x="110" y="176" fill="#142126" font-size="18" font-weight="700">工作区聊天 · Dashboard · iframe · Conversation API · SSE · 多 Agent Tool</text>
+
+    <rect x="80" y="202" width="700" height="83" rx="16" fill="#f7f5f0"/>
+    <text x="110" y="228" fill="#e6533c" font-size="13" font-weight="800">L6 · AGENT RUNTIME</text>
+    <text x="110" y="253" fill="#142126" font-size="18" font-weight="700">检索 → 计划 → SQL → 检查 → 执行 → 解释</text>
+    <text x="110" y="274" fill="#5f6c70" font-size="14">澄清歧义 · 多步分析 · 表格/图表/引用 · 会话上下文</text>
+
+    <rect x="795" y="202" width="345" height="83" rx="16" fill="#f7f5f0"/>
+    <text x="825" y="228" fill="#e6533c" font-size="13" font-weight="800">L7 · QUALITY LOOP</text>
+    <text x="825" y="253" fill="#142126" font-size="18" font-weight="700">Benchmark · Monitor</text>
+    <text x="825" y="274" fill="#5f6c70" font-size="14">真值 SQL · 输出契约 · 回归 Gate</text>
+
+    <rect x="80" y="299" width="1060" height="86" rx="16" fill="#ffffff"/>
+    <text x="110" y="326" fill="#e6533c" font-size="13" font-weight="800">L4–L5 · BUSINESS SEMANTICS + TRUSTED ASSETS</text>
+    <text x="110" y="353" fill="#142126" font-size="19" font-weight="700">指标 / 维度 / Join / 同义词 / 时区 / 状态口径</text>
+    <text x="610" y="353" fill="#142126" font-size="19" font-weight="700">Reviewed SQL · 参数模板 · 只读 Function</text>
+    <text x="110" y="374" fill="#5f6c70" font-size="14">回答“业务上是什么意思”</text>
+    <text x="610" y="374" fill="#5f6c70" font-size="14">把高频复杂逻辑固化成可授权资产</text>
+
+    <rect x="80" y="399" width="1060" height="113" rx="18" fill="url(#govern)"/>
+    <text x="110" y="429" fill="#123b34" font-size="14" font-weight="900">L2 · UNITY CATALOG-LIKE GOVERNANCE — 必要但不充分</text>
+    <text x="110" y="459" fill="#10252b" font-size="21" font-weight="800">统一对象与 Owner</text>
+    <text x="350" y="459" fill="#10252b" font-size="21" font-weight="800">身份 / 权限 / 行列策略</text>
+    <text x="695" y="459" fill="#10252b" font-size="21" font-weight="800">分类 / 发现</text>
+    <text x="900" y="459" fill="#10252b" font-size="21" font-weight="800">血缘 / 审计</text>
+    <text x="110" y="490" fill="#315c54" font-size="14">跨实例、引擎、湖仓的稳定资产 ID · 策略在执行层强制 · 源表到 Agent 回答可追溯</text>
+
+    <rect x="80" y="526" width="1060" height="78" rx="16" fill="#ffffff"/>
+    <text x="110" y="552" fill="#e6533c" font-size="13" font-weight="800">L3 · DATA INTEGRATION + HISTORY</text>
+    <text x="110" y="579" fill="#142126" font-size="19" font-weight="700">联邦 / 只读直连：新鲜、少搬数据</text>
+    <text x="610" y="579" fill="#142126" font-size="19" font-weight="700">CDC 入湖仓：隔离、历史、跨域</text>
+
+    <rect x="80" y="618" width="1060" height="78" rx="16" fill="#f7f5f0"/>
+    <text x="110" y="644" fill="#e6533c" font-size="13" font-weight="800">L1 · SAFE QUERY BOUNDARY</text>
+    <text x="110" y="672" fill="#142126" font-size="18" font-weight="700">只读身份 · Replica · SQL allowlist · timeout · row/scan/concurrency cap · cancel · kill switch</text>
+
+    <rect x="80" y="710" width="1060" height="90" rx="16" fill="#0b1a1e" stroke="#4d747c"/>
+    <text x="110" y="738" fill="#9de0cd" font-size="13" font-weight="800">L0 · CLOUD DATABASE FOUNDATION</text>
+    <text x="110" y="769" fill="#ffffff" font-size="21" font-weight="800">RDS MySQL / PostgreSQL · PolarDB · TaurusDB · 其他托管关系数据库</text>
+    <text x="110" y="792" fill="#a9bbc0" font-size="14">SQL · ACID · HA · Backup / PITR · Read Replica · Native Catalog · Metrics / Logs</text>
+
+    <rect x="1180" y="202" width="340" height="598" rx="20" fill="#391f1c" stroke="#d9705e"/>
+    <text x="1212" y="238" fill="#ffac9e" font-size="14" font-weight="900">L9 · ACTION GATEWAY</text>
+    <text x="1212" y="273" fill="#ffffff" font-size="22" font-weight="800">与分析权限分离</text>
+    <line x1="1212" y1="295" x2="1488" y2="295" stroke="#8a4a40"/>
+    <g fill="#f6c6bd" font-size="17">
+      <text x="1212" y="338">① typed action / Runbook</text>
+      <text x="1212" y="382">② preview / dry-run</text>
+      <text x="1212" y="426">③ 影响范围与风险</text>
+      <text x="1212" y="470">④ 人工 / 策略审批</text>
+      <text x="1212" y="514">⑤ 幂等执行</text>
+      <text x="1212" y="558">⑥ verify</text>
+      <text x="1212" y="602">⑦ rollback / 补偿</text>
+      <text x="1212" y="646">⑧ 证据归档</text>
+    </g>
+    <rect x="1212" y="694" width="276" height="72" rx="12" fill="#542a25"/>
+    <text x="1234" y="722" fill="#ffffff" font-size="16" font-weight="800">退款 / 改订单 / 修库</text>
+    <text x="1234" y="748" fill="#ffac9e" font-size="14">不能由自由 SQL 或 Prompt 直连</text>
+  </g>
+
+  <path d="M 1150 245 C 1170 245, 1170 245, 1180 245" fill="none" stroke="#9de0cd" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="80" y="853" fill="#9de0cd" font-size="16" font-weight="700" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif">关键原则：治理在模型之前，评测在发布之前，审批在写动作之前。</text>
+</svg>

@@ -1,0 +1,17 @@
+{
+  "name": "databricks-explore-demo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "capture:site": "node scripts/record_page.mjs http://127.0.0.1:8765 evidence/workspace/site-v0.webm",
+    "build:zh-voiceovers": "node scripts/build_zh_voiceovers.mjs",
+    "render:details": "node scripts/render_markdown_pages.mjs",
+    "validate:zh-voiceovers": "node scripts/validate_zh_voiceovers.mjs"
+  },
+  "devDependencies": {
+    "ffmpeg-static": "^5.2.0",
+    "marked": "^18.0.9",
+    "playwright": "1.61.1"
+  }
+}

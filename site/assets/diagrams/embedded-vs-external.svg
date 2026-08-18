@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="820" viewBox="0 0 1600 820" role="img" aria-labelledby="title desc">
+  <title id="title">工作区内嵌与外部调用对比</title>
+  <desc id="desc">左侧是工作区 UI 的低配置体验，右侧是外部应用和 Agent 的可组合体验，中间共享 Unity Catalog、SQL Warehouse、Lakehouse 与 Lakebase。</desc>
+  <defs>
+    <linearGradient id="left" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#173b43"/><stop offset="1" stop-color="#102a31"/></linearGradient>
+    <linearGradient id="right" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff7f1"/><stop offset="1" stop-color="#f3eee7"/></linearGradient>
+    <filter id="s"><feDropShadow dx="0" dy="9" stdDeviation="12" flood-color="#10252b" flood-opacity=".12"/></filter>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#e6533c"/></marker>
+    <style>
+      text{font-family:Inter,system-ui,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+      .h{font-size:30px;font-weight:800}.t{font-size:20px;font-weight:750}.b{font-size:16px}.c{font-size:13px;font-weight:800;letter-spacing:2px}.m{font-size:14px}
+    </style>
+  </defs>
+  <rect width="800" height="820" fill="url(#left)"/><rect x="800" width="800" height="820" fill="url(#right)"/>
+  <text x="70" y="68" class="c" fill="#9de0cd">WORKSPACE EMBEDDED</text><text x="70" y="112" class="h" fill="#fff">工作区内嵌：上下文完整、启动快</text>
+  <text x="1530" y="68" class="c" fill="#e6533c" text-anchor="end">EXTERNAL CONSUMERS</text><text x="1530" y="112" class="h" fill="#142126" text-anchor="end">外部调用：可组合、可自动化</text>
+
+  <g transform="translate(70 165)">
+    <g><rect width="285" height="104" rx="16" fill="#fff" fill-opacity=".07" stroke="#fff" stroke-opacity=".13"/><text x="22" y="37" class="t" fill="#fff">浏览器用户身份</text><text x="22" y="67" class="m" fill="#abc0c4">Google/企业登录与当前用户上下文</text></g>
+    <g transform="translate(0 122)"><rect width="285" height="104" rx="16" fill="#fff" fill-opacity=".07" stroke="#fff" stroke-opacity=".13"/><text x="22" y="37" class="t" fill="#fff">原生入口</text><text x="22" y="67" class="m" fill="#abc0c4">Catalog · SQL · Notebook · Genie</text></g>
+    <g transform="translate(0 244)"><rect width="285" height="104" rx="16" fill="#fff" fill-opacity=".07" stroke="#fff" stroke-opacity=".13"/><text x="22" y="37" class="t" fill="#fff">平台串联体验</text><text x="22" y="67" class="m" fill="#abc0c4">计算、SQL、图表、血缘和反馈</text></g>
+    <g transform="translate(0 366)"><rect width="285" height="104" rx="16" fill="#fff" fill-opacity=".07" stroke="#fff" stroke-opacity=".13"/><text x="22" y="37" class="t" fill="#fff">更适合</text><text x="22" y="67" class="m" fill="#abc0c4">探索 · 开发 · 人工分析 · 演示</text></g>
+  </g>
+
+  <g transform="translate(1245 165)">
+    <g><rect width="285" height="104" rx="16" fill="#fff" stroke="#ded8d0"/><text x="22" y="37" class="t" fill="#142126">显式认证</text><text x="22" y="67" class="m" fill="#5f6c70">OAuth · 服务身份 · 短期凭据</text></g>
+    <g transform="translate(0 122)"><rect width="285" height="104" rx="16" fill="#fff" stroke="#ded8d0"/><text x="22" y="37" class="t" fill="#142126">程序入口</text><text x="22" y="67" class="m" fill="#5f6c70">CLI · SDK · REST · JDBC/ODBC</text></g>
+    <g transform="translate(0 244)"><rect width="285" height="104" rx="16" fill="#fff" stroke="#ded8d0"/><text x="22" y="37" class="t" fill="#142126">调用方责任</text><text x="22" y="67" class="m" fill="#5f6c70">连接、重试、限流、UI、审计</text></g>
+    <g transform="translate(0 366)"><rect width="285" height="104" rx="16" fill="#fff" stroke="#ded8d0"/><text x="22" y="37" class="t" fill="#142126">更适合</text><text x="22" y="67" class="m" fill="#5f6c70">应用 · Agent · 批量 · CI/CD</text></g>
+  </g>
+
+  <g transform="translate(505 178)" filter="url(#s)">
+    <rect width="590" height="460" rx="28" fill="#fff" stroke="#d8dfdc" stroke-width="2"/>
+    <text x="295" y="48" class="c" fill="#e6533c" text-anchor="middle">SHARED GOVERNED CORE</text>
+    <text x="295" y="88" class="h" fill="#142126" text-anchor="middle">共同的数据与治理核心</text>
+    <g transform="translate(42 120)"><rect width="506" height="62" rx="12" fill="#102f36"/><text x="253" y="39" class="t" fill="#fff" text-anchor="middle">Unity Catalog · 身份 · 权限 · 血缘</text></g>
+    <g transform="translate(42 202)"><rect width="242" height="82" rx="14" fill="#e7f4f0"/><text x="121" y="35" class="t" fill="#173b43" text-anchor="middle">Lakehouse</text><text x="121" y="60" class="m" fill="#5f6c70" text-anchor="middle">Delta · Spark · Photon</text></g>
+    <g transform="translate(306 202)"><rect width="242" height="82" rx="14" fill="#fff0e9"/><text x="121" y="35" class="t" fill="#7d3124" text-anchor="middle">Lakebase</text><text x="121" y="60" class="m" fill="#5f6c70" text-anchor="middle">Postgres · 事务 · 状态</text></g>
+    <g transform="translate(42 304)"><rect width="154" height="82" rx="14" fill="#f1f0ec"/><text x="77" y="35" class="t" fill="#142126" text-anchor="middle">SQL</text><text x="77" y="60" class="m" fill="#5f6c70" text-anchor="middle">Warehouse</text></g>
+    <g transform="translate(218 304)"><rect width="154" height="82" rx="14" fill="#f1f0ec"/><text x="77" y="35" class="t" fill="#142126" text-anchor="middle">Genie</text><text x="77" y="60" class="m" fill="#5f6c70" text-anchor="middle">自然语言</text></g>
+    <g transform="translate(394 304)"><rect width="154" height="82" rx="14" fill="#f1f0ec"/><text x="77" y="35" class="t" fill="#142126" text-anchor="middle">Lakeflow</text><text x="77" y="60" class="m" fill="#5f6c70" text-anchor="middle">Pipeline · Job</text></g>
+    <text x="295" y="424" class="m" fill="#7a8588" text-anchor="middle">换入口不等于绕过治理；每次访问仍按身份与权限执行</text>
+  </g>
+
+  <path d="M355 388H493" fill="none" stroke="#9de0cd" stroke-width="3" marker-end="url(#a)"/>
+  <path d="M1107 388H1233" fill="none" stroke="#e6533c" stroke-width="3" marker-end="url(#a)"/>
+
+  <g transform="translate(70 710)">
+    <rect width="1460" height="64" rx="14" fill="#10252b"/>
+    <text x="30" y="40" class="b" fill="#fff">关键判断：</text>
+    <text x="135" y="40" class="b" fill="#c4d3d6">内嵌减少配置与认知负担；外部增加组合与自动化能力，同时把更多工程责任交给调用方。</text>
+    <text x="1428" y="40" class="m" fill="#809498" text-anchor="end">概念图 · 2026-08-14</text>
+  </g>
+</svg>
+

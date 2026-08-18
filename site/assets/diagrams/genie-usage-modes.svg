@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Genie Agent 多种使用方式</title>
+  <desc id="desc">工作区、iframe、API 和多 Agent 四类使用路径，以及不同路径的责任边界。</desc>
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7f5f0"/>
+      <stop offset="1" stop-color="#e7eee9"/>
+    </linearGradient>
+    <filter id="shadow2" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#10252b" flood-opacity="0.13"/>
+    </filter>
+    <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#e6533c"/>
+    </marker>
+    <style>
+      .cn { font-family: Inter, "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .head { font-size: 25px; font-weight: 850; fill: #142126; }
+      .body { font-size: 18px; fill: #53666a; }
+      .tag { font-size: 14px; font-weight: 850; letter-spacing: 1.8px; fill: #e6533c; }
+      .white { fill: #ffffff; }
+    </style>
+  </defs>
+  <rect width="1600" height="900" rx="28" fill="url(#bg2)"/>
+  <g class="cn">
+    <text x="70" y="76" font-size="40" font-weight="850" fill="#142126">Genie 的四种交付方式：同一语义层，不同集成责任</text>
+    <text x="70" y="114" font-size="20" fill="#5f6c70">先在工作区验证答案，再决定是嵌入 UI、调用 API，还是作为多 Agent 的数据工具</text>
+
+    <g filter="url(#shadow2)">
+      <rect x="628" y="274" width="344" height="248" rx="34" fill="#10252b"/>
+    </g>
+    <circle cx="800" cy="332" r="30" fill="#e6533c"/>
+    <text x="800" y="341" text-anchor="middle" font-size="25" font-weight="900" class="white">G</text>
+    <text x="800" y="398" text-anchor="middle" font-size="30" font-weight="850" class="white">受治理的 Genie Agent</text>
+    <text x="800" y="439" text-anchor="middle" font-size="18" fill="#9de0cd">Sources · Knowledge · Instructions</text>
+    <text x="800" y="471" text-anchor="middle" font-size="18" fill="#9de0cd">Examples · Benchmark · Monitor</text>
+    <text x="800" y="503" text-anchor="middle" font-size="16" fill="#b9cccf">同一个 Agent，可被多种入口复用</text>
+
+    <path d="M 628 355 C 555 330, 520 302, 466 282" fill="none" stroke="#e6533c" stroke-width="4" marker-end="url(#arrow2)"/>
+    <path d="M 972 355 C 1048 330, 1080 302, 1134 282" fill="none" stroke="#e6533c" stroke-width="4" marker-end="url(#arrow2)"/>
+    <path d="M 680 522 C 602 570, 548 592, 468 617" fill="none" stroke="#e6533c" stroke-width="4" marker-end="url(#arrow2)"/>
+    <path d="M 920 522 C 1000 570, 1052 592, 1130 617" fill="none" stroke="#e6533c" stroke-width="4" marker-end="url(#arrow2)"/>
+
+    <g filter="url(#shadow2)">
+      <rect x="70" y="174" width="400" height="220" rx="24" fill="#ffffff"/>
+      <rect x="1130" y="174" width="400" height="220" rx="24" fill="#ffffff"/>
+      <rect x="70" y="586" width="400" height="220" rx="24" fill="#ffffff"/>
+      <rect x="1130" y="586" width="400" height="220" rx="24" fill="#ffffff"/>
+    </g>
+
+    <text x="102" y="212" class="tag">01 · WORKSPACE</text>
+    <text x="102" y="254" class="head">工作区直接问答</text>
+    <text x="102" y="292" class="body">Chat：单问 / 追问 / SQL / 图表</text>
+    <text x="102" y="324" class="body">Agent：多步分析 / 多次查询 / 报告</text>
+    <text x="102" y="362" font-size="16" fill="#218267">最快上线 · 平台承担最多 UI 与上下文</text>
+
+    <text x="1162" y="212" class="tag">02 · IFRAME</text>
+    <text x="1162" y="254" class="head">嵌入企业门户</text>
+    <text x="1162" y="292" class="body">复用原生 Genie UI 与同一 Agent</text>
+    <text x="1162" y="324" class="body">用户仍须登录并拥有数据权限</text>
+    <text x="1162" y="362" font-size="16" fill="#e6533c">嵌入用户不能编辑 Agent 配置</text>
+
+    <text x="102" y="624" class="tag">03 · API</text>
+    <text x="102" y="666" class="head">程序化问答与流式报告</text>
+    <text x="102" y="704" class="body">Conversation API：异步会话</text>
+    <text x="102" y="736" class="body">Agent API Beta：SSE / 多步结果</text>
+    <text x="102" y="774" font-size="16" fill="#e6533c">应用承担 OAuth、轮询、重试、渲染、审计</text>
+
+    <text x="1162" y="624" class="tag">04 · MULTI-AGENT</text>
+    <text x="1162" y="666" class="head">作为数据分析工具</text>
+    <text x="1162" y="704" class="body">Supervisor → Genie / Policy / Ticket</text>
+    <text x="1162" y="736" class="body">Action Tool 与分析工具分离</text>
+    <text x="1162" y="774" font-size="16" fill="#e6533c">退款、改订单、修库必须走审批 Gate</text>
+
+    <rect x="510" y="584" width="580" height="222" rx="24" fill="#17373e"/>
+    <text x="544" y="626" font-size="16" font-weight="850" letter-spacing="2" fill="#9de0cd">选择原则</text>
+    <text x="544" y="668" font-size="21" font-weight="800" class="white">只要 Databricks UI → 工作区</text>
+    <text x="544" y="704" font-size="21" font-weight="800" class="white">门户里保留原生体验 → iframe</text>
+    <text x="544" y="740" font-size="21" font-weight="800" class="white">自定义交互 / 自动化编排 → API</text>
+    <text x="544" y="776" font-size="21" font-weight="800" class="white">需要动作与跨系统协作 → 多 Agent + 审批</text>
+
+    <text x="70" y="860" font-size="17" fill="#5f6c70">共同底线：用户身份与 Unity Catalog 权限不会因为换成 iframe/API/Agent 而自动消失。</text>
+  </g>
+</svg>

@@ -1,0 +1,25 @@
+node_modules/
+.tools/
+.DS_Store
+videos/recordings/*.tmp.*
+evidence/workspace/*.tmp.*
+
+# Local credentials and browser/OAuth state must never enter this public repo.
+.env
+.env.*
+!.env.example
+.databrickscfg
+**/.databrickscfg
+*.pem
+*.key
+*.p12
+*.sqlite
+*.har
+**/storage-state*.json
+**/cookies*.json
+**/browser-profile/
+playwright-report/
+test-results/
+
+# Generated only inside the GitHub Pages workflow.
+_site/

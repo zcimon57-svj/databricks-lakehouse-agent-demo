@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="真实录屏与讲稿">
+  <title>真实录屏与讲稿</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../details.css">
+</head>
+<body class="detail-page">
+  <header class="detail-header">
+    <nav class="detail-nav shell" aria-label="详情页导航">
+      <a class="brand" href="../index.html#videos">← 返回视频模块</a>
+      <a href="../index.html">DBX Explore 首页</a>
+    </nav>
+    <div class="shell detail-heading">
+      <p class="eyebrow">RECORDINGS</p>
+      <h1>真实录屏与讲稿</h1>
+      <p>这是完整研究层；演示页保持精简，证据、边界、步骤和来源在这里展开。</p>
+    </div>
+  </header>
+  <main class="shell detail-layout">
+    <article class="markdown-body">
+<h1>真实 Databricks 工作区录屏索引</h1>
+<p>信息截止：2026-08-18<br>工作区：AWS Databricks Free Edition<br>格式：H.264 MP4；真实 UI 约 1440×758 / 4 fps，架构演示 1440×900 / 25 fps；画面内置中文字幕</p>
+<h2>使用说明</h2>
+<p>这些不是产品宣传片，而是本项目真实工作区的操作证据。<code>zh-voice/</code> 保存 13 段普通话有声版，站点默认播放这一版本；当前目录根部保留逐帧画面一致的无声原版。中文配音使用合成神经语音，不冒充真人录音；逐段讲稿、时间轴、构建方式与哈希见 <a href="voiceover.html">配音说明</a>，补充材料见 <a href="external-videos.html">外部视频索引</a>。</p>
+<p>隐私处理：录制脚本会替换邮箱和 UUID，模糊账号/头像控件；所有抽检画面均未发现邮箱。数据全部为 <code>samples</code> 或 <code>.invalid</code> 保留域的确定性合成数据。</p>
+<h2>录屏清单</h2>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th align="right">时长</th>
+<th>覆盖模块/案例</th>
+<th>讲解重点</th>
+<th>无声原版 SHA-256</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="../../videos/recordings/zh-voice/G1-genie-business-user-multi-use.mp4">有声</a> · <a href="../../videos/recordings/G1-genie-business-user-multi-use.mp4">无声</a></td>
+<td align="right">61.25s</td>
+<td>Genie 业务使用、C2-C4</td>
+<td>明确口径的退款问答、Show code、三个数据库事故、多轮追问与写动作审批边界</td>
+<td><code>eade2ba0b51bdc7dba77818e2d9ecc0bb97d4e63930642f019ab08c557f33471</code></td>
+</tr>
+<tr>
+<td><a href="../../videos/recordings/zh-voice/G2-genie-authoring-monitor-benchmark.mp4">有声</a> · <a href="../../videos/recordings/G2-genie-authoring-monitor-benchmark.mp4">无声</a></td>
+<td align="right">82.75s</td>
+<td>Genie 实现与质量闭环</td>
+<td>7 Sources、Instructions、Curated Example、Monitor、3 个 Benchmark、三次 33% 运行及失败分类</td>
+<td><code>b4f7bf896f8c0a87b695a2355bfb3adf5655002c773cb8e7729a514acb140fa7</code></td>
+</tr>
+<tr>
+<td><a href="../../videos/recordings/zh-voice/G3-genie-embedded-vs-api-architecture.mp4">有声</a> · <a href="../../videos/recordings/G3-genie-embedded-vs-api-architecture.mp4">无声</a></td>
+<td align="right">71.00s</td>
+<td>Genie 外部集成</td>
+<td>工作区、iframe、Conversation API、Agent API/SSE、多 Agent 与审批 Gate；架构演示，非本账号 API 实调</td>
+<td><code>170b368e23e3fa5e955559991c9d53056389cf87ff1ce10b16c1411bf39732c2</code></td>
+</tr>
+<tr>
+<td><a href="../../videos/recordings/zh-voice/D1-cloud-database-governed-agent-architecture.mp4">有声</a> · <a href="../../videos/recordings/D1-cloud-database-governed-agent-architecture.mp4">无声</a></td>
+<td align="right">78.80s</td>
+<td>云数据库接入专题</td>
+<td>数据库已有能力、Unity Catalog-like、语义/评测、三条接入路线、内外部责任与 G0–G8；架构演示，非生产实调</td>
+<td><code>a6961aab6416b626a3e55d3ecf9ce09bc675d4a1ec37cf86eb5343001c9834ba</code></td>
+</tr>
+<tr>
+<td><a href="../../videos/recordings/zh-voice/M01-workspace-free-edition-entrypoints.mp4">有声</a> · <a href="../../videos/recordings/M01-workspace-free-edition-entrypoints.mp4">无声</a></td>
+<td align="right">9.50s</td>
+<td>M01、M14</td>
+<td>Free Edition 版本证据；New 菜单里的数据、SQL、Dashboard、Genie、Job、Pipeline、App 入口</td>
+<td><code>b0c26bf46c4cc28cc25a27c49be0bebe427a923ff3a10853c80acf46aca6ea0b</code></td>
+</tr>
+<tr>
+<td><a href="../../videos/recordings/zh-voice/M02-catalog-delta-lineage.mp4">有声</a> · <a href="../../videos/recordings/M02-catalog-delta-lineage.mp4">无声</a></td>
+<td align="right">25.00s</td>
+<td>M02、M03、M04、C1</td>
+<td>Catalog→Schema→MANAGED Delta 表→Details→自动 Lineage</td>
+<td><code>e6c61c9aef49c680332ff95e1034b860be424d30699ec193d05262feaadf09f8</code></td>
+</tr>
+<tr>
+<td><a href="../../videos/recordings/zh-voice/M05-data-ingestion-paths.mp4">有声</a> · <a href="../../videos/recordings/M05-data-ingestion-paths.mp4">无声</a></td>
+<td align="right">13.50s</td>
+<td>M05、C1</td>
+<td>文件/Volume 与托管数据库/SaaS Connector；本次实测 Files API 路径</td>
+<td><code>3be9e0e5e330476048188cc7b04cc888ca6f466a042f35f02f02306fa1e4586a</code></td>
+</tr>
+<tr>
+<td><a href="../../videos/recordings/zh-voice/M06-jobs-and-pipelines.mp4">有声</a> · <a href="../../videos/recordings/M06-jobs-and-pipelines.mp4">无声</a></td>
+<td align="right">13.75s</td>
+<td>M06、M15、C1</td>
+<td>Ingestion Pipeline、ETL Pipeline、Job 的职责；当前为空，不创建资源</td>
+<td><code>bb8d87bef05cf5ba8d89d614dc2f4f59beeb1a51d38af8bc1aa015077df58af5</code></td>
+</tr>
+<tr>
+<td><a href="../../videos/recordings/zh-voice/M07-sql-warehouse-and-lakebase.mp4">有声</a> · <a href="../../videos/recordings/M07-sql-warehouse-and-lakebase.mp4">无声</a></td>
+<td align="right">14.25s</td>
+<td>M07、M10、M13、M15</td>
+<td>分析 SQL Warehouse 与 OLTP Lakebase 分工；内嵌/外部连接责任；只验证 Lakebase 入口</td>
+<td><code>c1580b27ebe120b36d30fd827bacb55779348f7897e4b24688d7079ddda3457c</code></td>
+</tr>
+<tr>
+<td><a href="../../videos/recordings/zh-voice/M09-genie-embedded-natural-language.mp4">有声</a> · <a href="../../videos/recordings/M09-genie-embedded-natural-language.mp4">无声</a></td>
+<td align="right">34.25s</td>
+<td>M08、M09、M13、C2-C4</td>
+<td>中文回答与图表、Show code、7 Sources、Instructions、Curated Example</td>
+<td><code>ee181f177bb5348cace17050126bad55ec539a20a83e569b09a46da95927f6cd</code></td>
+</tr>
+<tr>
+<td><a href="../../videos/recordings/zh-voice/C2-natural-language-trusted-sql.mp4">有声</a> · <a href="../../videos/recordings/C2-natural-language-trusted-sql.mp4">无声</a></td>
+<td align="right">16.25s</td>
+<td>C2</td>
+<td>先固定可信 SQL 答案：西南 3、华南 2、东北 1、华北 1，再核对 Genie</td>
+<td><code>89650509e2459deee639918c5fd4c20ef2ea310985e26d8d6f5ad8f53705165b</code></td>
+</tr>
+<tr>
+<td><a href="../../videos/recordings/zh-voice/C3-intelligent-after-sales.mp4">有声</a> · <a href="../../videos/recordings/C3-intelligent-after-sales.mp4">无声</a></td>
+<td align="right">15.50s</td>
+<td>C3</td>
+<td>700 条售后数据→18 条行动队列→政策/建议→写动作人工审批</td>
+<td><code>8d7c1d3a2e93c152cad09861abe8923127e48c01507221454d0c0aee4048f5eb</code></td>
+</tr>
+<tr>
+<td><a href="../../videos/recordings/zh-voice/C4-database-intelligent-operations.mp4">有声</a> · <a href="../../videos/recordings/C4-database-intelligent-operations.mp4">无声</a></td>
+<td align="right">16.00s</td>
+<td>C4</td>
+<td>指标/慢 SQL/告警/变更/事故/Runbook→诊断；不连接或修改生产库</td>
+<td><code>57809da28269d29aab1a946ef1a55edfea8c60ff6a2f54e781b0833708cb5692</code></td>
+</tr>
+</tbody></table>
+<p>总时长约 7 分 32 秒。全部 13 段现在都有逐画面对齐的普通话解说；旧 9 段适合按模块短插播，G1/G2/G3 是 Genie 专题长讲，D1 是云数据库接入专题。</p>
+<h2>建议演示顺序</h2>
+<ol>
+<li>播 M01，30 秒说明账号版本、入口和 Free Edition 边界。</li>
+<li>展示 <code>site/assets/diagrams/platform-data-paths.svg</code>，再播 M05→M02→M06→M07，讲清“接入→Delta→治理→任务→查询/应用”。</li>
+<li>播 C2 作为正确答案基线；快速汇报播 M09，Genie 专题改播 G1，强调自然语言最终仍落到受权限约束、可展开的 SQL。</li>
+<li>播 G2，展示实现面和真实 Benchmark：不能把真值错误、输出契约失败和评测器异常都算给模型。</li>
+<li>播 G3 并展示两张 Genie SVG，总结工作区、iframe、API 与多 Agent 的责任差异。</li>
+<li>播 D1 并展示两张云数据库 SVG，解释 RDS / PolarDB / TaurusDB 类产品要补的前置治理、语义、评测和三条接入路线。</li>
+<li>C3/C4 作为售后和运维的短版 SQL 证据；G1 已把二者放入同一个连续 Agent 会话。</li>
+</ol>
+<h2>领导版口述提纲</h2>
+<ul>
+<li>Databricks 的主线不是“又一个数据库”，而是一份受治理的数据同时服务接入、处理、SQL、BI、自然语言、应用和共享。</li>
+<li>Delta/Unity Catalog/SQL Warehouse 分别解决可靠表、统一治理和分析计算；Lakebase 是另一个面向事务应用的 Postgres 路径。</li>
+<li>Genie 的价值不是绕过 SQL，而是把领域专家维护的口径、示例、数据源和权限包装成业务用户能直接提问的接口。</li>
+<li>Benchmark 是回归评测，不是训练集；本轮最终有效运行严格准确率仍为 33%，其余两题分别是输出契约失败和评测器异常待复核。</li>
+<li>内嵌体验由平台接好身份、权限、计算、图表和反馈；外部 API/Agent 可以嵌入业务流程，但身份代理、失败恢复、审计和审批不能甩给模型。</li>
+<li>Free Edition 足以验证功能路径，不代表生产 SLA、私网、合规、容量或成本结论。</li>
+</ul>
+<h2>未做成“真实资源操作”的模块</h2>
+<ul>
+<li>AI/BI Dashboard/Metric View：本轮用 Genie 生成图表和官方 Dashboard 视频说明，没有创建 Dashboard；</li>
+<li>Databricks Apps：入口可见，未创建 App；</li>
+<li>Lakehouse Federation/Open Sharing：完整研究与外部视频覆盖，未创建 Connection/Share；</li>
+<li>Lakebase：真实入口已录，官方配额确认，但没有创建项目、分支或数据库。</li>
+</ul>
+<p>这些边界在汇报中必须原样说明，不能用官方视频替代本工作区实测证据。</p>
+
+    </article>
+  </main>
+  <footer>
+    <div class="shell footer-content">
+      <div><strong>真实录屏与讲稿</strong><p>由项目内 Markdown 源文件生成；UTF-8 静态页面，可离线阅读。</p></div>
+      <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">返回顶部 ↑</a>
+    </div>
+  </footer>
+</body>
+</html>

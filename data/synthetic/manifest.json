@@ -1,0 +1,231 @@
+{
+  "generated_at": "2026-08-14T00:00:00+08:00",
+  "seed": 20260814,
+  "classification": "SYNTHETIC_NON_SENSITIVE",
+  "notice": "All people, organizations, hosts, events and metrics are fictional.",
+  "datasets": {
+    "customers": {
+      "file": "customers.csv",
+      "rows": 300,
+      "columns": [
+        "customer_id",
+        "customer_name",
+        "email",
+        "segment",
+        "region",
+        "signup_date",
+        "is_vip"
+      ],
+      "bytes": 27428,
+      "sha256": "3f7b70be2dc52329dbf1388a91cfe4a06ee49f5b178f1ba8ebbc3be459b3c690"
+    },
+    "products": {
+      "file": "products.csv",
+      "rows": 60,
+      "columns": [
+        "product_id",
+        "product_name",
+        "category",
+        "unit_price",
+        "warranty_days",
+        "active"
+      ],
+      "bytes": 3999,
+      "sha256": "2cd06c6432016f81fdbcfe2727e0008788e3cd781cff2caeee30efdc82e4126a"
+    },
+    "orders": {
+      "file": "orders.csv",
+      "rows": 2400,
+      "columns": [
+        "order_id",
+        "customer_id",
+        "order_ts",
+        "channel",
+        "status",
+        "region",
+        "payment_method",
+        "total_amount"
+      ],
+      "bytes": 183712,
+      "sha256": "c71058531434413618f66706c145e829d46fc228ef5735ce91c5d96e2a78942a"
+    },
+    "order_items": {
+      "file": "order_items.csv",
+      "rows": 6036,
+      "columns": [
+        "order_item_id",
+        "order_id",
+        "product_id",
+        "quantity",
+        "unit_price",
+        "discount_pct",
+        "line_amount"
+      ],
+      "bytes": 277688,
+      "sha256": "0235305312ffd84de178065e4f29c1513524b69d6ff45c15b9cedcaa2692d9f3"
+    },
+    "refunds": {
+      "file": "refunds.csv",
+      "rows": 235,
+      "columns": [
+        "refund_id",
+        "order_id",
+        "requested_ts",
+        "completed_ts",
+        "reason",
+        "status",
+        "amount"
+      ],
+      "bytes": 20063,
+      "sha256": "fffe01fc6b7f7ef80b98f3d7e5e43af61c805aba2cdbbc7ba9c26fbe1e18289b"
+    },
+    "support_tickets": {
+      "file": "support_tickets.csv",
+      "rows": 700,
+      "columns": [
+        "ticket_id",
+        "customer_id",
+        "order_id",
+        "created_ts",
+        "category",
+        "priority",
+        "channel",
+        "sentiment",
+        "status",
+        "resolution_minutes",
+        "summary"
+      ],
+      "bytes": 100548,
+      "sha256": "750561b2b3e96ec102125e3ed49d95bb9cc19bcc57aece2dc1f83c03bade710c"
+    },
+    "support_policies": {
+      "file": "support_policies.csv",
+      "rows": 5,
+      "columns": [
+        "policy_id",
+        "title",
+        "category",
+        "effective_date",
+        "content",
+        "approval_required"
+      ],
+      "bytes": 1121,
+      "sha256": "3dece638ccdffb6cc15b0bf30bd108aeb192912f8a98941f4ea7daedd590f202"
+    },
+    "db_instances": {
+      "file": "db_instances.csv",
+      "rows": 12,
+      "columns": [
+        "instance_id",
+        "instance_name",
+        "engine",
+        "version",
+        "region",
+        "service_tier",
+        "owner_team",
+        "cpu_cores",
+        "memory_gb",
+        "production"
+      ],
+      "bytes": 1110,
+      "sha256": "10e193e7b4ba65581ce44870bbc1a0c07984184fbbee4855eb1ebbda59267b2a"
+    },
+    "db_metrics": {
+      "file": "db_metrics.csv",
+      "rows": 8064,
+      "columns": [
+        "instance_id",
+        "observed_ts",
+        "cpu_pct",
+        "memory_pct",
+        "qps",
+        "p95_latency_ms",
+        "active_connections",
+        "lock_waits",
+        "error_rate"
+      ],
+      "bytes": 524079,
+      "sha256": "b30ac74578fbb8003d4d13c551c3c43689950e63e1de38d0662f75252775f585"
+    },
+    "slow_queries": {
+      "file": "slow_queries.csv",
+      "rows": 550,
+      "columns": [
+        "query_id",
+        "instance_id",
+        "observed_ts",
+        "query_fingerprint",
+        "duration_ms",
+        "rows_examined",
+        "rows_returned",
+        "query_type",
+        "wait_event"
+      ],
+      "bytes": 67866,
+      "sha256": "7f1aaefbfe27ff87de23c240b0c31065c1ee3c94c1516cd277a520ac110289cc"
+    },
+    "alerts": {
+      "file": "alerts.csv",
+      "rows": 66,
+      "columns": [
+        "alert_id",
+        "instance_id",
+        "fired_ts",
+        "severity",
+        "metric",
+        "threshold",
+        "observed_value",
+        "status"
+      ],
+      "bytes": 4648,
+      "sha256": "75345509a6106d6b9a5dd85ddaf60f695d21fb135f4e78465f31b06e09ffb6d2"
+    },
+    "changes": {
+      "file": "changes.csv",
+      "rows": 63,
+      "columns": [
+        "change_id",
+        "instance_id",
+        "changed_ts",
+        "change_type",
+        "description",
+        "operator",
+        "approved"
+      ],
+      "bytes": 7367,
+      "sha256": "ab421891cb6c0f810985d3863c452c1ce6d6d857eaba0871b7503439a73ff17e"
+    },
+    "incidents": {
+      "file": "incidents.csv",
+      "rows": 3,
+      "columns": [
+        "incident_id",
+        "instance_id",
+        "started_ts",
+        "ended_ts",
+        "severity",
+        "symptom",
+        "root_cause",
+        "resolution",
+        "status"
+      ],
+      "bytes": 699,
+      "sha256": "b4235193ba35144a534fa9d171ffc845dfcc4ac23f69c3c854ac104afa991204"
+    },
+    "runbooks": {
+      "file": "runbooks.csv",
+      "rows": 4,
+      "columns": [
+        "runbook_id",
+        "title",
+        "symptom_pattern",
+        "diagnostic_steps",
+        "safe_actions",
+        "prohibited_actions",
+        "approval_required"
+      ],
+      "bytes": 1509,
+      "sha256": "75d615f18b60b5bbe0857eec0657dd7848217f5aaaccede7d7111f2a0e5502c5"
+    }
+  }
+}

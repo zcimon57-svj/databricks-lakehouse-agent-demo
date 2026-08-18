@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Databricks Genie Agent 实现架构、多种用法、评测闭环与内外部集成演示">
+  <title>Genie Agent 深度演示</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="genie.css">
+</head>
+<body>
+  <header class="genie-hero" id="top">
+    <nav class="nav shell" aria-label="Genie 导航">
+      <a class="brand" href="index.html">← DBX Explore</a>
+      <div class="nav-links">
+        <a href="#what">是什么</a>
+        <a href="#implementation">实现</a>
+        <a href="#modes">用法</a>
+        <a href="#quality">评测</a>
+        <a href="#genie-videos">长视频</a>
+        <a href="database-agent.html">云数据库接入</a>
+      </div>
+    </nav>
+    <div class="shell genie-hero-content">
+      <p class="eyebrow">GENIE AGENT · 深度专题</p>
+      <h1>不是一个聊天框，<br><span>而是受治理的数据 Agent</span></h1>
+      <p class="lead">领域专家先定义数据、口径、示例与评测；业务用户再用自然语言完成单问、追问和多步骤分析。</p>
+      <div class="hero-actions">
+        <a class="button primary" href="#implementation">看实现架构</a>
+        <a class="button secondary" href="details/genie-guide.html">完整实现手册</a>
+      </div>
+      <div class="genie-proof" aria-label="Genie 实测摘要">
+        <div><strong>7</strong><span>真实 Sources</span></div>
+        <div><strong>1</strong><span>Curated Example</span></div>
+        <div><strong>3</strong><span>Agent Benchmarks</span></div>
+        <div><strong>2</strong><span>Chat / Agent 模式</span></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section shell" id="what" aria-labelledby="what-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">三个角色</p><h2 id="what-title">每个人看到的 Genie 不一样</h2></div>
+        <p>同一个 Agent 分成业务使用、领域配置和平台集成三层；不要把三层职责混在一个超级 Agent 里。</p>
+      </div>
+      <div class="persona-grid">
+        <article><span>业务用户</span><h3>问数据</h3><p>用 Chat 做直接问答和追问；用 Agent mode 做多步分析与结构化报告。</p></article>
+        <article><span>领域专家</span><h3>教口径</h3><p>维护 Sources、Instructions、Knowledge、Examples，并用 Monitor 与 Benchmark 纠错。</p></article>
+        <article><span>平台团队</span><h3>控边界</h3><p>管理身份、Unity Catalog、Warehouse、嵌入/API、审计与写动作审批。</p></article>
+      </div>
+      <div class="statement"><strong>核心独特点：</strong>Genie 把语义、SQL 执行、数据权限、可解释结果和质量反馈放在同一条数据链路中。</div>
+    </section>
+
+    <section class="section section-dark" id="implementation" aria-labelledby="implementation-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div><p class="eyebrow">HOW IT WORKS</p><h2 id="implementation-title">从配置到答案，再回到评测</h2></div>
+          <p>真实查询仍在 SQL Warehouse 执行；Unity Catalog 权限不会因为使用自然语言而失效。</p>
+        </div>
+        <figure class="diagram-frame">
+          <img src="assets/diagrams/genie-implementation-architecture.svg" alt="Genie Agent 配置、运行、治理和评测闭环架构图">
+          <figcaption>实测配置：售后、退款、政策、订单、客户、数据库事故与 Runbook 共 7 个 Sources。</figcaption>
+        </figure>
+        <div class="five-steps" aria-label="Genie 实施五步">
+          <div><b>01</b><span>少量高质量 Sources</span></div>
+          <div><b>02</b><span>写清业务口径与安全边界</span></div>
+          <div><b>03</b><span>收录可信 SQL / Function</span></div>
+          <div><b>04</b><span>真实用户试问与 Monitor</span></div>
+          <div><b>05</b><span>Benchmark 回归后再开放</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell" id="modes" aria-labelledby="modes-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">MULTIPLE USES</p><h2 id="modes-title">四种用法，不只是工作区聊天</h2></div>
+        <p>选择入口时，真正变化的是谁负责 UI、身份、会话、失败处理和写动作，而不是是否遵守数据权限。</p>
+      </div>
+      <figure class="diagram-frame light">
+        <img src="assets/diagrams/genie-usage-modes.svg" alt="Genie 工作区、iframe、API 和多 Agent 四种使用方式">
+      </figure>
+      <div class="mode-table" role="table" aria-label="Genie 用法对比">
+        <div class="mode-row mode-head" role="row"><span>入口</span><span>适合</span><span>主要责任</span></div>
+        <div class="mode-row" role="row"><strong>工作区</strong><span>最快自助分析</span><span>平台提供 UI、SQL、图表、反馈</span></div>
+        <div class="mode-row" role="row"><strong>iframe</strong><span>企业门户复用原生体验</span><span>用户仍登录 Databricks 并保留权限</span></div>
+        <div class="mode-row" role="row"><strong>API</strong><span>自定义聊天与自动化</span><span>调用方负责 OAuth、异步、重试、渲染、审计</span></div>
+        <div class="mode-row" role="row"><strong>多 Agent</strong><span>售后 / 运维跨系统协作</span><span>Genie 只分析；Action Tool 单独审批</span></div>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="quality" aria-labelledby="quality-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div><p class="eyebrow">QUALITY LOOP · 真实实测</p><h2 id="quality-title">失败不是坏事，无法解释的失败才是</h2></div>
+          <p>第一次 Agent-mode 批量评测只通过 1/3，直接暴露两类实施问题。</p>
+        </div>
+        <div class="quality-grid">
+          <article class="quality-score"><span>第一次运行</span><strong>33%</strong><p>1 / 3 assessed correctly</p></article>
+          <article><span>Schema 漂移</span><h3>标准 SQL 列名过期</h3><p>`resolution_summary` 与 `refund_reason` 不存在。先修真值，不把评测器错误算成模型错误。</p></article>
+          <article><span>指标歧义</span><h3>“退款总额”有两种合理口径</h3><p>所有状态是 80,135.35；只看 approved 是 59,814.38。问题与 Instructions 必须明确。</p></article>
+          <article><span>闭环原则</span><h3>修配置，再跑同一回归集</h3><p>Benchmark 不会进入回答上下文，因此不能靠“背答案”提高评测。</p></article>
+        </div>
+        <p class="quality-note" id="latest-benchmark"><strong>修正真值后的第三轮仍为 33%：</strong>P1 题通过；退款事实正确但因多返回 Top 5 与笔数被严格判失败；DBOps 报告完整却被判 “Empty Result”，需人工复核评测器。这里不为展示效果放宽标准。</p>
+      </div>
+    </section>
+
+    <section class="section shell" id="genie-videos" aria-labelledby="genie-videos-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">LONG-FORM DEMOS</p><h2 id="genie-videos-title">三段长视频，分别讲使用、实现和集成</h2></div>
+        <p>三段均默认播放中文有声版；真实工作区负责证明 G1/G2，G3 是本地架构演示，并明确标注外部 API 未在该账号做生产调用。</p>
+      </div>
+      <div class="recording-grid genie-recordings">
+        <article class="recording-card">
+          <video controls preload="metadata" src="../videos/recordings/zh-voice/G1-genie-business-user-multi-use.mp4"></video>
+          <div><span>G1 · 真实工作区</span><h3>业务用户：多种问法</h3><p>Chat / Agent mode、售后、退款、DBOps、SQL、追问与动作边界。</p></div>
+        </article>
+        <article class="recording-card">
+          <video controls preload="metadata" src="../videos/recordings/zh-voice/G2-genie-authoring-monitor-benchmark.mp4"></video>
+          <div><span>G2 · 真实工作区</span><h3>领域专家：配置与评测</h3><p>7 Sources、Instructions、Example、Monitor、Benchmark 与 33% → 调优闭环。</p></div>
+        </article>
+        <article class="recording-card">
+          <video controls preload="metadata" src="../videos/recordings/zh-voice/G3-genie-embedded-vs-api-architecture.mp4"></video>
+          <div><span>G3 · 架构演示</span><h3>平台团队：内嵌与外部</h3><p>工作区、iframe、Conversation API、Agent API/SSE 与多 Agent 审批边界。</p></div>
+        </article>
+      </div>
+      <div class="source-links">
+        <a href="https://docs.databricks.com/aws/en/genie-agents/concepts">官方：Genie Agents concepts</a>
+        <a href="https://docs.databricks.com/aws/en/genie/monitor">官方：Benchmark 与 Monitor</a>
+        <a href="https://docs.databricks.com/aws/en/genie/embed">官方：iframe 嵌入</a>
+        <a href="https://docs.databricks.com/aws/en/genie-agents/api">官方：Agent mode API</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-content">
+      <div><strong>Genie Agent 深度专题</strong><p>事实、真实工作区证据与架构演示分开标注；信息截止 2026-08-17。</p></div>
+      <a href="#top">返回顶部 ↑</a>
+    </div>
+  </footer>
+</body>
+</html>
