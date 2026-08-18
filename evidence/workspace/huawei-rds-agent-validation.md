@@ -80,13 +80,15 @@ cd videos/voiceover && sha256sum -c SHA256SUMS
 
 ## GitHub Pages 公网检查
 
-- 发布提交：`187b5b70b9931b532260371af6e3ad18869b899d`；
-- GitHub Actions Pages 运行：`32147285340`，结论 `success`，耗时 2 分 28 秒；
+- 初始专题提交：`187b5b70b9931b532260371af6e3ad18869b899d`；
+- 外部官方视频补充提交：`f2f2727eb01277da6441a6d9d481679096e1d153`；
+- 最新内容 GitHub Actions Pages 运行：`32149221444`，结论 `success`，耗时 3 分 30 秒；
 - 在线专题：`https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/huawei-rds-agent.html`，HTTP 200；
 - 在线完整手册：`https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/details/huawei-rds-agent-guide.html`，HTTP 200；
 - 两张在线 SVG 均成功解码，浏览器自然宽度 1600；
 - 在线 H1 为 `video/mp4`，`content-length=6939947`，浏览器 `readyState=4`、时长 127.16 秒、媒体错误为 0；
-- 专题页与完整手册的站内链接全部为 200，正文隐私扫描无邮箱和私有 Databricks Host。
+- 专题页与完整手册的站内链接全部为 200，正文隐私扫描无邮箱和私有 Databricks Host；
+- 公网页面正文已出现四个华为云官方视频/课程卡片；查询参数强制刷新后 H1 响应 `last-modified: Tue, 18 Aug 2026 14:38:33 GMT`。
 
 公网截图保存在 `evidence/workspace/huawei-rds-agent-online.png` 和 `evidence/workspace/huawei-rds-agent-guide-online.png`。
 
