@@ -1,5 +1,7 @@
 # Databricks Lakehouse、数据库与数据 Agent 演示
 
+[![Deploy Databricks demo to GitHub Pages](https://github.com/zcimon57-svj/databricks-lakehouse-agent-demo/actions/workflows/pages.yml/badge.svg)](https://github.com/zcimon57-svj/databricks-lakehouse-agent-demo/actions/workflows/pages.yml)
+
 一套面向领导、同事和数据平台团队的可复现演示包，聚焦 Databricks 的数据湖、Lakehouse、数据库、Genie 自然语言分析，以及云数据库接入治理型数据 Agent 所需的完整前置能力。
 
 > 内容快照与工作区验证截止 2026-08-18。项目刻意弱化模型训练和通用推理基础设施，重点解释数据如何接入、治理、查询、分析并安全地交给 Agent 使用。

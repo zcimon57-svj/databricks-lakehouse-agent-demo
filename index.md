@@ -43,6 +43,7 @@
 - [当前交付状态](STATE.md)
 - [站点与云数据库专题校验](evidence/workspace/site-v4-cloud-database-validation.md)
 - [中文配音校验](evidence/workspace/zh-voiceover-validation.md)
+- [GitHub 公开发布与 Pages 校验](evidence/workspace/github-publication-validation.md)
 - [录屏文件与 SHA-256](videos/recordings/README.md)
 
 ## 必须保留的边界

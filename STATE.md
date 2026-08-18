@@ -56,3 +56,12 @@ Updated: 2026-08-18
 - SQL Warehouse is `STOPPED`.
 - Temporary browser was closed and its exact disposable profile was moved to the system trash; it can be recovered from trash if needed.
 - Lakebase, Apps, Federation/Sharing and Dashboard creation remain explicitly marked as uncreated/not live-validated.
+
+## Public publication
+
+- Public repository: `https://github.com/zcimon57-svj/databricks-lakehouse-agent-demo`.
+- GitHub Pages: `https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/`; HTTPS is enforced and the build type is GitHub Actions.
+- The public Pages artifact contains the root redirect, presentation site, all 13 narrated clips, all 13 silent originals, and voiceover manifests/checksums.
+- Online browser validation passed for the leadership page, 10 embedded narrated videos, all 26 recording links, SVGs, voiceover evidence links and privacy checks.
+- Local dependency and tool directories remain excluded: `node_modules/`, `.tools/` and `_site/`.
+- Publication evidence is recorded in `evidence/workspace/github-publication-validation.md`.
