@@ -1,0 +1,1184 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="华为云能力目标驱动、Conversation-first、Harness-first 的 Data Intelligence 方案：以统一对话 Agent 承载问数、分析、知识构建、数据库洞察与安全行动，再比较两种组织路线。">
+  <title>华为云统一对话 Agent｜能力目标与两种领先产品方案</title>
+  <style>
+    :root {
+      --ink: #14231f;
+      --muted: #5c6f68;
+      --paper: #f4f2ea;
+      --panel: rgba(255,255,255,.78);
+      --line: rgba(20,35,31,.14);
+      --green: #0f745d;
+      --green-2: #19a17e;
+      --blue: #2457a6;
+      --orange: #e36d3f;
+      --gold: #b78b28;
+      --red: #b8493f;
+      --dark: #102923;
+      --shadow: 0 20px 55px rgba(25,48,40,.11);
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 4%, rgba(25,161,126,.14), transparent 28rem),
+        radial-gradient(circle at 93% 2%, rgba(227,109,63,.12), transparent 27rem),
+        var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.65;
+    }
+    a { color: var(--green); text-underline-offset: 3px; }
+    button { font: inherit; }
+    .wrap { width: min(1220px, calc(100% - 40px)); margin: 0 auto; }
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(244,242,234,.88);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(18px);
+    }
+    .topbar .wrap { min-height: 64px; display: flex; align-items: center; gap: 24px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; white-space: nowrap; }
+    .brand-mark { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; color: white; background: var(--dark); font-size: 13px; }
+    nav { display: flex; gap: 18px; flex: 1; overflow-x: auto; scrollbar-width: none; }
+    nav::-webkit-scrollbar { display: none; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 13px; white-space: nowrap; }
+    nav a:hover { color: var(--ink); }
+    .top-links { display: flex; gap: 8px; }
+    .mini-link { padding: 7px 11px; border: 1px solid var(--line); border-radius: 999px; text-decoration: none; color: var(--ink); font-size: 12px; white-space: nowrap; background: rgba(255,255,255,.56); }
+    .global-view { display:flex; align-items:center; gap:5px; padding:4px; border:1px solid var(--line); border-radius:999px; background:rgba(255,255,255,.66); white-space:nowrap; }
+    .global-view > span { padding-left:7px; color:var(--muted); font-size:10px; font-weight:800; letter-spacing:.06em; }
+    .global-view .route-btn { padding:5px 9px; border:0; background:transparent; }
+    .global-view .route-btn.active { background:var(--dark); color:white; }
+    .hero { padding: 86px 0 52px; }
+    .eyebrow { display: flex; align-items: center; gap: 9px; color: var(--green); font-weight: 800; letter-spacing: .08em; text-transform: uppercase; font-size: 12px; }
+    .eyebrow::before { content: ""; width: 28px; height: 2px; background: var(--green-2); }
+    h1 { font-size: clamp(44px, 7vw, 88px); line-height: .98; letter-spacing: -.055em; margin: 19px 0 24px; max-width: 1180px; }
+    .hero-copy { display: grid; grid-template-columns: 1.35fr .65fr; gap: 36px; align-items: end; }
+    .hero-copy > p { font-size: clamp(18px, 2vw, 24px); color: #354b44; margin: 0; max-width: 780px; }
+    .hero-callout { border-left: 3px solid var(--orange); padding-left: 18px; color: var(--muted); font-size: 14px; }
+    .hero-callout strong { display: block; color: var(--ink); font-size: 17px; margin-bottom: 4px; }
+    .metric-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-top: 42px; }
+    .metric { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 20px; box-shadow: var(--shadow); }
+    .metric b { display: block; color: var(--green); font-size: 30px; line-height: 1; letter-spacing: -.03em; margin-bottom: 9px; }
+    .metric span { color: var(--muted); font-size: 13px; }
+    .notice { margin-top: 18px; border: 1px solid rgba(183,139,40,.3); background: rgba(255,248,220,.74); border-radius: 14px; padding: 12px 15px; color: #6f5a23; font-size: 13px; }
+    .view-status { display:inline-flex; align-items:center; gap:7px; margin-top:14px; padding:7px 11px; border-radius:999px; color:var(--green); background:#dff3eb; font-size:12px; font-weight:800; }
+    .view-status::before { content:""; width:7px; height:7px; border-radius:50%; background:var(--green-2); }
+    .goal-thesis { display:grid; grid-template-columns:1.15fr .85fr; gap:20px; padding:30px; border-radius:26px; color:white; background:linear-gradient(135deg,#102923,#174c3f); box-shadow:var(--shadow); }
+    .goal-thesis h3 { margin:10px 0; font-size:clamp(26px,3vw,40px); }
+    .goal-thesis p { margin:0; color:rgba(255,255,255,.72); }
+    .north-star { display:grid; align-content:center; padding:20px; border-radius:19px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.16); }
+    .north-star small { color:#83e2c4; font-weight:900; letter-spacing:.08em; }
+    .north-star b { display:block; margin:8px 0; font-size:34px; line-height:1.05; }
+    .north-star span { color:rgba(255,255,255,.66); font-size:12px; }
+    .goal-flow { display:grid; grid-template-columns:repeat(6,1fr); gap:8px; margin-top:16px; }
+    .goal-node { position:relative; min-height:112px; padding:14px; border:1px solid var(--line); border-radius:15px; background:rgba(255,255,255,.73); }
+    .goal-node:not(:last-child)::after { content:"→"; position:absolute; right:-9px; top:43px; z-index:2; color:var(--orange); font-weight:900; }
+    .goal-node b { display:block; margin:4px 0; font-size:12px; }
+    .goal-node span { display:block; color:var(--muted); font-size:10px; line-height:1.45; }
+    .goal-node.final { color:white; background:var(--dark); }
+    .goal-node.final span { color:rgba(255,255,255,.65); }
+    .contract-layout { display:grid; grid-template-columns:.95fr 1.05fr; gap:16px; margin-top:16px; }
+    .contract-card { border-radius:22px; padding:22px; color:white; background:#162e28; }
+    .contract-fields { display:flex; flex-wrap:wrap; gap:7px; margin-top:12px; }
+    .contract-fields span { padding:6px 9px; border:1px solid rgba(255,255,255,.16); border-radius:999px; color:#8ce1c5; font:11px ui-monospace,monospace; }
+    .contract-card pre { margin:14px 0 0; white-space:pre-wrap; color:#d7e9e3; font:11px/1.65 ui-monospace,monospace; }
+    .goal-state { display:flex; flex-wrap:wrap; gap:7px; margin:12px 0 16px; }
+    .goal-state span { padding:6px 9px; border-radius:999px; background:#eef3ee; color:var(--muted); font-size:10px; }
+    .goal-state span.accepted { color:var(--green); background:#dff3eb; font-weight:900; }
+    .oracle-box { padding:15px; border-radius:14px; background:#fff6e0; border:1px solid #eed18c; color:#70571e; font-size:12px; }
+    .job-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-top:16px; }
+    .job-card { padding:16px; border-top:4px solid var(--green); border-radius:15px; background:rgba(255,255,255,.72); }
+    .job-card b { display:block; font-size:12px; }
+    .job-card span { display:block; margin-top:5px; color:var(--muted); font-size:10px; }
+    .goal-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:18px; }
+    .goal-card { min-height:190px; padding:20px; border:1px solid var(--line); border-radius:19px; background:rgba(255,255,255,.74); }
+    .goal-card .goal-id { display:inline-flex; padding:4px 8px; border-radius:999px; color:var(--green); background:#dff3eb; font-size:10px; font-weight:900; }
+    .goal-card h3 { margin-top:10px; }
+    .goal-card p { margin:6px 0; color:var(--muted); font-size:12px; }
+    .goal-card small { display:block; padding-top:8px; border-top:1px solid var(--line); color:#475d56; font-size:10px; }
+    .horizon-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-top:18px; }
+    .horizon { min-height:190px; padding:17px; border-radius:17px; border:1px solid var(--line); background:rgba(255,255,255,.72); }
+    .horizon .when { color:var(--orange); font-size:11px; font-weight:900; }
+    .horizon h3 { margin:7px 0; font-size:17px; }
+    .horizon p { margin:0; color:var(--muted); font-size:11px; }
+    .horizon .goal-kpi { margin-top:10px; padding-top:9px; border-top:1px solid var(--line); color:var(--green); font-size:10px; font-weight:800; }
+    .capability-hero { display:grid; grid-template-columns:1.2fr .8fr; gap:18px; padding:30px; border-radius:26px; color:white; background:linear-gradient(135deg,#102923,#174c3f); box-shadow:var(--shadow); }
+    .capability-hero h3 { margin:10px 0; font-size:clamp(28px,3.3vw,44px); line-height:1.15; }
+    .capability-hero p { margin:0; color:rgba(255,255,255,.72); }
+    .capability-promise { display:grid; gap:8px; align-content:center; }
+    .capability-promise span { padding:10px 13px; border:1px solid rgba(255,255,255,.15); border-radius:12px; background:rgba(255,255,255,.07); color:#d7eee6; font-size:12px; }
+    .capability-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:18px; }
+    .capability-card { min-height:230px; padding:19px; border:1px solid var(--line); border-radius:19px; background:rgba(255,255,255,.75); }
+    .capability-card.core { border-top:5px solid var(--green); }
+    .capability-card.support { border-top:5px solid var(--blue); }
+    .capability-card.later { border-top:5px solid var(--orange); }
+    .capability-card.future { border-top:5px solid var(--gold); }
+    .cap-head { display:flex; justify-content:space-between; gap:8px; align-items:center; }
+    .cap-id, .cap-phase { display:inline-flex; padding:4px 7px; border-radius:999px; font-size:9px; font-weight:900; }
+    .cap-id { color:var(--green); background:#dff3eb; }
+    .cap-phase { color:var(--muted); background:#ecefe9; }
+    .capability-card h3 { margin:12px 0 5px; }
+    .capability-card .say { min-height:42px; color:var(--ink); font-size:12px; font-weight:800; }
+    .capability-card p { margin:8px 0; color:var(--muted); font-size:11px; }
+    .capability-card small { display:block; padding-top:8px; border-top:1px solid var(--line); color:#52675f; font-size:10px; }
+    .priority-lanes { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:18px; }
+    .priority-lane { padding:20px; border-radius:18px; color:white; background:var(--dark); }
+    .priority-lane:nth-child(2) { background:#234b62; }
+    .priority-lane:nth-child(3) { background:#7c442e; }
+    .priority-lane small { color:rgba(255,255,255,.6); font-weight:900; letter-spacing:.08em; }
+    .priority-lane h3 { margin:8px 0; }
+    .priority-lane p { margin:0; color:rgba(255,255,255,.72); font-size:12px; }
+    .sentence-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:9px; margin-top:18px; }
+    .sentence-card { padding:15px; border-radius:15px; border:1px solid var(--line); background:rgba(255,255,255,.72); }
+    .sentence-card b { display:block; color:var(--green); font-size:12px; }
+    .sentence-card q { display:block; margin:7px 0; color:var(--ink); font-size:11px; }
+    .sentence-card span { color:var(--muted); font-size:10px; }
+    .prototype-lead { display:grid; grid-template-columns:1fr auto; gap:20px; align-items:center; margin-bottom:18px; padding:20px 22px; border-radius:20px; color:white; background:linear-gradient(135deg,#102923,#245646); box-shadow:var(--shadow); }
+    .prototype-lead h3 { margin:0 0 5px; font-size:24px; }
+    .prototype-lead p { margin:0; color:rgba(255,255,255,.7); font-size:12px; }
+    .prototype-lead a { padding:9px 13px; border:1px solid rgba(255,255,255,.2); border-radius:999px; color:white; text-decoration:none; white-space:nowrap; font-size:11px; font-weight:850; }
+    .prototype-gallery { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+    .prototype-preview { margin:0; overflow:hidden; border:1px solid var(--line); border-radius:20px; background:rgba(255,255,255,.76); box-shadow:var(--shadow); }
+    .prototype-preview > a { display:block; overflow:hidden; border-bottom:1px solid var(--line); background:#e8eeeb; }
+    .prototype-preview img { display:block; width:100%; height:auto; aspect-ratio:1288/764; object-fit:contain; transition:transform .2s ease; }
+    .prototype-preview:hover img { transform:scale(1.012); }
+    .prototype-caption { display:grid; grid-template-columns:1fr auto; gap:12px; padding:15px 17px; }
+    .prototype-caption b { display:block; font-size:14px; }
+    .prototype-caption span { display:block; margin-top:3px; color:var(--muted); font-size:10px; }
+    .prototype-phase { align-self:start; padding:4px 7px; border-radius:999px; color:var(--green)!important; background:#dff3eb; font-size:9px!important; font-weight:900; white-space:nowrap; }
+    .prototype-phase.p1 { color:#a94e2e!important; background:#fae7dd; }
+    .prototype-note { margin-top:16px; padding:13px 15px; border:1px solid #e4c56e; border-radius:14px; background:#fff8df; color:#715a1d; font-size:11px; }
+    .boundary-note { margin-top:16px; padding:15px 17px; border-radius:15px; background:#e8eef9; color:#294d78; font-size:12px; }
+    [hidden] { display:none !important; }
+    section { padding: 64px 0; scroll-margin-top: 72px; }
+    .section-head { display: grid; grid-template-columns: .34fr 1fr; gap: 28px; margin-bottom: 30px; }
+    .kicker { color: var(--green); font-size: 12px; letter-spacing: .12em; font-weight: 800; text-transform: uppercase; padding-top: 9px; }
+    h2 { font-size: clamp(30px, 4.7vw, 55px); line-height: 1.08; letter-spacing: -.04em; margin: 0 0 12px; }
+    .section-head p { margin: 0; color: var(--muted); font-size: 17px; max-width: 800px; }
+    h3 { font-size: 21px; line-height: 1.3; letter-spacing: -.02em; margin: 0 0 10px; }
+    h4 { margin: 0 0 7px; }
+    .panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 26px; }
+    .verdict-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 16px; }
+    .verdict-main { background: var(--dark); color: white; padding: 32px; position: relative; overflow: hidden; }
+    .verdict-main::after { content:""; position:absolute; width:230px; height:230px; border:1px solid rgba(255,255,255,.17); border-radius:50%; right:-75px; bottom:-95px; }
+    .verdict-main p { color: rgba(255,255,255,.74); margin: 8px 0 0; max-width: 680px; }
+    .verdict-list { display: grid; gap: 10px; }
+    .verdict-item { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: start; background: rgba(255,255,255,.8); border: 1px solid var(--line); border-radius: 17px; padding: 15px; }
+    .num { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 10px; background: #dff3eb; color: var(--green); font-weight: 900; }
+    .verdict-item b { display:block; margin-bottom: 2px; }
+    .verdict-item span { color: var(--muted); font-size: 13px; }
+    .compare-wrap { overflow:auto; border:1px solid var(--line); border-radius:22px; background:rgba(255,255,255,.73); box-shadow:var(--shadow); }
+    .compare-wrap table { min-width:780px; }
+    .compare-wrap th:first-child, .compare-wrap td:first-child { width:155px; color:var(--ink); font-weight:800; }
+    .compare-wrap th.company-col { background:#dcefe8; color:var(--green); }
+    .compare-wrap th.db-col { background:#fae7dd; color:#a94e2e; }
+    .compare-wrap td { line-height:1.5; }
+    .decision-strip { display:grid; grid-template-columns:1fr auto 1fr; gap:14px; align-items:stretch; margin-top:18px; }
+    .decision-card { padding:21px; border-radius:18px; border:1px solid var(--line); background:rgba(255,255,255,.74); }
+    .decision-card.company { border-top:4px solid var(--green); }
+    .decision-card.db { border-top:4px solid var(--orange); }
+    .decision-card p { margin:6px 0 0; color:var(--muted); font-size:13px; }
+    .decision-or { display:grid; place-items:center; color:var(--muted); font-size:11px; font-weight:900; }
+    .plan-banner { display:grid; grid-template-columns:1fr .34fr; gap:24px; align-items:end; margin-bottom:20px; padding:28px; border-radius:24px; color:white; background:linear-gradient(135deg,#0f745d,#12372f); box-shadow:var(--shadow); }
+    .plan-banner.db { background:linear-gradient(135deg,#d35f36,#713724); }
+    .plan-banner h3 { font-size:30px; margin:8px 0; }
+    .plan-banner p { margin:0; color:rgba(255,255,255,.76); }
+    .plan-kpi { border-left:1px solid rgba(255,255,255,.25); padding-left:18px; }
+    .plan-kpi b { display:block; font-size:28px; }
+    .plan-kpi span { font-size:11px; color:rgba(255,255,255,.68); }
+    .architecture.db-arch { background:#321f19; }
+    .architecture.db-arch .arch-layer b, .architecture.db-arch .arch-arrow { color:#ffb18d; }
+    .architecture.db-arch .arch-authority { background:rgba(227,109,63,.13); border-color:rgba(255,177,141,.22); }
+    .plan-detail-grid { display:grid; grid-template-columns:1.08fr .92fr; gap:16px; margin-top:16px; }
+    .selection-list { display:grid; gap:8px; }
+    .selection-item { display:grid; grid-template-columns:118px 1fr; gap:10px; padding:11px 13px; border:1px solid var(--line); border-radius:13px; background:rgba(255,255,255,.67); }
+    .selection-item b { font-size:12px; }
+    .selection-item span { color:var(--muted); font-size:11px; }
+    .gate-list { display:grid; gap:8px; }
+    .gate-line { display:grid; grid-template-columns:26px 1fr; gap:9px; align-items:start; font-size:12px; color:var(--muted); }
+    .gate-line i { width:24px; height:24px; display:grid; place-items:center; border-radius:8px; color:var(--green); background:#dff3eb; font-style:normal; font-size:10px; font-weight:900; }
+    .common-table th, .common-table td { min-width:120px; }
+    .common-table th:first-child, .common-table td:first-child { position:sticky; left:0; z-index:2; min-width:150px; background:#f4f5f0; }
+    .common-table th:first-child { z-index:3; background:#e9ebe4; }
+    .status-pill { display:inline-flex; padding:3px 7px; border-radius:999px; font-size:10px; font-weight:900; color:var(--green); background:#def2eb; }
+    .status-pill.eval { color:#a94e2e; background:#fae7dd; }
+    .status-pill.adapt { color:var(--blue); background:#e8eef9; }
+    .specific-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .specific-card { border:1px solid var(--line); border-radius:22px; overflow:hidden; background:rgba(255,255,255,.72); }
+    .specific-card > header { padding:20px 22px; color:white; background:var(--green); }
+    .specific-card.db > header { background:var(--orange); }
+    .specific-card > header p { margin:5px 0 0; color:rgba(255,255,255,.75); font-size:12px; }
+    .specific-list { display:grid; gap:0; padding:7px 20px 18px; }
+    .specific-item { padding:12px 0; border-bottom:1px solid var(--line); }
+    .specific-item:last-child { border-bottom:0; }
+    .specific-item b { display:block; font-size:12px; }
+    .specific-item span { display:block; margin-top:3px; color:var(--muted); font-size:11px; }
+    body[data-route="company"] .scope-db { display:none !important; }
+    body[data-route="db"] .scope-company { display:none !important; }
+    .architecture { display: grid; gap: 10px; padding: 28px; background: #102923; color: white; border-radius: 27px; box-shadow: var(--shadow); }
+    .arch-layer { border: 1px solid rgba(255,255,255,.15); border-radius: 18px; padding: 19px 22px; background: rgba(255,255,255,.06); }
+    .arch-layer b { display: block; color: #7fe2c2; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 8px; }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { border: 1px solid rgba(255,255,255,.18); color: white; background: rgba(255,255,255,.08); border-radius: 999px; padding: 7px 11px; font-size: 13px; }
+    .arch-arrow { text-align: center; color: #72d9b9; height: 16px; line-height: 16px; font-weight: 900; }
+    .arch-split { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+    .arch-authority { border-radius: 14px; padding: 13px; background: rgba(25,161,126,.13); border: 1px solid rgba(127,226,194,.22); font-size: 13px; }
+    .ownership-grid { margin-top: 18px; display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+    .ownership-card { padding: 18px; border: 1px solid var(--line); border-radius: 17px; background: rgba(255,255,255,.62); }
+    .ownership-card small { color: var(--green); font-weight: 800; }
+    .ownership-card p { margin: 6px 0 0; color: var(--muted); font-size: 13px; }
+    .harness-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+    .harness-card { border: 1px solid var(--line); background: rgba(255,255,255,.73); border-radius: 20px; padding: 21px; display: flex; flex-direction: column; min-height: 262px; }
+    .harness-top { display:flex; justify-content:space-between; gap:12px; align-items:start; }
+    .score { width: 54px; height: 54px; border-radius: 50%; display:grid; place-items:center; font-weight:900; color:var(--green); background: conic-gradient(var(--green-2) calc(var(--score) * 1%), #e2e5df 0); position:relative; }
+    .score::after { content:""; position:absolute; inset:5px; border-radius:50%; background:#fff; }
+    .score span { position:relative; z-index:1; font-size:14px; }
+    .tag { display:inline-flex; align-items:center; gap:5px; width:max-content; border-radius:999px; padding:4px 8px; background:#e1f3ec; color:var(--green); font-size:11px; font-weight:800; }
+    .tag.warn { background:#fff0e7; color:#ad512f; }
+    .tag.blue { background:#e8eef9; color:var(--blue); }
+    .harness-card p { color: var(--muted); font-size: 13px; margin: 12px 0; flex:1; }
+    .factline { border-top:1px solid var(--line); padding-top:10px; display:flex; justify-content:space-between; gap:8px; font-size:11px; color:var(--muted); }
+    .bakeoff { display:grid; grid-template-columns: 1fr 28px 1fr 28px 1fr; align-items:stretch; margin-top:18px; }
+    .stage { padding:19px; border:1px solid var(--line); border-radius:17px; background:rgba(255,255,255,.7); }
+    .stage b { display:block; color:var(--green); font-size:13px; margin-bottom:7px; }
+    .stage p { margin:0; color:var(--muted); font-size:13px; }
+    .stage-arrow { display:grid; place-items:center; color:var(--orange); font-weight:900; }
+    .ecs-layout { display:grid; grid-template-columns:1.15fr .85fr; gap:16px; }
+    .ecs-host { background:#182f2a; border-radius:24px; padding:24px; color:white; }
+    .host-title { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+    .host-title span { color:#82dec2; font-size:12px; font-weight:800; }
+    .service-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:9px; }
+    .service { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); border-radius:13px; padding:12px; }
+    .service strong { display:block; font-size:13px; }
+    .service small { color:rgba(255,255,255,.58); font-size:11px; }
+    .service.runner { border-color:#63d5b2; background:rgba(25,161,126,.17); }
+    .security-list { display:grid; gap:9px; }
+    .security-item { border-left:3px solid var(--green-2); padding:9px 12px; background:rgba(255,255,255,.67); border-radius:0 12px 12px 0; }
+    .security-item b { display:block; font-size:13px; }
+    .security-item span { color:var(--muted); font-size:12px; }
+    .protocol-grid { display:grid; grid-template-columns:.95fr 1.05fr; gap:16px; }
+    .method-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:9px; }
+    .method { border:1px solid var(--line); border-radius:13px; padding:11px; background:rgba(255,255,255,.72); }
+    .method code { color:var(--green); font-weight:800; font-size:12px; }
+    .method span { display:block; color:var(--muted); font-size:11px; margin-top:4px; }
+    .event-flow { background:#152d28; color:white; border-radius:20px; padding:21px; }
+    .event-flow pre { margin:0; white-space:pre-wrap; color:#d9eee7; font:12px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace; }
+    .event-pills { display:flex; flex-wrap:wrap; gap:7px; margin-top:14px; }
+    .event-pills span { border:1px solid rgba(255,255,255,.18); border-radius:999px; padding:5px 8px; color:#8ce1c5; font:11px ui-monospace,monospace; }
+    .tool-toolbar { display:flex; gap:10px; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; margin-bottom:14px; }
+    .atomic-details { border:1px solid var(--line); border-radius:20px; background:rgba(255,255,255,.72); box-shadow:var(--shadow); overflow:hidden; }
+    .atomic-details > summary { display:flex; justify-content:space-between; gap:18px; align-items:center; padding:18px 20px; cursor:pointer; list-style:none; font-weight:850; }
+    .atomic-details > summary::-webkit-details-marker { display:none; }
+    .atomic-details > summary::after { content:"展开 88 项 ↓"; color:var(--green); font-size:11px; white-space:nowrap; }
+    .atomic-details[open] > summary::after { content:"收起 ↑"; }
+    .atomic-details > summary span { color:var(--muted); font-size:11px; font-weight:500; }
+    .atomic-content { padding:0 18px 18px; border-top:1px solid var(--line); }
+    .atomic-content .tool-toolbar { margin-top:16px; }
+    .filters { display:flex; flex-wrap:wrap; gap:7px; }
+    .filter-btn, .route-btn { border:1px solid var(--line); background:rgba(255,255,255,.7); color:var(--muted); border-radius:999px; padding:7px 11px; cursor:pointer; font-size:12px; }
+    .filter-btn.active, .route-btn.active { background:var(--dark); color:white; border-color:var(--dark); }
+    .tool-count { color:var(--muted); font-size:13px; padding-top:7px; }
+    .table-wrap { overflow:auto; border:1px solid var(--line); border-radius:18px; background:rgba(255,255,255,.72); }
+    table { width:100%; border-collapse:collapse; font-size:13px; }
+    th { position:sticky; top:0; background:#e9ebe4; color:#53635e; text-align:left; font-size:11px; letter-spacing:.04em; text-transform:uppercase; z-index:1; }
+    th, td { padding:11px 12px; border-bottom:1px solid var(--line); vertical-align:top; }
+    td code { color:var(--green); white-space:nowrap; }
+    tbody tr:hover { background:#f7fbf8; }
+    .phase { display:inline-flex; padding:3px 7px; border-radius:999px; background:#def2eb; color:var(--green); font-size:10px; font-weight:900; }
+    .phase.p1 { background:#eeeae0; color:#7c6a42; }
+    .risk-write { color:var(--red); font-weight:800; }
+    .nl-flow { display:grid; grid-template-columns:repeat(6,1fr); gap:9px; }
+    .nl-step { border:1px solid var(--line); background:rgba(255,255,255,.75); border-radius:15px; padding:13px; min-height:116px; }
+    .nl-step .stepno { color:var(--orange); font-weight:900; font-size:11px; }
+    .nl-step b { display:block; font-size:13px; margin:5px 0; }
+    .nl-step small { color:var(--muted); font-size:11px; line-height:1.5; display:block; }
+    .nl-step.final { background:var(--dark); color:white; }
+    .nl-step.final small { color:rgba(255,255,255,.65); }
+    .mode-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:18px; }
+    .mode { border-top:4px solid var(--gold); }
+    .mode.trusted { border-color:var(--green); }
+    .mode.action { border-color:var(--red); }
+    .mode p { color:var(--muted); font-size:13px; margin:7px 0 0; }
+    .responsibility { margin-top:16px; display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .responsibility ul { padding-left:18px; margin:8px 0 0; color:var(--muted); font-size:13px; }
+    .accuracy-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:18px; }
+    .bar-row { display:grid; grid-template-columns:95px 1fr 42px; gap:9px; align-items:center; margin:9px 0; font-size:12px; }
+    .bar { height:8px; background:#e2e6df; border-radius:999px; overflow:hidden; }
+    .bar i { display:block; height:100%; background:linear-gradient(90deg,var(--green),var(--green-2)); border-radius:inherit; }
+    .hard-fail { display:flex; align-items:center; gap:13px; padding:18px; border:1px solid rgba(184,73,63,.25); background:#fff1ed; border-radius:17px; color:#8e382f; }
+    .hard-fail b { font-size:28px; }
+    .asset-layout { display:grid; grid-template-columns:.9fr 1.1fr; gap:16px; margin-top:16px; }
+    .repo-tree { margin:0; min-height:100%; border-radius:22px; padding:24px; color:#dff5ed; background:#142e28; overflow:auto; font:12px/1.75 ui-monospace,SFMono-Regular,Menlo,monospace; }
+    .repo-tree strong { color:#83e2c4; }
+    .asset-lifecycle { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-bottom:14px; }
+    .asset-state { position:relative; min-height:102px; padding:13px; border:1px solid var(--line); border-radius:14px; background:rgba(255,255,255,.72); }
+    .asset-state:not(:last-child)::after { content:"→"; position:absolute; right:-9px; top:39px; z-index:2; color:var(--orange); font-weight:900; }
+    .asset-state b { display:block; color:var(--green); font-size:12px; }
+    .asset-state span { display:block; margin-top:5px; color:var(--muted); font-size:10px; line-height:1.45; }
+    .responsibility-split { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .responsibility-split > div { padding:15px; border-radius:14px; background:#eef3ee; }
+    .responsibility-split b { display:block; font-size:12px; }
+    .responsibility-split span { display:block; margin-top:4px; color:var(--muted); font-size:11px; }
+    .db-flow { display:grid; grid-template-columns:repeat(7,1fr); gap:8px; }
+    .db-step { position:relative; min-height:126px; padding:14px 12px; border:1px solid var(--line); border-radius:15px; background:rgba(255,255,255,.74); }
+    .db-step:not(:last-child)::after { content:"→"; position:absolute; right:-9px; top:49px; z-index:2; color:var(--orange); font-weight:900; }
+    .db-step b { display:block; margin:5px 0; font-size:12px; }
+    .db-step small { display:block; color:var(--muted); font-size:10px; line-height:1.45; }
+    .db-step.final { color:white; background:var(--dark); }
+    .db-step.final small { color:rgba(255,255,255,.65); }
+    .artifact-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:16px; }
+    .artifact-card { padding:16px; border-top:4px solid var(--green); border-radius:14px; background:rgba(255,255,255,.72); }
+    .artifact-card b { display:block; font-size:12px; }
+    .artifact-card span { display:block; margin-top:5px; color:var(--muted); font-size:11px; }
+    .conversation-contract { max-width:980px; margin:0 auto; overflow:hidden; border:1px solid var(--line); border-radius:25px; background:white; box-shadow:var(--shadow); }
+    .contract-bar { display:flex; align-items:center; gap:8px; min-height:52px; padding:0 18px; border-bottom:1px solid var(--line); background:#f7f9f6; }
+    .contract-bar b { margin-right:auto; font-size:13px; }
+    .contract-bar span { padding:5px 8px; border-radius:999px; color:var(--muted); background:#e8eeea; font-size:9px; font-weight:800; }
+    .contract-stream { min-height:500px; padding:30px clamp(18px,6vw,72px) 22px; display:flex; flex-direction:column; gap:18px; }
+    .contract-user { align-self:flex-end; max-width:68%; padding:12px 16px; border-radius:18px 18px 4px 18px; background:#e8eeeb; font-size:12px; }
+    .contract-agent { display:grid; grid-template-columns:34px 1fr; gap:12px; }
+    .contract-avatar { width:34px; height:34px; display:grid; place-items:center; border-radius:11px; color:white; background:var(--dark); font-size:10px; font-weight:900; }
+    .contract-answer h4 { margin:1px 0 6px; font-size:17px; }
+    .contract-answer > p { margin:0 0 9px; color:var(--muted); font-size:12px; }
+    .contract-runtime { margin-bottom:10px; color:var(--green); font-size:10px; }
+    .contract-artifact { overflow:hidden; border:1px solid var(--line); border-radius:16px; background:#fbfcfa; }
+    .contract-artifact-head { display:flex; justify-content:space-between; padding:11px 14px; border-bottom:1px solid var(--line); font-size:11px; }
+    .contract-artifact-head span { color:var(--muted); font-size:9px; }
+    .contract-artifact-body { display:grid; grid-template-columns:1fr .85fr; gap:16px; padding:16px; }
+    .contract-findings { display:grid; gap:8px; }
+    .contract-finding { display:grid; grid-template-columns:28px 1fr auto; gap:9px; align-items:center; padding:9px; border-radius:11px; background:white; border:1px solid var(--line); font-size:10px; }
+    .contract-finding i { width:26px; height:26px; display:grid; place-items:center; border-radius:8px; color:var(--green); background:#dff3eb; font-style:normal; font-weight:900; }
+    .contract-finding b { color:var(--orange); }
+    .contract-bars { display:flex; align-items:flex-end; justify-content:space-around; gap:10px; min-height:130px; padding:12px 8px 2px; border-bottom:1px solid var(--line); }
+    .contract-bars div { flex:1; text-align:center; color:var(--muted); font-size:8px; }
+    .contract-bars i { display:block; width:72%; max-width:38px; margin:0 auto 7px; border-radius:5px 5px 1px 1px; background:var(--green); }
+    .contract-artifact-foot { display:flex; flex-wrap:wrap; gap:6px; padding:10px 14px; border-top:1px solid var(--line); }
+    .contract-artifact-foot span { padding:4px 7px; border-radius:999px; color:var(--muted); background:#edf2ee; font:8px ui-monospace,monospace; }
+    .contract-artifact-foot b { margin-left:auto; color:var(--green); font-size:9px; }
+    .contract-actions { display:flex; gap:14px; margin-top:9px; color:var(--muted); font-size:9px; }
+    .contract-composer { display:flex; align-items:center; gap:10px; margin:4px 46px 0; padding:11px 14px; border:1px solid var(--line); border-radius:17px; color:var(--muted); background:white; box-shadow:0 10px 28px rgba(25,48,40,.07); font-size:10px; }
+    .contract-composer b { margin-left:auto; width:26px; height:26px; display:grid; place-items:center; border-radius:8px; color:white; background:var(--dark); }
+    .contract-rules { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:16px; }
+    .contract-rule { padding:14px; border-top:4px solid var(--green); border-radius:14px; background:rgba(255,255,255,.72); }
+    .contract-rule b { display:block; font-size:11px; }
+    .contract-rule span { display:block; margin-top:4px; color:var(--muted); font-size:10px; }
+    .route-switch { display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap; }
+    .route-common { padding:17px; border-radius:17px; background:var(--dark); color:white; margin-bottom:14px; display:flex; flex-wrap:wrap; gap:9px; align-items:center; }
+    .route-common b { margin-right:8px; }
+    .route-common span { background:rgba(255,255,255,.09); border:1px solid rgba(255,255,255,.16); padding:5px 9px; border-radius:999px; font-size:11px; }
+    .route-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .route-card { border:1px solid var(--line); border-radius:22px; background:rgba(255,255,255,.73); overflow:hidden; }
+    .route-card header { padding:23px; color:white; background:var(--green); }
+    .route-card.db header { background:var(--orange); }
+    .route-card header p { margin:6px 0 0; color:rgba(255,255,255,.77); font-size:13px; }
+    .route-body { padding:22px; }
+    .route-body ul { padding-left:18px; color:var(--muted); font-size:13px; }
+    .okr { border-top:1px solid var(--line); padding:10px 0; }
+    .okr b { display:block; font-size:13px; }
+    .okr span { color:var(--muted); font-size:12px; }
+    body[data-route="company"] .route-card.db { display:none; }
+    body[data-route="company"] .route-grid { grid-template-columns:1fr; }
+    body[data-route="db"] .route-card.company { display:none; }
+    body[data-route="db"] .route-grid { grid-template-columns:1fr; }
+    .timeline { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+    .time-card { border:1px solid var(--line); border-radius:21px; padding:23px; background:rgba(255,255,255,.74); position:relative; overflow:hidden; }
+    .time-card .time { color:var(--green); font-size:29px; font-weight:900; letter-spacing:-.04em; }
+    .time-card ul { padding-left:17px; color:var(--muted); font-size:13px; }
+    .gate { margin-top:12px; padding:11px; border-radius:12px; background:#e3f3ed; color:#176650; font-size:11px; font-weight:700; }
+    .route-add { margin-top:9px; padding:10px 11px; border-radius:11px; background:#edf5f1; color:#315d50; font-size:11px; }
+    .route-add.db { background:#fff0e8; color:#8e4b31; }
+    .route-add b { display:block; margin-bottom:3px; }
+    .gate-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-top:18px; }
+    .gate-card { border-top:4px solid var(--green); background:rgba(255,255,255,.75); border-radius:13px; padding:14px; }
+    .gate-card b { display:block; font-size:13px; }
+    .gate-card span { color:var(--muted); font-size:11px; }
+    .unknown-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+    .unknown { padding:17px; border:1px solid rgba(183,139,40,.25); border-radius:16px; background:#fff9e9; }
+    .unknown b { display:block; color:#755b1d; font-size:13px; }
+    .unknown span { color:#806f48; font-size:12px; }
+    .sources { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+    .source-group { border:1px solid var(--line); border-radius:18px; padding:18px; background:rgba(255,255,255,.7); }
+    .source-group ul { padding-left:18px; margin:9px 0 0; }
+    .source-group li { margin:6px 0; font-size:12px; }
+    footer { border-top:1px solid var(--line); padding:26px 0 42px; color:var(--muted); font-size:12px; }
+    footer .wrap { display:flex; justify-content:space-between; gap:18px; flex-wrap:wrap; }
+    @media (max-width: 980px) {
+      .hero-copy, .section-head, .verdict-grid, .ecs-layout, .protocol-grid, .accuracy-grid, .asset-layout, .plan-detail-grid, .goal-thesis, .contract-layout, .capability-hero { grid-template-columns:1fr; }
+      .metric-grid, .ownership-grid { grid-template-columns:repeat(2,1fr); }
+      .harness-grid { grid-template-columns:repeat(2,1fr); }
+      .nl-flow { grid-template-columns:repeat(3,1fr); }
+      .contract-rules { grid-template-columns:repeat(2,1fr); }
+      .arch-split { grid-template-columns:1fr; }
+      .gate-grid { grid-template-columns:repeat(3,1fr); }
+      .db-flow { grid-template-columns:repeat(4,1fr); }
+      .artifact-grid { grid-template-columns:repeat(2,1fr); }
+      .goal-flow { grid-template-columns:repeat(3,1fr); }
+      .job-grid { grid-template-columns:repeat(3,1fr); }
+      .horizon-grid { grid-template-columns:repeat(3,1fr); }
+      .capability-grid { grid-template-columns:repeat(2,1fr); }
+      .sentence-grid { grid-template-columns:repeat(3,1fr); }
+      .plan-banner { grid-template-columns:1fr; }
+      .plan-kpi { border-left:0; border-top:1px solid rgba(255,255,255,.25); padding:14px 0 0; }
+    }
+    @media (max-width: 700px) {
+      .wrap { width:min(100% - 24px,1220px); }
+      .topbar .wrap { gap:12px; }
+      nav { display:none; }
+      .top-links .mini-link:first-child { display:none; }
+      .hero { padding-top:58px; }
+      h1 { font-size:48px; }
+      .metric-grid, .harness-grid, .ownership-grid, .mode-grid, .responsibility, .responsibility-split, .route-grid, .timeline, .unknown-grid, .sources, .artifact-grid, .specific-grid, .goal-grid, .job-grid, .horizon-grid, .capability-grid, .priority-lanes, .sentence-grid, .prototype-gallery { grid-template-columns:1fr; }
+      .prototype-lead { grid-template-columns:1fr; }
+      .bakeoff { grid-template-columns:1fr; gap:8px; }
+      .stage-arrow { transform:rotate(90deg); height:22px; }
+      .service-grid, .method-grid { grid-template-columns:1fr; }
+      .nl-flow { grid-template-columns:repeat(2,1fr); }
+      .asset-lifecycle, .db-flow { grid-template-columns:1fr; }
+      .asset-state:not(:last-child)::after, .db-step:not(:last-child)::after { content:"↓"; right:auto; left:50%; top:auto; bottom:-16px; }
+      .goal-flow { grid-template-columns:1fr; }
+      .goal-node:not(:last-child)::after { content:"↓"; right:auto; left:50%; top:auto; bottom:-16px; }
+      .contract-artifact-body, .contract-rules { grid-template-columns:1fr; }
+      .contract-stream { padding:22px 12px 18px; }
+      .contract-user { max-width:88%; }
+      .contract-agent { grid-template-columns:28px 1fr; gap:8px; }
+      .contract-avatar { width:28px; height:28px; border-radius:9px; }
+      .contract-composer { margin:4px 0 0; }
+      .gate-grid { grid-template-columns:1fr 1fr; }
+      .global-view > span { display:none; }
+      .global-view .route-btn { padding:5px 7px; font-size:11px; }
+      .brand > span:last-child { display:none; }
+      .decision-strip { grid-template-columns:1fr; }
+      .decision-or { min-height:18px; }
+      .selection-item { grid-template-columns:1fr; gap:3px; }
+      section { padding:48px 0; }
+      .panel { padding:19px; }
+      th,td { padding:9px 10px; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
+  </style>
+</head>
+<body data-route="all">
+  <header class="topbar">
+    <div class="wrap">
+      <div class="brand"><span class="brand-mark">DI</span><span>领先产品方案</span></div>
+      <nav aria-label="页面导航">
+        <a href="#goals">能力目标</a><a href="#data-plane">数据建设</a><a href="#schemes">方案对比</a><a href="#product-ui">对话画册</a><a class="scope-company" href="#company-architecture">方案一</a><a class="scope-db" href="#db-architecture">方案二</a><a href="#shared-modules">共用模块</a><a href="#roadmap">路线图</a><a href="#evidence">证据</a><a href="#tools">原子附录</a>
+      </nav>
+      <div class="global-view" aria-label="全篇方案视图"><span>全篇</span><button class="route-btn active" type="button" data-route-btn="all">双方案</button><button class="route-btn" type="button" data-route-btn="company">方案一</button><button class="route-btn" type="button" data-route-btn="db">方案二</button></div>
+      <div class="top-links"><a class="mini-link" href="./agent-entry-governance-visual-report.html">竞品主报告</a><a class="mini-link" href="./huawei-catch-up-product-plan.md">完整文档</a></div>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero wrap">
+      <div class="eyebrow">Conversation-first · Capability-first · Harness-first · 2026-08-20</div>
+      <h1 id="heroTitle">先定要做成哪些产品能力，<br>再选两种架构。</h1>
+      <div class="hero-copy">
+        <p id="heroCopy">产品首先要回答“用户能用一句话做成什么、先做哪几件”。首期串起数据接入与资产化、智能问数与分析、数据知识构建、数据库洞察，再比较公司级协作与数据库绿地两套承载方案。</p>
+        <div class="hero-callout"><strong id="heroCalloutTitle">当前建议</strong><span id="heroCallout">技术按数据库绿地方案立即启动；组织给公司协作方案 2–4 周 Gate。条件成立时，同一代码直接升格，不推倒重来。</span></div>
+      </div>
+      <div class="view-status" id="viewStatus" aria-live="polite">当前显示：两种方案及全部对比</div>
+      <div class="metric-grid">
+        <div class="metric"><b>4 主线</b><span>接入资产、问数分析、数据知识、数据库洞察</span></div>
+        <div class="metric"><b>10 回答</b><span>接入、导入、资产、治理，以及六类使用/运维回答</span></div>
+        <div class="metric"><b>C0–C7</b><span>接入准备、问数、分析、知识、DB、治理、行动、主动</span></div>
+        <div class="metric"><b id="deploymentMetric">2 方案</b><span id="deploymentMetricText">同一能力组合的两种承载方式</span></div>
+      </div>
+      <div class="notice">所有分数、期限和阈值均为设计建议，不是华为云现状或交付承诺；公开资料只证明接口形态，真实正确率、合规、Region、成本和容量仍需 Bake-off / 内部验证。</div>
+    </div>
+
+    <section id="goals">
+      <div class="wrap">
+        <div class="section-head"><div class="kicker">01 · Product capabilities</div><div><h2>先决定产品让用户“一句话做成什么”，再讨论 Agent 怎么做。</h2><p>产品目标不是 Goal 状态机，而是一组客户能理解、购买和持续使用的能力。首期覆盖接入数据、生成资产、管理和使用数据，再做深数据库洞察；不把调用协议当成产品卖点。</p></div></div>
+
+        <div class="capability-hero">
+          <div><span class="tag" style="background:rgba(255,255,255,.13);color:#9ce8cf">DATA INTELLIGENCE · 数据智能</span><h3>一句话接入、生成、管理和使用数据。</h3><p>一个对话 Agent、十种回答工件。用户只描述要完成的事情，产品自动路由能力，不要求选择 Dashboard、Harness、模型或内部 Agent。</p></div>
+          <div class="capability-promise"><span>接数据 · 比较直查/导入/定时/CDC，生成 Pipeline</span><span>生成产品 · 得到清洗表、指标、知识、质量和血缘草稿</span><span>管数据 · 得到发现、影响、任务与可审核治理 Diff</span><span>问数/分析/查库 · 得到表图、证据、结论与诊断</span></div>
+        </div>
+
+        <div class="capability-grid" aria-label="产品能力全集与优先级">
+          <article class="capability-card core"><div class="cap-head"><span class="cap-id">C0</span><span class="cap-phase">P0 核心 1</span></div><h3>数据接入与准备</h3><div class="say">“维表直查、交易表 CDC，再导入这批供应商文件。”</div><p>比较直查/一次/定时/CDC，完成连接、Schema/映射、质量/敏感预检、发布与数据到达验证。</p><small>交付：接入方案 · Pipeline 草稿 · Schema Diff · 水位/验证</small></article>
+          <article class="capability-card core"><div class="cap-head"><span class="cap-id">C1</span><span class="cap-phase">P0 核心 2</span></div><h3>智能问数</h3><div class="say">“最近 30 天华东各地区退款率是多少？”</div><p>理解口径、消歧、多轮追问、生成并执行安全 SQL。</p><small>交付：表 · 图 · SQL · 参数 · 口径 · query_id · 证据</small></article>
+          <article class="capability-card core"><div class="cap-head"><span class="cap-id">C2</span><span class="cap-phase">P0 核心 3</span></div><h3>智能分析</h3><div class="say">“哪些地区显著上升？为什么？影响多大？”</div><p>完成趋势、对比、分群、异常、贡献和假设验证，区分事实与推断。</p><small>交付：分析画布 · 关键发现 · 证据 · 可复算报告</small></article>
+          <article class="capability-card core"><div class="cap-head"><span class="cap-id">C3</span><span class="cap-phase">P0 核心 4 · 草稿</span></div><h3>数据知识构建</h3><div class="say">“扫描订单库，生成客户 360 和知识网络草稿。”</div><p>从 Schema、样例、文档和血缘生成清洗表/视图、指标语义、实体关系、质量规则与 Verified 候选。</p><small>交付：数据产品蓝图 · 知识网络 · 语义/规则草稿 · Review</small></article>
+          <article class="capability-card core"><div class="cap-head"><span class="cap-id">C4</span><span class="cap-phase">P0 · DB 差异化</span></div><h3>数据库洞察</h3><div class="say">“订单库昨晚为什么变慢？”</div><p>查询实例、容量、Top SQL、锁、等待、计划、指标和变更，形成证据调查。</p><small>交付：体检/调查报告 · 时间线 · 候选原因 · 建议</small></article>
+          <article class="capability-card core"><div class="cap-head"><span class="cap-id">C5</span><span class="cap-phase">P0 发现 / P1 闭环</span></div><h3>智能治理</h3><div class="say">“检查敏感、质量和血缘，给我修复计划。”</div><p>P0 完成资产发现、分类/质量/血缘候选和可审核计划；P1 扩跨源策略、生命周期与受控修复。</p><small>交付：资产清单 · 覆盖报告 · 影响图 · 待审批 Diff</small></article>
+          <article class="capability-card later"><div class="cap-head"><span class="cap-id">C6</span><span class="cap-phase">P1 少量 / P2 扩展</span></div><h3>安全行动</h3><div class="say">“取消异常查询，并确认业务恢复。”</div><p>形成动作方案，经策略和人工审批后幂等执行，从权威系统验证结果。</p><small>交付：审批 · 执行 · 后置验证 · 补偿/回滚证据</small></article>
+          <article class="capability-card future"><div class="cap-head"><span class="cap-id">C7</span><span class="cap-phase">P2</span></div><h3>主动智能</h3><div class="say">“每天监控退款率，异常时自动分析并通知我。”</div><p>由指标、质量或数据库事件触发调查、解释、订阅和下一步建议。</p><small>交付：主动洞察 · 告警调查包 · 周期报告 · 动作草案</small></article>
+        </div>
+
+        <div class="boundary-note"><strong>“一句话建知识”不是让模型随意画图。</strong>产品构建的是可治理的数据知识网络：实体、表、指标、维度、规则、Owner、Verified Query 及其业务关系、Join、血缘、派生和影响。推断关系必须带来源、置信度和 Review 状态，首期只能生成草稿，不能自动发布。</div>
+
+        <div class="section-head" style="margin:34px 0 16px"><div class="kicker">Priority score</div><div><h3 style="font-size:27px">同一能力全集，两种方案的投资顺序不同。</h3><p>这是设计优先分，不是当前产品能力分；按客户价值、华为差异化、飞轮价值、可交付性、安全可控和多入口复用加权，待内部基线重算。</p></div></div>
+        <div class="compare-wrap"><table><thead><tr><th>能力</th><th class="company-col scope-company">方案一优先分</th><th class="db-col scope-db">方案二优先分</th><th>裁决</th></tr></thead><tbody>
+          <tr><td>C0 接入准备</td><td class="scope-company"><strong>94 · #1</strong></td><td class="scope-db"><strong>91 · #2</strong></td><td>首次价值、数据新鲜度和所有后续能力上限</td></tr>
+          <tr><td>C1 智能问数</td><td class="scope-company"><strong>91 · #3</strong></td><td class="scope-db"><strong>86 · #3</strong></td><td>高频入口，直接检验知识/权限/SQL 全链</td></tr>
+          <tr><td>C2 智能分析</td><td class="scope-company"><strong>88 · #4</strong></td><td class="scope-db">73 · #5</td><td>公司级高价值；DB 首期只做基础分析</td></tr>
+          <tr><td>C3 知识构建</td><td class="scope-company"><strong>92 · #2</strong></td><td class="scope-db"><strong>82 · #4</strong></td><td>从已有库生成数据产品，形成准确率飞轮</td></tr>
+          <tr><td>C4 DB 洞察</td><td class="scope-company">84 · #6</td><td class="scope-db"><strong>95 · #1</strong></td><td>DB 权威上下文形成最强差异化</td></tr>
+          <tr><td>C5 智能治理</td><td class="scope-company"><strong>87 · #5</strong></td><td class="scope-db">68 · #6</td><td>发现/质量/敏感/血缘前移；完整治理分阶段</td></tr>
+          <tr><td>C6 安全行动</td><td class="scope-company">61</td><td class="scope-db">64</td><td>等只读、审批与后置验证成熟</td></tr>
+          <tr><td>C7 主动智能</td><td class="scope-company">68</td><td class="scope-db">70</td><td>长期能力，依赖知识/事件/评测</td></tr>
+        </tbody></table></div>
+
+        <div class="section-head" style="margin:34px 0 16px"><div class="kicker">Focus first</div><div><h3 style="font-size:27px">首期集中四条主线，用一条纵向故事串起来。</h3></div></div>
+        <div class="priority-lanes">
+          <div class="priority-lane"><small>主线 A · 首次价值</small><h3>接入 + 资产化</h3><p>一句话比较直查/导入/定时/CDC，完成 Schema、质量/敏感预检和数据到达验证，再生成可用资产候选。</p></div>
+          <div class="priority-lane"><small>主线 B · 最大使用价值</small><h3>智能问数 + 分析</h3><p>找到正确数据与口径，安全查询并完成趋势、对比和贡献分析，交付表图、SQL 和证据。</p></div>
+          <div class="priority-lane"><small>主线 C · 准确率壁垒</small><h3>数据产品 + 知识</h3><p>生成清洗视图、指标、关系、质量规则和 Verified 草稿，经 Owner Review 后服务问数与治理。</p></div>
+          <div class="priority-lane"><small>主线 D · DB 不可替代</small><h3>数据库洞察</h3><p>一句话查实例、运行状态和慢 SQL/锁/等待/计划变化，形成证据时间线与处置建议。</p></div>
+        </div>
+
+        <div class="sentence-grid" aria-label="一句话产品旅程">
+          <div class="sentence-card"><b>一句话接数据库</b><q>维表直查，交易表 CDC；先给方案。</q><span>路径比较、映射、Pipeline 与前置缺口</span></div>
+          <div class="sentence-card"><b>一句话导入数据</b><q>导入 CSV，以后每天从 OBS 增量加载。</q><span>Schema、坏数、敏感、目标与调度</span></div>
+          <div class="sentence-card"><b>一句话生成产品</b><q>扫描 CRM/订单库，生成客户 360 草稿。</q><span>清洗视图、指标、知识、质量和血缘</span></div>
+          <div class="sentence-card"><b>一句话管数据</b><q>检查敏感、质量和血缘，给修复计划。</q><span>覆盖度、影响、任务和待审批 Diff</span></div>
+          <div class="sentence-card"><b>一句话问数据</b><q>上季度各产品线收入和毛利率是多少？</q><span>表图、口径、SQL、时间和证据</span></div>
+          <div class="sentence-card"><b>一句话做分析</b><q>收入下降来自哪些客户？排除汇率影响。</q><span>贡献拆解、假设、反证和报告</span></div>
+          <div class="sentence-card"><b>一句话建知识</b><q>为订单域建立客户、订单、商品、退款知识网络。</q><span>关系图、指标/Join 候选、冲突和缺口</span></div>
+          <div class="sentence-card"><b>一句话查数据库</b><q>这个实例容量、复制延迟和最近变更怎么样？</q><span>实例状态、趋势、异常和证据</span></div>
+          <div class="sentence-card"><b>一句话调查故障</b><q>昨晚 22 点后订单库为什么变慢？</q><span>SQL/锁/等待/计划/变更时间线</span></div>
+        </div>
+
+        <div class="horizon-grid" aria-label="短中长期产品能力目标">
+          <div class="horizon"><span class="when">0–2 周</span><h3>纵向验证</h3><p>DB 直查、文件导入、资产草稿、问数和查库。</p><div class="goal-kpi">一个 DB · CSV/Parquet · 一个数据域</div></div>
+          <div class="horizon"><span class="when">1 个月</span><h3>首个可用版</h3><p>接入准备、智能问数、基础分析、数据库洞察。</p><div class="goal-kpi">接入验证 · 20 问数 Gold · 8–10 DB 能力</div></div>
+          <div class="horizon"><span class="when">2–3 个月</span><h3>生成产品与治理</h3><p>一个域可生成、Review、发布资产/知识/规则草稿。</p><div class="goal-kpi">3–5 个伙伴使用四条主线</div></div>
+          <div class="horizon"><span class="when">3–6 个月</span><h3>形成能力飞轮</h3><p>智能治理、外部 Agent、知识版本和极少安全行动。</p><div class="goal-kpi">成功任务反哺知识与 Gold</div></div>
+          <div class="horizon"><span class="when">6–18 个月</span><h3>形成平台壁垒</h3><p>主动智能、跨域知识、行业包和更多可验证行动。</p><div class="goal-kpi">由客户价值与安全 Gate 决定扩展</div></div>
+        </div>
+
+        <div class="section-head" style="margin:34px 0 16px"><div class="kicker">Capability coverage</div><div><h3 style="font-size:27px">两种方案使用同一能力名称，但首要能力和深度不同。</h3><p>选择单方案视图后只显示该方案覆盖列。</p></div></div>
+        <div class="compare-wrap"><table><thead><tr><th>产品能力</th><th class="company-col scope-company">方案一 · 公司竞争力</th><th class="db-col scope-db">方案二 · DB 绿地</th></tr></thead><tbody>
+          <tr><td>C0 接入准备</td><td class="scope-company"><strong>首要：</strong>DataArts 多源、批/实时/CDC、Catalog 与权限的对话任务</td><td class="scope-db"><strong>首要：</strong>一个 DB + CSV/Parquet；直查/快照先闭环</td></tr>
+          <tr><td>C1 智能问数</td><td class="scope-company"><strong>首要：</strong>多源业务问数与 BI Artifact</td><td class="scope-db"><strong>首要：</strong>直接查询数据库业务数据</td></tr>
+          <tr><td>C2 智能分析</td><td class="scope-company"><strong>首要：</strong>趋势/对比/贡献/异常到复杂分析</td><td class="scope-db">服务问数和 DB 调查的基础分析</td></tr>
+          <tr><td>C3 知识构建</td><td class="scope-company"><strong>核心壁垒：</strong>企业级语义/知识生命周期</td><td class="scope-db">DB 域知识草稿 + DataArts Adapter</td></tr>
+          <tr><td>C4 DB 洞察</td><td class="scope-company">数据库团队交付版本化能力包</td><td class="scope-db"><strong>第一差异化：</strong>查库、诊断、证据和处置</td></tr>
+          <tr><td>C5 智能治理</td><td class="scope-company">P0 发现/质量/敏感/血缘；P1 跨域策略和生命周期</td><td class="scope-db">P0 DB 域候选与计划；不复制企业治理平台</td></tr>
+          <tr><td>C6 安全行动</td><td class="scope-company">逐步扩到跨域审批和权威验证</td><td class="scope-db">先取消 Query/Session，再逐个扩展</td></tr>
+          <tr><td>C7 主动智能</td><td class="scope-company">跨数据/数据库事件的长期能力</td><td class="scope-db">聚焦 DB 异常、容量和慢 SQL 调查</td></tr>
+        </tbody></table></div>
+
+        <div class="section-head" style="margin:34px 0 16px"><div class="kicker">Capability to build</div><div><h3 style="font-size:27px">每项产品能力都落到共用模块和原子执行域。</h3><p>产品能力定义客户买到什么；功能模块组织完整旅程；原子域通过同一套 CLI/MCP 被 Harness 调用。三层不能互相代替，也不重复建栈。</p></div></div>
+        <div class="compare-wrap"><table aria-label="产品能力到功能模块与原子域映射"><thead><tr><th>产品能力</th><th>主要功能模块</th><th><code>di</code> 原子域</th><th>禁止重复建设</th></tr></thead><tbody>
+          <tr><td>C0 接入准备</td><td>Path Advisor、连接/Schema/Profile、映射、Pipeline 预览/发布、水位验证</td><td>身份 · 数据源 · 接入 · 目录 · 质量</td><td>只负责聊天的“接数 Agent”；每源一套 UI</td></tr>
+          <tr><td>C1 智能问数</td><td>数据发现、语义解析、Verified、NL2SQL、SQL Guard、表图证据</td><td>身份 · 目录 · 语义 · SQL · 工件</td><td>与分析分离的 SQL、权限和工件栈</td></tr>
+          <tr><td>C2 智能分析</td><td>Analysis Plan、趋势/比较/分群/贡献、假设验证、报告画布</td><td>SQL · 结果分析 · 质量 · 工件</td><td>脱离证据的通用总结 Agent</td></tr>
+          <tr><td>C3 知识构建</td><td>资产盘点、清洗视图/指标/知识/Verified 草稿、Review、发布和回滚</td><td>目录 · 接入 · 知识 · 语义 · 质量 · 保证</td><td>只存在 Prompt 中、不可版本化的“记忆”</td></tr>
+          <tr><td>C4 DB 洞察</td><td>实例状态、体检、Top SQL、锁/等待、计划/指标/变更时间线</td><td>诊断 · SQL · 保证 · 工件</td><td>让通用 SQL 猜测实例事实</td></tr>
+          <tr><td>C5 智能治理</td><td>资产发现、分类、质量、血缘、影响、Schema 漂移、策略和 Owner Workflow</td><td>目录 · 接入 · 知识 · 质量 · 保证</td><td>首期重建完整治理平台；模型无 Review 改生产</td></tr>
+          <tr><td>C6 安全行动</td><td>Action Plan、策略、审批、执行、后置验证、补偿</td><td>动作 · 诊断写操作 · 保证</td><td>Harness 直连权威系统自由写入</td></tr>
+          <tr><td>C7 主动智能</td><td>订阅、触发器、异常调查、周期报告、动作草案</td><td>质量 · 诊断 · 工件 · 动作 · 保证</td><td>C1–C6 未稳定前建设复杂自主多 Agent</td></tr>
+        </tbody></table></div>
+        <div class="boundary-note"><strong>执行内核不是产品能力：</strong>Harness、Goal Contract、Session/Event、Artifact、权限、评测和 CLI/MCP 负责把上述能力做稳，但不能代替“产品到底能让客户做什么”的定义。</div>
+      </div>
+    </section>
+
+    <section id="data-plane">
+      <div class="wrap">
+        <div class="section-head"><div class="kicker">02 · Data build &amp; management</div><div><h2>从“会回答”补到“能把数据接进来、做成资产并持续管理”。</h2><p>这个修正来自重新核验 Databricks 与阿里云官方资料：对话式接数已是直接竞争基线；领先产品必须在同一线程继续完成资产化、治理和验证，而不是只给运维/咨询建议。</p></div></div>
+
+        <div class="db-flow" aria-label="数据建设与管理闭环">
+          <div class="db-step"><span class="stepno">01</span><b>理解来源与用途</b><small>数据库、文件、对象、SaaS/流；目标用户、SLA、驻留与预算</small></div>
+          <div class="db-step"><span class="stepno">02</span><b>选择接入路径</b><small>直查 / 一次导入 / 定时同步 / CDC；解释时效、负载和成本</small></div>
+          <div class="db-step"><span class="stepno">03</span><b>Schema 与预检</b><small>映射、主键、坏数、新列、PII、权限和源端前置</small></div>
+          <div class="db-step"><span class="stepno">04</span><b>发布并验证</b><small>Pipeline 版本、停止/恢复、行数、校验和、水位与 Schema</small></div>
+          <div class="db-step"><span class="stepno">05</span><b>生成数据产品</b><small>清洗表/视图、指标、知识、Verified、质量、血缘与 API/RAG 候选</small></div>
+          <div class="db-step final"><span class="stepno">06</span><b>持续治理</b><small>发现、分类、质量、影响、Owner、生命周期和受控修复</small></div>
+        </div>
+
+        <div class="section-head" style="margin:34px 0 16px"><div class="kicker">Fresh official benchmark</div><div><h3 style="font-size:27px">阿里把“对话建接入任务”做得更显性；Databricks 把接入路径和治理底座做得更系统。</h3><p>以下都是官方声明，不是本轮账号实测。产品状态、Region、Edition、连接器动作与性能必须逐环境核验。</p></div></div>
+        <div class="compare-wrap"><table aria-label="Databricks 阿里云与华为建议的数据建设能力比较"><thead><tr><th>细粒度能力</th><th>Databricks · 官方声明</th><th>阿里云 DataWorks · 官方声明</th><th>华为领先目标 · 建议</th></tr></thead><tbody>
+          <tr><td><strong>对话创建接入</strong></td><td>Lakeflow 向导/API + Genie Code 数据工程；未证明 Genie One 已独立承担所有接入操作</td><td>DI Agent 明确支持单表/整库、离线/实时的自然语言创建与管理，确认后发布</td><td><strong>同一消费对话直接生成接入草稿</strong>，专业向导只是可展开工件</td></tr>
+          <tr><td><strong>外部数据库路径</strong></td><td>Unity Catalog 下联邦只读；另有查询接入和托管 CDC</td><td>ChatDB 探索已接数据源；批/实时、全量/增量/整库同步</td><td>Agent 比较直查/一次/定时/CDC，不因一句“实时”盲选</td></tr>
+          <tr><td><strong>文件与 Schema</strong></td><td>Auto Loader 推断、演进并保留异常字段；覆盖对象文件格式</td><td>DI Agent 描述结构化/非结构化 ETL、标签/转写/摘要/向量化</td><td>新列、坏行、类型冲突与 PII 先预览；隔离而非静默丢弃</td></tr>
+          <tr><td><strong>资产发现</strong></td><td>Discover/Catalog Explorer、样例、权限、自动血缘和认证信号</td><td>Data Map 搜索、详情、预览、血缘、分类与数据专辑</td><td>搜索只是入口；Agent 直接回答“这个库能生成什么数据产品”</td></tr>
+          <tr><td><strong>质量与敏感</strong></td><td>质量异常/画像；Agentic 分类和标签；可联动 ABAC 掩码</td><td>治理 Agent 可扫描、生成治理/SQL Diff、确认执行并复检</td><td>发现/草稿 P0；策略/修复必须影响分析、审批和权威复检</td></tr>
+          <tr><td><strong>准备负担</strong></td><td>Unity Catalog、Serverless、连接/权限与源端 CDC 前提；连接器状态/区域不一</td><td>需购买 Data Agent、Serverless 资源组、数据源/网络；版本与增值模块影响治理能力</td><td>回复显式分栏“产品已完成 / 用户待补 / 当前不可用”，不卖裸连接器数量</td></tr>
+        </tbody></table></div>
+
+        <div class="responsibility" style="margin-top:18px">
+          <div class="panel"><span class="tag official">官方声明 · Databricks</span><h3>平台对象与治理更连续</h3><p style="color:var(--muted);font-size:13px">Lakeflow Connect、Federation、Auto Loader、Unity Catalog 发现/血缘/质量/分类和 metric views 形成强底座。接入配置仍分布在多个专业面，给华为留下“一个对话连续交付”的空间。</p><p style="font-size:12px"><a href="https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/">Lakeflow Connect ↗</a> · <a href="https://docs.databricks.com/gcp/en/query-federation">Federation ↗</a> · <a href="https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-discovery">Data discovery ↗</a></p></div>
+          <div class="panel"><span class="tag official">官方声明 · 阿里云</span><h3>对话接入与治理最直接</h3><p style="color:var(--muted);font-size:13px">DI Agent 已明确展示自然语言创建/管理同步和 ChatDB；治理 Agent 生成计划/Diff、确认后执行并复检。它已经不是“只有 Quick BI 问数入口”的旧基线。</p><p style="font-size:12px"><a href="https://help.aliyun.com/zh/dataworks/user-guide/introduction-to-data-integration-and-ai-native-capabilities">DI Agent ↗</a> · <a href="https://help.aliyun.com/zh/dataworks/user-guide/data-governance-agent">治理 Agent ↗</a> · <a href="https://help.aliyun.com/zh/dataworks/user-guide/data-map/">数据地图 ↗</a></p></div>
+        </div>
+
+        <div class="section-head" style="margin:34px 0 16px"><div class="kicker">What an existing DB can become</div><div><h3 style="font-size:27px">扫描现有数据库后，产品不能只回一张 Schema 清单。</h3></div></div>
+        <div class="compare-wrap"><table><thead><tr><th>可生成对象</th><th>自动生成到什么程度</th><th>用户必须补什么</th><th>何时才可发布</th></tr></thead><tbody>
+          <tr><td>资产清单、Schema/Profile、索引/约束、热度/新鲜度</td><td><strong>高：</strong>只读扫描直接生成</td><td>用途与扫描范围</td><td>样例遵守列权限与脱敏</td></tr>
+          <tr><td>表/字段说明、领域归类、Owner 候选</td><td><strong>中：</strong>命名/样例/文档推断</td><td>组织术语、职责</td><td>Owner Review；推断标签保留</td></tr>
+          <tr><td>清洗表/视图、客户 360、主题数据产品</td><td><strong>中：</strong>生成蓝图与 Pipeline 草稿</td><td>粒度、SLA、成本、保留</td><td>Dry-run + 质量 Gate + 回滚计划</td></tr>
+          <tr><td>指标/维度/Join、知识网络、Verified Query</td><td><strong>中：</strong>从结构/样例/历史查询生成候选</td><td>权威口径和例外</td><td>结果等价 Gold + 语义 Owner Review</td></tr>
+          <tr><td>质量规则、敏感分类、掩码/访问策略</td><td><strong>中高：</strong>规则/分类/策略 Diff</td><td>合规等级、误报与豁免</td><td>问题样例、影响分析与审批</td></tr>
+          <tr><td>API/共享数据集、特征/向量/RAG 索引候选</td><td><strong>中：</strong>生成消费合同草稿</td><td>消费者、更新频率、ACL、模型用途</td><td>数据产品 Owner + 安全/成本 Gate</td></tr>
+        </tbody></table></div>
+
+        <div class="section-head" style="margin:34px 0 16px"><div class="kicker">Responsibility split</div><div><h3 style="font-size:27px">Agent 自动化越强，责任边界越要在回复里看得见。</h3></div></div>
+        <div class="ownership-grid"><div class="ownership-card"><small>PRODUCT</small><h3>产品负责</h3><p>连通/能力/负载与四路径比较；Schema/Profile、映射、质量/敏感预检；版本化 Pipeline、停止/恢复、目标验证和资产草稿。</p></div><div class="ownership-card"><small>DATA OWNER</small><h3>用户负责</h3><p>批准身份、网络、用途、驻留、SLA、成本、主键和业务口径；裁决敏感等级、误报、Owner 与生产发布。</p></div><div class="ownership-card"><small style="color:var(--red)">NEVER</small><h3>禁止捷径</h3><p>长期密码进 Harness；静默丢列或污染可信表；模型自报成功却无目标证据；自动发布推断血缘、指标或访问策略。</p></div><div class="ownership-card"><small>EVIDENCE</small><h3>完成判据</h3><p>源/目标身份、Schema 版本、行数/校验和或水位、坏数策略、Pipeline 状态和审批记录都能由权威接口复核。</p></div></div>
+      </div>
+    </section>
+
+    <!-- Goal Contract and completion states are execution safeguards; the compact design appears in the protocol and UI sections below. -->
+
+
+    <section id="schemes">
+      <div class="wrap">
+        <div class="section-head"><div class="kicker">03 · Choose scheme</div><div><h2>能力组合和优先级明确后，再选两种完整产品架构。</h2><p>方案差异不只是组织名称，而是接入/资产/治理做到多广多深、由谁承载、入口、Owner、硬依赖、首期部署和风险不同。顶部“全篇”切换会隐藏另一方案的架构、专属模块和路线内容。</p></div></div>
+        <div class="compare-wrap">
+          <table aria-label="两种方案完整对比"><thead><tr><th>决策维度</th><th class="company-col scope-company">方案一 · 公司竞争力</th><th class="db-col scope-db">方案二 · DB 绿地</th></tr></thead><tbody>
+            <tr><td>能力中心</td><td class="scope-company"><strong>C0 多源接入 + C3 数据产品 + C1/2 问数分析 + C5 治理</strong>；C4 DB 洞察为强能力包</td><td class="scope-db"><strong>C4 DB 洞察 + C0 单库/文件接入 + DB 上的 C1 问数</strong>；C3/5 做轻量资产治理</td></tr>
+            <tr><td>产品边界</td><td class="scope-company">多源接入、数据产品、问数分析、知识治理、数据库洞察 + 多入口嵌入</td><td class="scope-db">一个 DB + CSV/Parquet 的直查/快照、资产草稿、问数分析、查库/诊断</td></tr>
+            <tr><td>唯一 Owner</td><td class="scope-company">公司级 Data Intelligence 总 Owner</td><td class="scope-db">数据库部门产品 Owner + 端到端小队</td></tr>
+            <tr><td>入口</td><td class="scope-company">人：统一对话并嵌入 DataArts/DB；Agent：CLI/MCP/API</td><td class="scope-db">人：独立对话 + DB 实例页嵌入；Agent：CLI/MCP/API</td></tr>
+            <tr><td>架构</td><td class="scope-company">统一对话入口 + 控制面 + 可替换 Harness + 多部门能力包</td><td class="scope-db">对话 Web + 模块化单体 + 隔离 Runner + DB Tool Gateway</td></tr>
+            <tr><td>硬依赖</td><td class="scope-company">只依赖签署契约与 SLO 的共享 DataArts/DB/IAM 能力</td><td class="scope-db">ECS、模型端点、一个 DB 只读/导出接口、OBS/文件；其余为 Adapter</td></tr>
+            <tr><td>首期部署</td><td class="scope-company">单 ECS 纵向样例验证；正式承载按公司服务 Gate 与 SLO 演进</td><td class="scope-db">单 ECS Docker Compose；无 HA/SLA，但安全和证据完整</td></tr>
+            <tr><td>接入/资产/治理</td><td class="scope-company">DataArts/DRS 作为执行与权威对象；产品补对话规划、预览、验证和连续任务</td><td class="scope-db"><code>ingest-lite</code> + Git/PostgreSQL 资产包；P0 无通用 CDC/连接器平台</td></tr>
+            <tr><td>语义/BI</td><td class="scope-company">DataArts 通过稳定 ID、版本、ACL、事件 Gate 后权威承载</td><td class="scope-db">Git YAML/SQL + Verified Query 起步，未来适配 DataArts</td></tr>
+            <tr><td>数据库深度</td><td class="scope-company">高，取决于数据库能力包在共同 Backlog 的优先级</td><td class="scope-db"><strong>最高且直接可控</strong></td></tr>
+            <tr><td>组织依赖</td><td class="scope-company">高：总 Owner、共同 OKR、能力包、同一发布列车缺一不可</td><td class="scope-db">中低：需要数据库部门拥有小队、预算和发布权</td></tr>
+            <tr><td>主要风险</td><td class="scope-company">名义协作，实际多入口、多状态、每个部门各自完成</td><td class="scope-db">范围膨胀成通用平台，临时实现长期固化</td></tr>
+            <tr><td>转换路径</td><td class="scope-company">组织 Gate 不成立就退回方案二，技术样例不停</td><td class="scope-db">公司条件成熟后替换承载模块，协议不变，升格方案一</td></tr>
+          </tbody></table>
+        </div>
+        <div class="decision-strip">
+          <div class="decision-card company scope-company"><span class="tag">选择方案一，当且仅当</span><h3 style="margin-top:10px">2–4 周内能获得真正的公司级权力</h3><p>总 Owner、共同预算/OKR、能力包契约、真实 OBO 和同一发布列车全部可执行。</p></div>
+          <div class="decision-or scope-company scope-db">否则 →</div>
+          <div class="decision-card db scope-db"><span class="tag warn">当前技术起步</span><h3 style="margin-top:10px">先按方案二启动低依赖纵向样例</h3><p>一台 ECS、一个主引擎、CSV/Parquet，跑通“接入—资产—问数—查库”纵向故事，不等待“大平台”。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="product-ui">
+      <div class="wrap">
+        <div class="section-head"><div class="kicker">Product in action</div><div><h2>先看一个对话 Agent 如何把数据建设与使用任务做完。</h2><p>用户始终留在同一条对话线程；接入方案、Pipeline、资产蓝图、治理报告、图表、知识图、诊断时间线和审批卡都是 Agent 回复里的结构化工件，来源、Diff 与运行证据作为附件展开。</p></div></div>
+        <div class="prototype-lead"><div><h3>一个对话 Agent，十种结构化回答</h3><p>新增的前四种回答覆盖接数据库、导入新数据、从现有库生成数据产品和治理；后六种继续覆盖问数、分析、知识、DB 调查与动作。两种方案承载位置不同，Task/Session、权限、事件、工件合同不变。</p></div><a href="./huawei-product-ui-prototypes.html">打开完整对话回答画册 ↗</a></div>
+        <div class="prototype-gallery">
+          <figure class="prototype-preview"><a href="./huawei-product-ui-prototypes.html#connect"><img src="./assets/huawei-product-ui/connect.png" alt="对话 Agent 接入现有数据库回答设计原型" width="1288" height="764"></a><figcaption class="prototype-caption"><div><b>DATA 01 · 接入现有数据库</b><span>比较直查/一次/定时/CDC，检查网络、权限、主键与日志前置，返回表分配和 Pipeline 草稿。</span></div><span class="prototype-phase">C0/C5 · P0</span></figcaption></figure>
+          <figure class="prototype-preview"><a href="./huawei-product-ui-prototypes.html#import"><img src="./assets/huawei-product-ui/import.png" alt="对话 Agent 导入新数据回答设计原型" width="1288" height="764"></a><figcaption class="prototype-caption"><div><b>DATA 02 · 导入新数据</b><span>文件画像、Schema/字段 Diff、坏数隔离、敏感策略、目标表与每日调度都在发布前确认。</span></div><span class="prototype-phase">C0/C5 · P0</span></figcaption></figure>
+          <figure class="prototype-preview"><a href="./huawei-product-ui-prototypes.html#derive"><img src="./assets/huawei-product-ui/derive.png" alt="对话 Agent 从现有数据库生成数据产品回答设计原型" width="1288" height="764"></a><figcaption class="prototype-caption"><div><b>DATA 03 · 生成数据产品</b><span>从 CRM/订单库生成清洗视图、指标语义、知识网络、质量/敏感/血缘草稿，并展示缺口与 Owner。</span></div><span class="prototype-phase">C0/C3/C5 · P0 草稿</span></figcaption></figure>
+          <figure class="prototype-preview"><a href="./huawei-product-ui-prototypes.html#govern"><img src="./assets/huawei-product-ui/govern.png" alt="对话 Agent 数据治理回答设计原型" width="1288" height="764"></a><figcaption class="prototype-caption"><div><b>DATA 04 · 数据治理</b><span>敏感、质量、血缘与影响按优先级返回；治理任务和策略 Diff 可 Review，生产修复未审批不执行。</span></div><span class="prototype-phase">C5 · P0/P1</span></figcaption></figure>
+          <figure class="prototype-preview"><a href="./huawei-product-ui-prototypes.html#brief"><img src="./assets/huawei-product-ui/home.png" alt="统一对话 Agent 综合经营回答设计原型" width="1288" height="764"></a><figcaption class="prototype-caption"><div><b>01 · 综合经营回答</b><span>一个问题触发多次只读查询与数据库快照；先给结论，再在回复中嵌入趋势和重点事项。</span></div><span class="prototype-phase">C1/C2/C4 · P0</span></figcaption></figure>
+          <figure class="prototype-preview"><a href="./huawei-product-ui-prototypes.html#ask"><img src="./assets/huawei-product-ui/ask.png" alt="对话 Agent 智能问数回答设计原型" width="1288" height="764"></a><figcaption class="prototype-caption"><div><b>02 · 智能问数回答</b><span>自然语言结论、表图、口径与证据在同一条回复中交付；SQL 与 query_id 可展开。</span></div><span class="prototype-phase">C1 · P0</span></figcaption></figure>
+          <figure class="prototype-preview"><a href="./huawei-product-ui-prototypes.html#analyze"><img src="./assets/huawei-product-ui/analyze.png" alt="对话 Agent 智能分析回答设计原型" width="1288" height="764"></a><figcaption class="prototype-caption"><div><b>03 · 智能分析回答</b><span>追问“为什么”后，回复嵌入贡献图、事实/推断/Unknown，并可展开 Analysis Plan。</span></div><span class="prototype-phase">C2 · P0/P1</span></figcaption></figure>
+          <figure class="prototype-preview"><a href="./huawei-product-ui-prototypes.html#knowledge"><img src="./assets/huawei-product-ui/knowledge.png" alt="对话 Agent 数据知识构建回答设计原型" width="1288" height="764"></a><figcaption class="prototype-caption"><div><b>04 · 知识构建回答</b><span>知识图、来源、置信度、冲突与 Review 状态作为回复工件返回；候选不会自动发布。</span></div><span class="prototype-phase">C3 · P0/P1</span></figcaption></figure>
+          <figure class="prototype-preview"><a href="./huawei-product-ui-prototypes.html#database"><img src="./assets/huawei-product-ui/database.png" alt="对话 Agent 数据库调查回答设计原型" width="1288" height="764"></a><figcaption class="prototype-caption"><div><b>05 · 数据库调查回答</b><span>Agent 用文字先给候选结论，再嵌入指标、SQL、计划与变更的证据时间线。</span></div><span class="prototype-phase">C4 · P0</span></figcaption></figure>
+          <figure class="prototype-preview"><a href="./huawei-product-ui-prototypes.html#action"><img src="./assets/huawei-product-ui/action.png" alt="对话 Agent 安全行动审批回答设计原型" width="1288" height="764"></a><figcaption class="prototype-caption"><div><b>06 · 安全行动审批回答</b><span>一次性动作合同与审批卡出现在回复内；批准、执行和权威验证继续留在同一线程。</span></div><span class="prototype-phase p1">C6 · P1</span></figcaption></figure>
+        </div>
+        <div class="prototype-note"><strong>证据边界：</strong>十张图均为本方案的产品设计原型，不是华为云现网截图、已发布功能或交付承诺；画面使用合成数据。真实 Region、Edition、连接器、正确率、性能、权限贯通和接口可用性仍是内部 Gate / Unknown。</div>
+      </div>
+    </section>
+
+    <section id="company-architecture" class="scope-company">
+      <div class="wrap">
+        <div class="section-head"><div class="kicker">04A · Scheme one</div><div><h2>方案一架构：一个公司级控制面，部门只交付能力包。</h2><p>不能把接数 Agent、DataArts Agent、DB Agent 和治理 Agent 拼在首页。所有入口恢复同一 Goal/Task/Session；领域团队保留权威对象，但通过统一 Tool、Artifact 和 ID 合同进入产品。</p></div></div>
+        <div class="plan-banner"><div><span class="tag" style="background:rgba(255,255,255,.16);color:white">方案一</span><h3>华为云竞争力优先</h3><p>产品中心是多源接入与资产化、问数分析、数据知识和治理；数据库洞察作为强能力包进入一个公司级产品。</p></div><div class="plan-kpi"><b>C0–C5</b><span>公司级数据生命周期；成立依赖组织 Gate</span></div></div>
+        <div class="architecture" role="img" aria-label="方案一公司级能力包架构">
+          <div class="arch-layer"><b>公司级统一入口面</b><div class="chip-row"><span class="chip">人：对话 Agent Web</span><span class="chip">人：DataArts/DB 嵌入对话</span><span class="chip">人：IM 对话</span><span class="chip">Agent：di CLI/MCP/REST</span></div></div>
+          <div class="arch-arrow">↓ 自然语言目标 / 上下文；能力由 Agent 自动路由</div>
+          <div class="arch-layer"><b>公司级产品能力层</b><div class="chip-row"><span class="chip">C0 接入</span><span class="chip">C1 问数</span><span class="chip">C2 分析</span><span class="chip">C3 知识</span><span class="chip">C4 DB 洞察</span><span class="chip">C5 治理</span><span class="chip">C6/C7 行动/主动</span></div></div>
+          <div class="arch-arrow">↓ capability / user / tenant / context</div>
+          <div class="arch-layer"><b>唯一产品控制面</b><div class="chip-row"><span class="chip">Goal/Task/Session</span><span class="chip">Completion Oracle</span><span class="chip">IAM/OBO</span><span class="chip">Event</span><span class="chip">Artifact</span><span class="chip">Approval/Audit</span></div></div>
+          <div class="arch-arrow">↓ Harness Protocol v1</div>
+          <div class="arch-layer"><b>可替换执行面</b><div class="chip-row"><span class="chip">Harness Adapter</span><span class="chip">一主一备</span><span class="chip">隔离 Runner</span><span class="chip">Skills</span></div></div>
+          <div class="arch-arrow">↓ Tool Gateway / di CLI-MCP / task token</div>
+          <div class="arch-split"><div class="arch-authority"><strong>DataArts 能力包</strong><br>接入、目录、知识/语义、问数分析、治理、BI Artifact</div><div class="arch-authority"><strong>数据库能力包</strong><br>DB 洞察、SQL、计划、锁、等待、指标、取消</div><div class="arch-authority"><strong>IAM / AgentArts / 其他包</strong><br>委托、模型、Trace、Eval、动作</div></div>
+        </div>
+        <div class="plan-detail-grid">
+          <div class="panel"><h3>模块承载与选型</h3><div class="selection-list">
+            <div class="selection-item"><b>能力/入口/任务</b><span>总 Owner 固定 C0–C7 能力与优先级；产品团队新建统一壳层；Goal/Oracle 仅保证每次调用可靠。</span></div>
+            <div class="selection-item"><b>Harness/Runner</b><span>共同 Bake-off 一主一备；产品团队维护 Adapter，AgentArts 通过 Gate 后可承载运行面。</span></div>
+            <div class="selection-item"><b>DataArts Pack</b><span>权威承载批/实时/CDC、Catalog、质量/分类/血缘、知识/语义、问数分析和 Artifact；产品补对话规划、预览与验证。</span></div>
+            <div class="selection-item"><b>Database Pack</b><span>数据库部门交付 sql/db Tool、引擎 Manifest、负载保护、query cancel 和证据。</span></div>
+            <div class="selection-item"><b>IAM/OBO</b><span>优先使用 IAM 委托与短期凭据；撤权、过期和数据库审计主体必须实测。</span></div>
+            <div class="selection-item"><b>Trace/Eval</b><span>AgentArts 竞标承载通用部分；领域 Gold Oracle 仍归 DataArts/DB Owner。</span></div>
+            <div class="selection-item"><b>正式运行</b><span>按真实 SLO 采用 CCE/RDS/OBS 等；不为组织完整提前拆微服务。</span></div>
+          </div></div>
+          <div class="panel"><h3>成立 Gate 与共同 OKR</h3><div class="gate-list">
+            <div class="gate-line"><i>1</i><span><b>唯一总 Owner</b><br>对范围、预算、优先级和发布有最终权。</span></div>
+            <div class="gate-line"><i>2</i><span><b>能力包合同</b><br>DataArts、DB、IAM/Agent 均声明版本、SLO、权限、错误和回滚。</span></div>
+            <div class="gate-line"><i>3</i><span><b>真实身份贯通</b><br>UI → Harness → Tool → Authority → Audit 不变成共享服务账号。</span></div>
+            <div class="gate-line"><i>4</i><span><b>共同 Gold</b><br>端到端失败不能以“我的组件成功”关闭。</span></div>
+            <div class="gate-line"><i>5</i><span><b>同一发布列车</b><br>一个 Backlog、Scoreboard 和 Release Train 至少运行一周期。</span></div>
+          </div><div class="notice"><strong>建议 KR：</strong>权限负例 100% 阻断；核心 user/resource/semantic/query/artifact/trace 关联率 100%；3 个设计伙伴连续 4 周使用真实任务。</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="db-architecture" class="scope-db">
+      <div class="wrap">
+        <div class="section-head"><div class="kicker">04B · Scheme two</div><div><h2>方案二架构：一台 ECS 快速闭环，但每个逻辑边界都为替换预留。</h2><p>数据库部门直接拥有 Goal/Task、入口、Session、Harness Adapter、接入/Tool Gateway、资产/DB 证据和评测。DataArts、AgentArts 等是可选 Adapter，不是启动依赖。</p></div></div>
+        <div class="plan-banner db"><div><span class="tag" style="background:rgba(255,255,255,.16);color:white">方案二</span><h3>数据库部门绿地突围</h3><p>产品中心是数据库洞察，同时把一个数据库和文件源的接入/资产化、问数分析、轻量知识治理做成完整闭环。</p></div><div class="plan-kpi"><b>C4 + C0 + C1</b><span>深 DB + 首次价值；单 ECS 起步</span></div></div>
+        <div class="architecture db-arch" role="img" aria-label="方案二单 ECS 绿地架构">
+          <div class="arch-layer"><b>统一入口面</b><div class="chip-row"><span class="chip">人：对话 Agent Web</span><span class="chip">人：DB 实例页嵌入对话</span><span class="chip">Agent：REST/MCP</span><span class="chip">Agent：di CLI</span></div></div>
+          <div class="arch-arrow">↓ 自然语言目标 / DB 上下文；能力由 Agent 自动路由</div>
+          <div class="arch-layer"><b>DB 产品能力层</b><div class="chip-row"><span class="chip">C4 数据库洞察</span><span class="chip">C0 DB/文件接入</span><span class="chip">C1/2 问数分析</span><span class="chip">C3/5 资产治理草稿</span></div></div>
+          <div class="arch-arrow">↓ capability / IAM user / db context</div>
+          <div class="arch-layer"><b>单 ECS 模块化单体</b><div class="chip-row"><span class="chip">edge</span><span class="chip">Goal/Session API</span><span class="chip">Event/Artifact</span><span class="chip">runner-manager</span><span class="chip">tool-gateway</span><span class="chip">PostgreSQL</span></div></div>
+          <div class="arch-arrow">↓ per-session isolated runner / short-lived token</div>
+          <div class="arch-layer"><b>Harness + Skills + di CLI/MCP</b><div class="chip-row"><span class="chip">一主一备</span><span class="chip">DB Knowledge Pack</span><span class="chip">Verified Query</span><span class="chip">Policy/Budget/Cancel</span></div></div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-split"><div class="arch-authority"><strong>DB 权威面</strong><br>Role、Schema、SQL、Plan、Lock、Wait、Metric</div><div class="arch-authority"><strong>本地状态/工件</strong><br>PostgreSQL、加密卷或 OBS Adapter</div><div class="arch-authority"><strong>可选公司 Adapter</strong><br>DataArts、AgentArts、IAM、Model Gateway</div></div>
+        </div>
+        <div class="plan-detail-grid">
+          <div class="panel"><h3>首期模块与选型</h3><div class="selection-list">
+            <div class="selection-item"><b>对话 Web</b><span>React/Vue 按团队成熟栈一次性选一个；承载消息流与回复内工件，只消费受控 Message/Event/Artifact，不绑定 Harness。</span></div>
+            <div class="selection-item"><b>能力/Goal</b><span>DB Owner 优先 C4、C0 与 C1；Goal/Oracle 固定接入验证、资产草稿、问数和调查的交付与终态。</span></div>
+            <div class="selection-item"><b>接入/资产</b><span><code>ingest-lite</code> 做一个 DB 直查/快照和 CSV/Parquet；Git/PostgreSQL 承载 Profile、知识/语义/治理草稿。</span></div>
+            <div class="selection-item"><b>Runner</b><span>Docker 非 root、只读根盘、固定 quota；narrow launcher 不暴露完整 Docker socket。</span></div>
+            <div class="selection-item"><b>Harness</b><span>六候选 Smoke、前三 Bake-off；第 7 天一主一备，不集成六套生产内核。</span></div>
+            <div class="selection-item"><b>知识/语义</b><span>Git YAML/JSON + 资产/知识扫描、规则/关系草稿、Review + Verified SQL；以后接 DataArts Adapter。</span></div>
+            <div class="selection-item"><b>图表/工件</b><span>ECharts/Vega-Lite 按现有资产选一个受控 spec；大对象用加密引用。</span></div>
+            <div class="selection-item"><b>模型/Trace</b><span>薄 model-proxy + Event/Evidence + OTEL 兼容导出；公司服务过 Gate 后替换。</span></div>
+          </div></div>
+          <div class="panel"><h3>必须自持与范围封顶</h3><div class="gate-list">
+            <div class="gate-line"><i>1</i><span><b>自持安全执行面</b><br>身份映射、凭据、Role/RLS、AST、预算、执行和取消。</span></div>
+            <div class="gate-line"><i>2</i><span><b>自持数据库证据</b><br>Schema、会话、锁、计划、指标、变更与业务影响。</span></div>
+            <div class="gate-line"><i>3</i><span><b>自持 Adapter/Eval</b><br>Harness 可换、Gold/权限/负载 Oracle 可复现。</span></div>
+            <div class="gate-line"><i>4</i><span><b>只做 1+1+4</b><br>一个主引擎、CSV/Parquet；接入资产、问数分析、知识治理、查库四条主线。</span></div>
+            <div class="gate-line"><i>5</i><span><b>不做平台</b><br>不重建通用连接器/CDC、完整 BI、Catalog、Agent 市场或全引擎。</span></div>
+          </div><div class="notice"><strong>升级原则：</strong>以后迁 CCE/RDS/OBS 或接 DataArts/AgentArts，替换的是承载模块，不改变 Session、Tool、Artifact 和 UI 合同。</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="shared-modules">
+      <div class="wrap">
+        <div class="section-head"><div class="kicker">05 · Shared core</div><div><h2>两种方案都要实现的模块，以及明确选型。</h2><p><span class="status-pill">固定</span> 是不再分叉的产品合同；<span class="status-pill eval">评选</span> 是限时 Bake-off；<span class="status-pill adapt">适配</span> 是公司服务过 Gate 就复用，否则先用轻量实现。</p></div></div>
+        <div class="table-wrap"><table class="common-table"><thead><tr><th>共用模块</th><th>状态 / 首期选型</th><th class="scope-company">方案一承载</th><th class="scope-db">方案二承载</th><th>不可变化的合同</th></tr></thead><tbody>
+          <tr><td>能力目录</td><td><span class="status-pill">固定</span> C0–C7 ID、名称、版本、输入输出、前置条件</td><td class="scope-company">公司产品 Owner；各域交能力包</td><td class="scope-db">DB Owner 开放 C0–C5 窄范围子集</td><td>capability id/version/scope/input/output/availability</td></tr>
+          <tr><td>执行合同</td><td><span class="status-pill">固定</span> Goal Contract + Completion Oracle + 终态规则</td><td class="scope-company">公司产品 Owner + 领域 Oracle</td><td class="scope-db">DB 产品 Owner + DB Oracle</td><td>每次能力调用的 deliverable / criteria / evidence / terminal</td></tr>
+          <tr><td>Task/Session</td><td><span class="status-pill">固定</span> REST/JSON + SSE；PostgreSQL 状态</td><td class="scope-company">公司产品控制面</td><td class="scope-db">模块化单体 session-api</td><td>goal / revision / idempotency / resume / cancel</td></tr>
+          <tr><td>Harness Adapter</td><td><span class="status-pill eval">评选</span> 六看三测，一主一备</td><td class="scope-company">产品团队；AgentArts 可竞标承载</td><td class="scope-db">DB 产品团队维护</td><td>Harness Protocol v1</td></tr>
+          <tr><td>隔离 Runner</td><td><span class="status-pill">固定</span> Docker 非 root、只读根盘、限额</td><td class="scope-company">平台 Runner / CCE Sandbox</td><td class="scope-db">单 ECS per-session 容器</td><td>image digest / task token / quota</td></tr>
+          <tr><td>Skills</td><td><span class="status-pill">固定</span> Git 版本化 SKILL.md</td><td class="scope-company">公司 packs/skills</td><td class="scope-db">DB product-pack/skills</td><td>skill id/version/tool compatibility</td></tr>
+          <tr><td>`di` CLI/MCP</td><td><span class="status-pill">固定</span> 一套实现、两种接口</td><td class="scope-company">领域能力包实现</td><td class="scope-db">DB 团队先实现 P0</td><td>schema / error / idempotency / audit</td></tr>
+          <tr><td>Tool Gateway</td><td><span class="status-pill">固定</span> Policy/Credential/Budget/Audit</td><td class="scope-company">公司共同控制面</td><td class="scope-db">模块化单体</td><td>user/resource/purpose/risk decision</td></tr>
+          <tr><td>身份/凭据</td><td><span class="status-pill adapt">适配</span> IAM → task token → 权威凭据</td><td class="scope-company">IAM/OBO/Credential Broker</td><td class="scope-db">最小 IAM→DB 映射</td><td>delegation / expiry / revocation</td></tr>
+          <tr><td>连接注册</td><td><span class="status-pill">固定</span> source、主体、用途、能力、网络与有效期</td><td class="scope-company">映射 DataArts/IAM 权威对象</td><td class="scope-db">PostgreSQL Registry + Credential Broker</td><td>source id/subject/purpose/capability/expiry</td></tr>
+          <tr><td>接入规划/执行</td><td><span class="status-pill adapt">适配</span> 直查/一次/定时/CDC 计划、预览、发布、停止与验证</td><td class="scope-company">DataArts/DRS/流处理权威执行</td><td class="scope-db"><code>ingest-lite</code> 一次导入；P1 单引擎增量</td><td>plan/pipeline/revision/mode/mapping/watermark/verify</td></tr>
+          <tr><td>资产/Profile/治理</td><td><span class="status-pill adapt">适配</span> 清单、画像、质量/敏感/血缘候选与 Review</td><td class="scope-company">DataArts Catalog/治理对象</td><td class="scope-db">DB 域轻资产包 + Git Review</td><td>asset/version/owner/source/quality/classification/lineage</td></tr>
+          <tr><td>数据知识</td><td><span class="status-pill adapt">适配</span> 数据产品/知识草稿、校验、Review；Git 可先承载</td><td class="scope-company">DataArts 承载企业资产/知识/语义</td><td class="scope-db">DB 域 Git Asset/Knowledge Pack</td><td>entity/relation/metric/source/confidence/review/version</td></tr>
+          <tr><td>SQL 安全执行</td><td><span class="status-pill">固定</span> 参数化、权威解析/EXPLAIN、只读、预算、取消</td><td class="scope-company">数据库能力包</td><td class="scope-db">DB Tool Gateway</td><td>policy / estimate / query_id / cancel</td></tr>
+          <tr><td>Artifact/Evidence</td><td><span class="status-pill">固定</span> 元数据入库，大对象加密引用</td><td class="scope-company">公司 Artifact/Insight Renderer</td><td class="scope-db">本地卷或 OBS Adapter</td><td>id/hash/ACL/source/version</td></tr>
+          <tr><td>Trace/Eval</td><td><span class="status-pill adapt">适配</span> Event/Evidence + OTEL 导出 + Gold Oracle</td><td class="scope-company">AgentArts 通用部分 + 领域判分</td><td class="scope-db">本地 Event/Eval runner</td><td>trace id/oracle/version set</td></tr>
+          <tr><td>对话 UI</td><td><span class="status-pill">固定</span> 对话流 + 受控回复工件 Renderer</td><td class="scope-company">统一对话 + 嵌入 SDK</td><td class="scope-db">新 DB 对话 Web</td><td>message/plan/tool/artifact/evidence/approval schema</td></tr>
+        </tbody></table></div>
+        <div class="ownership-grid">
+          <div class="ownership-card"><small>Harness</small><h3>负责“想与选”</h3><p>理解目标、计划、选 Skill/Tool、有限修复和解释。</p></div>
+          <div class="ownership-card"><small>CLI/MCP</small><h3>负责“算与做”</h3><p>探测、接入、画像、校验、预算、执行、停止、诊断和工件。</p></div>
+          <div class="ownership-card"><small>Gateway</small><h3>负责“能不能”</h3><p>主体、资源、用途、凭据、风险、审批和审计。</p></div>
+          <div class="ownership-card"><small>CONVERSATION UI</small><h3>负责“问、看、追、批”</h3><p>自然语言对话，以及回复内的接入/Pipeline、治理、表图、知识图、证据、歧义和审批工件。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="specific-modules">
+      <div class="wrap">
+        <div class="section-head"><div class="kicker">06 · Route-only</div><div><h2>只因方案边界不同而存在的专属模块。</h2><p>能力名称、Harness、Session、Runner、`di`、接入/资产/知识合同、Artifact 和 Eval 不在这里，因为它们不能分叉。顶部选择单一方案后，本节只显示该方案专属内容。</p></div></div>
+        <div class="specific-grid">
+          <article class="specific-card scope-company"><header><h3>方案一专属</h3><p>解决跨部门产品化和统一发布问题。</p></header><div class="specific-list">
+            <div class="specific-item"><b>统一产品壳层与嵌入 SDK</b><span>三个入口恢复同一 session_id；复用渲染，不复用私有会话。</span></div>
+            <div class="specific-item"><b>能力包注册与合规</b><span>签名 Manifest 校验 Owner、版本、SLO、权限、错误、配额和回滚。</span></div>
+            <div class="specific-item"><b>Data Path Advisor</b><span>跨 DataArts/DRS/DB 比较直查、一次、定时和 CDC，并生成统一 Pipeline/验证工件。</span></div>
+            <div class="specific-item"><b>Canonical Resource ID</b><span>关联 source/pipeline/asset/dataset/semantic/db/query/artifact，不复制权威对象。</span></div>
+            <div class="specific-item"><b>跨服务 IAM/OBO</b><span>允许、拒绝、撤权、过期和 DB 审计主体全部可验证。</span></div>
+            <div class="specific-item"><b>共同 Release Train</b><span>一个 Backlog、Scoreboard、版本和发布裁决者。</span></div>
+            <div class="specific-item"><b>多领域 Artifact/分享</b><span>跨源表图报告、ACL、分享和撤销使用同一 ID。</span></div>
+          </div></article>
+          <article class="specific-card db scope-db"><header><h3>方案二专属</h3><p>解决小队低依赖起步和 DB 领域闭环问题。</p></header><div class="specific-list">
+            <div class="specific-item"><b>DB Intelligence 对话入口</b><span>对话 SPA、Session API、DB 实例页嵌入对话和首轮自然语言引导。</span></div>
+            <div class="specific-item"><b>单 ECS 安装/升级器</b><span>Compose、镜像 digest、配置、备份、恢复和失败回退。</span></div>
+            <div class="specific-item"><b>DB Context Onboarding</b><span>实例、Role、用途、预算、连通、撤权和凭据过期路径。</span></div>
+            <div class="specific-item"><b><code>ingest-lite</code></b><span>一个 DB 的直查/快照 + CSV/Parquet；Schema/Profile、坏数隔离和目标端验证。</span></div>
+            <div class="specific-item"><b>Engine Capability Manifest</b><span>首发只签一个主引擎；未声明能力不展示给 Harness。</span></div>
+            <div class="specific-item"><b>DB Evidence Collector</b><span>计划、SQL、锁、等待、指标、变更的 ID 与时间线归一。</span></div>
+            <div class="specific-item"><b>DB 资产/知识与运维</b><span>Profile、质量/敏感、实体/指标/关系/Join 草稿 Review，以及 Runner/预算/Trace/恢复。</span></div>
+          </div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="harness">
+      <div class="wrap">
+        <div class="section-head"><div class="kicker">Harness bake-off</div><div><h2>六个候选都能跑，适不适合产品化差别很大。</h2><p>分数只衡量官方资料可见的工程适配，不包含真实任务质量。任何越权、凭据泄漏、取消无效或无法锁版本都直接淘汰。</p></div></div>
+        <div class="harness-grid">
+          <article class="harness-card"><div class="harness-top"><div><span class="tag">暂列主选</span><h3 style="margin-top:10px">OpenCode</h3></div><div class="score" style="--score:91"><span>91</span></div></div><p>无头 HTTP Server、OpenAPI 3.1、Session/Event/Permission/Abort 与官方 SDK，最接近“统一对话壳 + 可编程 Server”。</p><div class="factline"><span>MIT · 多模型</span><span>需补产品 IAM/隔离</span></div></article>
+          <article class="harness-card"><div class="harness-top"><div><span class="tag blue">多渠道强</span><h3 style="margin-top:10px">Hermes</h3></div><div class="score" style="--score:88"><span>88</span></div></div><p>ACP、JSON-RPC、HTTP+SSE 共用 Agent Core，Skills/MCP/IM/headless 完整；但首发必须关闭不需要的记忆、自学习与插件面。</p><div class="factline"><span>MIT · 多模型</span><span>范围与供应链较宽</span></div></article>
+          <article class="harness-card"><div class="harness-top"><div><span class="tag warn">协议标杆</span><h3 style="margin-top:10px">Codex</h3></div><div class="score" style="--score:88"><span>88</span></div></div><p>App Server 的 Thread/Turn/Event/Approval/Interrupt 非常适合产品嵌入，exec 也有 JSONL 与 Resume。</p><div class="factline"><span>实现公开</span><span>商业/Region/服务 Gate</span></div></article>
+          <article class="harness-card"><div class="harness-top"><div><span class="tag">极简备选</span><h3 style="margin-top:10px">Pi</h3></div><div class="score" style="--score:84"><span>84</span></div></div><p>JSONL RPC、AgentSession SDK 与扩展协议非常干净，单机部署轻。官方明确无内建文件/进程/网络权限系统。</p><div class="factline"><span>MIT · 多模型</span><span>平台必须补安全</span></div></article>
+          <article class="harness-card"><div class="harness-top"><div><span class="tag warn">商业 Gate</span><h3 style="margin-top:10px">Claude Agent SDK</h3></div><div class="score" style="--score:83"><span>83</span></div></div><p>Session、Hooks、Skills、MCP、审批、部署与流事件完善；面向产品必须走 API key 和商业条款，不能借个人登录额度。</p><div class="factline"><span>质量标杆</span><span>模型/条款绑定</span></div></article>
+          <article class="harness-card"><div class="harness-top"><div><span class="tag blue">战略孵化</span><h3 style="margin-top:10px">DeepSeek Harness</h3></div><div class="score" style="--score:80"><span>80</span></div></div><p>SessionEvent、Tool Pipeline、Sandbox/Approval 与插件缝很有长期潜力，Web/headless/Python SDK 齐全。</p><div class="factline"><span>MIT · 插件化</span><span>Developer Preview</span></div></article>
+        </div>
+        <div class="bakeoff" aria-label="Harness 选型流程">
+          <div class="stage"><b>0–48 h · Smoke</b><p>六个候选各跑 3 个只读任务；核验无头、事件、会话、工具、取消、许可和锁版本。</p></div><div class="stage-arrow">→</div>
+          <div class="stage"><b>D3–D7 · Bake-off</b><p>前三名在同一 ECS、模型、Skill、`di` Tool 与快照上跑 20 Tasks × 3。</p></div><div class="stage-arrow">→</div>
+          <div class="stage"><b>D7 · 一主一备</b><p>主选进入产品；备选每日契约回归；其余只保留 Adapter 设计，不进入发布物。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="protocol">
+      <div class="wrap">
+        <div class="section-head"><div class="kicker">Execution safeguard</div><div><h2>九个方法、十一类事件，把每次产品能力调用变成可验证执行。</h2><p>这是执行保障，不是产品能力清单。Adapter 翻译 Harness 私有协议；Gateway 固定 capability、Goal revision、身份、状态、验证和权威终态。</p></div></div>
+        <div class="protocol-grid">
+          <div class="panel"><h3>Harness Protocol v1</h3><div class="method-grid">
+            <div class="method"><code>create_task</code><span>选择 capability，创建 Goal 草案、Runner 与会话</span></div><div class="method"><code>submit_input</code><span>补充目标上下文或回答澄清</span></div>
+            <div class="method"><code>accept_goal</code><span>冻结执行所依赖的 Goal revision</span></div><div class="method"><code>resume_task</code><span>按 revision 恢复，拒绝静默漂移</span></div>
+            <div class="method"><code>stream_event</code><span>游标续流与断线重连</span></div>
+            <div class="method"><code>approve_tool</code><span>显式范围、期限与理由</span></div><div class="method"><code>cancel_task</code><span>同时中断模型、工具和 SQL</span></div>
+            <div class="method"><code>export_artifact</code><span>带 Goal、ACL 与 hash 导出</span></div><div class="method"><code>close_task</code><span>校验终态、回收 Runner、执行保留策略</span></div>
+          </div></div>
+          <div class="event-flow"><h3>统一 Event Envelope</h3><pre>{
+  "spec_version": "harness.events/v1",
+  "capability_id": "c2.smart_analysis",
+  "capability_version": "1.0",
+  "goal_id": "goal_...",
+  "goal_revision": 3,
+  "task_id": "task_...",
+  "session_id": "ses_...",
+  "seq": 42,
+  "type": "tool_call",
+  "source": { "harness": "...", "version": "digest" },
+  "payload": {},
+  "trace_id": "tr_..."
+}</pre><div class="event-pills"><span>message</span><span>goal</span><span>plan</span><span>tool_call</span><span>tool_result</span><span>artifact</span><span>approval_required</span><span>validation</span><span>status</span><span>error</span><span>completed</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="ecs" class="scope-db">
+      <div class="wrap">
+        <div class="section-head"><div class="kicker">Scheme two · Physical</div><div><h2>方案二的一台 ECS 物理部署：机器少，逻辑边界不能少。</h2><p>这是数据库绿地方案的首期物理实现，不是方案一的最终拓扑。首期不用 CCE、Kafka、Temporal 或复杂微服务，复杂度集中在隔离、固定镜像、权限和可取消任务。</p></div></div>
+        <div class="ecs-layout">
+          <div class="ecs-host">
+            <div class="host-title"><h3>Docker Compose Host</h3><span>Phase 1</span></div>
+            <div class="service-grid">
+              <div class="service"><strong>edge + web</strong><small>TLS / static SPA / reverse proxy</small></div>
+              <div class="service"><strong>session-api</strong><small>Auth / Session / Event / Artifact</small></div>
+              <div class="service"><strong>runner-manager</strong><small>signed image / fixed quota</small></div>
+              <div class="service"><strong>runner-launcher</strong><small>narrow Docker control surface</small></div>
+              <div class="service runner"><strong>agent-runner-*</strong><small>per-session · Harness + Skills</small></div>
+              <div class="service"><strong>tool-gateway</strong><small>di / policy / credential / audit</small></div>
+              <div class="service"><strong>postgres</strong><small>sessions / events / eval metadata</small></div>
+              <div class="service"><strong>artifact + model proxy</strong><small>encrypted ref / optional routing</small></div>
+            </div>
+          </div>
+          <div class="panel">
+            <h3>首日硬边界</h3>
+            <div class="security-list">
+              <div class="security-item"><b>Runner 无长期 DB 凭据</b><span>只拿短期 task token，Tool Gateway 才能访问数据源。</span></div>
+              <div class="security-item"><b>生产 Profile 关闭任意 Shell</b><span>只开放 `di` 和必要只读工具；容器非 root、只读根盘、限资源。</span></div>
+              <div class="security-item"><b>查询预算与取消贯穿全链</b><span>停 UI 不算取消；必须停模型、Tool 和 query_id。</span></div>
+              <div class="security-item"><b>状态和工件不是聊天文本</b><span>Postgres 存事件元数据，Artifact 有 ACL、hash 与证据引用。</span></div>
+              <div class="security-item"><b>先单机，按触发器扩</b><span>队列/资源/SLO 真正触发时再迁 CCE、RDS、OBS 或事件流。</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="assets">
+      <div class="wrap">
+        <div class="section-head"><div class="kicker">Build data knowledge</div><div><h2>“一句话建知识”：自动生成可审核的数据知识网络，不是让客户从零手工建模。</h2><p>首期从 Schema、文档、血缘和样例生成实体、指标、关系、Join、规则和 Verified Query 草稿；推断必须带来源、置信度和状态，只有 Owner Review 后才能发布并服务可信问数。</p></div></div>
+        <div class="goal-flow" aria-label="一句话构建数据知识流程">
+          <div class="goal-node"><span>01</span><b>选择范围</b><span>数据域、数据源、业务文档、用途和权限</span></div>
+          <div class="goal-node"><span>02</span><b>自动扫描</b><span>Schema、约束、统计、样例、血缘和已有资产</span></div>
+          <div class="goal-node"><span>03</span><b>生成候选</b><span>实体、指标、关系、Join、同义词、规则、Verified</span></div>
+          <div class="goal-node"><span>04</span><b>校验冲突</b><span>重复、循环、基数、公式、权限、敏感字段和缺口</span></div>
+          <div class="goal-node"><span>05</span><b>Owner Review</b><span>接受、修改、拒绝、分派；推断不自动发布</span></div>
+          <div class="goal-node final"><span>06</span><b>发布与运营</b><span>不可变版本、Diff、影响、Gold、漂移与回滚</span></div>
+        </div>
+        <div class="boundary-note"><strong>知识网络对象：</strong>业务实体、数据对象、指标、维度、规则、Owner、Verified Query，以及业务关系、Join、血缘、派生和影响边。状态统一为 candidate → in_review → approved → published → deprecated。</div>
+        <div class="asset-layout">
+          <pre class="repo-tree" aria-label="产品资产包目录"><strong>product-pack/</strong>
+├─ manifest.yaml          # Harness / di / 引擎兼容版本
+├─ skills/
+│  ├─ ask-data/SKILL.md
+│  ├─ investigate-db/SKILL.md
+│  └─ build-knowledge/SKILL.md
+├─ knowledge/
+│  ├─ entities/customer.yaml
+│  ├─ relationships/customer_order.yaml
+│  └─ rules/order_refund.yaml
+├─ semantic/
+│  ├─ metrics/refund_rate.yaml
+│  ├─ joins/order_customer.yaml
+│  ├─ synonyms/zh-CN.yaml
+│  └─ enums/order_status.yaml
+├─ verified_queries/
+│  ├─ weekly_refund_rate.sql
+│  └─ weekly_refund_rate.test.yaml
+├─ gold_tasks/
+│  ├─ ask-data/
+│  ├─ db-diagnosis/
+│  └─ permission-negative/
+└─ policies/
+   ├─ tool-policy.yaml
+   └─ data-budget.yaml</pre>
+          <div class="panel">
+            <h3>从自动草稿到持续可信</h3>
+            <div class="asset-lifecycle" aria-label="数据知识资产生命周期">
+              <div class="asset-state"><b>探索</b><span>Schema、统计与只读 SQL；明确非正式口径</span></div>
+              <div class="asset-state"><b>候选</b><span>从成功会话提取指标、Join、问法和 SQL</span></div>
+              <div class="asset-state"><b>评审</b><span>Owner 核对公式、粒度、过滤、权限与用途</span></div>
+              <div class="asset-state"><b>发布</b><span>签名版本绑定 Verified Query 与回归测试</span></div>
+              <div class="asset-state"><b>运营</b><span>漂移、BadCase、影响分析、回滚和废弃</span></div>
+            </div>
+            <div class="responsibility-split">
+              <div><b>厂商自动化</b><span>连接发现、候选生成、静态校验、参数化、Gold 回归、漂移告警和版本对比。</span></div>
+              <div><b>客户最小决策</b><span>授予只读用途；处理真实歧义；由指标 Owner 审批公式、Join、过滤和角色。</span></div>
+            </div>
+            <div class="notice"><strong>版本绑定：</strong>每次任务记录 Harness/模型/Skill/语义/Tool/引擎版本；任何一项漂移都可重放比较，不把“上次答对”当成永久保证。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="nl2sql">
+      <div class="wrap">
+        <div class="section-head"><div class="kicker">C1 + C2 · Ask &amp; analyze</div><div><h2>智能问数不止生成 SQL，智能分析也不只是让模型总结表格。</h2><p>问数是一条可澄清、可预算、可取消、可复算的 11 步链路；分析在其上执行趋势、对比、分群、贡献和假设验证，每个结论都绑定查询与证据。</p></div></div>
+        <div class="nl-flow">
+          <div class="nl-step"><span class="stepno">01</span><b>身份 / 上下文</b><small>主体、数据源、模式、预算</small></div>
+          <div class="nl-step"><span class="stepno">02</span><b>目录搜索</b><small>表、字段、统计、样例值</small></div>
+          <div class="nl-step"><span class="stepno">03</span><b>语义解析</b><small>指标、Join、同义词、Verified Query</small></div>
+          <div class="nl-step"><span class="stepno">04</span><b>歧义 Gate</b><small>多个合法口径就问，不猜</small></div>
+          <div class="nl-step"><span class="stepno">05</span><b>Harness 草拟</b><small>生成参数化 SQL 候选</small></div>
+          <div class="nl-step"><span class="stepno">06</span><b>AST 校验</b><small>只读、对象、列、函数、方言</small></div>
+          <div class="nl-step"><span class="stepno">07</span><b>计划 / 预算</b><small>EXPLAIN、扫描、并发、超时</small></div>
+          <div class="nl-step"><span class="stepno">08</span><b>只读执行</b><small>事务、query_id、可取消</small></div>
+          <div class="nl-step"><span class="stepno">09</span><b>结果校验</b><small>空值、时间窗、基线、等价</small></div>
+          <div class="nl-step"><span class="stepno">10</span><b>生成工件</b><small>表、图、SQL、Evidence</small></div>
+          <div class="nl-step final"><span class="stepno">11</span><b>可信回答</b><small>事实 / 推断 / 建议 / Unknown</small></div>
+        </div>
+        <div class="mode-grid">
+          <div class="panel mode"><span class="tag warn">探索</span><h3 style="margin-top:10px">低准备</h3><p>只有只读连接、Schema 与统计即可首问；输出必须标为探索，不冒充正式指标。</p></div>
+          <div class="panel mode trusted"><span class="tag">可信</span><h3 style="margin-top:10px">业务可复算</h3><p>绑定审批过的指标、Join、Verified Query、语义版本和完整执行证据。</p></div>
+          <div class="panel mode action"><span class="tag warn">动作</span><h3 style="margin-top:10px">首期关闭</h3><p>需要可信模式、动作策略、审批、幂等与权威后置验证，不能由模型自报成功。</p></div>
+        </div>
+        <div class="section-head" style="margin:30px 0 14px"><div class="kicker">Analysis modes</div><div><h3 style="font-size:27px">C2 智能分析先做四类确定性分析，再扩到预测与候选归因。</h3></div></div>
+        <div class="goal-grid">
+          <div class="goal-card"><span class="goal-id">P0</span><h3>趋势与周期比较</h3><p>同比、环比、移动窗口、完整时间区间和异常点。</p><small>必须交付：粒度、基线、公式、query 与图表证据</small></div>
+          <div class="goal-card"><span class="goal-id">P0</span><h3>分群与分布</h3><p>新老客户、地区、产品线、区间与长尾分布。</p><small>必须交付：分群规则、样本量、缺失值和权限过滤</small></div>
+          <div class="goal-card"><span class="goal-id">P0</span><h3>贡献拆解</h3><p>客户、产品、地区对总体变化的贡献，合计可回到总变化。</p><small>不能把贡献或相关性写成已经证明的因果</small></div>
+          <div class="goal-card"><span class="goal-id">P1</span><h3>漏斗 / 留存 / 队列</h3><p>事件漏斗、批次留存和人群转化。</p><small>固定事件定义、观察窗口、去重与人群口径</small></div>
+          <div class="goal-card"><span class="goal-id">P1</span><h3>异常与候选归因</h3><p>基线、阈值、关联事件、替代解释和反证。</p><small>输出候选解释，不在证据不足时宣称根因</small></div>
+          <div class="goal-card"><span class="goal-id">P1/P2</span><h3>预测与情景</h3><p>趋势预测、置信区间和参数化情景模拟。</p><small>展示模型、假设、训练窗和适用边界</small></div>
+        </div>
+        <div class="responsibility">
+          <div class="panel"><h3>厂商自动承担</h3><ul><li>连接测试、Schema/统计、方言识别</li><li>语义候选、SQL 校验、计划和预算</li><li>成功会话生成 Verified Query 候选</li><li>BadCase、回归、漂移和版本对比</li></ul></div>
+          <div class="panel"><h3>客户最小责任</h3><ul><li>选择数据源并授予只读身份与用途</li><li>对真实歧义作选择</li><li>指标 Owner 审批口径、Join 与过滤</li><li>维护真实 Role/RLS/列权限和审批人</li></ul></div>
+        </div>
+        <div class="accuracy-grid">
+          <div class="panel"><h3>准确度必须拆开算</h3>
+            <div class="bar-row"><span>结果等价</span><div class="bar"><i style="width:100%"></i></div><b>25%</b></div>
+            <div class="bar-row"><span>业务语义</span><div class="bar"><i style="width:80%"></i></div><b>20%</b></div>
+            <div class="bar-row"><span>安全权限</span><div class="bar"><i style="width:80%"></i></div><b>20%</b></div>
+            <div class="bar-row"><span>澄清质量</span><div class="bar"><i style="width:40%"></i></div><b>10%</b></div>
+            <div class="bar-row"><span>证据完整</span><div class="bar"><i style="width:40%"></i></div><b>10%</b></div>
+            <div class="bar-row"><span>鲁棒修复</span><div class="bar"><i style="width:40%"></i></div><b>10%</b></div>
+            <div class="bar-row"><span>成本时延</span><div class="bar"><i style="width:20%"></i></div><b>5%</b></div>
+          </div>
+          <div style="display:grid;gap:12px"><div class="hard-fail"><b>0</b><div><strong>越权零容忍</strong><br><small>安全不参加平均；任何越权、凭据泄漏或取消失效直接淘汰。</small></div></div><div class="panel"><h3>修复上限</h3><p style="color:var(--muted);font-size:13px">单问题最多 2 次自动 SQL 修复。第 3 次失败交付诊断包；AUTH_DENIED、UNSAFE_SQL、BUDGET_EXCEEDED 不允许通过改写 Prompt 绕过。</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="dbjourney">
+      <div class="wrap">
+        <div class="section-head"><div class="kicker">C4 · Database insight</div><div><h2>数据库洞察不是一个诊断 Skill，而是方案二的第一差异化产品能力。</h2><p>它覆盖一句话查实例、查状态、做体检和调查故障。以“昨晚 22:00 后订单库为什么变慢”为例，Harness 组织假设，数据库权威工具提供计划、锁、等待、会话、指标和变更；相关性不能冒充已证实根因。</p></div></div>
+        <div class="db-flow" aria-label="数据库调查流程">
+          <div class="db-step"><span class="stepno">01</span><b>绑定现场</b><small>实例、引擎、版本、时间窗、时区、主体</small></div>
+          <div class="db-step"><span class="stepno">02</span><b>保全快照</b><small>配置、拓扑、健康、数据新鲜度</small></div>
+          <div class="db-step"><span class="stepno">03</span><b>重建负载</b><small>CPU/IO/内存/连接/复制时间序列</small></div>
+          <div class="db-step"><span class="stepno">04</span><b>定位贡献</b><small>Top SQL、等待、锁链和会话</small></div>
+          <div class="db-step"><span class="stepno">05</span><b>对比变化</b><small>计划差异、参数、发布、告警和运维事件</small></div>
+          <div class="db-step"><span class="stepno">06</span><b>验证假设</b><small>时间对齐、替代解释、反证和证据缺口</small></div>
+          <div class="db-step final"><span class="stepno">07</span><b>诊断工件</b><small>事实 / 相关性 / 推断 / 建议分层交付</small></div>
+        </div>
+        <div class="artifact-grid">
+          <div class="artifact-card"><b>现场身份</b><span>实例、版本、时间窗、时区、采样间隔与 freshness。</span></div>
+          <div class="artifact-card"><b>原始证据引用</b><span>SQL hash、query_id、计划、等待、锁、指标和事件 ID。</span></div>
+          <div class="artifact-card"><b>诊断置信边界</b><span>已证实事实、相关性、推断、替代假设与缺失证据。</span></div>
+          <div class="artifact-card"><b>可验证建议</b><span>收益、风险、前提、验证方法；首期只给动作草案。</span></div>
+        </div>
+        <div class="responsibility" style="margin-top:16px">
+          <div class="panel"><h3>P0 · 全只读</h3><p style="color:var(--muted);font-size:13px">快照、Top SQL、等待、锁、计划差异、时间线、相关性和调查报告。证据不足时明确下一步，不生成“确定根因”。</p></div>
+          <div class="panel"><h3>P1 · 极少受控动作</h3><p style="color:var(--muted);font-size:13px">只在事故演练通过后开放取消指定 Query/Session；必须有审批、幂等、超时、权威后置验证和审计。参数、索引、扩容、切换继续关闭。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="ui">
+      <div class="wrap">
+        <div class="section-head"><div class="kicker">Shared conversation contract</div><div><h2>十种回答共享一个对话壳，差别只在回复工件。</h2><p>产品没有一排能力 Dashboard，也不把接入、导入、资产、治理、问数、分析、知识和数据库拆成多套页面。用户提问后，Agent 先用语言回答，再把本次最合适的 Pipeline、治理报告、图表、知识图、时间线或审批卡嵌入回复。</p></div></div>
+        <div class="conversation-contract" role="img" aria-label="统一对话 Agent 与回复内可视化工件的信息架构示意">
+          <div class="contract-bar"><b>Data Intelligence Agent</b><span>零售经营</span><span>可信模式</span></div>
+          <div class="contract-stream">
+            <div class="contract-user">最近 30 天哪些地区退款率明显上升？为什么？</div>
+            <div class="contract-agent"><div class="contract-avatar">DI</div><div class="contract-answer"><h4>上海上升最明显，新客户与服饰类目贡献了 62%</h4><p>订单规模效应已排除；直播渠道与退款上升相关，但供应商批次数据缺失，因此不能写成已证明因果。</p><div class="contract-runtime">已完成 5 次只读查询 · SQL 与结果回总通过 · 可展开运行详情</div>
+              <div class="contract-artifact"><div class="contract-artifact-head"><b>退款率变化贡献 · +1.42pp</b><span>回复内可复算分析</span></div><div class="contract-artifact-body"><div class="contract-findings"><div class="contract-finding"><i>事</i><span>新客户 + 服饰</span><b>62%</b></div><div class="contract-finding"><i>推</i><span>直播渠道相关</span><b>待验证</b></div><div class="contract-finding"><i>缺</i><span>供应商批次</span><b>Unknown</b></div></div><div class="contract-bars"><div><i style="height:92px"></i>新客</div><div><i style="height:68px"></i>服饰</div><div><i style="height:46px"></i>质量</div><div><i style="height:30px;background:var(--orange)"></i>其他</div></div></div><div class="contract-artifact-foot"><span>metric v12</span><span>query ×5</span><span>RLS EAST</span><span>snapshot 15:48</span><b>SQL · 来源 · Evidence ↗</b></div></div>
+              <div class="contract-actions"><span>复制</span><span>展开分析步骤</span><span>保存报告</span><span>继续追问</span></div>
+            </div></div>
+            <div class="contract-composer">＋ <span>继续追问，或要求 Agent 生成新的回答工件</span><b>↑</b></div>
+          </div>
+        </div>
+        <div class="contract-rules"><div class="contract-rule"><b>唯一主入口</b><span>对话是产品，不要求用户先选功能菜单。</span></div><div class="contract-rule"><b>回复内可视化</b><span>Pipeline、治理、表图、知识图、时间线和审批卡按问题生成。</span></div><div class="contract-rule"><b>证据随回答</b><span>source/pipeline/asset、SQL、query_id、水位、ACL 与运行记录可展开。</span></div><div class="contract-rule"><b>原位连续工作</b><span>追问、Review、审批、停止、执行验证都留在同一线程。</span></div></div>
+      </div>
+    </section>
+
+    <section id="roadmap">
+      <div class="wrap">
+        <div class="section-head"><div class="kicker">Delivery roadmap</div><div><h2>两周跑通“接入—资产—问数—查库”，一月形成首个可用版。</h2><p>每阶段按“客户能用一句话做成什么”验收，不按组件数量验收。这是待真实基线校准的建议，不是未经容量验证的承诺。</p></div></div>
+        <div class="timeline">
+          <div class="time-card"><div class="time">0–2 周</div><h3>C0/C1/C3/C4 · 纵向故事</h3><ul><li>一个 DB 直查 + CSV/Parquet 一次导入</li><li>Schema/Profile、质量/敏感与资产草稿</li><li>问数表图/SQL；慢 SQL 调查证据</li><li>六 Harness Smoke；两周约 18–20 个 Tool</li></ul><div class="route-add scope-company"><b>方案一追加</b>指定 C0–C5 能力包 Owner；打通一个 DataArts 数据源/接入只读适配。</div><div class="route-add db scope-db"><b>方案二追加</b>单 ECS、<code>ingest-lite</code>、Registry、Git 资产/知识包；30 分钟内起服务。</div><div class="gate">能力 Gate：数据到达可验证；坏数不污染可信表；问数/调查可复核；推断未自动发布</div></div>
+          <div class="time-card"><div class="time">1 个月</div><h3>C0/C1/C2/C4 · 首个可用版</h3><ul><li>接入准备 + 智能问数 + 基础分析</li><li>35–40 个精选 P0 Tool</li><li>5–10 指标、10 Verified、20 问数 Gold</li><li>最小分类/质量 + 8–10 个 DB 诊断能力</li></ul><div class="route-add scope-company"><b>方案一追加</b>DataArts 批/实时/CDC 与 Catalog/治理能力包过契约；入口恢复同一任务。</div><div class="route-add db scope-db"><b>方案二追加</b>一个 DB + 文件范围封顶；未开放的 CDC 只显示前置/计划，不伪装执行。</div><div class="gate">能力 Gate：接入验证完整；Schema/坏数/权限失败可解释；问数等价；DB 调查证据完整</div></div>
+          <div class="time-card"><div class="time">2–3 个月</div><h3>C3/C5 · 数据产品 + Beta</h3><ul><li>一个域生成清洗视图、知识/语义和规则草稿</li><li>分类/质量/血缘/影响与 Owner Review</li><li>3–5 个伙伴连续使用四条主线</li><li>BadCase → 资产/知识修复 → 回归 → 灰度</li></ul><div class="route-add scope-company"><b>方案一追加</b>扩多源/CDC；共同 Release Train；DataArts 资产/治理与 AgentArts Trace/Eval 过 Gate。</div><div class="route-add db scope-db"><b>方案二追加</b>单引擎增量/CDC 仅在主键、日志、恢复、重复语义和负载 Gold 通过后开放。</div><div class="gate">能力 Gate：资产/分类/血缘来源可追溯；3 个伙伴连续 4 周；零越权、凭据和静默坏数事故</div></div>
+        </div>
+        <div class="gate-grid"><div class="gate-card"><b>契约 Gate</b><span>Adapter、Tool、Event、Artifact</span></div><div class="gate-card"><b>正确 Gate</b><span>Intent、Result、诊断证据</span></div><div class="gate-card"><b>安全 Gate</b><span>权限、注入、凭据、取消</span></div><div class="gate-card"><b>运营 Gate</b><span>Trace、成本、恢复、回滚</span></div><div class="gate-card"><b>客户 Gate</b><span>真实任务价值，不数提问</span></div></div>
+      </div>
+    </section>
+
+    <section id="evidence">
+      <div class="wrap">
+        <div class="section-head"><div class="kicker">Evidence &amp; unknowns</div><div><h2>公开接口已经足够开始；这些内部事实仍然能改变方案。</h2><p>Unknown 不是差距，也不是能力。必须用固定版本、目标 Region、真实身份和正负用例闭合。</p></div></div>
+        <div class="unknown-grid">
+          <div class="unknown"><b>模型 / Region / 成本</b><span>允许端点、数据驻留、配额与真实 Token/时延。</span></div><div class="unknown"><b>开源产品化合规</b><span>固定 commit、SBOM、依赖树、漏洞与升级流程。</span></div><div class="unknown"><b>商业 Harness 条款</b><span>Codex/Claude 的企业 API、区域、数据处理与嵌入边界。</span></div>
+          <div class="unknown scope-company"><b>AgentArts 可嵌入性</b><span>Runtime/Gateway/Trace/Eval 的 API、SLO、取消、成本和升级。</span></div><div class="unknown scope-company"><b>DataArts 对象与版本</b><span>语义/指标/数据集稳定 ID、事件、ACL、作者 API 与回滚。</span></div><div class="unknown"><b>IAM → DB 委托</b><span>允许、拒绝、撤权、过期与数据库审计主体。</span></div>
+          <div class="unknown"><b>引擎能力 Manifest</b><span>元数据、SQL、诊断、取消的 GA/区域/性能。</span></div><div class="unknown"><b>真实客户任务</b><span>频次、失败、人工基线、使用持续性和愿付价格。</span></div><div class="unknown scope-company"><b>组织授权</b><span>总 Owner、共同 OKR、预算、团队容量与发布权。</span></div><div class="unknown scope-db"><b>DB 小队授权</b><span>端到端人员、ECS/模型预算、首发引擎和新品发布权。</span></div>
+        </div>
+        <div class="sources" style="margin-top:18px">
+          <div class="source-group"><h3>开源 Harness</h3><ul><li><a href="https://dev.opencode.ai/docs/server/">OpenCode Server</a></li><li><a href="https://opencode.ai/docs/sdk">OpenCode SDK</a></li><li><a href="https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/rpc.md">Pi RPC</a></li><li><a href="https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/architecture.md">DeepSeek Harness Architecture</a></li><li><a href="https://github.com/NousResearch/hermes-agent/blob/main/website/docs/developer-guide/programmatic-integration.md">Hermes Integration</a></li></ul></div>
+          <div class="source-group"><h3>商业 / 协议标杆</h3><ul><li><a href="https://developers.openai.com/codex/app-server">Codex App Server</a></li><li><a href="https://developers.openai.com/codex/noninteractive">Codex Non-interactive</a></li><li><a href="https://code.claude.com/docs/en/cli-usage">Claude Code CLI</a></li><li><a href="https://code.claude.com/docs/en/agent-sdk/overview">Claude Agent SDK</a></li></ul></div>
+          <div class="source-group"><h3>Databricks 接入 / 治理</h3><ul><li><a href="https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/">Lakeflow Connect</a></li><li><a href="https://docs.databricks.com/gcp/en/query-federation">Lakehouse Federation</a></li><li><a href="https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/schema">Auto Loader Schema</a></li><li><a href="https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-discovery">UC Data discovery</a></li><li><a href="https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring">Data quality</a></li><li><a href="https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-classification">Data classification</a></li></ul></div>
+          <div class="source-group"><h3>阿里云数据建设 Agent</h3><ul><li><a href="https://help.aliyun.com/zh/dataworks/user-guide/introduction-to-data-integration-and-ai-native-capabilities">DataWorks DI Agent</a></li><li><a href="https://help.aliyun.com/zh/dataworks/user-guide/overview/">Data Agent 概述</a></li><li><a href="https://help.aliyun.com/zh/dataworks/user-guide/data-integration-overview">数据集成概述</a></li><li><a href="https://help.aliyun.com/zh/dataworks/user-guide/data-map/">数据地图</a></li><li><a href="https://help.aliyun.com/zh/dataworks/user-guide/data-governance-agent">数据治理 Agent</a></li></ul></div>
+          <div class="source-group"><h3>华为云能力边界</h3><ul><li><a href="https://support.huaweicloud.com/usermanual-dataartsinsight/dataartsinsight_03_0302.html">Insight 智能分析助手</a></li><li><a href="https://support.huaweicloud.com/api-dataartsinsight/dataartsinsight_api_0008.html">Insight API</a></li><li><a href="https://support.huaweicloud.com/highcode-agentarts/agentarts_10_022.html">AgentArts Gateway</a></li><li><a href="https://support.huaweicloud.com/ops-agentarts/agentarts_14_0021.html">AgentArts Trace</a></li><li><a href="https://support.huaweicloud.com/intl/zh-cn/api-das/das_01_0007.html">DAS API</a></li></ul></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tools">
+      <div class="wrap">
+        <div class="section-head"><div class="kicker">Appendix · Atomic catalog</div><div><h2>原子能力全集放到最后，实施时再按需下钻。</h2><p>前文先回答产品做什么、页面怎么运行和两种方案如何承载；这里保留 88 项统一 CLI/MCP 执行面，新增接入规划、Pipeline 与最小治理原子能力，供研发拆解和契约评审使用。</p></div></div>
+        <details class="atomic-details">
+          <summary><div>展开 `di` CLI/MCP 原子能力目录<br><span>可按能力域和 P0/P1 筛选；CLI 与 MCP 使用同一实现、schema、错误和证据语义。</span></div></summary>
+          <div class="atomic-content">
+            <div class="tool-toolbar">
+              <div><div class="filters" id="domainFilters" aria-label="按能力域筛选"></div><div class="filters" id="phaseFilters" style="margin-top:8px" aria-label="按阶段筛选"></div></div>
+              <div class="tool-count" id="toolCount" aria-live="polite"></div>
+            </div>
+            <div class="table-wrap"><table><thead><tr><th>域</th><th>CLI</th><th>MCP Tool</th><th>风险</th><th>阶段</th><th>作用</th></tr></thead><tbody id="toolRows"></tbody></table></div>
+          </div>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap"><span>华为云 Data Intelligence · Capability-first / Harness-first 产品设计建议 · 2026-08-20</span><span><a href="./huawei-product-ui-prototypes.html">对话回答画册</a> · <a href="./huawei-catch-up-product-plan.md">完整 Markdown</a> · <a href="./agent-entry-governance-visual-report.html">竞品主报告</a> · <a href="./vendor-entry-atlas.html#capabilities">竞品能力全集</a></span></div></footer>
+
+  <script>
+    const tools = [
+      ["身份","di auth whoami","读","P0","主体、租户、委托与有效期"],["身份","di context open","读","P0","绑定工作空间、数据源、实例与用途"],["身份","di policy check","读","P0","调用前解释允许、拒绝与约束"],["身份","di capability list","读","P0","按引擎、区域、版本返回能力"],["身份","di budget get","读","P0","查询、Token、时间与工件预算"],
+      ["数据源","di source list","读","P0","列出当前主体可见数据源"],["数据源","di source register","写","P0","注册用途受限的凭据引用"],["数据源","di source test","读","P0","连通、权限、方言和延迟"],["数据源","di source freshness","读","P0","更新时间与复制/CDC 水位"],
+      ["接入","di ingest assess","算","P0","比较直查、一次、定时与 CDC"],["接入","di ingest plan","算","P0","表、字段、目标、调度和预算计划"],["接入","di ingest preview","读","P0","Dry-run Schema、坏数、敏感和影响"],["接入","di ingest publish","写","P0","确认后发布版本化 Pipeline"],["接入","di ingest status","读","P0","阶段、吞吐、延迟、水位与错误"],["接入","di ingest stop","写","P0","幂等停止 Pipeline，不删除目标数据"],["接入","di ingest verify","读","P0","源目标行数、校验和、水位和 Schema"],["接入","di file profile","读","P0","格式、Schema、编码、坏行和新列"],
+      ["目录","di catalog search","读","P0","搜索表、字段、指标与报表"],["目录","di schema inspect","读","P0","列、类型、约束、主外键与注释"],["目录","di stats inspect","读","P0","基数、空值、分布和统计时间"],["目录","di sample values","读","P0","权限内抽样与枚举"],["目录","di lineage trace","读","P0","上下游来源；区分采集与推断"],["目录","di impact analyze","算","P1","变更对指标、Query 与报表的影响"],
+      ["语义","di semantic resolve","算","P0","业务词映射实体、指标与字段"],["语义","di metric get","读","P0","公式、粒度、过滤、Owner 与版本"],["语义","di join plan","算","P0","允许 Join、方向、基数和风险"],["语义","di synonym resolve","算","P0","同义词与歧义候选"],["语义","di enum values","读","P0","受控状态和地区枚举"],["语义","di verified search","读","P0","搜索已验证问法、SQL 和测试"],["语义","di semantic validate","算","P0","校验指标、Join、循环与引用"],["语义","di semantic diff","读","P1","版本差异与影响"],
+      ["知识","di knowledge scan","读","P0","扫描 Schema、文档、血缘与已有资产"],["知识","di knowledge draft","算","P0","生成实体、指标、关系、Join 与规则候选"],["知识","di knowledge validate","算","P0","检查冲突、循环、基数、公式、权限与敏感字段"],["知识","di knowledge graph","读","P0","返回受控知识网络视图、状态与证据"],["知识","di knowledge review","写","P0","接受、修改、拒绝或分派候选，不直接发布"],["知识","di knowledge publish","写","P1","审批后发布不可变知识版本"],["知识","di knowledge diff","读","P1","比较知识版本与来源变化"],["知识","di knowledge impact","算","P1","评估问数、分析、报表、策略和 Gold 影响"],["知识","di knowledge rollback","写","P1","回退服务指针到已验证版本"],
+      ["SQL","di sql normalize","算","P0","方言标准化、参数化与 hash"],["SQL","di sql validate","算","P0","AST、只读、对象、列与函数权限"],["SQL","di sql prepare","算","P0","安全绑定参数"],["SQL","di sql explain","读","P0","取计划，不执行查询主体"],["SQL","di sql estimate","算","P0","扫描、行数、耗时和预算"],["SQL","di sql execute","读","P0","只读执行并返回 query_id"],["SQL","di sql status","读","P0","查询执行状态"],["SQL","di sql cancel","写","P0","幂等取消 query_id"],["SQL","di result fetch","读","P0","分页、限量取结果"],["SQL","di result profile","算","P0","空值、分布、异常和时间范围"],["SQL","di result compare","算","P0","与基线、上期或 Gold 比较"],["SQL","di sql replay","读","P1","固定快照与版本复算"],
+      ["诊断","di db snapshot","读","P0","配置、版本、拓扑和健康快照"],["诊断","di db top-sql","读","P0","Top SQL 与负载贡献"],["诊断","di db sessions","读","P0","会话和去敏状态"],["诊断","di db locks","读","P0","阻塞链与持续时间"],["诊断","di db waits","读","P0","等待事件与时间序列"],["诊断","di db plan-diff","算","P0","当前/历史执行计划差异"],["诊断","di db metrics","读","P0","CPU、IO、内存、连接、复制"],["诊断","di db timeline","算","P0","告警、变更、SQL 与负载时间线"],["诊断","di db correlate","算","P0","指标、SQL、锁与变更相关性"],["诊断","di db advisory","算","P0","有证据的建议与风险"],["诊断","di db kill-session","写","P1","审批后终止会话"],["诊断","di db apply-change","写","P1","受控参数/索引动作"],
+      ["治理","di classify scan","算","P0","敏感分类候选、证据与 Review 状态"],["质量","di quality rule-list","读","P0","可用和推荐的质量规则"],["质量","di quality run","算","P0","质量检查与问题样例"],["质量","di anomaly detect","算","P1","指定指标与时间窗异常"],["质量","di change detect","算","P1","Schema、语义与分布漂移"],
+      ["工件","di artifact table","算","P0","分页表格工件"],["工件","di artifact chart","算","P0","受控图表 spec"],["工件","di artifact sql","算","P0","SQL、参数、计划和证据"],["工件","di artifact report","算","P0","事实/推断分区报告"],["工件","di artifact evidence","读","P0","打包来源、版本、query 与 trace"],["工件","di artifact export","读","P1","带 ACL 导出"],["工件","di artifact share","写","P1","有期限可撤销分享"],
+      ["动作","di action plan","算","P1","结构化动作草案"],["动作","di approval request","写","P1","向策略指定审批人请求"],["动作","di action execute","写","P1","按幂等键执行已批动作"],["动作","di action verify","读","P1","权威系统后置验证"],["动作","di action compensate","写","P1","预定义补偿"],
+      ["保证","di trace get","读","P0","跨 Harness、Tool 与 DB Trace"],["保证","di eval run","算","P0","Gold、SQL 与权限评测"],["保证","di eval compare","算","P0","Harness、模型、Skill 与语义对比"],["保证","di feedback add","写","P0","结构化反馈"],["保证","di badcase create","写","P0","去敏 BadCase 修复队列"],["保证","di task replay","算","P1","固定依赖重放"],["保证","di audit search","读","P0","按主体、工具、资源与 Query 审计"]
+    ];
+    const domains = ["全部", ...new Set(tools.map(t => t[0]))];
+    let domain = "全部", phase = "全部";
+    const domainEl = document.getElementById("domainFilters");
+    const phaseEl = document.getElementById("phaseFilters");
+    const rowsEl = document.getElementById("toolRows");
+    const countEl = document.getElementById("toolCount");
+    const button = (label, group) => {
+      const b = document.createElement("button"); b.type = "button"; b.className = "filter-btn"; b.textContent = label;
+      b.addEventListener("click", () => { if (group === "domain") domain = label; else phase = label; renderFilters(); renderTools(); });
+      return b;
+    };
+    function renderFilters() {
+      domainEl.innerHTML = ""; domains.forEach(d => { const b=button(d,"domain"); if(d===domain)b.classList.add("active"); domainEl.appendChild(b); });
+      phaseEl.innerHTML = ""; ["全部","P0","P1"].forEach(p => { const b=button(p,"phase"); if(p===phase)b.classList.add("active"); phaseEl.appendChild(b); });
+    }
+    function mcpName(cli) { const p=cli.split(" ").slice(1).map(x=>x.replaceAll("-","_")); return "di."+p.join("."); }
+    function renderTools() {
+      const visible = tools.filter(t => (domain === "全部" || t[0] === domain) && (phase === "全部" || t[3] === phase));
+      rowsEl.innerHTML = visible.map(t => `<tr><td>${t[0]}</td><td><code>${t[1]}</code></td><td><code>${mcpName(t[1])}</code></td><td class="${t[2]==="写"?"risk-write":""}">${t[2]}</td><td><span class="phase ${t[3]==="P1"?"p1":""}">${t[3]}</span></td><td>${t[4]}</td></tr>`).join("");
+      countEl.textContent = `显示 ${visible.length} / ${tools.length} 项`;
+    }
+    renderFilters(); renderTools();
+    const routeCopy = {
+      all: {
+        title: "先定要做成哪些产品能力，<br>再选两种架构。",
+        copy: "先定义数据接入与资产化、智能问数与分析、数据知识构建和数据库洞察的优先级，再比较公司级协作与数据库绿地两套架构。",
+        calloutTitle: "当前建议",
+        callout: "技术按数据库绿地方案立即启动；组织给公司协作方案 2–4 周 Gate。条件成立时，同一代码直接升格，不推倒重来。",
+        status: "当前显示：两种方案及全部对比",
+        metric: "2 方案",
+        metricText: "同一能力组合的两种组织与承载方式"
+      },
+      company: {
+        title: "先定能力重点，<br>再走方案一。",
+        copy: "本视图保留完整能力地图，并突出多源接入、数据产品、问数分析和知识治理的公司级产品中心；随后只展开方案一架构、共同内核、专属模块与路线。",
+        calloutTitle: "成立条件",
+        callout: "必须在 2–4 周内落实唯一总 Owner、共同 OKR、能力包合同、真实 IAM/OBO 和同一发布列车；否则不能把名义协作当成方案一。",
+        status: "当前显示：仅方案一 · 华为云竞争力优先",
+        metric: "3+ 包",
+        metricText: "DataArts、数据库、IAM/Agent 版本化能力包"
+      },
+      db: {
+        title: "先定能力重点，<br>再走方案二。",
+        copy: "本视图保留完整能力地图，并突出一个数据库的接入/资产化、数据库洞察与数据库上的问数；随后只展开方案二架构、共同内核、专属模块与路线。",
+        calloutTitle: "首期边界",
+        callout: "一台 ECS、一个主引擎、CSV/Parquet；先跑通接入—资产—问数—查库，首月精选 35–40 个 Tool；无 HA/SLA，但隔离、短期凭据、坏数策略、取消和证据不能延期。",
+        status: "当前显示：仅方案二 · 数据库部门绿地突围",
+        metric: "1 ECS",
+        metricText: "首期 Docker Compose 可重复部署"
+      }
+    };
+    function setRoute(route, updateUrl = true) {
+      if (!routeCopy[route]) route = "all";
+      document.body.dataset.route = route;
+      document.querySelectorAll("[data-route-btn]").forEach(x => {
+        const active = x.dataset.routeBtn === route;
+        x.classList.toggle("active", active);
+        x.setAttribute("aria-pressed", String(active));
+      });
+      const c = routeCopy[route];
+      document.getElementById("heroTitle").innerHTML = c.title;
+      document.getElementById("heroCopy").textContent = c.copy;
+      document.getElementById("heroCalloutTitle").textContent = c.calloutTitle;
+      document.getElementById("heroCallout").textContent = c.callout;
+      document.getElementById("viewStatus").textContent = c.status;
+      document.getElementById("deploymentMetric").textContent = c.metric;
+      document.getElementById("deploymentMetricText").textContent = c.metricText;
+      document.title = route === "all" ? "华为云统一对话 Agent｜能力目标与两种领先产品方案" : `${route === "company" ? "方案一" : "方案二"} · 华为云统一对话 Agent｜能力目标与领先产品方案`;
+      if (updateUrl) {
+        try {
+          const url = new URL(location.href);
+          if (route === "all") url.searchParams.delete("view"); else url.searchParams.set("view", route);
+          history.replaceState(null, "", url);
+        } catch (_) {}
+      }
+    }
+    document.querySelectorAll("[data-route-btn]").forEach(b => b.addEventListener("click", () => setRoute(b.dataset.routeBtn)));
+    const initialRoute = new URLSearchParams(location.search).get("view") || "all";
+    setRoute(initialRoute, false);
+  </script>
+</body>
+</html>

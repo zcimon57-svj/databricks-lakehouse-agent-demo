@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="11 家数据与云厂商 Agent 产品入口、67 项细粒度能力、12 类数据源、前置准备、准确性保障与易用度对照详册">
+  <title>厂商 Agent 能力详册｜入口、数据接入、前置准备与责任边界</title>
+  <link rel="stylesheet" href="./assets/capability-comparison.css">
+  <style>
+    :root {
+      --ink: #11233c;
+      --muted: #5d6d80;
+      --paper: #f4f6f2;
+      --card: #ffffff;
+      --line: #d8e0df;
+      --navy: #102b45;
+      --blue: #2e68d1;
+      --cyan: #2a9da0;
+      --orange: #ee8e3b;
+      --red: #c84f5e;
+      --green: #287d64;
+      --gold: #a77521;
+      --shadow: 0 18px 48px rgba(22, 45, 68, .10);
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 0%, rgba(42, 157, 160, .12), transparent 28rem),
+        radial-gradient(circle at 92% 12%, rgba(238, 142, 59, .12), transparent 26rem),
+        var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.62;
+    }
+    a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    a:hover { color: #174ba5; }
+    img { display: block; max-width: 100%; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      min-height: 62px;
+      padding: .7rem max(1rem, calc((100vw - 1440px) / 2));
+      color: #fff;
+      background: rgba(16, 43, 69, .96);
+      border-bottom: 1px solid rgba(255,255,255,.15);
+      backdrop-filter: blur(12px);
+    }
+    .brand { display: flex; align-items: baseline; gap: .6rem; white-space: nowrap; }
+    .brand strong { font-size: .95rem; letter-spacing: .08em; }
+    .brand span { color: #bcd0df; font-size: .72rem; }
+    .vendor-nav {
+      display: flex;
+      gap: .25rem;
+      overflow-x: auto;
+      scrollbar-width: thin;
+      padding-bottom: .12rem;
+    }
+    .vendor-nav a {
+      flex: 0 0 auto;
+      padding: .35rem .58rem;
+      border-radius: 999px;
+      color: #d9e6ef;
+      text-decoration: none;
+      font-size: .74rem;
+      font-weight: 700;
+    }
+    .vendor-nav a:hover, .vendor-nav a.active { color: #102b45; background: #fff; }
+    .back-link { margin-left: auto; flex: 0 0 auto; color: #fff; font-size: .76rem; font-weight: 800; }
+    main { width: min(1440px, calc(100% - 2rem)); margin: 0 auto; }
+    .hero { padding: 5rem 0 2.3rem; }
+    .eyebrow { color: var(--red); font-weight: 900; font-size: .75rem; letter-spacing: .13em; text-transform: uppercase; }
+    h1 { max-width: 1050px; margin: .55rem 0 1rem; font-size: clamp(2.35rem, 5vw, 5.4rem); line-height: 1.02; letter-spacing: -.055em; }
+    .hero > p { max-width: 920px; margin: 0; color: var(--muted); font-size: clamp(1rem, 1.6vw, 1.24rem); }
+    .hero-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 1rem; margin-top: 2rem; }
+    .decision-card, .method-card { padding: 1.25rem 1.35rem; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255,255,255,.86); box-shadow: var(--shadow); }
+    .decision-card { background: linear-gradient(135deg, #102b45 0%, #193e5c 100%); color: #fff; }
+    .decision-card h2, .method-card h2 { margin: 0 0 .5rem; font-size: 1.14rem; }
+    .decision-card p, .method-card p { margin: .35rem 0; }
+    .decision-card p { color: #d7e7ef; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: .65rem; margin-top: 1rem; }
+    .stat { padding: .75rem; border-radius: 14px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.14); }
+    .stat strong { display: block; font-size: 1.55rem; line-height: 1; }
+    .stat span { display: block; margin-top: .35rem; color: #bdd2df; font-size: .68rem; }
+    .legend { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .8rem; }
+    .badge, .score, .status {
+      display: inline-flex;
+      align-items: center;
+      gap: .34rem;
+      border-radius: 999px;
+      font-size: .7rem;
+      font-weight: 850;
+      letter-spacing: .01em;
+    }
+    .badge { padding: .28rem .58rem; border: 1px solid var(--line); background: #fff; }
+    .badge.ui { color: var(--green); border-color: #a9d7c9; background: #eff9f5; }
+    .badge.motion { color: #265cb3; border-color: #bdd0ed; background: #f0f5fc; }
+    .badge.concept { color: #96620b; border-color: #e4ce9c; background: #fff9e9; }
+    .badge.unknown { color: #8a4350; border-color: #e0b6bd; background: #fff2f4; }
+    .matrix-wrap { margin: 1rem 0 3.4rem; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255,255,255,.9); box-shadow: var(--shadow); }
+    .matrix-head { display: flex; align-items: end; justify-content: space-between; gap: 1rem; padding: 1.1rem 1.25rem .8rem; }
+    .matrix-head h2 { margin: 0; font-size: 1.25rem; }
+    .matrix-head p { margin: .25rem 0 0; color: var(--muted); font-size: .82rem; }
+    .matrix-scroll { overflow-x: auto; }
+    table { width: 100%; min-width: 1020px; border-collapse: collapse; }
+    th, td { padding: .72rem .8rem; text-align: left; vertical-align: top; border-top: 1px solid #e6ecea; font-size: .76rem; }
+    th { color: #fff; background: var(--navy); border-top: 0; font-size: .68rem; letter-spacing: .04em; text-transform: uppercase; }
+    td strong { display: block; }
+    td small { color: var(--muted); }
+    .vendor-section { scroll-margin-top: 78px; margin: 0 0 2.5rem; }
+    .vendor-shell { overflow: hidden; border: 1px solid var(--line); border-radius: 28px; background: var(--card); box-shadow: var(--shadow); }
+    .vendor-head { display: flex; align-items: start; gap: 1rem; padding: 1.25rem 1.4rem 1rem; border-bottom: 1px solid var(--line); }
+    .rank { display: grid; place-items: center; width: 42px; height: 42px; flex: 0 0 42px; border-radius: 13px; color: #fff; background: var(--navy); font-weight: 900; }
+    .vendor-title { flex: 1; }
+    .vendor-title h2 { margin: 0; font-size: clamp(1.45rem, 2.7vw, 2.45rem); letter-spacing: -.035em; line-height: 1.05; }
+    .vendor-title p { margin: .3rem 0 0; color: var(--muted); }
+    .vendor-score { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; justify-content: flex-end; }
+    .score { padding: .45rem .72rem; color: #fff; background: var(--blue); }
+    .status { padding: .4rem .68rem; color: var(--ink); background: #edf1ef; }
+    .vendor-grid { display: grid; grid-template-columns: minmax(0, 1.18fr) minmax(360px, .82fr); }
+    .shot { margin: 0; padding: 1rem; border-right: 1px solid var(--line); background: #edf1ef; }
+    .shot-stage { display: grid; place-items: center; min-height: 420px; overflow: hidden; border-radius: 17px; background: #fff; border: 1px solid #dbe3e2; }
+    .shot-stage img { width: 100%; height: 100%; max-height: 680px; object-fit: contain; background: #fff; }
+    .shot figcaption { margin-top: .65rem; color: var(--muted); font-size: .72rem; }
+    .shot figcaption strong { color: var(--ink); }
+    .vendor-copy { padding: 1.15rem 1.3rem 1.3rem; }
+    .vendor-copy h3 { margin: 1.15rem 0 .4rem; font-size: .92rem; }
+    .vendor-copy h3:first-child { margin-top: 0; }
+    .vendor-copy p { margin: .38rem 0; color: #33485c; font-size: .86rem; }
+    .journey { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem; margin: .55rem 0 .8rem; }
+    .step { padding: .34rem .55rem; border-radius: 9px; background: #eef3f7; border: 1px solid #d8e2ea; font-size: .69rem; font-weight: 800; }
+    .arrow { color: #91a0ac; font-weight: 900; }
+    .judgement { display: grid; gap: .5rem; margin-top: .75rem; }
+    .judge { padding: .62rem .72rem; border-left: 4px solid var(--green); border-radius: 8px; background: #f3f7f5; font-size: .77rem; }
+    .judge.gap { border-left-color: var(--red); background: #fff5f6; }
+    .judge.watch { border-left-color: var(--gold); background: #fff9ec; }
+    .judge strong { display: block; margin-bottom: .15rem; }
+    .media-row { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .8rem; }
+    .media-link, summary {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      padding: .43rem .68rem;
+      border: 1px solid #b9c8d5;
+      border-radius: 10px;
+      background: #f8fafb;
+      color: var(--navy);
+      font-size: .72rem;
+      font-weight: 850;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    details.video { margin-top: .8rem; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: #f7f9f8; }
+    details.video summary { border: 0; border-radius: 0; list-style: none; }
+    details.video summary::-webkit-details-marker { display: none; }
+    .video-frame { aspect-ratio: 16 / 9; background: #0d1824; }
+    .video-frame iframe { width: 100%; height: 100%; border: 0; }
+    .source-list { margin: .45rem 0 0; padding-left: 1.1rem; }
+    .source-list li { margin: .25rem 0; color: var(--muted); font-size: .73rem; }
+    .closing { margin: 3.5rem 0 5rem; padding: 1.4rem; color: #fff; border-radius: 24px; background: linear-gradient(135deg, #102b45, #1d5364); }
+    .closing h2 { margin: 0; font-size: 1.35rem; }
+    .closing p { max-width: 1020px; color: #d4e4ea; }
+    .closing a { color: #fff; }
+    footer { padding: 1.5rem 0 3rem; color: var(--muted); font-size: .72rem; text-align: center; }
+    @media (max-width: 1000px) {
+      .topbar { align-items: flex-start; flex-wrap: wrap; }
+      .vendor-nav { order: 3; width: 100%; }
+      .back-link { margin-left: auto; }
+      .hero-grid, .vendor-grid { grid-template-columns: 1fr; }
+      .shot { border-right: 0; border-bottom: 1px solid var(--line); }
+      .shot-stage { min-height: 260px; }
+    }
+    @media (max-width: 620px) {
+      main { width: min(100% - 1rem, 1440px); }
+      .hero { padding-top: 3rem; }
+      .hero-grid { gap: .65rem; }
+      .stats { grid-template-columns: 1fr; }
+      .vendor-head { flex-wrap: wrap; padding: 1rem; }
+      .vendor-score { justify-content: flex-start; width: 100%; }
+      .shot, .vendor-copy { padding: .72rem; }
+      .shot-stage { min-height: 210px; }
+    }
+    @media print {
+      .topbar { position: static; }
+      .vendor-section { break-inside: avoid; }
+      details.video { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><strong>ENTRY ATLAS</strong><span>2026-08-19</span></div>
+    <nav class="vendor-nav" aria-label="厂商章节">
+      <a href="#capabilities">能力全集</a><a href="#data-sources">数据源</a>
+      <a href="#snowflake">Snowflake</a><a href="#databricks">Databricks</a><a href="#google">Google</a>
+      <a href="#aws">AWS</a><a href="#microsoft">Microsoft</a><a href="#alibaba">阿里</a>
+      <a href="#tencent">腾讯</a><a href="#oracle">Oracle</a><a href="#volcano">火山</a>
+      <a href="#huawei">华为</a><a href="#baidu">百度</a>
+    </nav>
+    <a class="back-link" href="./agent-entry-governance-visual-report.html#entry-atlas">← 返回主报告</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="eyebrow">Official UI · First-task journey · Governance boundary</div>
+      <h1>不要只看聊天框，先看它背后的数据接入、前置准备与责任边界。</h1>
+      <p>本详册先用 67 项去重后的细粒度能力、12 类数据源与接入方式和统一任务流程比较 11 家厂商，再保留官方入口截图、首次任务路径与演示作为体验证据。截图能判断入口收敛度；能力矩阵才解释准确性、易用度和落地成本为何不同。所有状态均来自公开官方资料，不替代账号实测。</p>
+
+      <div class="hero-grid">
+        <article class="decision-card">
+          <h2>结构选择：主报告看结论，详册先横比再逐家钻取</h2>
+          <p>没有拆成 11 个孤立子页面。统一能力全集、数据源口径和责任模型必须并排可见；向下滚动仍可在每家厂商章节查看大图、入口路径、治理判断和视频证据。</p>
+          <div class="stats">
+            <div class="stat"><strong>67</strong><span>去重能力项</span></div>
+            <div class="stat"><strong>12</strong><span>数据源与接入方式</span></div>
+            <div class="stat"><strong>11</strong><span>厂商统一标尺</span></div>
+          </div>
+        </article>
+        <article class="method-card">
+          <h2>怎么读图，不被营销图误导</h2>
+          <p><strong>真实 UI</strong> 只证明厂商公开过这个界面；不证明当前账号、区域、Edition 已可用。</p>
+          <p><strong>官方动图/视频</strong> 可观察任务过程；仍不证明权限负例、规模和失败行为。</p>
+          <p><strong>概念图</strong> 只证明方向，不能拿来与真实控制台等价比较。</p>
+          <div class="legend"><span class="badge ui">● 官方产品 UI</span><span class="badge motion">▶ 官方动态/视频</span><span class="badge concept">◇ 官网概念图</span><span class="badge unknown">? 仍需账号验证</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="matrix-wrap" aria-labelledby="matrix-title">
+      <div class="matrix-head"><div><h2 id="matrix-title">先看入口形态，再看总分</h2><p>入口“像聊天”不是强弱依据；关键是它能否承载跨域任务、继承最终用户权限，并产出可继续使用的受治理工件。</p></div></div>
+      <div class="matrix-scroll">
+        <table>
+          <thead><tr><th>厂商</th><th>公开入口</th><th>入口形态</th><th>首次任务前置</th><th>截图直接显示的强项</th><th>不能从截图证明</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Snowflake</strong><small>91.3 ±3</small></td><td>CoWork / ai.snowflake.com</td><td>个人工作 Agent 首页</td><td>管理员开放数据、工具与身份</td><td>对话、自动化、工件、能力与历史同屏</td><td>MCP 动作评测和身份默认值是否无残差</td></tr>
+            <tr><td><strong>Databricks</strong><small>90.6 ±3</small></td><td>Genie One / <code>/one</code></td><td>数据消费统一首页</td><td>UC 数据、Genie Space/资产已治理</td><td>Ask/Search、Dashboard、Genie、Apps 统一发现</td><td>复杂业务动作、不同嵌入凭据是否一致</td></tr>
+            <tr><td><strong>Google Cloud</strong><small>85.9 ±4</small></td><td>BigQuery Conversational Analytics</td><td>BigQuery 内 Conversations + Agent Catalog</td><td>创建/发布 Agent，绑定数据源与 IAM</td><td>多步推理、Agent 目录、结构化与非结构化数据</td><td>BigQuery/Looker/数据库之间统一语义与策略</td></tr>
+            <tr><td><strong>AWS</strong><small>85.0 ±4</small></td><td>Amazon Quick（图中名 Quick Suite）</td><td>Chat-primary 工作首页</td><td>管理员连接数据、Apps、Agents、Spaces</td><td>Chat、Research、Flow、Space 与连接器一屏收敛</td><td>新组合的长期成熟度与数据正确性回归深度</td></tr>
+            <tr><td><strong>Microsoft</strong><small>84.4 ±4</small></td><td>Fabric Data Agent → M365 Copilot</td><td>Fabric 构建/测试面 + 办公分发面</td><td>工作区、数据源、发布、Agent Store</td><td>数据源、字段、指令、测试与发布在同一作者界面</td><td>它还不是 Fabric 全产品的单一业务首页</td></tr>
+            <tr><td><strong>阿里云</strong><small>81.8 ±5</small></td><td>Quick BI 智能小Q + DataWorks Data Agent</td><td>消费入口 + 对话式接入/治理入口</td><td>购买相应版本，准备数据集/数据源、网络和 Serverless 资源组</td><td>问数/报告 + 单表/整库同步、ChatDB、治理计划/Diff</td><td>Quick BI、DataWorks、DMS 是否同一 Session/OBO/Trace</td></tr>
+            <tr><td><strong>腾讯云</strong><small>79.6 ±7</small></td><td>DataBuddy</td><td>Agent-native 数据工作台</td><td>试用/购买、工作空间与数据准备</td><td>任务历史、Skills、SQL/工程/治理/分析入口并列</td><td>2026-08 新产品的规模、SLA 与持续回归</td></tr>
+            <tr><td><strong>Oracle</strong><small>79.0 ±5</small></td><td>OAC AI Agent / Workbook / standalone</td><td>领域 Agent 配置面 + 分散消费入口</td><td>作者绑定数据集、指令与知识文档</td><td>领域数据、补充指令、首条消息、知识文档可配置</td><td>OAC、Select AI、DB Tools 是否统一生命周期</td></tr>
+            <tr><td><strong>火山引擎</strong><small>68.6 ±6</small></td><td>Data Agent / 智能分析 Agent</td><td>专用对话页</td><td>项目、数据集、Agent 配置</td><td>研究模式、联网、拓展、附件与报告生成</td><td>动作控制面、OBO 与版本化评测闭环</td></tr>
+            <tr><td><strong>华为云</strong><small>67.6 ±6</small></td><td>DataArts Insight 智能分析助手</td><td>项目内 BI 问答页</td><td>企业版 + 公测开通 + 数据源/数据集/助手</td><td>极简问答入口，产品内可生成分析与图表</td><td>与 AgentArts/数据库的身份、语义、Trace 贯通</td></tr>
+            <tr><td><strong>百度智能云</strong><small>62.9 ±9</small></td><td>DataBuilder Data Agent（方向）</td><td>官网能力叙事</td><td>公开资料不足</td><td>强调上下文、专业工具、人机协同、可信结果</td><td>真实对话入口、API/MCP、OBO、评测与 GA 状态</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="vendor-section" id="capabilities" aria-labelledby="capabilities-title">
+      <div class="matrix-head"><div><h2 id="capabilities-title">能力全景：支持范围、数据接入、前置准备与责任边界</h2><p>以下内容由同一份数据驱动主报告摘要和本页完整矩阵；入口界面只是 67 项能力中的一小部分。</p></div></div>
+      <div id="capability-full"></div>
+    </section>
+
+    <section class="vendor-section" id="snowflake">
+      <article class="vendor-shell">
+        <header class="vendor-head"><div class="rank">01</div><div class="vendor-title"><h2>Snowflake · CoWork</h2><p>最像“个人工作 Agent”的统一入口；不只问数，还把工件、自动化、搜索和跨系统动作放进同一工作面。</p></div><div class="vendor-score"><span class="score">91.3 / 100</span><span class="status">动量 10.0</span><span class="status">±3</span></div></header>
+        <div class="vendor-grid">
+          <figure class="shot"><div class="shot-stage"><img src="./assets/vendor-entry/snowflake-cowork.webp" alt="Snowflake CoWork 官方产品首页，左侧包含 New chat、Automations、Artifacts、Capabilities 和 Search，中间是统一提问框与工件"></div><figcaption><strong>素材性质：</strong>官网真实产品 UI。入口直接显示 New chat、Automations、Artifacts、Capabilities、Search 与历史任务。<br><a href="https://www.snowflake.com/en/product/snowflake-cowork/" target="_blank" rel="noreferrer">官方产品页与原图</a></figcaption></figure>
+          <div class="vendor-copy">
+            <h3>用户从哪里进去</h3><p>公开入口是 <code>ai.snowflake.com</code>。CoWork（原 Snowflake Intelligence）定位为每位知识工作者的个人 Agent，并把 Deep Research、MCP 动作、可复用 Artifacts 与自动化放在同一首页。</p>
+            <div class="journey"><span class="step">CoWork 首页</span><span class="arrow">→</span><span class="step">自然语言目标</span><span class="arrow">→</span><span class="step">自动选择数据/工具</span><span class="arrow">→</span><span class="step">报告/图表/动作</span><span class="arrow">→</span><span class="step">Artifact / Automation</span></div>
+            <h3>为什么当前排第一梯队</h3><div class="judgement"><div class="judge"><strong>强项</strong>入口不是一个 BI 聊天框，而是数据、研究、工件、工具和后台自动化的统一工作壳；角色、caller grants、Agent identity、版本、评测和 trace 组成目前公开证据最完整的保证面。</div><div class="judge gap"><strong>残差</strong>Agent evaluation 目前不实际调用 MCP 工具；部分个人记忆、Skill、文件输出与 Agent Studio 能力仍处于预览或“soon”，不能按 GA 满分理解。</div><div class="judge watch"><strong>看图后的判断</strong>它在“从答案继续做事”上明显领先纯对话式 BI，但必须继续核验默认 role、跨系统 consent、外部动作沙箱和多方审批。</div></div>
+            <div class="media-row"><a class="media-link" href="https://www.snowflake.com/en/ai-pulse/june-2026/" target="_blank" rel="noreferrer">▶ 官方 CoWork 演示（17:48 章节）</a><a class="media-link" href="https://docs.snowflake.com/" target="_blank" rel="noreferrer">↗ 官方文档</a></div>
+            <ul class="source-list"><li>视频性质：Snowflake AI Pulse 官方完整发布录制，CoWork 深入介绍从 05:26 开始，产品 Demo 从 17:48 开始。</li><li>边界：截图与视频均为厂商演示，不是本研究账号实测。</li></ul>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="vendor-section" id="databricks">
+      <article class="vendor-shell">
+        <header class="vendor-head"><div class="rank">02</div><div class="vendor-title"><h2>Databricks · Genie One</h2><p>最像“受治理数据消费首页”：Ask/Search、Dashboard、Genie Space、App 和 Domain 围绕同一数据平台汇聚。</p></div><div class="vendor-score"><span class="score">90.6 / 100</span><span class="status">动量 9.8</span><span class="status">±3</span></div></header>
+        <div class="vendor-grid">
+          <figure class="shot"><div class="shot-stage"><img src="./assets/vendor-entry/databricks-genie-one.png" alt="Databricks Genie One 官方首页，顶部统一提问框，左侧包含 Dashboards、Genie Spaces、Apps 和 Domains"></div><figcaption><strong>素材性质：</strong>官方文档真实 UI。页面突出一个统一 Ask/Search 框，并把 Dashboard、Genie Space、App 和 Domain 放进简化导航。<br><a href="https://docs.databricks.com/aws/en/genie-one" target="_blank" rel="noreferrer">Genie One 官方文档与原图</a></figcaption></figure>
+          <div class="vendor-copy">
+            <h3>用户从哪里进去</h3><p>获授权的业务用户可通过工作区内 Genie One 或直接 <code>/one</code> 进入。它不是替代专业工作区，而是给消费者一个简化入口，让用户搜索资产、自然语言提问、打开 Dashboard/Genie/App。</p>
+            <div class="journey"><span class="step">Genie One</span><span class="arrow">→</span><span class="step">Ask / Search</span><span class="arrow">→</span><span class="step">路由到资产/Genie</span><span class="arrow">→</span><span class="step">SQL/图表/答案</span><span class="arrow">→</span><span class="step">保存/分享/外部调用</span></div>
+            <h3>数据建设与管理面</h3><p>官方另提供 Lakeflow Connect 数据库/SaaS/文件/流接入、Unity Catalog 下的外部数据库联邦只读、Auto Loader Schema 演进，以及 Discover/Catalog Explorer、自动血缘、质量监控和敏感分类。它的强项是对象与治理底座连续；但公开材料没有证明这些专业配置都已由 Genie One 单一对话直接完成。</p>
+            <h3>为什么与 Snowflake 并列第一梯队</h3><div class="judgement"><div class="judge"><strong>强项</strong>入口背后是 Unity Catalog、metric views、Dashboard、Genie、MCP 和评测逐步围绕同一对象面收敛；看起来简单，但治理深度比“首页有聊天框”重要得多。</div><div class="judge gap"><strong>残差</strong>复杂业务/数据库写动作并非其当前强项；Genie Agent API、外部数据源、部分托管 MCP/OBO 和新入口能力仍有 Beta/Preview，嵌入的 viewer/publisher 凭据路径也不完全同构。</div><div class="judge watch"><strong>看图后的判断</strong>Databricks 更像“统一数据消费入口”，Snowflake 更像“统一个人工作 Agent”。两者 0.7 分差不具有实质排名意义。</div></div>
+            <div class="media-row"><a class="media-link" href="https://www.youtube.com/watch?v=Tc3WqbV7fKA" target="_blank" rel="noreferrer">▶ 官方 AI/BI + Genie 端到端 Demo</a><a class="media-link" href="https://www.databricks.com/resources/demos/tours/bi/databricks-aibi-genie" target="_blank" rel="noreferrer">⌁ 官方交互式产品 Tour</a><a class="media-link" href="https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/" target="_blank" rel="noreferrer">↗ Lakeflow Connect</a><a class="media-link" href="https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-discovery" target="_blank" rel="noreferrer">↗ UC 数据发现</a></div>
+            <details class="video"><summary>▶ 在本页播放 Databricks 官方 Demo</summary><div class="video-frame"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/Tc3WqbV7fKA" title="Databricks AI BI Dashboards and Genie end-to-end demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div></details>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="vendor-section" id="google">
+      <article class="vendor-shell">
+        <header class="vendor-head"><div class="rank">03</div><div class="vendor-title"><h2>Google Cloud · BigQuery Conversational Analytics</h2><p>官方动图显示 Conversations 与 Agent Catalog 双面：用户可直接分析，也可发现、创建、发布领域数据 Agent。</p></div><div class="vendor-score"><span class="score">85.9 / 100</span><span class="status">动量 9.8</span><span class="status">±4</span></div></header>
+        <div class="vendor-grid">
+          <figure class="shot"><div class="shot-stage"><img src="./assets/vendor-entry/google-bigquery-conversational-analytics.gif" alt="Google Cloud BigQuery Conversational Analytics 官方动图，展示对话、推理、数据源和回答"></div><figcaption><strong>素材性质：</strong>Google Cloud 官方博客动态 UI 演示；此图会自动播放，能观察从提问到多步分析回答的过程。<br><a href="https://cloud.google.com/blog/products/data-analytics/introducing-conversational-analytics-in-bigquery" target="_blank" rel="noreferrer">官方发布博客与原始动图</a></figcaption></figure>
+          <div class="vendor-copy">
+            <h3>用户从哪里进去</h3><p>入口位于 BigQuery 的 Conversational Analytics，顶层包含 Conversations 与 Agents/Agent Catalog。用户可以进入已有 Agent 对话，也可由数据团队创建并发布领域 Agent；API v1 已提供程序化消费路径。</p>
+            <div class="journey"><span class="step">BigQuery</span><span class="arrow">→</span><span class="step">Conversations / Agents</span><span class="arrow">→</span><span class="step">选择 Agent/数据</span><span class="arrow">→</span><span class="step">多步推理与查询</span><span class="arrow">→</span><span class="step">回答/引用/API</span></div>
+            <h3>强弱判断</h3><div class="judgement"><div class="judge"><strong>强项</strong>结构化、非结构化、多模态、预测与 API/ADK/MCP 组合强，调用用户的数据权限有明确 IAM 路径；动画直接展示“不是一次 SQL 问答”的多步分析形态。</div><div class="judge gap"><strong>残差</strong>BigQuery、Looker、Knowledge Catalog 与数据库 Agent 分布在多个产品面；v1 API 与 UI 并不完全同构，例如官方曾明确 API 不返回 chart。</div><div class="judge watch"><strong>路线信号</strong>Google 更可能由 Gemini Enterprise 做上层分发、由 BigQuery/Looker/数据库 Agent 做领域执行；统一语义与策略是否真正跨产品仍要验证。</div></div>
+            <div class="media-row"><a class="media-link" href="https://cloud.google.com/blog/products/data-analytics/introducing-conversational-analytics-in-bigquery" target="_blank" rel="noreferrer">▶ 官网四段动态演示</a><a class="media-link" href="https://docs.cloud.google.com/bigquery/docs/conversational-analytics" target="_blank" rel="noreferrer">↗ 当前产品文档</a></div>
+            <ul class="source-list"><li>视频状态：确认到官方 UI 动图，未单独找到与当前入口一一对应、信息更强的官方长视频，因此不以第三方视频补位。</li></ul>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="vendor-section" id="aws">
+      <article class="vendor-shell">
+        <header class="vendor-head"><div class="rank">04</div><div class="vendor-title"><h2>AWS · Amazon Quick</h2><p>官方文档直接把 Chat 定义为 primary interface；从问答、Research 到 Flow、Space 和外部动作都由它首跳。</p></div><div class="vendor-score"><span class="score">85.0 / 100</span><span class="status">动量 9.3</span><span class="status">±4</span></div></header>
+        <div class="vendor-grid">
+          <figure class="shot"><div class="shot-stage"><img src="./assets/vendor-entry/aws-quick-suite.png" alt="Amazon Quick Suite 官方产品首页，统一聊天框与 Chat agents、Spaces、Flows、Research 导航"></div><figcaption><strong>素材性质：</strong>AWS 2025-10 官方发布 UI，截图中仍使用 Amazon Quick Suite 名称；当前官方产品面称 Amazon Quick。<br><a href="https://aws.amazon.com/blogs/business-intelligence/reimagine-business-intelligence-amazon-quicksight-evolves-to-amazon-quick-suite/" target="_blank" rel="noreferrer">官方发布文章与原图</a></figcaption></figure>
+          <div class="vendor-copy">
+            <h3>用户从哪里进去</h3><p>用户从 Quick 首页聊天开始。系统可根据请求回答连接数据、生成内容、执行 Flow、开展 Research 或在外部应用中采取动作；Spaces 组织 Dashboard、Dataset、文档、知识库与连接器上下文。</p>
+            <div class="journey"><span class="step">Quick Chat</span><span class="arrow">→</span><span class="step">Agent / Space</span><span class="arrow">→</span><span class="step">数据/文档/Apps</span><span class="arrow">→</span><span class="step">Research / Insight / Flow</span><span class="arrow">→</span><span class="step">Consent 后动作</span></div>
+            <h3>强弱判断</h3><div class="judgement"><div class="judge"><strong>强项</strong>“对话是主入口”最明确；连接器、remote MCP、READ/WRITE consent、identity propagation、活动流和 sandbox 让它更像工作 Agent，而不是 BI Copilot。</div><div class="judge gap"><strong>残差</strong>Quick 是近年重新组合的产品面，长期对象稳定性、成本、规模与数据正确性回归证据仍不如 Snowflake/Databricks 完整。</div><div class="judge watch"><strong>看图后的判断</strong>AWS 在入口和动作上很强，但其治理优势更多来自跨服务身份与策略体系；若只看分析语义和可复现性，不应自动排在数据云双强之前。</div></div>
+            <div class="media-row"><a class="media-link" href="https://www.youtube.com/watch?v=duccb_K1seQ" target="_blank" rel="noreferrer">▶ AWS 官方产品介绍视频</a><a class="media-link" href="https://docs.aws.amazon.com/quick/latest/userguide/how-quicksuite-works.html" target="_blank" rel="noreferrer">↗ Chat-primary 官方文档</a></div>
+            <details class="video"><summary>▶ 在本页播放 AWS 官方视频</summary><div class="video-frame"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/duccb_K1seQ" title="Introducing Amazon Quick Suite by AWS" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div></details>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="vendor-section" id="microsoft">
+      <article class="vendor-shell">
+        <header class="vendor-head"><div class="rank">05</div><div class="vendor-title"><h2>Microsoft · Fabric Data Agent</h2><p>作者在 Fabric 建 Agent，业务用户更可能在 Microsoft 365 Copilot/Agent Store 消费；入口优势来自办公分发，而非 Fabric 首页收敛。</p></div><div class="vendor-score"><span class="score">84.4 / 100</span><span class="status">动量 9.0</span><span class="status">±4</span></div></header>
+        <div class="vendor-grid">
+          <figure class="shot"><div class="shot-stage"><img src="./assets/vendor-entry/microsoft-fabric-data-agent.png" alt="Microsoft Fabric Data Agent 官方作者与测试界面，左侧数据源与字段，右侧自然语言测试框"></div><figcaption><strong>素材性质：</strong>Microsoft Learn 真实产品 UI。它展示的是 Data Agent 创建/测试面，而不是 Microsoft 365 中的最终消费入口。<br><a href="https://learn.microsoft.com/en-us/fabric/data-science/how-to-create-data-agent" target="_blank" rel="noreferrer">官方创建文档与原图</a></figcaption></figure>
+          <div class="vendor-copy">
+            <h3>用户从哪里进去</h3><p>数据团队在 Fabric 工作区创建 Agent、绑定数据源、配置指令、测试并发布；业务用户可在 Fabric 中使用，也可经 Agent Store / Microsoft 365 Copilot 分发。两层入口是 Microsoft 的真实设计，不应误读为一个 Fabric 聊天首页。</p>
+            <div class="journey"><span class="step">Fabric Workspace</span><span class="arrow">→</span><span class="step">Data Agent + 数据源</span><span class="arrow">→</span><span class="step">测试/发布</span><span class="arrow">→</span><span class="step">M365 Copilot / Agent Store</span><span class="arrow">→</span><span class="step">只读回答</span></div>
+            <h3>强弱判断</h3><div class="judgement"><div class="judge"><strong>强项</strong>Entra OBO、RBAC、Purview 审计与 M365 分发是独特组合；用户无需迁移到另一个陌生工作台，是“第三方/上层 Agent 做入口”的强样本。</div><div class="judge gap"><strong>残差</strong>Fabric Data Agent 当前以只读为主，并有结果尺寸、语言、数据类型等限制；Fabric、Foundry、Copilot Studio 等多 orchestrator 下的答案与授权一致性仍是风险。</div><div class="judge watch"><strong>看图后的判断</strong>作者界面清楚、可发布，但它本身不证明统一消费体验。Microsoft 的强项要在 M365 里判断，而不是拿这张 Fabric UI 与 Genie One 首页机械比较。</div></div>
+            <div class="media-row"><a class="media-link" href="https://www.youtube.com/watch?v=5hPVjbV2bRU" target="_blank" rel="noreferrer">▶ 官方非结构化数据 Demo</a><a class="media-link" href="https://community.fabric.microsoft.com/t5/Fabric-Updates-Blog/What-s-New-for-Fabric-Data-Agents-at-Ignite-2025-Unlocking/ba-p/5172488" target="_blank" rel="noreferrer">↗ 官方视频与发布说明</a></div>
+            <details class="video"><summary>▶ 在本页播放 Microsoft 官方 Demo</summary><div class="video-frame"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/5hPVjbV2bRU" title="Microsoft Fabric Data Agent official demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div></details>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="vendor-section" id="alibaba">
+      <article class="vendor-shell">
+        <header class="vendor-head"><div class="rank">06</div><div class="vendor-title"><h2>阿里云 · Quick BI + DataWorks Data Agent</h2><p>业务消费面有智能小Q；数据建设面已出现对话式接入、ChatDB 与治理 Agent，覆盖范围明显不再局限于问数。</p></div><div class="vendor-score"><span class="score">81.8 / 100</span><span class="status">动量 9.5</span><span class="status">±5</span></div></header>
+        <div class="vendor-grid">
+          <figure class="shot"><div class="shot-stage"><img src="./assets/vendor-entry/alibaba-quick-bi-smartq.png" alt="阿里云 Quick BI 智能小Q官方首页，顶部一级入口，中间统一输入框和小Q问数、解读、报告、搭建、搜索模式"></div><figcaption><strong>素材性质：</strong>阿里云帮助中心真实产品 UI。红框为官方文档标注，显示“智能小Q”作为 Quick BI 顶部一级入口。<br><a href="https://help.aliyun.com/zh/quick-bi/user-guide/smart-q-home-page" target="_blank" rel="noreferrer">官方入口文档与原图</a></figcaption></figure>
+          <div class="vendor-copy">
+            <h3>用户从哪里进去</h3><p>业务消费从 Quick BI 顶部“智能小Q”进入；数据建设则从 DataWorks AI Native / Data Agent 进入。最新官方 DI Agent 文档明确把单表/整库、离线/实时同步做成自然语言任务，并提供 ChatDB 与多模态 ETL；治理 Agent 位于 DataWorks 治理场景。公开资料仍未证明这些入口共享同一 Session、OBO 与 Trace。</p>
+            <div class="journey"><span class="step">智能小Q / Data Agent</span><span class="arrow">→</span><span class="step">消费问题或数据任务</span><span class="arrow">→</span><span class="step">数据集 / 数据源 / 治理上下文</span><span class="arrow">→</span><span class="step">答案 / Pipeline / 治理计划</span><span class="arrow">→</span><span class="step">确认 / Skill / CLI / DMS</span></div>
+            <h3>数据建设与管理面</h3><p>DI Agent 官方说明可自动探测 Schema、字段映射、资源和调度，展示表清单与配置摘要后发布；还可画像已接数据源、预览样例、建库建表和修改结构。Data Governance Agent 可扫描、生成治理方案与 SQL Diff，用户确认后修复并复检。能力很激进，但写操作必须额外验证最小权限、影响分析、幂等和权威后验。</p>
+            <h3>强弱判断</h3><div class="judgement"><div class="judge"><strong>强项</strong>中文业务入口完成度高；DataWorks 已把接入/开发/治理任务显性 Agent 化，Quick BI v6.2 又提供外部 Skill/CLI，DMS MCP 覆盖数据库工单与审批。</div><div class="judge gap"><strong>残差</strong>Quick BI、DataWorks 与 DMS 仍是多条产品线。公开资料没有证明它们共享同一最终用户委托、语义对象、策略决策 ID 和端到端 trace；连接器“80+”也不等于每种源/动作同等成熟。</div><div class="judge watch"><strong>修正后的判断</strong>阿里在“对话建接入/治理任务”的显性程度已构成直接追赶压力；华为要领先，必须把消费、建设和 DB 证据做成同一线程，而不是复制三个入口。</div></div>
+            <div class="media-row"><a class="media-link" href="https://help.aliyun.com/zh/quick-bi/videos/smartq" target="_blank" rel="noreferrer">▶ 官方智能问数/搭建实操视频</a><a class="media-link" href="https://help.aliyun.com/zh/dataworks/user-guide/introduction-to-data-integration-and-ai-native-capabilities" target="_blank" rel="noreferrer">↗ DataWorks DI Agent</a><a class="media-link" href="https://help.aliyun.com/zh/dataworks/user-guide/data-governance-agent" target="_blank" rel="noreferrer">↗ 数据治理 Agent</a></div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="vendor-section" id="tencent">
+      <article class="vendor-shell">
+        <header class="vendor-head"><div class="rank">07</div><div class="vendor-title"><h2>腾讯云 · DataBuddy</h2><p>方向最激进的国内新入口：不是给旧数据平台加一个问数框，而是把工程、治理、分析都声明为“对话即交付”。</p></div><div class="vendor-score"><span class="score">79.6 / 100</span><span class="status">动量 9.8</span><span class="status">±7</span></div></header>
+        <div class="vendor-grid">
+          <figure class="shot"><div class="shot-stage"><img src="./assets/vendor-entry/tencent-databuddy.webp" alt="腾讯云 DataBuddy 官方界面，左侧任务、数据、知识库、SQL分析、治理等入口，中间自然语言任务框和 Skills"></div><figcaption><strong>素材性质：</strong>腾讯云大数据团队在腾讯云开发者社区发布的真实产品 UI；产品官网与文档同时确认 DataBuddy 定位。<br><a href="https://cloud.tencent.com/developer/article/2672626" target="_blank" rel="noreferrer">官方团队文章与原图</a> · <a href="https://cloud.tencent.com/product/databuddy" target="_blank" rel="noreferrer">产品页</a></figcaption></figure>
+          <div class="vendor-copy">
+            <h3>用户从哪里进去</h3><p>用户进入 DataBuddy 工作空间，从首页直接描述任务；侧栏把数据、知识库、任务开发、工作流、SQL 分析、仪表盘、治理、模型与服务放在同一壳层，输入框可选择 Agent、模型与 Skills。</p>
+            <div class="journey"><span class="step">DataBuddy Workspace</span><span class="arrow">→</span><span class="step">自然语言任务</span><span class="arrow">→</span><span class="step">Agent + Skills</span><span class="arrow">→</span><span class="step">SQL/工程/治理/分析</span><span class="arrow">→</span><span class="step">报告/发布/人把关</span></div>
+            <h3>强弱判断</h3><div class="judgement"><div class="judge"><strong>强项</strong>官网将统一元数据、语义层、细粒度权限、MCP 和三类 Agent 组合在一起；DatabaseClaw 又公开 OBO 强绑定、独立 AI role、L1–L4 风险等级与审计。</div><div class="judge gap"><strong>残差</strong>产品在 2026-08 基准日前后刚发布，官网架构、FAQ 与 UI 截图的证据密度高于规模化客户、区域、Edition、SLA、回归评测和持续运营证据。</div><div class="judge watch"><strong>看图后的判断</strong>它的产品形态比华为当前公开组合更接近目标终局，但 ±7 的不确定度意味着不能把“发布得新、讲得完整”直接等价成“已经比成熟产品稳定”。</div></div>
+            <div class="media-row"><a class="media-link" href="https://cloud.tencent.com/document/product/1835/135576" target="_blank" rel="noreferrer">↗ 官方产品概述</a><a class="media-link" href="https://cloud.tencent.com/document/product/1835/135597" target="_blank" rel="noreferrer">↗ 权限/计费/安全 FAQ</a></div>
+            <ul class="source-list"><li>视频状态：截至基准日未确认到与当前 DataBuddy 入口一一对应的官方产品演示视频；未用媒体或第三方录屏替代。</li></ul>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="vendor-section" id="oracle">
+      <article class="vendor-shell">
+        <header class="vendor-head"><div class="rank">08</div><div class="vendor-title"><h2>Oracle · Analytics AI Agent</h2><p>入口并不最统一，但它在“外部 Agent 如何以最终用户身份安全进入数据库”这个子问题上是关键标杆。</p></div><div class="vendor-score"><span class="score">79.0 / 100</span><span class="status">动量 8.7</span><span class="status">±5</span></div></header>
+        <div class="vendor-grid">
+          <figure class="shot"><div class="shot-stage"><img src="./assets/vendor-entry/oracle-analytics-ai-agent.png" alt="Oracle Analytics Cloud 新建 AI Agent 官方配置界面，包含数据字段、补充指令、首条消息、主题与知识文档"></div><figcaption><strong>素材性质：</strong>Oracle 官方文档真实作者 UI，展示 AI Agent 配置面；消费者端位于 Workbook Assistant 或独立 Agent 体验，由下方官方视频补足。<br><a href="https://docs.oracle.com/en/cloud/paas/analytics-cloud/acubi/create-oracle-analytics-ai-agent.html" target="_blank" rel="noreferrer">官方创建文档与原图</a></figcaption></figure>
+          <div class="vendor-copy">
+            <h3>用户从哪里进去</h3><p>作者在 OAC 中为 Agent 绑定数据集、补充指令、首条消息与知识文档，再把 Agent 加到 Workbook；消费者在 Workbook Insights/Assistant 中使用，也可独立使用。Select AI、Database Tools MCP 与 OAC 仍是多个入口面。</p>
+            <div class="journey"><span class="step">OAC 创建 Agent</span><span class="arrow">→</span><span class="step">数据集/指令/文档</span><span class="arrow">→</span><span class="step">Workbook / standalone</span><span class="arrow">→</span><span class="step">自然语言分析</span><span class="arrow">→</span><span class="step">DB Tools / A2A</span></div>
+            <h3>强弱判断</h3><div class="judgement"><div class="judge"><strong>强项</strong>Oracle Database Tools MCP 的短期 OBO 可把最终用户身份带到数据库，并由数据库实施行、列、单元级安全；这是判断外部 Agent 数据授权的高价值参考。</div><div class="judge gap"><strong>残差</strong>OAC、Select AI、Database Tools 与 AI Data Platform 的入口、Agent 生命周期、路由、版本、评测和 trace 尚未形成 Snowflake 式的统一公开证据。</div><div class="judge watch"><strong>看图后的判断</strong>截图本身看起来不如 Genie One 统一，但不能因此低估 Oracle 的深层数据库授权；“入口漂亮”和“数据源最终授权强”是两个维度。</div></div>
+            <div class="media-row"><a class="media-link" href="https://www.youtube.com/watch?v=FYg5mGs7-IE" target="_blank" rel="noreferrer">▶ Oracle 官方消费者端 Demo（2026-05）</a><a class="media-link" href="https://docs.oracle.com/en/cloud/paas/analytics-cloud/acubi/oracle-analytics-ai-agents.html" target="_blank" rel="noreferrer">↗ Agent 机制文档</a></div>
+            <details class="video"><summary>▶ 在本页播放 Oracle 官方 Demo</summary><div class="video-frame"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/FYg5mGs7-IE" title="Oracle Analytics AI Agents consumer demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div></details>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="vendor-section" id="volcano">
+      <article class="vendor-shell">
+        <header class="vendor-head"><div class="rank">09</div><div class="vendor-title"><h2>火山引擎 · Data Agent</h2><p>专注数据分析与深度研究：入口已很像通用 Agent，但产品强项仍集中在分析、报告和嵌入。</p></div><div class="vendor-score"><span class="score">68.6 / 100</span><span class="status">动量 7.8</span><span class="status">±6</span></div></header>
+        <div class="vendor-grid">
+          <figure class="shot"><div class="shot-stage"><img src="./assets/vendor-entry/volcano-data-agent.png" alt="火山引擎 Data Agent 官方对话入口，包含研究模式、联网、拓展和附件"></div><figcaption><strong>素材性质：</strong>火山引擎官方快速入门真实产品 UI。输入框下直接提供研究模式、联网、拓展与附件。<br><a href="https://www.volcengine.com/docs/85637/1783727?lang=zh" target="_blank" rel="noreferrer">官方快速入门与原图</a></figcaption></figure>
+          <div class="vendor-copy">
+            <h3>用户从哪里进去</h3><p>购买服务并进入数据智能体后，用户选择/创建项目，进入 Data Agent 对话页。通用 Agent 可切换研究、联网、拓展与文件输入；配置后的智能分析 Agent 可做问数、归因、深度研究并生成网页/文档报告。</p>
+            <div class="journey"><span class="step">数据智能体项目</span><span class="arrow">→</span><span class="step">Data Agent 对话</span><span class="arrow">→</span><span class="step">研究/联网/拓展</span><span class="arrow">→</span><span class="step">SQL/Python/知识</span><span class="arrow">→</span><span class="step">网页/文档报告</span></div>
+            <h3>强弱判断</h3><div class="judgement"><div class="judge"><strong>强项</strong>多数据集、语义模型、深度研究、步骤干预、报告编辑、JWT/iframe 嵌入与运营评测形成较完整的分析产品面。</div><div class="judge gap"><strong>残差</strong>分析面内的逐工具策略、最终用户 OBO、安全动作、Agent/语义/策略版本联动及数据库原生治理公开证据较弱。</div><div class="judge watch"><strong>看图后的判断</strong>首页形态与领先者相似，但“有研究/拓展按钮”不能直接证明跨系统受控动作。它更像高深度分析 Agent，而不是完整企业工作 Agent。</div></div>
+            <div class="media-row"><a class="media-link" href="https://developer.volcengine.com/videos/set/7552801541149687846" target="_blank" rel="noreferrer">▶ 官方 Data Agent 系列课程</a><a class="media-link" href="https://www.volcengine.com/product/AnalyticsAgent" target="_blank" rel="noreferrer">↗ 官方产品页</a></div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="vendor-section" id="huawei">
+      <article class="vendor-shell">
+        <header class="vendor-head"><div class="rank">10</div><div class="vendor-title"><h2>华为云 · DataArts Insight 智能分析助手</h2><p>真实问答入口已经存在；差距不在“有没有聊天框”，而在它能否成为 DataArts、AgentArts 与数据库共同的统一任务壳层。</p></div><div class="vendor-score"><span class="score">67.6 / 100</span><span class="status">动量 9.0</span><span class="status">±6</span></div></header>
+        <div class="vendor-grid">
+          <figure class="shot"><div class="shot-stage"><img src="./assets/vendor-entry/huawei-dataarts-insight-assistant.png" alt="华为云 DataArts Insight 智能分析助手官方问答首页，中央欢迎语和底部提问框"></div><figcaption><strong>素材性质：</strong>华为云官方快速入门真实产品 UI，使用官方文档图片原件；不是账号实测。<br><a href="https://support.huaweicloud.com/qs-dataartsinsight/dataartsinsight_02_0007.html" target="_blank" rel="noreferrer">官方快速入门与原图</a></figcaption></figure>
+          <div class="vendor-copy">
+            <h3>用户从哪里进去</h3><p>用户先购买 DataArts Insight 企业版并申请智能分析助手公测开通，再创建项目、连接数据源、建数据集、创建并同步助手，最后从“数据分析 → 智能分析助手 → 问答”进入。它目前是项目内 BI 旅程，不是跨产品统一首页。</p>
+            <div class="journey"><span class="step">Insight 企业版/公测</span><span class="arrow">→</span><span class="step">项目 + 数据源</span><span class="arrow">→</span><span class="step">数据集 + 助手</span><span class="arrow">→</span><span class="step">问答</span><span class="arrow">→</span><span class="step">图表/见解</span></div>
+            <h3>强弱判断</h3><div class="judgement"><div class="judge"><strong>已经具备</strong>自然语言问数、图表与智能见解；产品介绍还公开评测管理与 BadCase。AgentArts 另有 Gateway、API→MCP、认证、Trace/Eval/版本回流，DAS/DWS 也有数据库 Agent/MCP 组件。</div><div class="judge gap"><strong>核心差距</strong>公开资料没有证明同一用户身份、指标/语义 ID、工具策略、Task/Artifact、Trace 和动作生命周期贯穿 Insight、Studio、AgentArts 与数据库。组件存在不能当作集成已完成。</div><div class="judge watch"><strong>看图后的判断</strong>当前页面视觉上比 Genie One 更“纯聊天”，但入口更窄、前置步骤更多。优先级应是贯通治理与委托控制面，而不是再造一个更漂亮的聊天首页。</div></div>
+            <div class="media-row"><a class="media-link" href="https://support.huaweicloud.com/dataartsinsight_video/index.html" target="_blank" rel="noreferrer">▶ 官方“使用智能分析助手”视频（02:24）</a><a class="media-link" href="https://support.huaweicloud.com/productdesc-dataartsinsight/02-%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D-HC-%E5%AE%A2%E6%BB%A1-pdf.pdf" target="_blank" rel="noreferrer">↗ 2026 产品介绍</a></div>
+            <ul class="source-list"><li>状态边界：官方快速入门和 FAQ 均明确智能分析助手为公测/需开通，且依赖 DataArts Insight 企业版。</li><li>本组合分 67.6；DataArts 直接用户旅程诊断分为 57.6±7。两者不可混用。</li></ul>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="vendor-section" id="baidu">
+      <article class="vendor-shell">
+        <header class="vendor-head"><div class="rank">11</div><div class="vendor-title"><h2>百度智能云 · DataBuilder Data Agent</h2><p>官网方向与目标高度吻合，但公开材料尚不足以判断真实入口、治理深度和生产成熟度。</p></div><div class="vendor-score"><span class="score">62.9 / 100</span><span class="status">动量 7.5</span><span class="status">±9</span></div></header>
+        <div class="vendor-grid">
+          <figure class="shot"><div class="shot-stage"><img src="./assets/vendor-entry/baidu-databuilder-data-agent.png" alt="百度智能云 DataBuilder 官网 Data Agent 能力概念图，展示多层上下文、专业工具、人机协同、企业级可信与分析、探索、结果、经验能力"></div><figcaption><strong>素材性质：</strong><span class="badge concept">官网概念图，不是真实控制台</span>。它只能证明产品方向，不能与其他厂商的实际问答 UI 等价比较。<br><a href="https://cloud.baidu.com/product/databuilder" target="_blank" rel="noreferrer">官方产品页与原图</a></figcaption></figure>
+          <div class="vendor-copy">
+            <h3>用户从哪里进去</h3><p><strong>Unknown。</strong>公开官网强调 Data Agent 的多层上下文、专业工具、人机协同、企业级可信和经验复用，但截至基准日未找到能复核真实对话首页、首次任务路径、Agent API/MCP、最终用户委托与评测运营的当前官方材料。</p>
+            <div class="journey"><span class="step">DataBuilder 产品方向</span><span class="arrow">→</span><span class="step">真实入口 Unknown</span><span class="arrow">→</span><span class="step">首次任务 Unknown</span><span class="arrow">→</span><span class="step">授权/评测 Unknown</span></div>
+            <h3>强弱判断</h3><div class="judgement"><div class="judge"><strong>可确认方向</strong>官网叙事包含上下文、专业工具、人机协同和可信结果，概念上与“Agent 主入口 + 治理底座”吻合。</div><div class="judge gap"><strong>不能确认</strong>真实 UI、GA/Preview、区域/Edition、API/MCP、OBO、行列权限、版本、Trace、评测与客户规模。</div><div class="judge watch"><strong>如何读低分</strong>62.9 主要是证据惩罚，不是确认能力缺失；±9 是全榜最大不确定度。只有账号实测或更完整官方文档才能显著改变排序。</div></div>
+            <div class="media-row"><a class="media-link" href="https://cloud.baidu.com/doc/DataBuilder/s/tm99rrn2e" target="_blank" rel="noreferrer">↗ DataBuilder 官方文档入口</a><a class="media-link" href="https://cloud.baidu.com/video-center/index.html" target="_blank" rel="noreferrer">↗ 官方视频中心（未找到对应产品演示）</a></div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="closing">
+      <h2>能力详册给出的最终判断</h2>
+      <p>你的主方向判断成立，但需要从“入口统一”进一步收紧为“受治理的任务闭环统一”：对话页会成为主意图入口，API/CLI/MCP 会成为 Agent 能力面；真正决定厂商强弱的是数据如何接入、业务语义和可信逻辑由谁准备、最终用户权限是否实施到底、复杂任务能否形成可核验结果，以及失败案例能否进入版本化回归。Snowflake/Databricks 的优势是准备工作可沉淀为可复用的质量保障对象；AWS/Google 的优势是缩短用户抵达数据和任务的路径；华为当前最需要补的不是第二个聊天框，而是降低指标预计算、宽表准备等客户负担，并贯通 DataArts、AgentArts 与数据库的共享身份、语义、策略和执行链路。</p>
+      <p><a href="./agent-entry-governance-visual-report.html#capability-gap">返回主报告看能力摘要</a> · <a href="./agent-entry-governance-deep-dive.md#3b-细粒度能力全集数据源与接入方式前置准备与责任边界">阅读文字版方法</a> · <a href="./agent-entry-evidence-ledger.md">复核证据账本</a></p>
+    </section>
+  </main>
+
+  <footer>公开资料独立探索 · 信息基准日 2026-08-19 · 所有截图版权归相应厂商 · 未进行云账号写操作或付费开通</footer>
+  <script src="./assets/capability-comparison.js"></script>
+  <script>
+    const links = [...document.querySelectorAll('.vendor-nav a')];
+    const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+    const observer = new IntersectionObserver(entries => {
+      const hit = entries.filter(e => e.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!hit) return;
+      links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + hit.target.id));
+    }, { rootMargin: '-20% 0px -65% 0px', threshold: [0, .2, .6] });
+    sections.forEach(s => observer.observe(s));
+  </script>
+</body>
+</html>
