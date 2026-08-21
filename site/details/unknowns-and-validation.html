@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="华为产品决策 Unknown 与验证合同">
-  <title>华为产品决策 Unknown 与验证合同</title>
+  <meta name="description" content="还不知道什么，以及怎样验证">
+  <title>还不知道什么，以及怎样验证</title>
   <link rel="stylesheet" href="../styles.css">
   <link rel="stylesheet" href="../details.css">
 </head>
@@ -15,14 +15,51 @@
       <a href="../index.html">数据智能决策首页</a>
     </nav>
     <div class="shell detail-heading">
-      <p class="eyebrow">UNKNOWNS &amp; VALIDATION</p>
-      <h1>华为产品决策 Unknown 与验证合同</h1>
-      <p>这是完整研究层；演示页保持精简，证据、边界、步骤和来源在这里展开。</p>
+      <p class="eyebrow">待验证问题</p>
+      <h1>还不知道什么，以及怎样验证</h1>
+      <p>这里记录尚不能确认的能力、需要什么证据，以及未通过检查时应当怎样停止。</p>
     </div>
   </header>
   <main class="shell detail-layout">
     <article class="markdown-body">
-<h1>Unknown 与后续验证协议</h1>
+<p>本文保留英文 <code>Unknown</code>，表示“现有证据不足，必须继续验证”，不表示“产品没有这项能力”。<code>Gate</code> 表示决策关口：只有拿到指定证据，方案才能继续。</p>
+<h2>怎么使用这份文档</h2>
+<p>不要从 25 项 Unknown 逐条开始读。先根据当前要做的决定选择 Gate：</p>
+<table>
+<thead>
+<tr>
+<th>你要做的决定</th>
+<th>先执行</th>
+<th>通过后才能说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>现有 DataArts 骨架是否值得直接增强</td>
+<td>G1 产品骨架与对象贯通</td>
+<td>数据、目录、语义和版本能否跨产品复用</td>
+</tr>
+<tr>
+<td>统一入口是否能安全对外</td>
+<td>G2 身份、权限与入口一致性</td>
+<td>UI、API、嵌入和外部 Agent 是否遵守同一权限</td>
+</tr>
+<tr>
+<td>问数能力能否成为生产产品</td>
+<td>G3 正确性与持续运营</td>
+<td>答案能否回归、发现失败并持续修复</td>
+</tr>
+<tr>
+<td>数据库能力能否开放给 Agent</td>
+<td>G4 数据库调查与动作安全</td>
+<td>只读调查和少量动作是否有预算、审批、审计与后置验证</td>
+</tr>
+<tr>
+<td>应由哪个产品和团队承载</td>
+<td>G5 商业、运营与客户付费</td>
+<td>谁愿意付费、谁负责 SLO、哪种归属能规模运营</td>
+</tr>
+</tbody></table>
+<p>任何 Gate 未通过时，都保留 <code>Unknown</code>。营销材料、其他 Region 的截图或模型自报成功都不能代替通过证据。</p>
 <h2>当前验证边界</h2>
 <p>本轮尚无经授权的华为云、Databricks 或其他厂商账号级控制台验证。因此，公开页面之外的可见菜单、实际权限继承、端到端成功率、区域/Edition 可用性、配额、账单、性能、失败行为与支持流程均不能标记为“实际观察”。</p>
 <h2>1. 决策相关 Unknown</h2>
@@ -395,7 +432,7 @@ Owner 与下一验证：
   </main>
   <footer>
     <div class="shell footer-content">
-      <div><strong>华为产品决策 Unknown 与验证合同</strong><p>由项目内 Markdown 源文件生成；UTF-8 静态页面，可离线阅读。</p></div>
+      <div><strong>还不知道什么，以及怎样验证</strong><p>由项目内 Markdown 源文件生成；UTF-8 静态页面，可离线阅读。</p></div>
       <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">返回顶部 ↑</a>
     </div>
   </footer>

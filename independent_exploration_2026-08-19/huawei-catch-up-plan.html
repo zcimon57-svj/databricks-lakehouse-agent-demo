@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="华为云能力目标驱动、Conversation-first、Harness-first 的 Data Intelligence 方案：以统一对话 Agent 承载问数、分析、知识构建、数据库洞察与安全行动，再比较两种组织路线。">
-  <title>华为云统一对话 Agent｜能力目标与两种领先产品方案</title>
+  <meta name="description" content="从一条客户数据任务出发，说明华为云数据智能产品的能力边界、两种建设方案、验证条件与技术实现。">
+  <title>华为云数据智能产品方案｜先跑通客户任务</title>
   <style>
     :root {
       --ink: #14231f;
@@ -71,6 +71,18 @@
     .notice { margin-top: 18px; border: 1px solid rgba(183,139,40,.3); background: rgba(255,248,220,.74); border-radius: 14px; padding: 12px 15px; color: #6f5a23; font-size: 13px; }
     .view-status { display:inline-flex; align-items:center; gap:7px; margin-top:14px; padding:7px 11px; border-radius:999px; color:var(--green); background:#dff3eb; font-size:12px; font-weight:800; }
     .view-status::before { content:""; width:7px; height:7px; border-radius:50%; background:var(--green-2); }
+    .reader-story { scroll-margin-top:90px; display:grid; grid-template-columns:.82fr 1.18fr; gap:14px; margin-top:28px; }
+    .story-question, .story-result { padding:20px; border:1px solid var(--line); border-radius:19px; background:rgba(255,255,255,.76); box-shadow:var(--shadow); }
+    .story-question small, .story-result small { display:block; color:var(--green); font-size:11px; font-weight:900; letter-spacing:.08em; text-transform:uppercase; }
+    .story-question strong { display:block; margin:8px 0; font-size:clamp(19px,2.2vw,27px); line-height:1.25; }
+    .story-question p, .story-result p { margin:0; color:var(--muted); font-size:13px; }
+    .story-flow { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:12px; }
+    .story-step { position:relative; min-height:92px; padding:12px; border:1px solid var(--line); border-radius:14px; background:rgba(255,255,255,.72); }
+    .story-step:not(:last-child)::after { content:"→"; position:absolute; right:-8px; top:34px; z-index:2; color:var(--orange); font-weight:900; }
+    .story-step b { display:block; margin-bottom:4px; font-size:12px; }
+    .story-step span { display:block; color:var(--muted); font-size:10px; line-height:1.45; }
+    .story-boundaries { display:flex; flex-wrap:wrap; gap:6px; margin-top:11px; }
+    .story-boundaries span { padding:5px 8px; border-radius:8px; color:#7d432e; background:#fff0e8; font-size:10px; font-weight:800; }
     .goal-thesis { display:grid; grid-template-columns:1.15fr .85fr; gap:20px; padding:30px; border-radius:26px; color:white; background:linear-gradient(135deg,#102923,#174c3f); box-shadow:var(--shadow); }
     .goal-thesis h3 { margin:10px 0; font-size:clamp(26px,3vw,40px); }
     .goal-thesis p { margin:0; color:rgba(255,255,255,.72); }
@@ -280,6 +292,21 @@
     .atomic-details > summary::after { content:"展开 88 项 ↓"; color:var(--green); font-size:11px; white-space:nowrap; }
     .atomic-details[open] > summary::after { content:"收起 ↑"; }
     .atomic-details > summary span { color:var(--muted); font-size:11px; font-weight:500; }
+    .expert-details { margin:28px 0 10px; border:1px solid var(--line); border-radius:18px; background:rgba(255,255,255,.68); overflow:hidden; }
+    .expert-details > summary { padding:15px 18px; cursor:pointer; list-style:none; color:var(--ink); font-weight:850; }
+    .expert-details > summary::-webkit-details-marker { display:none; }
+    .expert-details > summary::after { content:"展开方法与分数 ↓"; float:right; color:var(--green); font-size:11px; }
+    .expert-details[open] > summary::after { content:"收起 ↑"; }
+    .expert-details > .expert-body { padding:0 18px 18px; border-top:1px solid var(--line); }
+    .technical-appendix { border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:rgba(232,240,236,.54); }
+    .technical-appendix > summary { padding:26px 0; cursor:pointer; list-style:none; background:rgba(255,255,255,.66); }
+    .technical-appendix > summary::-webkit-details-marker { display:none; }
+    .technical-appendix > summary .wrap { display:flex; justify-content:space-between; gap:24px; align-items:center; }
+    .technical-appendix > summary small { display:block; color:var(--green); font-weight:850; letter-spacing:.08em; text-transform:uppercase; }
+    .technical-appendix > summary b { display:block; margin-top:5px; font-size:clamp(21px,2.6vw,34px); }
+    .technical-appendix > summary span { display:block; max-width:760px; margin-top:5px; color:var(--muted); font-size:13px; }
+    .technical-appendix > summary .wrap::after { content:"展开 7 个技术章节 ↓"; flex:0 0 auto; padding:8px 11px; border:1px solid var(--line); border-radius:999px; background:#fff; color:var(--green); font-size:11px; font-weight:850; }
+    .technical-appendix[open] > summary .wrap::after { content:"收起技术章节 ↑"; }
     .atomic-content { padding:0 18px 18px; border-top:1px solid var(--line); }
     .atomic-content .tool-toolbar { margin-top:16px; }
     .filters { display:flex; flex-wrap:wrap; gap:7px; }
@@ -411,7 +438,7 @@
     footer { border-top:1px solid var(--line); padding:26px 0 42px; color:var(--muted); font-size:12px; }
     footer .wrap { display:flex; justify-content:space-between; gap:18px; flex-wrap:wrap; }
     @media (max-width: 980px) {
-      .hero-copy, .section-head, .verdict-grid, .ecs-layout, .protocol-grid, .accuracy-grid, .asset-layout, .plan-detail-grid, .goal-thesis, .contract-layout, .capability-hero { grid-template-columns:1fr; }
+      .hero-copy, .section-head, .verdict-grid, .ecs-layout, .protocol-grid, .accuracy-grid, .asset-layout, .plan-detail-grid, .goal-thesis, .contract-layout, .capability-hero, .reader-story { grid-template-columns:1fr; }
       .metric-grid, .ownership-grid { grid-template-columns:repeat(2,1fr); }
       .harness-grid { grid-template-columns:repeat(2,1fr); }
       .nl-flow { grid-template-columns:repeat(3,1fr); }
@@ -435,6 +462,8 @@
       .top-links .mini-link:first-child { display:none; }
       .hero { padding-top:58px; }
       h1 { font-size:48px; }
+      .story-flow { grid-template-columns:1fr 1fr; }
+      .story-step:not(:last-child)::after { display:none; }
       .metric-grid, .harness-grid, .ownership-grid, .mode-grid, .responsibility, .responsibility-split, .route-grid, .timeline, .unknown-grid, .sources, .artifact-grid, .specific-grid, .goal-grid, .job-grid, .horizon-grid, .capability-grid, .priority-lanes, .sentence-grid, .prototype-gallery { grid-template-columns:1fr; }
       .prototype-lead { grid-template-columns:1fr; }
       .bakeoff { grid-template-columns:1fr; gap:8px; }
@@ -458,6 +487,7 @@
       .decision-strip { grid-template-columns:1fr; }
       .decision-or { min-height:18px; }
       .selection-item { grid-template-columns:1fr; gap:3px; }
+      .technical-appendix > summary .wrap { align-items:flex-start; flex-direction:column; }
       section { padding:48px 0; }
       .panel { padding:19px; }
       th,td { padding:9px 10px; }
@@ -468,31 +498,35 @@
 <body data-route="all">
   <header class="topbar">
     <div class="wrap">
-      <div class="brand"><span class="brand-mark">DI</span><span>领先产品方案</span></div>
+      <div class="brand"><span class="brand-mark">DI</span><span>数据智能产品方案</span></div>
       <nav aria-label="页面导航">
-        <a href="#goals">能力目标</a><a href="#data-plane">数据建设</a><a href="#schemes">方案对比</a><a href="#product-ui">对话画册</a><a class="scope-company" href="#company-architecture">方案一</a><a class="scope-db" href="#db-architecture">方案二</a><a href="#shared-modules">共用模块</a><a href="#roadmap">路线图</a><a href="#evidence">证据</a><a href="#tools">原子附录</a>
+        <a href="#customer-task">客户任务</a><a href="#goals">能力目标</a><a href="#data-plane">数据建设</a><a href="#schemes">方案对比</a><a href="#product-ui">回答示例</a><a class="scope-company" href="#company-architecture">方案一</a><a class="scope-db" href="#db-architecture">方案二</a><a href="#roadmap">路线</a><a href="#evidence">证据</a><a href="#technical-appendix">实现附录</a>
       </nav>
       <div class="global-view" aria-label="全篇方案视图"><span>全篇</span><button class="route-btn active" type="button" data-route-btn="all">双方案</button><button class="route-btn" type="button" data-route-btn="company">方案一</button><button class="route-btn" type="button" data-route-btn="db">方案二</button></div>
-      <div class="top-links"><a class="mini-link" href="./agent-entry-governance-visual-report.html">竞品主报告</a><a class="mini-link" href="../site/details/huawei-catch-up-product-plan.html">完整文档 HTML</a></div>
+      <div class="top-links"><a class="mini-link" href="../site/details/independent-reader-guide.html">先看读者指南</a><a class="mini-link" href="../site/details/huawei-catch-up-product-plan.html">完整文档</a></div>
     </div>
   </header>
 
   <main>
     <div class="hero wrap">
-      <div class="eyebrow">Conversation-first · Capability-first · Harness-first · 2026-08-20</div>
-      <h1 id="heroTitle">先定要做成哪些产品能力，<br>再选两种架构。</h1>
+      <div class="eyebrow">客户任务优先 · 两种建设方案 · 设计建议 · 2026-08-20</div>
+      <h1 id="heroTitle">先跑通一条客户任务，<br>再决定由谁建设、怎样实现。</h1>
       <div class="hero-copy">
-        <p id="heroCopy">产品首先要回答“用户能用一句话做成什么、先做哪几件”。首期串起数据接入与资产化、智能问数与分析、数据知识构建、数据库洞察，再比较公司级协作与数据库绿地两套承载方案。</p>
-        <div class="hero-callout"><strong id="heroCalloutTitle">当前建议</strong><span id="heroCallout">技术按数据库绿地方案立即启动；组织给公司协作方案 2–4 周 Gate。条件成立时，同一代码直接升格，不推倒重来。</span></div>
+        <p id="heroCopy">经营负责人问“退款率为什么上升”时，产品要负责找到数据、确认口径、完成分析并交付证据；缺数据、无权限或涉及动作时，也要清楚说明下一步。</p>
+        <div class="hero-callout"><strong id="heroCalloutTitle">当前建议</strong><span id="heroCallout">先由小队做低依赖样例，同时用 2–4 周验证公司级 Owner、接口和发布条件。条件成立就升级为公司协作方案；不成立也不丢掉已经验证的闭环。</span></div>
       </div>
       <div class="view-status" id="viewStatus" aria-live="polite">当前显示：两种方案及全部对比</div>
-      <div class="metric-grid">
-        <div class="metric"><b>4 主线</b><span>接入资产、问数分析、数据知识、数据库洞察</span></div>
-        <div class="metric"><b>10 回答</b><span>接入、导入、资产、治理，以及六类使用/运维回答</span></div>
-        <div class="metric"><b>C0–C7</b><span>接入准备、问数、分析、知识、DB、治理、行动、主动</span></div>
-        <div class="metric"><b id="deploymentMetric">2 方案</b><span id="deploymentMetricText">同一能力组合的两种承载方式</span></div>
+      <div class="reader-story" id="customer-task">
+        <div class="story-question"><small>一条示例任务</small><strong>“最近 30 天华东退款率为什么上升？排除订单规模影响。”</strong><p>今天这类问题常跨业务、数据与数据库团队。目标产品要减少交接，但不能省略权限、口径和证据。</p></div>
+        <div class="story-result"><small>产品应怎样完成</small><div class="story-flow"><div class="story-step"><b>1 · 找到上下文</b><span>识别用户、数据、指标和比较周期</span></div><div class="story-step"><b>2 · 先处理歧义</b><span>口径不清先追问，无权限明确拒绝</span></div><div class="story-step"><b>3 · 查询与分析</b><span>保留 SQL、参数、数据版本和查询 ID</span></div><div class="story-step"><b>4 · 交付结果</b><span>表图、事实、候选解释、Unknown 和证据</span></div></div><div class="story-boundaries"><span>相关性不冒充根因</span><span>未审批不执行动作</span><span>权威系统验证完成</span></div></div>
       </div>
-      <div class="notice">所有分数、期限和阈值均为设计建议，不是华为云现状或交付承诺；公开资料只证明接口形态，真实正确率、合规、Region、成本和容量仍需 Bake-off / 内部验证。</div>
+      <div class="metric-grid">
+        <div class="metric"><b>客户任务</b><span>先看谁遇到什么问题，以及最后拿到什么结果</span></div>
+        <div class="metric"><b>产品边界</b><span>接入、问数、分析、知识、治理、数据库调查与少量动作</span></div>
+        <div class="metric"><b>可信条件</b><span>身份、口径、证据、失败状态、审批和后置验证</span></div>
+        <div class="metric"><b id="deploymentMetric">两种方案</b><span id="deploymentMetricText">同一客户能力的公司协作或数据库团队承载方式</span></div>
+      </div>
+      <div class="notice">这是产品设计建议，不是华为云现状、立项决定或交付承诺。精确分数已放入折叠方法区；正确率、合规、Region、成本、容量和内部接口仍需真实验证。</div>
     </div>
 
     <section id="goals">
@@ -503,6 +537,8 @@
           <div><span class="tag" style="background:rgba(255,255,255,.13);color:#9ce8cf">DATA INTELLIGENCE · 数据智能</span><h3>一句话接入、生成、管理和使用数据。</h3><p>一个对话 Agent、十种回答工件。用户只描述要完成的事情，产品自动路由能力，不要求选择 Dashboard、Harness、模型或内部 Agent。</p></div>
           <div class="capability-promise"><span>接数据 · 比较直查/导入/定时/CDC，生成 Pipeline</span><span>生成产品 · 得到清洗表、指标、知识、质量和血缘草稿</span><span>管数据 · 得到发现、影响、任务与可审核治理 Diff</span><span>问数/分析/查库 · 得到表图、证据、结论与诊断</span></div>
         </div>
+
+        <div class="boundary-note"><strong>C0–C7 是本文的能力编号，不是行业标准或现有产品菜单。</strong>它们只用于说明范围、依赖和优先级；用户仍从自己的问题开始，不需要先选择编号。</div>
 
         <div class="capability-grid" aria-label="产品能力全集与优先级">
           <article class="capability-card core"><div class="cap-head"><span class="cap-id">C0</span><span class="cap-phase">P0 核心 1</span></div><h3>数据接入与准备</h3><div class="say">“维表直查、交易表 CDC，再导入这批供应商文件。”</div><p>比较直查/一次/定时/CDC，完成连接、Schema/映射、质量/敏感预检、发布与数据到达验证。</p><small>交付：接入方案 · Pipeline 草稿 · Schema Diff · 水位/验证</small></article>
@@ -517,8 +553,9 @@
 
         <div class="boundary-note"><strong>“一句话建知识”不是让模型随意画图。</strong>产品构建的是可治理的数据知识网络：实体、表、指标、维度、规则、Owner、Verified Query 及其业务关系、Join、血缘、派生和影响。推断关系必须带来源、置信度和 Review 状态，首期只能生成草稿，不能自动发布。</div>
 
-        <div class="section-head" style="margin:34px 0 16px"><div class="kicker">Priority score</div><div><h3 style="font-size:27px">同一能力全集，两种方案的投资顺序不同。</h3><p>这是设计优先分，不是当前产品能力分；按客户价值、华为差异化、飞轮价值、可交付性、安全可控和多入口复用加权，待内部基线重算。</p></div></div>
-        <div class="compare-wrap"><table><thead><tr><th>能力</th><th class="company-col scope-company">方案一优先分</th><th class="db-col scope-db">方案二优先分</th><th>裁决</th></tr></thead><tbody>
+        <details class="expert-details"><summary>内部排序草案：为什么两种方案的投资顺序不同</summary><div class="expert-body">
+        <div class="section-head" style="margin:18px 0 16px"><div class="kicker">内部排序方法</div><div><h3 style="font-size:27px">精确分数只用于讨论投资先后。</h3><p>这些数字不是当前产品能力、客户调研或账号实测结果；按客户价值、华为差异化、后续复用、可交付性、安全和多入口复用加权，必须在内部基线完成后重算。</p></div></div>
+        <div class="compare-wrap"><table><thead><tr><th>能力</th><th class="company-col scope-company">方案一设计分</th><th class="db-col scope-db">方案二设计分</th><th>排序依据</th></tr></thead><tbody>
           <tr><td>C0 接入准备</td><td class="scope-company"><strong>94 · #1</strong></td><td class="scope-db"><strong>91 · #2</strong></td><td>首次价值、数据新鲜度和所有后续能力上限</td></tr>
           <tr><td>C1 智能问数</td><td class="scope-company"><strong>91 · #3</strong></td><td class="scope-db"><strong>86 · #3</strong></td><td>高频入口，直接检验知识/权限/SQL 全链</td></tr>
           <tr><td>C2 智能分析</td><td class="scope-company"><strong>88 · #4</strong></td><td class="scope-db">73 · #5</td><td>公司级高价值；DB 首期只做基础分析</td></tr>
@@ -528,6 +565,7 @@
           <tr><td>C6 安全行动</td><td class="scope-company">61</td><td class="scope-db">64</td><td>等只读、审批与后置验证成熟</td></tr>
           <tr><td>C7 主动智能</td><td class="scope-company">68</td><td class="scope-db">70</td><td>长期能力，依赖知识/事件/评测</td></tr>
         </tbody></table></div>
+        </div></details>
 
         <div class="section-head" style="margin:34px 0 16px"><div class="kicker">Focus first</div><div><h3 style="font-size:27px">首期集中四条主线，用一条纵向故事串起来。</h3></div></div>
         <div class="priority-lanes">
@@ -808,6 +846,9 @@
       </div>
     </section>
 
+    <details class="technical-appendix" id="technical-appendix">
+      <summary><div class="wrap"><div><small>按需阅读</small><b>技术实现附录</b><span>执行框架选型、统一协议、单机部署、资产与知识、自然语言转 SQL、数据库调查和对话界面都保留在这里，不再打断产品决策主线。</span></div></div></summary>
+      <div class="technical-appendix-body">
     <section id="harness">
       <div class="wrap">
         <div class="section-head"><div class="kicker">Harness bake-off</div><div><h2>六个候选都能跑，适不适合产品化差别很大。</h2><p>分数只衡量官方资料可见的工程适配，不包含真实任务质量。任何越权、凭据泄漏、取消无效或无法锁版本都直接淘汰。</p></div></div>
@@ -1035,6 +1076,8 @@
         <div class="contract-rules"><div class="contract-rule"><b>唯一主入口</b><span>对话是产品，不要求用户先选功能菜单。</span></div><div class="contract-rule"><b>回复内可视化</b><span>Pipeline、治理、表图、知识图、时间线和审批卡按问题生成。</span></div><div class="contract-rule"><b>证据随回答</b><span>source/pipeline/asset、SQL、query_id、水位、ACL 与运行记录可展开。</span></div><div class="contract-rule"><b>原位连续工作</b><span>追问、Review、审批、停止、执行验证都留在同一线程。</span></div></div>
       </div>
     </section>
+      </div>
+    </details>
 
     <section id="roadmap">
       <div class="wrap">
@@ -1083,7 +1126,7 @@
     </section>
   </main>
 
-  <footer><div class="wrap"><span>华为云 Data Intelligence · Capability-first / Harness-first 产品设计建议 · 2026-08-20</span><span><a href="./huawei-product-ui-prototypes.html">对话回答画册</a> · <a href="../site/details/huawei-catch-up-product-plan.html">完整研究 HTML</a> · <a href="./agent-entry-governance-visual-report.html">竞品主报告</a> · <a href="./vendor-entry-atlas.html#capabilities">竞品能力全集</a></span></div></footer>
+  <footer><div class="wrap"><span>华为云数据智能产品设计建议 · 2026-08-20 · 非现状或交付承诺</span><span><a href="../site/details/independent-reader-guide.html">读者指南</a> · <a href="./huawei-product-ui-prototypes.html">回答示例</a> · <a href="../site/details/huawei-catch-up-product-plan.html">完整方案</a> · <a href="./agent-entry-governance-visual-report.html">竞品报告</a></span></div></footer>
 
   <script>
     const tools = [
@@ -1124,31 +1167,31 @@
     renderFilters(); renderTools();
     const routeCopy = {
       all: {
-        title: "先定要做成哪些产品能力，<br>再选两种架构。",
-        copy: "先定义数据接入与资产化、智能问数与分析、数据知识构建和数据库洞察的优先级，再比较公司级协作与数据库绿地两套架构。",
+        title: "先跑通一条客户任务，<br>再决定由谁建设、怎样实现。",
+        copy: "经营负责人问‘退款率为什么上升’时，产品要负责找到数据、确认口径、完成分析并交付证据；缺数据、无权限或涉及动作时，也要清楚说明下一步。",
         calloutTitle: "当前建议",
-        callout: "技术按数据库绿地方案立即启动；组织给公司协作方案 2–4 周 Gate。条件成立时，同一代码直接升格，不推倒重来。",
+        callout: "先由小队做低依赖样例，同时用 2–4 周验证公司级 Owner、接口和发布条件。条件成立就升级为公司协作方案；不成立也不丢掉已经验证的闭环。",
         status: "当前显示：两种方案及全部对比",
-        metric: "2 方案",
-        metricText: "同一能力组合的两种组织与承载方式"
+        metric: "两种方案",
+        metricText: "同一客户能力的公司协作或数据库团队承载方式"
       },
       company: {
-        title: "先定能力重点，<br>再走方案一。",
-        copy: "本视图保留完整能力地图，并突出多源接入、数据产品、问数分析和知识治理的公司级产品中心；随后只展开方案一架构、共同内核、专属模块与路线。",
+        title: "先跑通跨产品客户任务，<br>再判断公司协作能否成立。",
+        copy: "该方案把多源接入、数据产品、问数分析、知识治理和数据库调查放进同一客户旅程；各团队保留权威能力，但必须共享身份、任务、证据和发布责任。",
         calloutTitle: "成立条件",
         callout: "必须在 2–4 周内落实唯一总 Owner、共同 OKR、能力包合同、真实 IAM/OBO 和同一发布列车；否则不能把名义协作当成方案一。",
         status: "当前显示：仅方案一 · 华为云竞争力优先",
-        metric: "3+ 包",
-        metricText: "DataArts、数据库、IAM/Agent 版本化能力包"
+        metric: "公司协作",
+        metricText: "DataArts、数据库、IAM/Agent 交付版本化能力包"
       },
       db: {
-        title: "先定能力重点，<br>再走方案二。",
-        copy: "本视图保留完整能力地图，并突出一个数据库的接入/资产化、数据库洞察与数据库上的问数；随后只展开方案二架构、共同内核、专属模块与路线。",
+        title: "先在一个数据库上跑通闭环，<br>再决定是否扩大范围。",
+        copy: "该方案从一个数据库和少量文件开始，先完成接入、资产草稿、问数与数据库调查；其他平台能力通过适配器接入，不在首期重建通用数据平台。",
         calloutTitle: "首期边界",
         callout: "一台 ECS、一个主引擎、CSV/Parquet；先跑通接入—资产—问数—查库，首月精选 35–40 个 Tool；无 HA/SLA，但隔离、短期凭据、坏数策略、取消和证据不能延期。",
         status: "当前显示：仅方案二 · 数据库部门绿地突围",
-        metric: "1 ECS",
-        metricText: "首期 Docker Compose 可重复部署"
+        metric: "低依赖起步",
+        metricText: "一台 ECS 上可重复部署，但安全与证据边界不减配"
       }
     };
     function setRoute(route, updateUrl = true) {
@@ -1167,7 +1210,7 @@
       document.getElementById("viewStatus").textContent = c.status;
       document.getElementById("deploymentMetric").textContent = c.metric;
       document.getElementById("deploymentMetricText").textContent = c.metricText;
-      document.title = route === "all" ? "华为云统一对话 Agent｜能力目标与两种领先产品方案" : `${route === "company" ? "方案一" : "方案二"} · 华为云统一对话 Agent｜能力目标与领先产品方案`;
+      document.title = route === "all" ? "华为云数据智能产品方案｜先跑通客户任务" : `${route === "company" ? "方案一" : "方案二"} · 华为云数据智能产品方案｜先跑通客户任务`;
       if (updateUrl) {
         try {
           const url = new URL(location.href);
@@ -1179,6 +1222,24 @@
     document.querySelectorAll("[data-route-btn]").forEach(b => b.addEventListener("click", () => setRoute(b.dataset.routeBtn)));
     const initialRoute = new URLSearchParams(location.search).get("view") || "all";
     setRoute(initialRoute, false);
+    function openDetailsForHash() {
+      if (!location.hash) return;
+      const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+      const details = target?.closest("details");
+      if (!details) return;
+      details.open = true;
+      setTimeout(() => {
+        const root = document.documentElement;
+        const priorBehavior = root.style.scrollBehavior;
+        root.style.scrollBehavior = "auto";
+        window.scrollTo(0, target.getBoundingClientRect().top + window.scrollY - 72);
+        root.style.scrollBehavior = priorBehavior;
+      }, 0);
+    }
+    window.addEventListener("hashchange", openDetailsForHash);
+    window.addEventListener("DOMContentLoaded", openDetailsForHash);
+    window.addEventListener("load", openDetailsForHash, { once: true });
+    openDetailsForHash();
   </script>
 </body>
 </html>

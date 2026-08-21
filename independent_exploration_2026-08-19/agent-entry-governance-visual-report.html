@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
-  <meta name="description" content="自然语言 Agent 入口、67 项细粒度能力、数据源与接入方式、前置准备、数据治理、身份授权、厂商路线与华为云差距的独立探索可视化报告">
-  <title>Agent 主入口、能力差距、治理与授权｜独立探索可视化</title>
+  <meta name="description" content="从一条客户数据任务出发，比较 11 家厂商怎样处理入口、身份、业务口径、工具调用、失败边界与结果证据。">
+  <title>用户从一句话开始，产品怎样把任务做完｜11 家厂商独立研究</title>
   <link rel="stylesheet" href="./assets/capability-comparison.css">
   <style>
     :root {
@@ -110,7 +110,7 @@
       border: 1px solid rgba(255,255,255,.22); background: rgba(255,255,255,.08);
       padding: .32rem .65rem; border-radius: 999px; font-size: .78rem; letter-spacing: .03em;
     }
-    h1 { margin: 0; max-width: 850px; font-size: clamp(2.15rem, 5vw, 4.75rem); line-height: 1.08; letter-spacing: -.04em; }
+    h1 { margin: 0; max-width: 850px; font-size: clamp(2.15rem, 4.2vw, 3.75rem); line-height: 1.08; letter-spacing: -.04em; }
     .hero-lead { max-width: 830px; margin: 1.4rem 0 0; color: #d9e9fb; font-size: clamp(1rem, 1.5vw, 1.25rem); }
     .hero-verdict {
       margin-top: 1.7rem; border-left: 4px solid #43d9cb; padding: .6rem 0 .6rem 1rem;
@@ -162,6 +162,27 @@
     .stat-card .label { margin-top: .6rem; color: var(--ink-soft); font-weight: 700; }
     .stat-card .note { margin-top: .35rem; color: var(--muted); font-size: .78rem; }
     .stat-card.accent .value { color: var(--blue); }
+    .reader-entry {
+      scroll-margin-top: 82px; margin-top: 1.2rem; padding: clamp(1.15rem, 2.8vw, 1.8rem);
+      border: 1px solid var(--line); border-radius: 22px; background: white; box-shadow: var(--shadow);
+    }
+    .reader-entry-head { display: grid; grid-template-columns: .78fr 1.22fr; gap: 1.2rem; align-items: start; }
+    .reader-task small { display: block; color: var(--blue); font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
+    .reader-task strong { display: block; margin: .55rem 0; color: var(--navy); font-size: clamp(1.25rem, 2.4vw, 2rem); line-height: 1.25; }
+    .reader-task p, .reader-result p { margin: 0; color: var(--ink-soft); }
+    .reader-journey { display: grid; grid-template-columns: repeat(4, 1fr); gap: .55rem; }
+    .reader-step { position: relative; min-height: 98px; padding: .8rem; border-radius: 13px; background: #f4f7fb; }
+    .reader-step:not(:last-child)::after { content: "→"; position: absolute; right: -.48rem; top: 2rem; z-index: 2; color: var(--cyan); font-weight: 900; }
+    .reader-step b { display: block; font-size: .82rem; }
+    .reader-step span { display: block; margin-top: .28rem; color: var(--muted); font-size: .72rem; line-height: 1.45; }
+    .reader-boundaries { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .8rem; }
+    .reader-boundaries span { padding: .3rem .55rem; border-radius: 8px; color: #8b4d05; background: #fff3de; font-size: .72rem; font-weight: 750; }
+    .score-details { border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255,255,255,.72); overflow: hidden; }
+    .score-details > summary { padding: 1rem 1.2rem; cursor: pointer; list-style: none; color: var(--navy); font-weight: 850; }
+    .score-details > summary::-webkit-details-marker { display: none; }
+    .score-details > summary::after { content: "展开方法与精确分数 ↓"; float: right; color: var(--blue); font-size: .78rem; }
+    .score-details[open] > summary::after { content: "收起 ↑"; }
+    .score-details > .score-detail-body { padding: 0 1rem 1rem; border-top: 1px solid var(--line); }
 
     .verdict-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
     .verdict-card {
@@ -407,7 +428,7 @@
     footer a { color: #8fdbff; }
 
     @media (max-width: 1100px) {
-      .hero-inner, .market-grid, .score-layout, .radar-layout, .gap-layout { grid-template-columns: 1fr; }
+      .hero-inner, .market-grid, .score-layout, .radar-layout, .gap-layout, .reader-entry-head { grid-template-columns: 1fr; }
       .trust-chain { max-width: 700px; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
       .entry-atlas-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -422,6 +443,8 @@
       main { width: min(100% - 1rem, var(--max)); }
       .stats-grid { margin-top: -1rem; gap: .6rem; }
       .stat-card { padding: .9rem; }
+      .reader-journey { grid-template-columns: 1fr 1fr; }
+      .reader-step:not(:last-child)::after { display: none; }
       .verdict-grid, .huawei-bench, .seam-map, .arch-domains, .arch-control, .roadmap, .vendor-roadmap-grid, .scenario-grid, .evidence-list, .boundary-grid, .final-grid, .entry-atlas-grid, .entry-atlas-intro { grid-template-columns: 1fr; }
       .entry-atlas-actions { justify-content: flex-start; }
       .capability-jump { align-items: flex-start; flex-direction: column; }
@@ -458,12 +481,13 @@
 
   <header class="topbar" aria-label="报告导航">
     <div class="topbar-inner">
-      <div class="brand"><span class="brand-mark">AI</span><span>Agent 数据入口研究</span></div>
+      <div class="brand"><span class="brand-mark">DI</span><span>数据智能入口研究</span></div>
       <nav class="nav-scroll" aria-label="章节">
+        <a class="nav-priority" href="#reader-story">先看客户任务</a>
         <a href="#verdict">判断</a>
         <a href="#market">趋势</a>
         <a href="#entry-atlas">入口图鉴</a>
-        <a class="nav-priority" href="./vendor-entry-atlas.html#capabilities">能力全集</a>
+        <a href="./vendor-entry-atlas.html#capabilities">能力附录</a>
         <a href="#capability-gap">能力差距</a>
         <a href="#scores">评分</a>
         <a href="#dimensions">十维</a>
@@ -483,21 +507,20 @@
         <div class="eyebrow">
           <span>独立探索</span><span>基准日 2026-08-19</span><span>仅官方公开资料</span><span>无账号写操作</span>
         </div>
-        <h1>对话会成为主入口，<br>但信任链才是产品。</h1>
-        <p class="hero-lead">从 Genie One、Snowflake Intelligence、Amazon Quick Suite 到国内 Smart Q、DataBuddy：入口正在从“找菜单”转向“说目标”。真正拉开差距的不是聊天框，而是语义、身份、工具、动作和证据能否连成一条生产闭环。</p>
-        <div class="hero-verdict">最终裁决：你的方向判断强成立；“其他能力都包在 CLI/MCP”需要校正为“能力 API 化，CLI/MCP Agent 化，控制面统一化”。</div>
+        <h1>用户可以从一句话开始，<br>但产品必须把任务做完。</h1>
+        <p class="hero-lead">11 家厂商都在把入口从“找菜单”改成“说目标”。差别不在聊天框长什么样，而在用户身份、业务口径、工具调用、失败处理和结果证据能否贯穿一条任务。</p>
+        <div class="hero-verdict">当前判断：自然语言会成为主要任务入口，但不会取代所有专业界面；CLI/MCP 是程序和外部 Agent 的调用方式，不是产品本身。</div>
         <div class="hero-actions">
-          <a class="primary" href="#scores">查看评分 ↓</a>
-          <a class="secondary" href="./vendor-entry-atlas.html#capabilities">查看 67 项能力全集</a>
+          <a class="primary" href="#reader-story">先看一条客户任务 ↓</a>
+          <a class="secondary" href="../site/details/independent-reader-guide.html">术语与阅读指南</a>
           <a class="secondary" href="./vendor-entry-atlas.html">查看 11 家官方入口截图</a>
-          <a class="secondary" href="./huawei-catch-up-plan.html">查看华为 Harness-first 方案</a>
-          <a class="secondary" href="../site/details/agent-entry-governance-deep-dive.html">打开完整研究 HTML</a>
-          <a class="secondary" href="./agent-entry-scorecard.csv">下载评分 CSV</a>
+          <a class="secondary" href="./huawei-catch-up-plan.html">查看华为产品方案</a>
+          <a class="secondary" href="../site/details/agent-entry-governance-deep-dive.html">查看完整研究与评分</a>
         </div>
       </div>
 
       <aside class="trust-chain" aria-label="生产级 Agent 信任链">
-        <div class="trust-title">Production trust chain</div>
+        <div class="trust-title">一条任务需要五类保证</div>
         <div class="trust-step"><span class="trust-num">01</span><div><strong>正确身份</strong><small>Human / Agent / Service / OBO</small></div><span class="trust-state">WHO</span></div>
         <div class="trust-step"><span class="trust-num">02</span><div><strong>正确语义</strong><small>Metric / Join / Context / Version</small></div><span class="trust-state">WHAT</span></div>
         <div class="trust-step"><span class="trust-num">03</span><div><strong>正确工具</strong><small>API / CLI / MCP / Policy</small></div><span class="trust-state">HOW</span></div>
@@ -508,44 +531,44 @@
   </div>
 
   <main id="main">
-    <div class="stats-grid" aria-label="关键数字">
-      <article class="stat-card accent"><div class="value">90%</div><div class="label">“Agent 成为主入口”研究置信度</div><div class="note">跨 11 个厂商产品组合的官方交叉证据</div></article>
-      <article class="stat-card"><div class="value">91.3</div><div class="label">当前最高综合分</div><div class="note">Snowflake；Databricks 90.6，共同第一梯队</div></article>
-      <article class="stat-card"><div class="value">23.0</div><div class="label">华为组合与 Databricks 的差距</div><div class="note">不是模型分差，主要是产品控制面接缝</div></article>
-      <article class="stat-card"><div class="value">76%</div><div class="label">差距集中于前五项</div><div class="note">身份、入口、语义、工具面、结果工件</div></article>
+    <div class="stats-grid" aria-label="四项主要判断">
+      <article class="stat-card accent"><div class="value">强支持</div><div class="label">自然语言会成为主要任务入口</div><div class="note">跨 11 家厂商的公开产品信号一致，但不等于唯一界面</div></article>
+      <article class="stat-card"><div class="value">两家</div><div class="label">当前公开证据第一梯队</div><div class="note">Snowflake 与 Databricks 领先来源不同，不用小分差强排名</div></article>
+      <article class="stat-card"><div class="value">接缝</div><div class="label">华为云当前最需要验证的地方</div><div class="note">身份、语义、任务状态和证据能否跨 DataArts、AgentArts 与数据库贯通</div></article>
+      <article class="stat-card"><div class="value">未实测</div><div class="label">所有精确分数的共同边界</div><div class="note">仅按公开证据比较；账号、Region、Edition 和失败行为仍需验证</div></article>
     </div>
+
+    <section class="reader-entry" id="reader-story" aria-labelledby="reader-story-title">
+      <div class="reader-entry-head"><div class="reader-task"><small>先看一条客户任务</small><strong id="reader-story-title">“最近 30 天华东退款率为什么上升？排除订单规模影响。”</strong><p>业务负责人不应该先判断该去 BI、数据开发还是数据库控制台。统一入口的价值，是减少交接，同时保留权限、口径和证据。</p></div><div class="reader-result"><div class="reader-journey"><div class="reader-step"><b>1 · 识别上下文</b><span>当前用户、数据范围、指标口径、比较周期</span></div><div class="reader-step"><b>2 · 先处理障碍</b><span>有歧义先追问，无权限拒绝，数据过期明确说明</span></div><div class="reader-step"><b>3 · 查询与分析</b><span>受控执行，保留 SQL、参数、版本和查询 ID</span></div><div class="reader-step"><b>4 · 交付可核验结果</b><span>表图、事实、候选解释、Unknown 与证据</span></div></div><div class="reader-boundaries"><span>相关性不写成根因</span><span>动作先审批</span><span>权威系统验证完成</span><span>失败状态可见</span></div></div></div>
+    </section>
 
     <section id="verdict">
       <div class="section-head">
         <div class="kicker">01 · 判断校验</div>
         <h2>大方向正确，产品语言需要更精确</h2>
-        <p>“主入口”不等于“唯一 UI”；“支持 OAuth”不等于最终用户身份到达数据源；“有 MCP”也不等于工具已经安全。以下置信度是研究判断，不是统计概率。</p>
+        <p>“主入口”不等于“唯一 UI”；“支持 OAuth”不等于最终用户身份到达数据源；“有 MCP”也不等于工具已经安全。精确判断分和方法保留在后文折叠区。</p>
       </div>
 
       <div class="verdict-grid">
         <article class="verdict-card">
-          <div class="verdict-top"><span class="verdict-tag tag-strong">强成立</span><div class="confidence"><strong>90%</strong>研究置信度</div></div>
+          <div class="verdict-top"><span class="verdict-tag tag-strong">强成立</span><div class="confidence"><strong>高</strong>判断强度</div></div>
           <h3>Genie One 一类 Agent 对话会成为主任务入口</h3>
           <p>多个厂商同时把问数、报告、应用、任务和工具收敛到统一自然语言入口。结构化 UI 仍负责复杂编辑、批量运营、审批和异常处理。</p>
-          <div class="meter"><span style="width:90%"></span></div>
         </article>
         <article class="verdict-card">
-          <div class="verdict-top"><span class="verdict-tag tag-strong">成立</span><div class="confidence"><strong>85%</strong>研究置信度</div></div>
+          <div class="verdict-top"><span class="verdict-tag tag-strong">成立</span><div class="confidence"><strong>高</strong>判断强度</div></div>
           <h3>用户会主要用自然语言启动任务</h3>
           <p>自然语言适合表达目标、跨产品路由和探索式追问；生产流程仍需沉淀为稳定、版本化、参数化的对象与策略。</p>
-          <div class="meter"><span style="width:85%"></span></div>
         </article>
         <article class="verdict-card">
-          <div class="verdict-top"><span class="verdict-tag tag-partial">部分成立</span><div class="confidence"><strong>60%</strong>研究置信度</div></div>
+          <div class="verdict-top"><span class="verdict-tag tag-partial">部分成立</span><div class="confidence"><strong>中</strong>判断强度</div></div>
           <h3>其他能力都会包在 CLI / MCP 中</h3>
           <p>CLI 是自动化外壳，MCP 是 Agent 工具适配层。API、对象模型、Catalog、策略与执行引擎才应是系统真相源。</p>
-          <div class="meter"><span style="width:60%;background:linear-gradient(90deg,var(--amber),#f6c75a)"></span></div>
         </article>
         <article class="verdict-card">
-          <div class="verdict-top"><span class="verdict-tag tag-strong">强成立</span><div class="confidence"><strong>95%</strong>必要性置信度</div></div>
+          <div class="verdict-top"><span class="verdict-tag tag-strong">强成立</span><div class="confidence"><strong>高</strong>必要性</div></div>
           <h3>数据治理和授权是关键</h3>
-          <p>它们是入场券而非充分条件。最终壁垒还包括业务语义、工具/动作安全、正确性评测、Trace/版本与成本可靠性。</p>
-          <div class="meter"><span style="width:95%"></span></div>
+          <p>它们是必要条件，但还需要业务语义、工具和动作安全、正确性评测、Trace、版本与成本可靠性。</p>
         </article>
       </div>
 
@@ -555,7 +578,7 @@
     <section id="market">
       <div class="section-head">
         <div class="kicker">02 · 市场收敛</div>
-        <h2>所有人都在向同一方向跑，但从不同优势面切入</h2>
+        <h2>厂商入口正在收敛，但各自的领先来源不同</h2>
         <p>横轴是当前综合能力，纵轴是近 12–18 个月可观察的发布动量。右上角意味着“当前强且推进快”；新发布厂商的高动量不等于高成熟度。</p>
         <div class="label-row"><span class="evidence-label label-official">官方声明</span><span class="evidence-label label-infer">竞争推断</span><span class="evidence-label label-unknown">Unknown 保留</span></div>
       </div>
@@ -567,7 +590,7 @@
         </article>
 
         <aside class="panel">
-          <div class="chart-head"><div><h3>五种领先路径</h3><p>同样走向统一入口，护城河并不相同。</p></div></div>
+          <div class="chart-head"><div><h3>五种产品路径</h3><p>同样走向统一入口，领先能力并不相同。</p></div></div>
           <div class="signal-list">
             <div class="signal-item"><div class="signal-icon">D</div><div><strong>Databricks：Catalog 中心</strong><span>把语义、AI/BI、Genie、Agent 与 MCP 围绕数据对象收敛。</span></div></div>
             <div class="signal-item"><div class="signal-icon">S</div><div><strong>Snowflake：Agent 保证体系</strong><span>版本、Alias、Eval、Trace、Connector 与动作治理形成控制面。</span></div></div>
@@ -588,7 +611,7 @@
       </div>
 
       <div class="entry-atlas-intro">
-        <p><strong>为什么不拆 11 个子页面：</strong>同一评价标尺需要并排可见；主报告负责一屏扫描，集中式详册用 11 个锚点章节承载大图、首次任务路径、身份治理边界、强弱判断和官方视频，避免证据与导航碎片化。</p>
+        <p><strong>推荐读法：</strong>先用本页缩略图比较入口层级和任务范围；需要核对某家厂商时，再进入详册查看大图、首次任务、身份边界和官方视频。</p>
         <div class="entry-atlas-actions">
           <a class="atlas-button capability-button" href="./vendor-entry-atlas.html#capabilities">打开 67 项能力全集 →</a>
           <a class="atlas-button" href="./vendor-entry-atlas.html">打开 11 家入口详册与视频 →</a>
@@ -630,16 +653,19 @@
         <p><strong>需要逐项核对，而不是只看摘要？</strong> 能力全集可按能力域、厂商和证据状态筛选，并包含 12 类数据源、首次使用前置、平台/客户责任卡与 CSV 下载。</p>
         <a class="atlas-button capability-button" href="./vendor-entry-atlas.html#capabilities">进入 67 × 11 完整矩阵 →</a>
       </div>
-      <div id="capability-main-summary"></div>
+      <details class="score-details"><summary>专家附录：八个能力域、数据源、准确性保障和责任摘要</summary><div class="score-detail-body"><div id="capability-main-summary"></div></div></details>
     </section>
 
     <section id="scores">
       <div class="section-head">
-        <div class="kicker">03 · 横向评分</div>
-        <h2>当前能力、演进速度、路线吻合度分开看</h2>
-        <p>切换指标和厂商区域查看。综合分使用十维加权；不确定度越大，越不能把小分差解释成确定排名。</p>
+        <div class="kicker">03 · 公开证据排序</div>
+        <h2>先看梯队；需要复核时再展开精确分数</h2>
+        <p>Snowflake 与 Databricks 属于共同第一梯队；Google、AWS、Microsoft 构成第二梯队；阿里云是当前公开组合较完整的国内参照。华为云不是“没有组件”，而是跨产品贯通仍缺公开证据。</p>
       </div>
 
+      <details class="score-details">
+        <summary>专家附录：十维权重、完整排名、动量与不确定度</summary>
+        <div class="score-detail-body">
       <div class="score-layout">
         <article class="chart-card">
           <div class="chart-head">
@@ -666,15 +692,18 @@
           <div class="warning-box"><strong>如何读名次：</strong>Snowflake 与 Databricks 相差 0.7 分，属于共同第一梯队；腾讯、华为等近期密集发布者拥有高动量，但成熟度与公开贯通证据仍受限。</div>
         </aside>
       </div>
+        </div>
+      </details>
     </section>
 
     <section id="dimensions">
       <div class="section-head">
         <div class="kicker">04 · 十维能力</div>
-        <h2>同样叫 Agent，控制面的深度完全不同</h2>
-        <p>选择最多四家叠加雷达图。默认对比 Snowflake、Databricks、阿里云和华为云产品组合，能直接看到国际双强与国内路径的差异。</p>
+        <h2>同样叫 Agent，实际需要验证的能力并不相同</h2>
+        <p>十个维度用于复核身份、语义、任务深度、工具、动作和运营条件，不用于证明页面看起来更像 Agent。</p>
       </div>
 
+      <details class="score-details"><summary>专家附录：展开厂商雷达图和十维验证条件</summary><div class="score-detail-body">
       <div class="radar-layout">
         <article class="chart-card">
           <div class="vendor-toggles" id="vendorToggles" aria-label="选择雷达图厂商"></div>
@@ -687,6 +716,7 @@
           <div class="dimension-list" id="dimensionDetails"></div>
         </aside>
       </div>
+      </div></details>
     </section>
 
     <section id="huawei">
@@ -696,6 +726,14 @@
         <p>DataArts 有数据与分析资产，AgentArts 有 Gateway/Trace/Eval，数据库产品掌握实例、Role、RLS、负载和动作。公开证据尚未证明它们使用同一个最终用户身份、语义对象、工具策略和任务证据链。</p>
       </div>
 
+      <div class="verdict-grid">
+        <article class="verdict-card"><span class="verdict-tag tag-strong">已确认</span><h3>重要组件已经存在</h3><p>DataArts、AgentArts 和数据库产品分别覆盖数据分析、Agent 运行治理与数据库权威能力。</p></article>
+        <article class="verdict-card"><span class="verdict-tag tag-limit">仍是 Unknown</span><h3>跨产品任务是否不断链</h3><p>最终用户身份、业务语义、任务状态、策略和证据能否贯通，公开资料尚未证明。</p></article>
+        <article class="verdict-card"><span class="verdict-tag tag-partial">决策重点</span><h3>先验证接缝，不再增加演示组件</h3><p>先用一条合成任务检查身份、资源 ID、结果、失败与审计，再决定产品归属和投入。</p></article>
+        <article class="verdict-card"><span class="verdict-tag tag-strong">公开参照</span><h3>Databricks 的优势来自对象连续性</h3><p>比较重点是数据、语义、权限、查询、评测和外部调用怎样共用受治理对象，而不是只比聊天入口。</p></article>
+      </div>
+
+      <details class="score-details" style="margin-top:1rem"><summary>专家附录：展开诊断分、差距贡献与计算说明</summary><div class="score-detail-body">
       <div class="huawei-bench">
         <article class="bench-card" style="--accent:#d94a57"><div class="number">57.6</div><h3>DataArts 直接旅程</h3><p>只计算当前用户可直接感知的 DataArts 分析/治理/助手链；诊断分，不参加总榜。</p></article>
         <article class="bench-card" style="--accent:#e79018"><div class="number">67.6</div><h3>华为云产品组合</h3><p>计入 AgentArts、DAS/DWS 公开组件，同时对跨产品贯通 Unknown 扣分。</p></article>
@@ -714,6 +752,7 @@
           <div class="label-row"><span class="evidence-label label-official">组件存在：官方声明</span><span class="evidence-label label-unknown">跨产品贯通：Unknown</span></div>
         </aside>
       </div>
+      </div></details>
 
       <div class="seam-map">
         <article class="authority"><div class="role">Domain authority 01</div><h3>DataArts</h3><p>业务语义、指标、Catalog、血缘、质量、分析工件和数据消费规则。</p></article>
@@ -722,17 +761,17 @@
         <div class="shared-plane"><strong>必须共同拥有的控制面接缝</strong><div class="shared-chips"><span>Canonical Resource ID</span><span>Human / Agent Identity</span><span>OBO / Delegation</span><span>Semantic Version</span><span>Tool Policy</span><span>Task / Artifact</span><span>Approval / Action State</span><span>Trace / Evaluation / Audit</span></div></div>
       </div>
       <div class="priority-callout" style="margin-top:1rem">
-        <strong>已重构为 Harness-first 的两条组织路线</strong>
-        子页面现按产品能力优先顺序组织：先定义正式能力和首期投资重点，再用一个统一对话 Agent 的十种回答展示接数据库、导文件、生成数据产品、治理、问数、分析、知识、数据库调查和安全行动。Pipeline、Schema/Profile、资产蓝图、治理报告、表格、图表、知识图、诊断时间线与审批卡都在 Agent 回复内，而不是十套 Dashboard。之后再比较两种完整架构和模块承载。顶部全篇切换支持只看公司级竞争力方案或数据库绿地方案；Goal/Completion 已降级为执行保障，88 项 `di` CLI/MCP 原子目录移到全页最末并默认折叠。
-        <a class="atlas-button" style="margin-top:.8rem" href="./huawei-catch-up-plan.html">打开华为领先方案 →</a>
-        <a class="atlas-button" style="margin-top:.8rem;margin-left:.45rem" href="./huawei-product-ui-prototypes.html">打开对话回答画册 →</a>
+        <strong>华为方案已经改为“客户任务优先”</strong>
+        子页面先用“退款率为什么上升”说明角色、输入、处理、结果和失败边界，再比较公司协作与数据库团队两种承载方式。执行框架、CLI/MCP 和原子能力保留在技术附录，不再作为首页卖点。
+        <a class="atlas-button" style="margin-top:.8rem" href="./huawei-catch-up-plan.html">打开华为产品方案 →</a>
+        <a class="atlas-button" style="margin-top:.8rem;margin-left:.45rem" href="./huawei-product-ui-prototypes.html">查看回答示例 →</a>
       </div>
     </section>
 
     <section id="architecture">
       <div class="section-head">
         <div class="kicker">06 · 目标产品形态</div>
-        <h2>一个壳层、三个领域权威、一个共同控制面</h2>
+        <h2>本文建议的产品结构：一个入口、三个领域权威、一个共同控制面</h2>
         <p>谁拥有聊天前端不是最关键的组织决策；谁拥有统一资源 ID、最终用户委托、策略决策、任务状态和证据链，才决定产品是否真正统一。</p>
       </div>
       <div class="architecture">
@@ -777,7 +816,7 @@
     <section id="scenarios">
       <div class="section-head">
         <div class="kicker">08 · 场景验真</div>
-        <h2>五条任务链，戳破“表面统一”</h2>
+        <h2>用五条任务检查入口是否真的统一</h2>
         <p>只要用户还要跨控制台复制凭据、重建指标或丢失 trace，“统一入口”就仍是一层路由包装。</p>
       </div>
       <div class="scenario-grid">

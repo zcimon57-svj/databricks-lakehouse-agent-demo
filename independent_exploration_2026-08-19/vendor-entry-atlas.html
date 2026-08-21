@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="11 家数据与云厂商 Agent 产品入口、67 项细粒度能力、12 类数据源、前置准备、准确性保障与易用度对照详册">
-  <title>厂商 Agent 能力详册｜入口、数据接入、前置准备与责任边界</title>
+  <meta name="description" content="逐家说明 11 个数据与云产品从哪里开始任务、需要准备什么数据、平台负责到哪里，以及哪些结论仍待验证。">
+  <title>11 家厂商的数据任务怎么开始｜入口、准备与责任边界</title>
   <link rel="stylesheet" href="./assets/capability-comparison.css">
   <style>
     :root {
@@ -133,6 +133,7 @@
     .vendor-title p { margin: .3rem 0 0; color: var(--muted); }
     .vendor-score { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; justify-content: flex-end; }
     .score { padding: .45rem .72rem; color: #fff; background: var(--blue); }
+    .vendor-score .score::before { content: "公开证据分 "; font-weight: 650; opacity: .82; }
     .status { padding: .4rem .68rem; color: var(--ink); background: #edf1ef; }
     .vendor-grid { display: grid; grid-template-columns: minmax(0, 1.18fr) minmax(360px, .82fr); }
     .shot { margin: 0; padding: 1rem; border-right: 1px solid var(--line); background: #edf1ef; }
@@ -178,6 +179,12 @@
     .closing h2 { margin: 0; font-size: 1.35rem; }
     .closing p { max-width: 1020px; color: #d4e4ea; }
     .closing a { color: #fff; }
+    .appendix-fold { border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255,255,255,.9); box-shadow: var(--shadow); overflow: hidden; }
+    .appendix-fold > summary { display: block; padding: 1rem 1.2rem; border: 0; border-radius: 0; list-style: none; color: var(--navy); background: #fff; font-size: .86rem; font-weight: 900; }
+    .appendix-fold > summary::-webkit-details-marker { display: none; }
+    .appendix-fold > summary::after { content: "展开完整矩阵 ↓"; float: right; color: var(--red); font-size: .7rem; }
+    .appendix-fold[open] > summary::after { content: "收起 ↑"; }
+    .appendix-body { padding: 0 1rem 1rem; border-top: 1px solid var(--line); }
     footer { padding: 1.5rem 0 3rem; color: var(--muted); font-size: .72rem; text-align: center; }
     footer a { color: var(--navy); font-weight: 850; }
     @media (max-width: 1000px) {
@@ -197,6 +204,7 @@
       .vendor-score { justify-content: flex-start; width: 100%; }
       .shot, .vendor-copy { padding: .72rem; }
       .shot-stage { min-height: 210px; }
+      .appendix-fold > summary::after { float: none; display: block; margin-top: .25rem; }
     }
     @media print {
       .topbar { position: static; }
@@ -209,7 +217,7 @@
   <header class="topbar">
     <div class="brand"><strong>ENTRY ATLAS</strong><span>2026-08-19</span></div>
     <nav class="vendor-nav" aria-label="厂商章节">
-      <a class="capability-nav" href="#capabilities">能力全集</a><a href="#data-sources">数据源</a>
+      <a href="#snowflake">从厂商入口开始</a><a class="capability-nav" href="#capabilities">专家能力附录</a><a href="#data-sources">数据源</a>
       <a href="#snowflake">Snowflake</a><a href="#databricks">Databricks</a><a href="#google">Google</a>
       <a href="#aws">AWS</a><a href="#microsoft">Microsoft</a><a href="#alibaba">阿里</a>
       <a href="#tencent">腾讯</a><a href="#oracle">Oracle</a><a href="#volcano">火山</a>
@@ -220,19 +228,19 @@
 
   <main>
     <section class="hero">
-      <div class="eyebrow">Official UI · First-task journey · Governance boundary</div>
-      <h1>不要只看聊天框，先看它背后的数据接入、前置准备与责任边界。</h1>
-      <p>本详册先用 67 项去重后的细粒度能力、12 类数据源与接入方式和统一任务流程比较 11 家厂商，再保留官方入口截图、首次任务路径与演示作为体验证据。截图能判断入口收敛度；能力矩阵才解释准确性、易用度和落地成本为何不同。所有状态均来自公开官方资料，不替代账号实测。</p>
+      <div class="eyebrow">官方入口 · 首次任务 · 准备工作 · 责任边界</div>
+      <h1>用户从哪里开始、要准备什么，平台又负责到哪里？</h1>
+      <p>本页逐家还原 11 家厂商的公开入口和首次任务。先看用户怎样进入、任务能做到哪一步、失败和权限由谁处理；需要复核时，再展开 67 项能力和 12 类数据源的专家矩阵。所有状态都来自公开官方资料，不替代账号实测。</p>
       <div class="hero-shortcuts" aria-label="本页重点入口">
-        <a href="#capabilities">直达 67 项能力全集</a>
-        <a href="#data-sources">直达 12 类数据源</a>
-        <a href="#snowflake">从厂商第一梯队开始</a>
+        <a href="#snowflake">从厂商入口开始</a>
+        <a href="#capabilities">展开 67 项能力附录</a>
+        <a href="#data-sources">查看 12 类数据源</a>
       </div>
 
       <div class="hero-grid">
         <article class="decision-card">
-          <h2>结构选择：主报告看结论，详册先横比再逐家钻取</h2>
-          <p>没有拆成 11 个孤立子页面。统一能力全集、数据源口径和责任模型必须并排可见；向下滚动仍可在每家厂商章节查看大图、入口路径、治理判断和视频证据。</p>
+          <h2>先比较任务，再查看分数</h2>
+          <p>每家厂商都按同一顺序说明：用户入口、首次准备、平台完成什么、客户还要做什么、哪些能力没有被公开证据证明。</p>
           <div class="stats">
             <div class="stat"><strong>67</strong><span>去重能力项</span></div>
             <div class="stat"><strong>12</strong><span>数据源与接入方式</span></div>
@@ -272,8 +280,10 @@
     </section>
 
     <section class="vendor-section" id="capabilities" aria-labelledby="capabilities-title">
-      <div class="matrix-head"><div><h2 id="capabilities-title">67 项能力全集：支持范围、数据接入、前置准备与责任边界</h2><p>以下内容由同一份数据驱动主报告摘要和本页完整矩阵；入口界面只是 67 项能力中的一小部分。</p></div></div>
-      <div id="capability-full"></div>
+      <details class="appendix-fold" id="capability-details">
+        <summary id="capabilities-title">专家附录：67 项能力、12 类数据源、准备工作与责任边界</summary>
+        <div class="appendix-body"><p style="color:var(--muted);font-size:.82rem">入口界面只是完整产品的一小部分。展开后可按能力域、厂商和证据状态筛选，并下载 CSV。</p><div id="capability-full"></div></div>
+      </details>
     </section>
 
     <section class="vendor-section" id="snowflake">
@@ -452,13 +462,13 @@
     </section>
 
     <section class="closing">
-      <h2>能力详册给出的最终判断</h2>
-      <p>你的主方向判断成立，但需要从“入口统一”进一步收紧为“受治理的任务闭环统一”：对话页会成为主意图入口，API/CLI/MCP 会成为 Agent 能力面；真正决定厂商强弱的是数据如何接入、业务语义和可信逻辑由谁准备、最终用户权限是否实施到底、复杂任务能否形成可核验结果，以及失败案例能否进入版本化回归。Snowflake/Databricks 的优势是准备工作可沉淀为可复用的质量保障对象；AWS/Google 的优势是缩短用户抵达数据和任务的路径；华为当前最需要补的不是第二个聊天框，而是降低指标预计算、宽表准备等客户负担，并贯通 DataArts、AgentArts 与数据库的共享身份、语义、策略和执行链路。</p>
+      <h2>从 11 家入口可以得到什么结论</h2>
+      <p>自然语言入口正在普及，但入口相似不代表产品能力相同。比较时要继续追问：数据怎样接入，谁准备业务口径，最终用户权限是否到达数据源，复杂任务能否留下可核验结果，失败样本能否进入回归。Snowflake 和 Databricks 的公开优势是把这些准备工作沉淀成可复用对象；华为云当前更需要验证 DataArts、AgentArts 与数据库之间的身份、语义、策略和任务证据，而不是再增加一个聊天页面。</p>
       <p><a href="#capabilities">回到 67 项能力全集</a> · <a href="#data-sources">查看 12 类数据源</a> · <a href="./agent-entry-governance-visual-report.html#capability-gap">返回主报告看能力摘要</a> · <a href="../site/details/agent-entry-governance-deep-dive.html">阅读文字版方法</a> · <a href="../site/details/agent-entry-evidence-ledger.html">复核证据账本</a></p>
     </section>
   </main>
 
-  <footer><a href="#capabilities">能力全集</a> · <a href="#data-sources">数据源</a> · <a href="./agent-entry-governance-visual-report.html">主报告</a><br>公开资料独立探索 · 信息基准日 2026-08-19 · 所有截图版权归相应厂商 · 未进行云账号写操作或付费开通</footer>
+  <footer><a href="#capabilities">能力附录</a> · <a href="#data-sources">数据源</a> · <a href="./agent-entry-governance-visual-report.html">主报告</a><br>公开资料独立探索 · 信息基准日 2026-08-19 · 所有截图版权归相应厂商 · 未进行云账号写操作或付费开通</footer>
   <script src="./assets/capability-comparison.js"></script>
   <script>
     const links = [...document.querySelectorAll('.vendor-nav a')];
@@ -469,6 +479,13 @@
       links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + hit.target.id));
     }, { rootMargin: '-20% 0px -65% 0px', threshold: [0, .2, .6] });
     sections.forEach(s => observer.observe(s));
+    function revealHashTarget() {
+      const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+      const details = target?.closest('details');
+      if (details) details.open = true;
+    }
+    revealHashTarget();
+    window.addEventListener('hashchange', revealHashTarget);
   </script>
 </body>
 </html>

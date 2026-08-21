@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="独立探索综合结论">
-  <title>独立探索综合结论</title>
+  <meta name="description" content="11 家厂商独立探索：结论与产品启示">
+  <title>11 家厂商独立探索：结论与产品启示</title>
   <link rel="stylesheet" href="../styles.css">
   <link rel="stylesheet" href="../details.css">
 </head>
@@ -15,20 +15,48 @@
       <a href="../index.html">数据智能决策首页</a>
     </nav>
     <div class="shell detail-heading">
-      <p class="eyebrow">INDEPENDENT FINDINGS</p>
-      <h1>独立探索综合结论</h1>
-      <p>这是完整研究层；演示页保持精简，证据、边界、步骤和来源在这里展开。</p>
+      <p class="eyebrow">研究结论</p>
+      <h1>11 家厂商独立探索：结论与产品启示</h1>
+      <p>先看用户任务、关键结论和证据边界；评分方法与逐项证据留在后文。</p>
     </div>
   </header>
   <main class="shell detail-layout">
     <article class="markdown-body">
-<h1>独立探索结论：DataArts、Databricks 与云上数据智能产品</h1>
 <blockquote>
 <p>研究基准日与公开资料核验日：2026-08-19</p>
 <p>证据范围：只使用本轮重新访问的公开官方资料；未使用本仓库既有研究、历史 Session 或记忆。</p>
 <p>验证边界：没有任何厂商账号级控制台验证，因此本文没有“实际观察”结论。</p>
 </blockquote>
-<h2>1. 决策摘要</h2>
+<h2>先看结论</h2>
+<p>这份报告想回答一个实际决策：当业务负责人问“最近 30 天华东退款率为什么上升”，华为云现有产品能否像一个完整产品那样找到数据、使用统一口径、完成分析并交付可核验结果；如果不能，应该补现有产品、由数据库团队另做闭环，还是采用联合方案。</p>
+<p>三分钟内先记住四点：</p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>当前回答</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>华为云是不是完全没有数据智能能力</td>
+<td>不是。DataArts、Insight、Fabric、LakeFormation 和数据库产品各自已有重要能力</td>
+</tr>
+<tr>
+<td>公开资料是否已经证明它们是一套贯通产品</td>
+<td>没有。共享对象、身份、语义、会话、评测和发布生命周期仍是 <code>Unknown</code></td>
+</tr>
+<tr>
+<td>Databricks 的公开优势只是聊天入口吗</td>
+<td>不是。更关键的是数据、语义、权限、查询、评测和外部调用之间的对象连续性</td>
+</tr>
+<tr>
+<td>现在应该直接决定产品归属吗</td>
+<td>不应该。先用合成数据执行 G1–G5，再按结果选择增强、联合、独立或联邦方案</td>
+</tr>
+</tbody></table>
+<p>当前最稳健的候选是“双平面、一条客户任务”：数据平台负责跨域数据、语义、分析和评测；数据库产品负责实例上下文、安全执行和运维证据；两者使用同一身份映射、任务状态和证据合同。它仍是待验证建议，不是组织结论。</p>
+<p>不熟悉文中术语时，先看 <a href="independent-reader-guide.html"><code>start-here.md</code></a>；只想了解五条客户任务，可直接跳到<a href="#five-customer-task-chains">第 6 节</a>。</p>
+<h2>1. 证据化决策摘要</h2>
 <h3>1.1 目前可以确认什么</h3>
 <ol>
 <li><p><strong><code>官方声明</code> DataArts 不是一个已经由公开证据证明为单一对象模型的完整产品。</strong> DataArts Studio 是数据开发与治理平台，DataArts Insight 是独立 BI 服务，DataArts Fabric 是数据与 AI 开发平台，LakeFormation 是湖元数据与权限服务；数据库侧另有 DAS、RDS DBA、DWS MCP 等入口。它们分别具备重要骨架，但公开材料只证明“可搭配”或“可连接”，没有证明共享资源 ID、业务语义、最终用户身份、行列策略、会话、评测或发布生命周期。<a href="https://support.huaweicloud.com/productdesc-dataartsstudio/dataartsstudio_07_001.html" target="_blank" rel="noreferrer">Studio 产品边界</a>、<a href="https://support.huaweicloud.com/productdesc-dataartsinsight/dataartsinsight_01_0002.html" target="_blank" rel="noreferrer">Insight 产品边界</a>、<a href="https://support.huaweicloud.com/productdesc-fabric/dataartsfabric_01_0003.html" target="_blank" rel="noreferrer">Fabric 产品介绍</a>、<a href="https://support.huaweicloud.com/intl/zh-cn/productdesc-lakeformation/lakeformation_01_0001.html" target="_blank" rel="noreferrer">LakeFormation 产品介绍</a></p>
@@ -312,6 +340,7 @@
 <li><strong>外部入口是一等能力。</strong> API、SDK、iframe、Agent/MCP 需要与 UI 共享语义和权限，而不是另建一套薄接口。</li>
 <li><strong>只读调查和有副作用动作分层。</strong> 动作需要硬权限、风险等级、草案、人工确认、工单/审批、幂等、执行证据和结果验证。</li>
 </ol>
+<p><a id="five-customer-task-chains"></a></p>
 <h2>6. 五条客户任务链，而不是功能清单</h2>
 <table>
 <thead>
@@ -626,7 +655,7 @@
   </main>
   <footer>
     <div class="shell footer-content">
-      <div><strong>独立探索综合结论</strong><p>由项目内 Markdown 源文件生成；UTF-8 静态页面，可离线阅读。</p></div>
+      <div><strong>11 家厂商独立探索：结论与产品启示</strong><p>由项目内 Markdown 源文件生成；UTF-8 静态页面，可离线阅读。</p></div>
       <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">返回顶部 ↑</a>
     </div>
   </footer>

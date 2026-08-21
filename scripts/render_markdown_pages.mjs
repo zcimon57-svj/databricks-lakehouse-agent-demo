@@ -98,24 +98,50 @@ const pages = [
   {
     source: "independent_exploration_2026-08-19/README.md",
     output: "site/details/independent-research-index.html",
-    pageTitle: "11 家厂商独立探索索引",
-    eyebrow: "INDEPENDENT RESEARCH",
+    pageTitle: "从客户任务开始：11 家厂商独立探索索引",
+    eyebrow: "独立研究入口",
+    intro: "先选你要回答的问题，再进入证据、结论或产品方案；不用先理解整套术语。",
+    stripSourceTitle: true,
     backHref: "../../independent_exploration_2026-08-19/agent-entry-governance-visual-report.html",
     backLabel: "返回友商可视报告",
   },
   {
+    source: "independent_exploration_2026-08-19/start-here.md",
+    output: "site/details/independent-reader-guide.html",
+    pageTitle: "先看这页：数据智能研究读者指南",
+    eyebrow: "阅读起点",
+    intro: "用一个真实业务问题说明这套研究在解决什么，并把容易混淆的名词一次讲清楚。",
+    stripSourceTitle: true,
+    backHref: "independent-research-index.html",
+    backLabel: "返回独立研究索引",
+  },
+  {
+    source: "independent_exploration_2026-08-19/reader-first-editorial-contract.md",
+    output: "site/details/reader-first-editorial-contract.html",
+    pageTitle: "面向读者的技术产品文档合同",
+    eyebrow: "后续编辑规则",
+    intro: "用同一套规则保护客户任务、术语身份、证据边界、正文与附录分层，以及桌面和手机阅读质量。",
+    stripSourceTitle: true,
+    backHref: "independent-research-index.html",
+    backLabel: "返回独立研究索引",
+  },
+  {
     source: "independent_exploration_2026-08-19/independent-findings.md",
     output: "site/details/independent-findings.html",
-    pageTitle: "独立探索综合结论",
-    eyebrow: "INDEPENDENT FINDINGS",
+    pageTitle: "11 家厂商独立探索：结论与产品启示",
+    eyebrow: "研究结论",
+    intro: "先看用户任务、关键结论和证据边界；评分方法与逐项证据留在后文。",
+    stripSourceTitle: true,
     backHref: "../index.html#market",
     backLabel: "返回决策首页",
   },
   {
     source: "independent_exploration_2026-08-19/agent-entry-governance-deep-dive.md",
     output: "site/details/agent-entry-governance-deep-dive.html",
-    pageTitle: "Agent 入口、治理与共享控制面深挖",
-    eyebrow: "ENTRY & GOVERNANCE DEEP DIVE",
+    pageTitle: "当用户用一句话启动数据任务：入口、治理、授权与厂商差距",
+    eyebrow: "入口与治理专题",
+    intro: "从一次退款率分析任务出发，说明产品入口、身份权限、治理和执行边界怎样连成完整链路。",
+    stripSourceTitle: true,
     backHref: "../../independent_exploration_2026-08-19/agent-entry-governance-visual-report.html",
     backLabel: "返回友商可视报告",
   },
@@ -138,16 +164,20 @@ const pages = [
   {
     source: "independent_exploration_2026-08-19/unknowns-and-validation.md",
     output: "site/details/unknowns-and-validation.html",
-    pageTitle: "华为产品决策 Unknown 与验证合同",
-    eyebrow: "UNKNOWNS & VALIDATION",
+    pageTitle: "还不知道什么，以及怎样验证",
+    eyebrow: "待验证问题",
+    intro: "这里记录尚不能确认的能力、需要什么证据，以及未通过检查时应当怎样停止。",
+    stripSourceTitle: true,
     backHref: "../huawei-rds-agent.html#gates",
     backLabel: "返回华为验证 Gate",
   },
   {
     source: "independent_exploration_2026-08-19/huawei-catch-up-product-plan.md",
     output: "site/details/huawei-catch-up-product-plan.html",
-    pageTitle: "华为数据智能追赶产品计划（方案假设）",
-    eyebrow: "PROPOSED PRODUCT PLAN",
+    pageTitle: "华为云数据智能产品方案：先跑通客户任务，再选择架构",
+    eyebrow: "产品方案建议",
+    intro: "先说明客户要完成的任务和产品应交付的结果，再展开能力分层、架构取舍与验证计划。",
+    stripSourceTitle: true,
     backHref: "../huawei-rds-agent.html#materials",
     backLabel: "返回华为方案材料",
   },
@@ -205,7 +235,7 @@ function template(page, renderedMarkdown) {
     <div class="shell detail-heading">
       <p class="eyebrow">${escapeHtml(page.eyebrow)}</p>
       <h1>${escapeHtml(page.pageTitle)}</h1>
-      <p>这是完整研究层；演示页保持精简，证据、边界、步骤和来源在这里展开。</p>
+      <p>${escapeHtml(page.intro ?? "这是完整研究层；演示页保持精简，证据、边界、步骤和来源在这里展开。")}</p>
     </div>
   </header>
   <main class="shell detail-layout">
@@ -234,7 +264,10 @@ for (const page of pages) {
   const outputFile = resolve(projectRoot, page.output);
   const markdown = await readFile(sourceFile, "utf8");
   const rendered = rewriteGeneratedLinks(await marked.parse(markdown), sourceFile, outputFile);
+  const pageBody = page.stripSourceTitle
+    ? rendered.replace(/^\s*<h1(?:\s[^>]*)?>[\s\S]*?<\/h1>\s*/, "")
+    : rendered;
   await mkdir(dirname(outputFile), { recursive: true });
-  await writeFile(outputFile, template(page, rendered), "utf8");
+  await writeFile(outputFile, template(page, pageBody), "utf8");
   console.log(`${page.source} -> ${page.output}`);
 }
