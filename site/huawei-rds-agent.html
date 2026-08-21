@@ -3,303 +3,314 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="华为云 RDS MySQL 与 PostgreSQL 落地受治理的数据与运维 Agent：客户故事、能力差距、目标架构、场景和 90 天计划">
-  <title>华为云 RDS 受治理智能层：从故事到 90 天落地</title>
+  <meta name="description" content="华为云数据智能与数据库 Agent 产品归属决策：对标范围、业务故事、模块目标、共享控制面和 G1-G6 验证">
+  <title>华为云数据智能：产品归属与验证决策</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="huawei-rds-agent.css">
 </head>
 <body>
-  <header class="hwr-hero" id="top">
-    <nav class="nav shell" aria-label="华为云 RDS Agent 导航">
-      <a class="brand" href="index.html">← DBX Explore</a>
+  <header class="hwr-hero decision-huawei-hero" id="top">
+    <nav class="nav shell" aria-label="华为云数据智能决策导航">
+      <a class="brand" href="index.html">← 决策研究首页</a>
       <div class="nav-links">
-        <a href="#story">客户故事</a>
-        <a href="#direction">产品方向</a>
-        <a href="#architecture">架构</a>
-        <a href="#scenarios">场景</a>
-        <a href="#engines">双引擎</a>
-        <a href="#roadmap">90 天</a>
-        <a href="#decision">立项</a>
+        <a href="#verdict">判断</a>
+        <a href="#benchmark">对标范围</a>
+        <a href="../independent_exploration_2026-08-19/vendor-entry-atlas.html#capabilities">能力全集</a>
+        <a href="#architecture">目标架构</a>
+        <a href="#modules">产品模块</a>
+        <a href="#stories">业务故事</a>
+        <a href="#gates">验证 Gate</a>
+        <a href="#options">产品归属</a>
+        <a href="#evidence">证据</a>
       </div>
     </nav>
     <div class="shell hwr-hero-content">
       <div class="status-pills" aria-label="材料状态">
-        <span>方向建议</span><span>公开资料核准</span><span>非现网产品声明</span>
+        <span>[官方资料研究]</span><span>[分析推断]</span><span>[方案假设]</span><span>华为目标账号未实测</span>
       </div>
-      <p class="eyebrow">HUAWEI CLOUD RDS MYSQL / POSTGRESQL</p>
-      <h1>不是给 RDS 加聊天框，<br><span>而是交付受治理的智能服务</span></h1>
-      <p class="lead">复用 RDS、DAS、DRS、DataArts、智能体平台、IAM 与 APIG，重点补齐身份策略、业务语义、安全查询、双方言、证据回答和评测运营。</p>
+      <p class="eyebrow">HUAWEI DATA INTELLIGENCE × DATABASE AGENT</p>
+      <h1>先决定领域权威和共享控制面，<br><span>再决定谁来出<span class="headline-word">产品</span></span></h1>
+      <p class="lead">DataArts、AgentArts、RDS 与 DAS 不是“有没有功能”的问题，而是同一客户任务能否共享对象、最终用户权限、执行状态、分析工件和证据链。当前建议以 PostgreSQL 为首个执行引擎，验证“双平面、一条客户旅程”。</p>
       <div class="hero-actions">
-        <a class="button primary" href="#story">先听客户故事</a>
-        <a class="button secondary" href="#roadmap">看 90 天计划</a>
-        <a class="button secondary" href="details/huawei-rds-agent-guide.html">打开完整研究稿</a>
+        <a class="button primary" href="#verdict">看当前判断</a>
+        <a class="button secondary" href="#gates">看 G1–G6</a>
+        <a class="button secondary capability-hero-button" href="../independent_exploration_2026-08-19/vendor-entry-atlas.html#capabilities">打开 67 项能力全集</a>
+        <a class="button secondary" href="../independent_exploration_2026-08-19/agent-entry-governance-visual-report.html">打开独立可视报告</a>
       </div>
-      <div class="hwr-proof" aria-label="建议方向摘要">
-        <div><strong>2</strong><span>MySQL / PostgreSQL 独立方言与评测</span></div>
-        <div><strong>3</strong><span>P0 场景：运维、售后、业务问答</span></div>
-        <div><strong>5</strong><span>核心新增服务，而非重复造数据库</span></div>
-        <div><strong>90d</strong><span>六个 Gate 的只读 MVP</span></div>
+      <div class="hwr-proof" aria-label="当前决策摘要">
+        <div><strong>3</strong><span>个领域权威：数据语义、任务编排、数据库执行</span></div>
+        <div><strong>5</strong><span>处核心接缝：对象、身份、语义、工具、证据</span></div>
+        <div><strong>6</strong><span>个可否决产品方案的验证 Gate</span></div>
+        <div><strong>PG</strong><span>首个执行验证引擎；多引擎在 Gate 后扩展</span></div>
       </div>
     </div>
   </header>
 
   <main>
-    <section class="section shell" id="story" aria-labelledby="story-title">
+    <section class="section shell" id="verdict" aria-labelledby="verdict-title">
       <div class="section-heading">
-        <div><p class="eyebrow">先讲故事，再讲组件</p><h2 id="story-title">10:05，退款增长与收银变慢同时发生</h2></div>
-        <p>“海岚零售”是合成案例，不是真实客户背书；故事用于固定产品目标、演示问题与可测真值。</p>
+        <div><p class="eyebrow">EXECUTIVE VERDICT</p><h2 id="verdict-title">现有证据只支持联合验证，不支持直接选边</h2></div>
+        <p>公开资料证明华为云已有多类数据、BI、Agent 和数据库能力；但没有证明它们形成统一任务闭环。组织结论必须晚于端到端验证。</p>
       </div>
-      <div class="story-layout">
-        <article class="story-before">
-          <span>BEFORE · 60–90 MIN</span>
-          <h3>数据都在，答案散落</h3>
-          <ol>
-            <li>客服从 PostgreSQL 工单系统筛 P1</li>
-            <li>研发去 MySQL 只读实例写临时 SQL</li>
-            <li>DBA 在 RDS、DAS、日志和变更系统找证据</li>
-            <li>群里拼截图，却无法确认口径和时间窗口</li>
-          </ol>
-        </article>
-        <div class="story-arrow" aria-hidden="true"><span>→</span></div>
-        <article class="story-after">
-          <span>TARGET · ≤5 MIN EVIDENCE</span>
-          <h3>同一事实，服务两个角色</h3>
-          <div class="question-card"><b>客服主管问</b><p>华南未解决 P1 工单涉及哪些订单？按“已批准退款”口径，总额多少？</p></div>
-          <div class="question-card"><b>DBA 问</b><p>10:00–10:20 哪些慢 SQL、变更、复制延迟和告警同时出现？</p></div>
-        </article>
+      <div class="verdict-grid">
+        <article class="fact-card"><span>[公开事实]</span><h3>不是从零建设</h3><p>DataArts Studio / Insight、AgentArts、RDS、DAS、DRS、IAM、APIG 等已经覆盖数据、分析、编排、数据库和接入的若干能力面。</p></article>
+        <article class="unknown-card"><span>[关键 Unknown]</span><h3>跨产品连续性未被证明</h3><p>资产、指标、用户身份、策略、任务、工件、Query ID、Trace 和评测是否能在同一任务中贯通，必须在目标账号实测。</p></article>
+        <article class="proposal-card"><span>[当前假设]</span><h3>双平面联合产品优先验证</h3><p>DataArts 管数据语义，RDS/DAS 管数据库执行，AgentArts 管任务编排，共享控制面提供身份、状态、策略、证据与运营。</p></article>
       </div>
-      <div class="answer-contract">
-        <div><b>01 · 身份</b><span>最终用户、租户、用途</span></div>
-        <div><b>02 · 语义</b><span>状态、时间、币种、Join</span></div>
-        <div><b>03 · 路由</b><span>只读实例 / DRS / DAS</span></div>
-        <div><b>04 · 防护</b><span>只读、预算、超时、取消</span></div>
-        <div><b>05 · 证据</b><span>SQL、来源、水位、Query ID</span></div>
-        <div><b>06 · 动作</b><span>提案 → 审批 → 验证</span></div>
+      <div class="decision-callout huawei-request">
+        <span>领导当前应批什么</span>
+        <strong>不是批准固定 90 天建设，而是批准一个 DataArts × AgentArts × RDS/DAS 联合小队，用一条 PostgreSQL 业务旅程完成 G1–G6，并据此提交产品归属、P0 模块和 OKR。</strong>
       </div>
-      <p class="story-outcome"><strong>故事的真正价值：</strong>不是 AI 替代客服或 DBA，而是把现有云服务组织成一条可验证、可复用、可对外提供的客户工作流。</p>
     </section>
 
-    <section class="section section-tint" id="direction" aria-labelledby="direction-title">
+    <section class="section section-tint" id="benchmark" aria-labelledby="benchmark-title">
       <div class="shell">
         <div class="section-heading">
-          <div><p class="eyebrow">产品方向</p><h2 id="direction-title">保留底座，打通断点，新增闭环</h2></div>
-          <p>方向代号“RDS 受治理智能层”是本研究建议，不是华为云现有产品名称或发布承诺。</p>
+          <div><p class="eyebrow">BENCHMARK SCOPE</p><h2 id="benchmark-title">对标哪些模块、谁承接、做到什么程度</h2></div>
+          <p>“对标”不是复制产品名称，而是对齐客户可感知的任务闭环。状态来自公开资料与分析，账号实测前不写成现网承诺。</p>
         </div>
-        <div class="build-map">
-          <article class="reuse-card">
-            <span>直接复用</span><h3>数据库与云服务地基</h3>
-            <ul><li>RDS SQL / HA / Backup / Replica</li><li>DAS 慢 SQL / 诊断</li><li>DRS 全量 / 增量同步</li><li>DataArts 目录 / 质量 / 数据服务</li><li>智能体编排、IAM、APIG、CTS</li></ul>
-          </article>
-          <article class="connect-card">
-            <span>重点打通</span><h3>从组件变成一条路径</h3>
-            <ul><li>最终用户身份 → 数据策略</li><li>RDS / DRS / DAS 统一资产与时间线</li><li>目录策略 → 实际查询强制执行</li><li>DRS 水位 → 答案新鲜度</li><li>UI / Widget / API 权限结果一致</li></ul>
-          </article>
-          <article class="build-card">
-            <span>必须新建</span><h3>五个产品化服务</h3>
-            <ol><li>Agent Policy Adapter</li><li>Semantic Contract Service</li><li>Query Gateway / Governor</li><li>Trusted SQL + 双方言包</li><li>Evidence + Benchmark / Monitor</li></ol>
-          </article>
+        <div class="benchmark-table-wrap">
+          <table class="benchmark-table">
+            <thead><tr><th>Databricks 参照能力</th><th>客户价值</th><th>华为可复用基础</th><th>当前动作</th><th>目标程度</th></tr></thead>
+            <tbody>
+              <tr><td><b>Unity Catalog</b><small>资产、权限、血缘、审计</small></td><td>一个受治理对象跨分析与 Agent 复用</td><td>DataArts 治理、IAM、各服务元数据</td><td><span class="status integrate">整合验证</span></td><td>稳定对象 ID + OBO + 执行端策略 + 共享审计</td></tr>
+              <tr><td><b>Metric Views / 语义</b><small>指标、维度、Join、口径</small></td><td>业务问题不用每次重写 SQL 语义</td><td>DataArts Insight / 数据语义能力</td><td><span class="status strengthen">重点补强</span></td><td>版本化语义合同，可被 BI、Agent、PG 查询共同消费</td></tr>
+              <tr><td><b>Genie / AI/BI</b><small>问答、追问、结果、工件</small></td><td>业务用户直接完成分析任务</td><td>DataArts Insight 智能问数相关入口</td><td><span class="status strengthen">重点补强</span></td><td>问题 → 受控执行 → 引用 → 保存工件 → 继续任务</td></tr>
+              <tr><td><b>Lakeflow / 数据工程</b><small>接入、同步、质量、血缘</small></td><td>可信数据持续进入分析面</td><td>DataArts Studio、DRS 等</td><td><span class="status reuse">直接复用</span></td><td>数据库团队不重建；只补水位、对象和证据接口</td></tr>
+              <tr><td><b>SQL / Lakebase 执行面</b><small>查询、事务、引擎上下文</small></td><td>结果新鲜、可复算且不伤生产</td><td>RDS PostgreSQL、DAS、DWS 等</td><td><span class="status db-own">数据库主责</span></td><td>只读查询、Query Guard、诊断、预算、预演和动作验证</td></tr>
+              <tr><td><b>Agent Runtime / Apps</b><small>编排、工具、应用入口</small></td><td>跨数据、文档、工单和动作完成任务</td><td>AgentArts、APIG、企业应用平台</td><td><span class="status integrate">整合验证</span></td><td>权威 API/Tool、异步状态、失败恢复与最终用户上下文</td></tr>
+              <tr><td><b>Benchmark / Monitor</b><small>评测、反馈、版本与追踪</small></td><td>发布前可判定，发布后可运营</td><td>分散的监控、审计与 Agent 运营能力</td><td><span class="status build-shared">共建控制面</span></td><td>Golden Questions + Trace + Eval + Audit + Cost 同一任务 ID</td></tr>
+              <tr><td><b>Managed Tool / 外部入口</b><small>API、Agent Tool、MCP 类适配</small></td><td>伙伴不用复制权限、语义和查询逻辑</td><td>APIG、AgentArts 工具接入、数据服务 API</td><td><span class="status build-shared">共建合同</span></td><td>API 为权威；Widget/CLI/MCP 仅做适配，权限结果一致</td></tr>
+              <tr class="out-scope"><td><b>模型训练与通用推理</b><small>MLOps / GPU / Serving</small></td><td>本项目不是购买决策重点</td><td>华为云既有 AI 基础设施</td><td><span class="status exclude">本方向不对标</span></td><td>只定义 MaaS 接口、模型路由和数据不出域边界</td></tr>
+            </tbody>
+          </table>
         </div>
-        <div class="direction-line"><strong>不复制 Databricks 全栈：</strong>RDS 保持交易与数据库专业能力；新增层只负责把治理、语义、安全执行、Agent 与质量闭环串起来。</div>
+        <div class="benchmark-boundary">
+          <div><b>能对标</b><p>客户旅程、对象连续性、语义合同、受控执行、工件、评测、内嵌与外部入口。</p></div>
+          <div><b>不能照搬</b><p>Databricks 的产品包装、湖仓存储实现和组织边界；Unity Catalog 也不能被简化成一个新微服务。</p></div>
+          <div><b>不在本方向</b><p>通用模型训练、GPU 调度和大规模推理基础设施，只要求通过 MaaS 合同接入。</p></div>
+        </div>
+        <div class="capability-crosslink">
+          <div><span>从模块级对标继续下钻</span><strong>本表回答“华为该对标什么”；67 项能力全集进一步回答每一项由谁支持、要接什么数据、首次使用前准备什么，以及平台和客户分别承担什么。</strong></div>
+          <a class="button dark" href="../independent_exploration_2026-08-19/vendor-entry-atlas.html#capabilities">打开 67 × 11 完整矩阵</a>
+        </div>
       </div>
     </section>
 
     <section class="section section-dark" id="architecture" aria-labelledby="architecture-title">
       <div class="shell">
         <div class="section-heading">
-          <div><p class="eyebrow">目标架构</p><h2 id="architecture-title">三个查询路径，一个权威合同</h2></div>
-          <p>实时窄查走只读实例；跨域历史走 DRS 分析副本；运维诊断走 RDS/DAS/日志 API。三条路共享身份、语义、证据与评测。</p>
+          <div><p class="eyebrow">TARGET HYPOTHESIS</p><h2 id="architecture-title">三个领域权威，不等于三个孤岛</h2></div>
+          <p>统一入口可以放在 RDS/DAS、DataArts 或企业门户；它必须是可替换的壳。真正不可分叉的是共享控制面和领域权威合同。</p>
         </div>
         <figure class="diagram-frame hwr-diagram">
-          <img src="assets/diagrams/huawei-rds-agent-target-architecture.svg" alt="华为云 RDS MySQL PostgreSQL 受治理智能层目标架构图">
-          <figcaption>绿色区域是建议新增的产品闭环；底部是可复用的华为云数据与运维基础。右侧动作网关故意与只读分析面隔离。</figcaption>
+          <img src="assets/diagrams/huawei-shared-control-plane.svg" alt="华为云数据智能双平面、三个领域权威与共享控制面方案假设">
+          <figcaption>[方案假设] 这张图需要通过 G1–G6 验证。它不声明 DataArts、AgentArts、RDS 和 DAS 当前已经共享这些对象或接口。</figcaption>
         </figure>
-        <div class="route-summary">
-          <article><span>A · 实时</span><h3>RDS 专用只读实例</h3><p>单订单、当前状态、小结果；必须返回复制延迟并限制负载。</p></article>
-          <article><span>B · 历史</span><h3>DRS → 分析副本</h3><p>跨 MySQL/PG、长窗口、大聚合；必须处理水位、Schema 演进和失败。</p></article>
-          <article class="route-recommended"><span>C · 推荐</span><h3>按问题混合路由</h3><p>路由可解释、可配置、可评测，不能由模型随意选择数据库。</p></article>
+        <div class="authority-grid">
+          <article><span>DATAARTS / BI</span><h3>数据与语义权威</h3><p>拥有资产、Owner、分类、血缘、指标、维度、Join、业务口径和分析工件；对外提供版本化对象合同。</p></article>
+          <article><span>AGENTARTS</span><h3>任务编排权威</h3><p>拥有 Plan、工具路由、模型路由、异步状态、重试、Handoff 和多 Agent 协作；不复制数据库权限真相。</p></article>
+          <article><span>RDS / DAS</span><h3>数据库执行权威</h3><p>拥有 PostgreSQL 引擎事实、安全查询、负载预算、诊断上下文、预演、审批后动作和结果验证。</p></article>
+          <article class="shared-authority"><span>SHARED CONTROL</span><h3>跨产品共同真相</h3><p>Canonical IDs、OBO、策略决策、Task/Artifact/Action State、Trace、Eval、Audit、Cost 和稳定失败合同。</p></article>
         </div>
       </div>
     </section>
 
-    <section class="section shell" id="scenarios" aria-labelledby="scenarios-title">
+    <section class="section shell" id="modules" aria-labelledby="modules-title">
       <div class="section-heading">
-        <div><p class="eyebrow">客户场景</p><h2 id="scenarios-title">先卖结果，不卖“一个大模型”</h2></div>
-        <p>前三项可在只读边界内形成首批产品包；SaaS 内嵌和多租户运维价值高，但需要更成熟的身份、配额与隔离。</p>
+        <div><p class="eyebrow">PRODUCT MODULES</p><h2 id="modules-title">产品方向不是一张大图，而是六个可验收模块</h2></div>
+        <p>优先级是当前方案假设：P0 先证明对象、身份、语义和安全执行；P1 再形成工件、评测与外部工具；动作自动化最后进入风险 Gate。</p>
       </div>
-      <div class="scenario-priority">
-        <article class="priority-card featured-priority"><span>P0 · RDS ENTERPRISE ADD-ON</span><h3>DBA Copilot</h3><p>在 RDS/DAS 控制台把指标、慢 SQL、日志、告警、变更和 Runbook 组织成事故证据包。</p><strong>目标：首个证据包 ≤5 分钟，MTTR -30%</strong></article>
-        <article class="priority-card"><span>P0 · INDUSTRY TEMPLATE</span><h3>智能售后</h3><p>联查订单、退款、客户、工单与 SLA；给解释和建议，不直接退款或改订单。</p><strong>目标：首次取数/答复时间 -50%</strong></article>
-        <article class="priority-card"><span>P0 · DATA AGENT WORKSPACE</span><h3>受治理业务问答</h3><p>运营与财务在本人权限下使用统一指标和可信 SQL，减少临时取数与口径争议。</p><strong>目标：转研发率 -30%</strong></article>
-        <article class="priority-card"><span>P1 · DEVELOPER PACK</span><h3>SQL / Schema 助手</h3><p>解释 Schema、生成受控只读查询并结合 DAS 诊断优化建议。</p><strong>边界：不直接执行 DDL/DML</strong></article>
-        <article class="priority-card"><span>P1 · EMBEDDED DATA AGENT</span><h3>SaaS 内嵌</h3><p>API、SDK、Widget 提供租户隔离的问数能力，避免每个 ISV 重建 NL2SQL 与审计。</p><strong>前置：on-behalf-of + 配额 + SLA</strong></article>
-        <article class="priority-card"><span>P2 · FLEET OPERATIONS</span><h3>MSP / 集团多实例运维</h3><p>跨账号汇总容量、风险和事故模式，但绝不使用共享高权限账号。</p><strong>前置：跨租户隔离和委托审计</strong></article>
-      </div>
-    </section>
-
-    <section class="section section-tint" id="engines" aria-labelledby="engines-title">
-      <div class="shell">
-        <div class="section-heading">
-          <div><p class="eyebrow">双引擎不是一个 Prompt</p><h2 id="engines-title">MySQL 做售后，PostgreSQL 做工单与运维证据</h2></div>
-          <p>共享产品框架，但技术元数据、SQL 方言、权限、审计和性能基线分别建设与验收。</p>
-        </div>
-        <div class="engine-compare">
-          <article class="mysql-card">
-            <div class="engine-head"><span>RDS FOR MYSQL</span><h3>交易与售后切片</h3></div>
-            <dl>
-              <div><dt>业务域</dt><dd>订单、支付、退款、库存</dd></div>
-              <div><dt>读取</dt><dd>专用只读实例 / DRS 分析副本</dd></div>
-              <div><dt>语义</dt><dd>8 个视图、15 个指标</dd></div>
-              <div><dt>真值</dt><dd>≥25 问、≥10 个可信查询</dd></div>
-              <div><dt>重点</dt><dd>时间、JSON、字符串、隐式转换、代理/复制</dd></div>
-            </dl>
-          </article>
-          <article class="pg-card">
-            <div class="engine-head"><span>RDS FOR POSTGRESQL</span><h3>客服与运维切片</h3></div>
-            <dl>
-              <div><dt>业务域</dt><dd>工单、SLA、告警、变更、Runbook</dd></div>
-              <div><dt>读取</dt><dd>独立只读连接 / 隔离分析副本</dd></div>
-              <div><dt>语义</dt><dd>7 个视图、12 个指标</dd></div>
-              <div><dt>真值</dt><dd>≥25 问、≥10 个可信查询</dd></div>
-              <div><dt>重点</dt><dd>Schema/Role、类型、JSON/数组、窗口、审计成本</dd></div>
-            </dl>
-          </article>
-        </div>
-        <p class="engine-bottom"><strong>共同底线：</strong>Agent 不连接主写端点；两个方言包独立 Benchmark；支持矩阵、区域、版本、审计负载和 DRS 拓扑在 G1 实测。</p>
-      </div>
-    </section>
-
-    <section class="section shell" id="roadmap" aria-labelledby="roadmap-title">
-      <div class="section-heading">
-        <div><p class="eyebrow">90 天落地</p><h2 id="roadmap-title">每两周交一份可判定证据</h2></div>
-        <p>Gate 是停止条件，不是汇报标题：没有安全路径，不做真实数据；没有语义真值，不发布 Agent；没有业务改善，不扩外部 API。</p>
-      </div>
-      <figure class="diagram-frame light hwr-diagram roadmap-diagram">
-        <img src="assets/diagrams/huawei-rds-agent-90-day-roadmap.svg" alt="华为云 RDS 受治理智能层 90 天分阶段落地路线图">
-      </figure>
-      <div class="gate-detail">
-        <article><b>G0 · W0–2</b><h3>价值合同</h3><p>3 家伙伴、Top 30 问题、基线、Owner、分析只读。</p></article>
-        <article><b>G1 · W3–4</b><h3>安全路径</h3><p>双方只读、DRS PoC、Query Gateway；危险查询全拒绝。</p></article>
-        <article><b>G2 · W5–6</b><h3>治理闭环</h3><p>资产、分类、策略与最终执行绑定；暴露字段覆盖 100%。</p></article>
-        <article><b>G3 · W7–8</b><h3>语义真值</h3><p>10–15 视图、15–25 指标、≥50 Golden Questions。</p></article>
-        <article><b>G4 · W9–10</b><h3>证据 Agent</h3><p>内嵌原型与 Widget；答案都带 SQL、来源和水位。</p></article>
-        <article><b>G5 · W11–13</b><h3>伙伴试点</h3><p>3–5 隔离租户；至少两家达到业务改善目标再继续。</p></article>
-      </div>
-    </section>
-
-    <section class="section section-dark" id="scorecard" aria-labelledby="scorecard-title">
-      <div class="shell">
-        <div class="section-heading">
-          <div><p class="eyebrow">建议目标，不是实测承诺</p><h2 id="scorecard-title">上线验收看正确、安全和业务结果</h2></div>
-          <p>“回答很流畅”和“调用量很高”不能证明数据 Agent 可用；数字答案必须先验证结果与权限。</p>
-        </div>
-        <div class="score-grid">
-          <article><span>安全</span><strong>0</strong><p>分析面生产写入、高严重度越权与敏感泄露</p></article>
-          <article><span>治理</span><strong>100%</strong><p>暴露字段有 Owner、分类、策略；回答展示新鲜度</p></article>
-          <article><span>质量</span><strong>≥85%</strong><p>≥50 个 Golden Questions 的 MVP 严格结果正确率</p></article>
-          <article><span>执行</span><strong>≥95%</strong><p>受控 SQL 执行成功率；失败有稳定错误契约</p></article>
-          <article><span>体验</span><strong>≤8s</strong><p>窄查询 p95；混合跨源建议目标 ≤30s</p></article>
-          <article><span>业务</span><strong>-30%</strong><p>DBA MTTR；客服首次答复建议目标 -50%</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section shell" id="delivery" aria-labelledby="delivery-title">
-      <div class="section-heading">
-        <div><p class="eyebrow">内嵌 vs 外部 Agent</p><h2 id="delivery-title">能力同源，集成责任不同</h2></div>
-        <p>一套服务端 Capability Contract，三个入口做身份、语义、权限、结果一致性回归。</p>
-      </div>
-      <div class="delivery-compare">
-        <article><span>RDS / DAS 内嵌</span><h3>上下文最完整</h3><ul><li>自动带入实例、告警、时间窗口</li><li>原生展示指标、SQL 和深链</li><li>最快形成 DBA Copilot</li></ul></article>
-        <article><span>企业 Widget</span><h3>最贴近业务流程</h3><ul><li>SSO + 订单/客户上下文</li><li>适合客服、运营与统一门户</li><li>仍由服务端执行权限</li></ul></article>
-        <article><span>API / Agent Tool</span><h3>组合能力最强</h3><ul><li>调用方传最终用户、租户和用途</li><li>负责异步、取消、配额、重试</li><li>API Key 不能替代最终用户权限</li></ul></article>
-        <article class="action-card"><span>ACTION GATEWAY</span><h3>写动作单独治理</h3><ul><li>提案、预演、影响范围</li><li>审批、幂等、执行、验证</li><li>退款 / Kill / 改参数不直连</li></ul></article>
-      </div>
-    </section>
-
-    <section class="section section-tint" id="decision" aria-labelledby="decision-title">
-      <div class="shell decision-layout">
-        <div>
-          <p class="eyebrow">GO / NO-GO</p>
-          <h2 id="decision-title">什么条件下值得立项</h2>
-          <p>立项重点不是模型选型，而是设计伙伴、只读路径、业务 Owner 和跨产品小队是否真实存在。</p>
-          <a class="button dark" href="details/huawei-rds-agent-guide.html">查看 Epic、团队、风险与官方来源</a>
-        </div>
-        <div class="decision-list">
-          <div class="go-list"><b>GO</b><ul><li>≥3 家设计伙伴提供问题和基线</li><li>双引擎有隔离只读/分析路径</li><li>领域 Owner 负责指标和可信 SQL</li><li>DataArts/IAM 策略可落到执行层</li><li>接受 MVP 只读和六个 Gate</li></ul></div>
-          <div class="stop-list"><b>STOP / SHRINK</b><ul><li>目标只是快速做聊天 Demo</li><li>只能使用共享高权限账号</li><li>无口径 Owner 或无安全查询路径</li><li>要求 MVP 自动退款或修库</li><li>成功指标只有调用量</li></ul></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section shell" id="demo" aria-labelledby="demo-title">
-      <div class="section-heading">
-        <div><p class="eyebrow">演示与完整材料</p><h2 id="demo-title">8 分钟故事线 + 完整执行手册</h2></div>
-        <p>H1 是本页的华为云 RDS 专项中文有声录屏；D1 仍保留为通用云数据库能力全景。两者都是架构材料，不冒充华为云生产实调。</p>
-      </div>
-      <div class="demo-layout">
-        <article class="recording-card">
-          <video controls preload="metadata" src="../videos/recordings/zh-voice/H1-huawei-rds-governed-agent.mp4"></video>
-          <div><span>H1 · 127s · 中文有声</span><h3>华为云 RDS：故事、架构与 90 天落地</h3><p>客户事故、复用/打通/新建、双引擎、六个 Gate、KPI、立项条件和证据边界。</p></div>
+      <div class="module-stack">
+        <article>
+          <div class="module-id"><span>P0 · M0</span><strong>统一任务壳</strong></div>
+          <div class="module-story"><b>用户为什么需要</b><p>从 DAS 的告警、DataArts 的指标或企业门户进入，都能继续同一个任务，不用在多个产品间复制问题和截图。</p></div>
+          <div class="module-build"><b>具体补什么</b><ul><li>Conversation / Task ID 与跨产品深链</li><li>结构化结果、证据、Artifact 和下一步动作</li><li>入口只持有视图状态，不私有权限与语义真相</li></ul></div>
+          <div class="module-done"><b>做到什么程度</b><p>同一任务可从 DataArts 跳到 DAS 再返回，用户、对象、时间窗口、执行和工件引用不丢失。</p></div>
         </article>
-        <div class="demo-script">
-          <b>建议现场节奏</b>
-          <ol><li>45 秒讲 10:05 事故和 90 分钟现状</li><li>45 秒讲客服与 DBA 的五分钟证据包</li><li>75 秒讲“复用—打通—新建”</li><li>75 秒讲混合路由和动作隔离</li><li>60 秒讲 MySQL / PG 双切片</li><li>90 秒讲六个 Gate 和量化目标</li><li>30 秒用 GO / NO-GO 收口</li></ol>
-          <a class="button outline" href="details/huawei-rds-agent-guide.html">打开逐项研究与来源</a>
-        </div>
+        <article>
+          <div class="module-id"><span>P0 · M1</span><strong>共享对象与身份控制面</strong></div>
+          <div class="module-story"><b>用户为什么需要</b><p>业务用户和外部 Agent 看到相同权限结果；审计能回答“谁以谁的身份，对哪个对象做了什么”。</p></div>
+          <div class="module-build"><b>具体补什么</b><ul><li>跨产品 canonical ID / version / owner</li><li>IAM OBO / purpose / tenant / service identity</li><li>统一策略决策接口与执行端强制、审计关联</li></ul></div>
+          <div class="module-done"><b>做到什么程度</b><p>至少通过正常、越权、对象改名、权限撤销和跨入口五类回归；Prompt 不能覆盖策略判定。</p></div>
+        </article>
+        <article>
+          <div class="module-id"><span>P0 · M2</span><strong>语义与可信分析合同</strong></div>
+          <div class="module-story"><b>用户为什么需要</b><p>“已完成退款”“毛利”“P1 未解决”在问答、Dashboard、API 和 PG 查询中是同一个口径。</p></div>
+          <div class="module-build"><b>具体补什么</b><ul><li>指标、维度、Join、同义词、时间与状态规则</li><li>NL2SQL / 可信查询 / 业务说明 / 引用</li><li>Golden Questions、严格结果真值与语义版本回归</li></ul></div>
+          <div class="module-done"><b>做到什么程度</b><p>一个领域先达到可版本、可引用、可评测、可追溯；不以“SQL 能执行”替代结果正确。</p></div>
+        </article>
+        <article>
+          <div class="module-id"><span>P0 · M3</span><strong>PostgreSQL 执行与诊断平面</strong></div>
+          <div class="module-story"><b>用户为什么需要</b><p>实时订单状态与数据库风险能安全进入业务任务，同时不伤主库、不泄露敏感数据、不让模型直接修库。</p></div>
+          <div class="module-build"><b>具体补什么</b><ul><li>只读连接、Query Guard、扫描/超时/并发预算</li><li>Schema、统计、慢 SQL、等待、告警、变更、拓扑工具</li><li>Query ID、新鲜度、Explain/Preview 和稳定错误合同</li></ul></div>
+          <div class="module-done"><b>做到什么程度</b><p>PG-first 通过真实负载保护与故障注入；多引擎只复用合同，方言、权限、诊断和评测分别验收。</p></div>
+        </article>
+        <article>
+          <div class="module-id"><span>P1 · M4</span><strong>工具与动作网关</strong></div>
+          <div class="module-story"><b>用户为什么需要</b><p>企业门户、ISV 和外部 Agent 可以安全复用问数与诊断，并把退款、Kill、改参数等高风险动作送进同一审批链。</p></div>
+          <div class="module-build"><b>具体补什么</b><ul><li>权威 API + Tool schema；Widget/CLI/MCP 做适配</li><li>异步、取消、重试、幂等、配额和租户隔离</li><li>Propose → Preview → Approve → Execute → Verify</li></ul></div>
+          <div class="module-done"><b>做到什么程度</b><p>内嵌与外部入口对同一用户返回相同权限和语义结果；写动作默认关闭，逐动作过风险 Gate。</p></div>
+        </article>
+        <article>
+          <div class="module-id"><span>P1 · M5</span><strong>工件、评测与运营</strong></div>
+          <div class="module-story"><b>用户为什么需要</b><p>答案可保存、复算、分享和继续；产品团队能知道版本升级后哪些问题退化、哪一步失败、成本在哪里。</p></div>
+          <div class="module-build"><b>具体补什么</b><ul><li>Answer / Query / Chart / Evidence Pack 等 Artifact</li><li>Trace、Eval、Benchmark、反馈、审计、成本和发布 Gate</li><li>语义、Prompt、Tool、模型和执行版本关联</li></ul></div>
+          <div class="module-done"><b>做到什么程度</b><p>一条真实任务可从用户问题回放到每个对象、策略、SQL、结果和动作；版本变更前后可自动回归。</p></div>
+        </article>
       </div>
-      <div class="official-video-block">
-        <div class="official-video-intro">
-          <p class="eyebrow">华为云官方外部视频</p>
-          <h3>用官方操作材料补底座，不冒充 Agent 闭环</h3>
-          <p>领导演示先播 H1 讲完整方案，再按受众选择 1–2 个官方入口。官方视频说明现有 RDS 产品和操作路径；本文拟议的 Policy、Semantic、Query、Evidence、Eval 平面仍须按 90 天 Gate 建设和验收。</p>
+      <figure class="diagram-frame light module-architecture-figure">
+        <img src="assets/diagrams/huawei-module-architectures.svg" alt="统一任务壳、共享对象身份、语义可信分析、PostgreSQL 执行诊断、工具动作网关和工件评测运营六个模块的内部架构">
+        <figcaption>[方案假设] 六个模块可由不同团队实现，但必须共享 canonical ID、OBO、策略、Task/Artifact/Action State 与 Trace；每一行右下角都是可验收完成态。</figcaption>
+      </figure>
+    </section>
+
+    <section class="section section-tint" id="stories" aria-labelledby="stories-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div><p class="eyebrow">BUSINESS-FIRST STORIES</p><h2 id="stories-title">数据库进入 Agent，不是只给 DBA 一个 Copilot</h2></div>
+          <p>首批故事以业务价值排序。DBA 效率是必要能力，但真正推动客户购买的是收入、客户体验、风险窗口和产品上市速度。</p>
         </div>
-        <div class="official-video-grid">
-          <a href="https://support.huaweicloud.com/video/mysql-zh.html">
-            <b>01 · RDS for MySQL 产品介绍</b>
-            <span>适合领导快速理解产品定位、核心优势和典型应用；页面更新于 2025-07-01。</span>
-          </a>
-          <a href="https://support.huaweicloud.com/rds-mysql_video/index.html">
-            <b>02 · MySQL 官方视频帮助</b>
-            <span>面向产品介绍和操作指导；技术演示按当前索引选择具体条目。</span>
-          </a>
-          <a href="https://support.huaweicloud.com/rds-pg_video/index.html">
-            <b>03 · PostgreSQL 官方视频帮助</b>
-            <span>补 PostgreSQL 服务介绍、特性和操作路径，避免只用 MySQL 画面代表双引擎。</span>
-          </a>
-          <a href="https://developer.huaweicloud.com/techfield/db.html">
-            <b>04 · 数据库开发者中心与实验</b>
-            <span>适合技术同事继续看 RDS 连接、快速入门和 DRS 迁移类课程与实验。</span>
-          </a>
+        <div class="huawei-story-grid">
+          <article>
+            <div class="story-rank"><span>P0 · 收入</span><strong>结算异常与经营损失控制</strong></div>
+            <p class="story-question">“华南支付成功率为什么从 99.2% 降到 96.8%，哪些商户和订单受影响，现在应先做什么？”</p>
+            <ol><li>DataArts 复用成功率、订单金额和商户分层口径</li><li>PG 执行面查询实时订单与复制水位</li><li>DAS/RDS 提供慢 SQL、等待、变更与拓扑事实</li><li>AgentArts 组织影响清单、根因假设和处置提案</li><li>形成经营影响工件；扩容或改参数单独审批</li></ol>
+            <div class="story-value"><b>客户为何付费</b><span>缩短收入损失窗口，业务与技术不再各自排查</span></div>
+          </article>
+          <article>
+            <div class="story-rank"><span>P0 · 客户体验</span><strong>退款激增与智能售后</strong></div>
+            <p class="story-question">“昨晚升级后，哪些 VIP 客户退款失败且工单超过 SLA？按已批准退款口径总额多少？”</p>
+            <ol><li>统一订单、退款、客户和工单资产</li><li>语义合同锁定退款状态、时间和币种口径</li><li>PG 安全联查当前状态，历史分析面计算趋势</li><li>生成客户分层证据包、建议回复和行动队列</li><li>退款、改订单、发消息进入独立 Action Tool</li></ol>
+            <div class="story-value"><b>客户为何付费</b><span>更快首答、更少误承诺、关键客户优先恢复</span></div>
+          </article>
+          <article>
+            <div class="story-rank"><span>P0 · 管理风险</span><strong>变更前业务影响预演</strong></div>
+            <p class="story-question">“这个索引和参数变更会影响哪些高价值业务？窗口内是否可执行，失败如何回滚？”</p>
+            <ol><li>PG 获取 Schema、统计、负载与 Explain 证据</li><li>DataArts 把表与业务域、Owner、关键指标关联</li><li>策略平面判断数据级别、窗口与审批人</li><li>生成影响范围、成本、验证指标和回滚计划</li><li>审批后执行，自动对比业务与数据库指标</li></ol>
+            <div class="story-value"><b>客户为何付费</b><span>把技术变更风险翻译成业务风险，减少重大事故</span></div>
+          </article>
+          <article>
+            <div class="story-rank"><span>P1 · 客户产品</span><strong>SaaS 内嵌数据智能</strong></div>
+            <p class="story-question">“让我们的每个租户在自己权限下问经营数据，并能把答案保存为报告，需要重建什么？”</p>
+            <ol><li>伙伴传最终用户、租户、用途和对象上下文</li><li>统一语义和 PG Query Guard 在服务端执行</li><li>异步任务返回结构化结果、引用和 Artifact</li><li>伙伴 UI 只负责体验，不复制策略和 NL2SQL</li><li>Trace、配额、成本、SLA 按租户运营</li></ol>
+            <div class="story-value"><b>客户为何付费</b><span>更快把数据智能卖给自身客户，不承担全套治理成本</span></div>
+          </article>
         </div>
-        <p class="official-video-boundary">播放边界：外部页面内容、日期和 UI 可能更新；它们不能证明本方案新增的受治理智能层已经存在，也不能替代目标区域、版本、权限和负载的 G0/G1 实测。</p>
       </div>
     </section>
 
-    <section class="section hwr-sources" id="sources" aria-labelledby="sources-title">
+    <section class="section section-dark" id="entry" aria-labelledby="entry-title">
       <div class="shell">
         <div class="section-heading">
-          <div><p class="eyebrow">官方事实底座</p><h2 id="sources-title">已有能力与建议能力分开</h2></div>
-          <p>链接是当前公开资料；具体区域、版本、计费、白名单、负载和 SLA 必须在 G0/G1 核验。</p>
+          <div><p class="eyebrow">EMBEDDED VS EXTERNAL</p><h2 id="entry-title">能力同源，入口上下文与集成责任不同</h2></div>
+          <p>最重要的原则是：入口不成为第二套事实和权限系统。内嵌体验靠上下文取胜；外部 Agent 靠标准合同、最终用户身份和稳定状态取胜。</p>
         </div>
-        <div class="source-grid">
-          <a href="https://support.huaweicloud.com/usermanual-rds-mysql/rds-mysql-usermanual-pdf.pdf"><b>RDS for MySQL</b><span>备份、只读、代理、监控与 DBA 能力</span></a>
-          <a href="https://support.huaweicloud.com/usermanual-rds-pg/rds-pg-usermanual-pdf.pdf"><b>RDS for PostgreSQL</b><span>只读、备份、日志、审计与诊断</span></a>
-          <a href="https://support.huaweicloud.com/realtimesyn-drs/drs_05_0005.html"><b>DRS 实时同步</b><span>全量/增量和实时分析路径</span></a>
-          <a href="https://support.huaweicloud.com/productdesc-dataartsstudio/dataartsstudio_07_001.html"><b>DataArts Studio</b><span>集成、目录、质量、服务与安全</span></a>
-          <a href="https://support.huaweicloud.com/usermanual-das/das_30_1011.html"><b>DAS SQL 诊断</b><span>MySQL 诊断能力与使用约束</span></a>
-          <a href="https://support.huaweicloud.com/usermanual-pangulm/pangulm_04_0423.html"><b>智能体开发流程</b><span>知识、插件、工作流、发布与 API</span></a>
-          <a href="https://support.huaweicloud.com/intl/zh-cn/api-iam5/AssumeAgency.html"><b>IAM 临时身份</b><span>委托与短期安全凭证</span></a>
-          <a href="https://support.huaweicloud.com/productdesc-apig/apig-productdesc-pdf.pdf"><b>APIG</b><span>认证、流控与后端保护</span></a>
-          <a href="https://support.huaweicloud.com/rds_video/index.html"><b>RDS 官方视频帮助</b><span>MySQL / PostgreSQL 产品介绍与操作入口</span></a>
+        <div class="entry-difference-grid">
+          <article><span>RDS / DAS 内嵌</span><h3>数据库上下文最深</h3><ul><li>自动带入实例、数据库、告警、SQL 和时间窗口</li><li>原生展示 Explain、拓扑、负载预算与动作预演</li><li>适合业务影响诊断和高风险动作审批</li></ul><strong>独特点：专业执行面与深链</strong></article>
+          <article><span>DataArts 内嵌</span><h3>语义与分析工件最完整</h3><ul><li>自动带入资产、指标、Owner、血缘和 Dashboard</li><li>最适合自然语言分析、领域治理和内容发布</li><li>数据库执行通过权威工具调用，不复制连接逻辑</li></ul><strong>独特点：领域语义与工件生命周期</strong></article>
+          <article><span>企业门户 / Widget</span><h3>业务流程最贴近</h3><ul><li>带订单、客户、工单等业务上下文</li><li>服务端仍执行 OBO、策略、查询与审计</li><li>适合客服、运营和企业统一工作台</li></ul><strong>独特点：业务对象与人机协同</strong></article>
+          <article><span>外部 Agent / Tool API</span><h3>组合能力最强</h3><ul><li>调用方负责会话、异步、取消、重试和 UI</li><li>必须传最终用户、租户、用途与幂等键</li><li>返回任务状态、Artifact、证据、错误和深链</li></ul><strong>独特点：跨系统组合且不泄露底层权限</strong></article>
         </div>
-        <p class="source-boundary">当前完成的是公开资料核准、架构设计和执行计划；没有连接华为云 RDS 租户，没有做版本/区域/性能/成本实测，也没有真实客户数据。所有 KPI 均为试点建议目标。</p>
+      </div>
+    </section>
+
+    <section class="section shell" id="gates" aria-labelledby="gates-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">G1–G6 VALIDATION</p><h2 id="gates-title">先证明一条链，再讨论全产品路线与 OKR</h2></div>
+        <p>每个 Gate 都有停止条件。公开文档、原型和局部 Demo 不能替代目标账号中的端到端证据。</p>
+      </div>
+      <div class="validation-gates">
+        <article><b>G1 · 对象连续性</b><h3>同一对象能否跨产品引用</h3><p>选择一个 PG 数据域，验证 DataArts 资产/指标、Agent 任务、DAS 查询和最终 Artifact 的 ID、版本、Owner 与深链。</p><strong>不过：统一产品叙事不成立</strong></article>
+        <article><b>G2 · 身份与权限</b><h3>最终用户权限能否落到 PG</h3><p>覆盖浏览器用户、服务身份、外部 Agent、权限撤销、越权字段与审计关联。</p><strong>不过：只能停留在封闭内嵌场景</strong></article>
+        <article><b>G3 · 语义与正确性</b><h3>同一口径能否跨入口复用</h3><p>建立真实问题、可信 SQL、严格结果真值和语义版本变更回归，比较 DataArts、DAS 和 API 结果。</p><strong>不过：不能承诺业务问答产品</strong></article>
+        <article><b>G4 · 工具与动作</b><h3>权威能力合同是否可复用</h3><p>验证查询、诊断、Artifact 和一个低风险动作的 API/Tool、异步、取消、幂等、预演、审批与验证。</p><strong>不过：外部 Agent 只提供只读查询</strong></article>
+        <article><b>G5 · 运营与保障</b><h3>一条任务能否完整回放</h3><p>打通 Task ID、对象、策略、SQL、Query ID、结果、Artifact、Eval、Audit、Cost，并注入超时、撤权和工具失败。</p><strong>不过：不可规模化发布</strong></article>
+        <article><b>G6 · 商业与组织</b><h3>客户是否为完整旅程买单</h3><p>用设计伙伴基线、可量化业务结果、WTP、采购路径、RACI、SLA 和成本模型选择产品归属。</p><strong>不过：缩为能力包或专业工作台</strong></article>
+      </div>
+      <div class="gate-output">
+        <span>Gate 完成后才生成</span>
+        <p>产品归属决议　·　P0/P1 模块边界　·　模块目标架构　·　按依赖与难度排序的 OKR　·　里程碑与资源模型　·　Go / Shrink / Stop 条件</p>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="options" aria-labelledby="options-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div><p class="eyebrow">FOUR OWNERSHIP OPTIONS</p><h2 id="options-title">G1–G6 决定选哪条路</h2></div>
+          <p>当前只优先验证 C，不预设最终选择。四个选项都必须解释统一入口、共享控制面和领域能力由谁承担。</p>
+        </div>
+        <div class="ownership-grid">
+          <article><span>A</span><h3>数据库独立新产品</h3><p>适合跨产品对象、身份和语义确实无法复用，且客户主要为数据库工作流付费。</p><strong>最大风险：重复建设治理、BI 和 Agent</strong></article>
+          <article><span>B</span><h3>DataArts 主导迭代</h3><p>适合 DataArts 能承接统一入口、语义、工件和外部工具，数据库只需提供高质量执行能力。</p><strong>最大风险：数据库深度和高风险动作被弱化</strong></article>
+          <article class="ownership-featured"><span>C · CURRENT HYPOTHESIS</span><h3>双平面联合产品</h3><p>三个领域权威共享对象、身份、任务和证据；以一条客户旅程而不是一个组织边界对外。</p><strong>最大风险：跨团队 RACI、SLA 和发布节奏</strong></article>
+          <article><span>D</span><h3>联邦能力包</h3><p>不建设统一总入口，以标准 Tool/API、身份、Artifact、Trace 与评测包嵌入各专业产品。</p><strong>最大风险：客户旅程继续碎片化</strong></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell" id="materials" aria-labelledby="materials-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">DESIGN MATERIALS</p><h2 id="materials-title">方案材料可以讨论，但不能冒充现状</h2></div>
+        <p>独立探索中的追赶计划和 UI 原型是用于评审的产品设计假设；历史 RDS 90 天方案保留为研究演进证据。</p>
+      </div>
+      <div class="material-grid">
+        <a href="../independent_exploration_2026-08-19/huawei-catch-up-plan.html"><span>[方案假设]</span><b>华为追赶产品计划</b><p>按市场差距形成的产品路线草案，待 G1–G6 修正。</p></a>
+        <a href="../independent_exploration_2026-08-19/huawei-product-ui-prototypes.html"><span>[方案假设]</span><b>统一入口与专业工作台 UI 原型</b><p>用于讨论体验和对象交接，不代表已开发页面。</p></a>
+        <a href="details/huawei-catch-up-product-plan.html"><span>[完整文字]</span><b>产品模块与追赶计划研究稿</b><p>查看模块细节、依据、Unknown 和推断。</p></a>
+        <a href="details/huawei-rds-agent-guide.html" class="historical-material"><span>[PHASE 1 历史方案]</span><b>RDS 双引擎 90 天落地手册</b><p>保留早期思路；不再作为当前立项承诺。</p></a>
+      </div>
+      <div class="historical-demo">
+        <article class="recording-card historical-recording">
+          <video controls preload="metadata" playsinline src="../videos/recordings/zh-voice/H1-huawei-rds-governed-agent.mp4"></video>
+          <div><span>H1 · PHASE 1 · 127s · 中文有声</span><h3>历史方案：华为 RDS 故事、架构与 90 天路线</h3><p>可用于解释为什么早期方案过早收敛；其中 MySQL/PG 双引擎、五个新增服务、固定 90 天和 KPI 已被独立调研降级为待验证假设。</p></div>
+        </article>
+        <div class="historical-notes">
+          <b>如何在汇报中使用</b>
+          <ol><li>先讲本页当前结论和 G1–G6</li><li>需要追溯时再播放 H1，说明 Phase 1 如何形成</li><li>明确指出独立调研发现的跨产品接缝</li><li>不把旧 KPI、架构图或 90 天路线写入当前承诺</li></ol>
+          <a class="button outline" href="assets/diagrams/huawei-rds-agent-90-day-roadmap.svg">查看历史 SVG（已降级）</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section hwr-sources" id="evidence" aria-labelledby="evidence-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div><p class="eyebrow">EVIDENCE &amp; BOUNDARY</p><h2 id="evidence-title">回到来源，也保留 Unknown</h2></div>
+          <p>本页的华为能力判断来自公开资料研究，没有登录华为云目标账号做跨产品实测。产品状态、区域、版本和权限可能变化。</p>
+        </div>
+        <div class="source-grid decision-sources">
+          <a class="featured-source" href="../independent_exploration_2026-08-19/vendor-entry-atlas.html#capabilities"><b>67 项能力全集</b><span>11 家支持矩阵、12 类数据源、前置准备与责任边界</span></a>
+          <a href="details/independent-findings.html"><b>独立探索综合结论</b><span>事实、推断、建议和 Unknown</span></a>
+          <a href="details/agent-entry-evidence-ledger.html"><b>厂商证据账本</b><span>官方来源、能力原子和证据等级</span></a>
+          <a href="details/unknowns-and-validation.html"><b>25 个 Unknown</b><span>账号、身份、语义、工具、工件与商业验证</span></a>
+          <a href="https://support.huaweicloud.com/productdesc-dataartsinsight/dataartsinsight_01_0009.html"><b>华为云 · DataArts Insight</b><span>官方产品资料入口</span></a>
+          <a href="https://support.huaweicloud.com/usermanual-dataartsinsight/dataartsinsight_03_5059.html"><b>DataArts Insight · 智能问数相关资料</b><span>公开功能路径，仍需账号验证</span></a>
+          <a href="https://support.huaweicloud.com/productdesc-agentarts/agentarts_03_0002.html"><b>华为云 · AgentArts</b><span>官方产品说明入口</span></a>
+          <a href="https://support.huaweicloud.com/bestpractice-das/das_best_practice_01_0017.html"><b>华为云 · DAS 最佳实践</b><span>数据库专业能力公开资料</span></a>
+          <a href="https://support.huaweicloud.com/usermanual-rds-pg/rds_pg_auditing_log.html"><b>RDS for PostgreSQL · 审计</b><span>数据库执行与证据基础</span></a>
+        </div>
+        <div class="official-video-block compact-videos">
+          <div class="official-video-intro">
+            <p class="eyebrow">官方外部视频</p>
+            <h3>用来补产品底座，不用来证明跨产品闭环</h3>
+            <p>现场按听众选择 DataArts Insight 或 RDS PostgreSQL 官方视频；本页的统一入口、共享控制面与联合产品仍是待验证方案。</p>
+          </div>
+          <div class="official-video-grid">
+            <a href="https://support.huaweicloud.com/dataartsinsight_video/index.html"><b>DataArts Insight 视频</b><span>了解官方 BI/分析入口和使用路径</span></a>
+            <a href="https://support.huaweicloud.com/rds-pg_video/index.html"><b>RDS for PostgreSQL 视频</b><span>了解数据库产品与基础操作路径</span></a>
+            <a href="details/external-videos.html"><b>本项目外部视频索引</b><span>Databricks、治理、联邦与 CDC 分模块讲解</span></a>
+            <a href="details/recordings.html"><b>本项目中文有声录屏</b><span>14 段录屏、时长、讲稿与证据边界</span></a>
+          </div>
+        </div>
+        <p class="source-boundary"><strong>必须保留的边界：</strong>没有目标华为云账号观察、跨产品接口调用、真实租户越权测试、端到端 Trace 或设计伙伴商业验证；因此页面中的共享控制面、模块优先级和产品归属都属于待验证建议。</p>
       </div>
     </section>
   </main>
 
   <footer>
     <div class="shell footer-content">
-      <div><strong>华为云 RDS 受治理智能层 · 方向探索</strong><p>客户故事、产品差距与 90 天落地计划；资料截止 2026-08-18。</p></div>
+      <div><strong>华为云数据智能：产品归属与验证决策</strong><p>公开事实、分析推断、方案假设与 Unknown 分层展示。更新于 2026-08-20。</p></div>
       <a href="#top">返回顶部 ↑</a>
     </div>
   </footer>

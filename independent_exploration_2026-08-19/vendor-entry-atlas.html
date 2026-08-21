@@ -72,6 +72,10 @@
       font-weight: 700;
     }
     .vendor-nav a:hover, .vendor-nav a.active { color: #102b45; background: #fff; }
+    .vendor-nav a.capability-nav {
+      color: #fff; background: var(--red); box-shadow: 0 4px 12px rgba(200,79,94,.28);
+    }
+    .vendor-nav a.capability-nav:hover, .vendor-nav a.capability-nav.active { color: var(--navy); background: #fff; }
     .back-link { margin-left: auto; flex: 0 0 auto; color: #fff; font-size: .76rem; font-weight: 800; }
     main { width: min(1440px, calc(100% - 2rem)); margin: 0 auto; }
     .hero { padding: 5rem 0 2.3rem; }
@@ -88,6 +92,13 @@
     .stat { padding: .75rem; border-radius: 14px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.14); }
     .stat strong { display: block; font-size: 1.55rem; line-height: 1; }
     .stat span { display: block; margin-top: .35rem; color: #bdd2df; font-size: .68rem; }
+    .hero-shortcuts { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.25rem; }
+    .hero-shortcuts a {
+      display: inline-flex; align-items: center; min-height: 42px; padding: .45rem .8rem;
+      border: 1px solid #b8c8d2; border-radius: 10px; color: var(--navy); background: #fff;
+      text-decoration: none; font-size: .75rem; font-weight: 850; box-shadow: 0 6px 18px rgba(22,45,68,.06);
+    }
+    .hero-shortcuts a:first-child { color: #fff; border-color: var(--red); background: var(--red); }
     .legend { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .8rem; }
     .badge, .score, .status {
       display: inline-flex;
@@ -168,6 +179,7 @@
     .closing p { max-width: 1020px; color: #d4e4ea; }
     .closing a { color: #fff; }
     footer { padding: 1.5rem 0 3rem; color: var(--muted); font-size: .72rem; text-align: center; }
+    footer a { color: var(--navy); font-weight: 850; }
     @media (max-width: 1000px) {
       .topbar { align-items: flex-start; flex-wrap: wrap; }
       .vendor-nav { order: 3; width: 100%; }
@@ -197,7 +209,7 @@
   <header class="topbar">
     <div class="brand"><strong>ENTRY ATLAS</strong><span>2026-08-19</span></div>
     <nav class="vendor-nav" aria-label="厂商章节">
-      <a href="#capabilities">能力全集</a><a href="#data-sources">数据源</a>
+      <a class="capability-nav" href="#capabilities">能力全集</a><a href="#data-sources">数据源</a>
       <a href="#snowflake">Snowflake</a><a href="#databricks">Databricks</a><a href="#google">Google</a>
       <a href="#aws">AWS</a><a href="#microsoft">Microsoft</a><a href="#alibaba">阿里</a>
       <a href="#tencent">腾讯</a><a href="#oracle">Oracle</a><a href="#volcano">火山</a>
@@ -211,6 +223,11 @@
       <div class="eyebrow">Official UI · First-task journey · Governance boundary</div>
       <h1>不要只看聊天框，先看它背后的数据接入、前置准备与责任边界。</h1>
       <p>本详册先用 67 项去重后的细粒度能力、12 类数据源与接入方式和统一任务流程比较 11 家厂商，再保留官方入口截图、首次任务路径与演示作为体验证据。截图能判断入口收敛度；能力矩阵才解释准确性、易用度和落地成本为何不同。所有状态均来自公开官方资料，不替代账号实测。</p>
+      <div class="hero-shortcuts" aria-label="本页重点入口">
+        <a href="#capabilities">直达 67 项能力全集</a>
+        <a href="#data-sources">直达 12 类数据源</a>
+        <a href="#snowflake">从厂商第一梯队开始</a>
+      </div>
 
       <div class="hero-grid">
         <article class="decision-card">
@@ -255,7 +272,7 @@
     </section>
 
     <section class="vendor-section" id="capabilities" aria-labelledby="capabilities-title">
-      <div class="matrix-head"><div><h2 id="capabilities-title">能力全景：支持范围、数据接入、前置准备与责任边界</h2><p>以下内容由同一份数据驱动主报告摘要和本页完整矩阵；入口界面只是 67 项能力中的一小部分。</p></div></div>
+      <div class="matrix-head"><div><h2 id="capabilities-title">67 项能力全集：支持范围、数据接入、前置准备与责任边界</h2><p>以下内容由同一份数据驱动主报告摘要和本页完整矩阵；入口界面只是 67 项能力中的一小部分。</p></div></div>
       <div id="capability-full"></div>
     </section>
 
@@ -437,11 +454,11 @@
     <section class="closing">
       <h2>能力详册给出的最终判断</h2>
       <p>你的主方向判断成立，但需要从“入口统一”进一步收紧为“受治理的任务闭环统一”：对话页会成为主意图入口，API/CLI/MCP 会成为 Agent 能力面；真正决定厂商强弱的是数据如何接入、业务语义和可信逻辑由谁准备、最终用户权限是否实施到底、复杂任务能否形成可核验结果，以及失败案例能否进入版本化回归。Snowflake/Databricks 的优势是准备工作可沉淀为可复用的质量保障对象；AWS/Google 的优势是缩短用户抵达数据和任务的路径；华为当前最需要补的不是第二个聊天框，而是降低指标预计算、宽表准备等客户负担，并贯通 DataArts、AgentArts 与数据库的共享身份、语义、策略和执行链路。</p>
-      <p><a href="./agent-entry-governance-visual-report.html#capability-gap">返回主报告看能力摘要</a> · <a href="./agent-entry-governance-deep-dive.md#3b-细粒度能力全集数据源与接入方式前置准备与责任边界">阅读文字版方法</a> · <a href="./agent-entry-evidence-ledger.md">复核证据账本</a></p>
+      <p><a href="#capabilities">回到 67 项能力全集</a> · <a href="#data-sources">查看 12 类数据源</a> · <a href="./agent-entry-governance-visual-report.html#capability-gap">返回主报告看能力摘要</a> · <a href="../site/details/agent-entry-governance-deep-dive.html">阅读文字版方法</a> · <a href="../site/details/agent-entry-evidence-ledger.html">复核证据账本</a></p>
     </section>
   </main>
 
-  <footer>公开资料独立探索 · 信息基准日 2026-08-19 · 所有截图版权归相应厂商 · 未进行云账号写操作或付费开通</footer>
+  <footer><a href="#capabilities">能力全集</a> · <a href="#data-sources">数据源</a> · <a href="./agent-entry-governance-visual-report.html">主报告</a><br>公开资料独立探索 · 信息基准日 2026-08-19 · 所有截图版权归相应厂商 · 未进行云账号写操作或付费开通</footer>
   <script src="./assets/capability-comparison.js"></script>
   <script>
     const links = [...document.querySelectorAll('.vendor-nav a')];

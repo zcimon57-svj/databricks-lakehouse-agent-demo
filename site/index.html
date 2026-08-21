@@ -3,318 +3,300 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Databricks 数据湖、数据库、自然语言分析与内外部使用方式演示">
-  <title>Databricks 数据湖与数据库演示</title>
+  <meta name="description" content="数据智能与数据库 Agent 产品决策研究：Databricks 实测、11 家厂商公开资料对比、华为云产品归属与验证 Gate">
+  <title>数据智能与数据库 Agent：产品决策研究</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="hero" id="top">
+  <header class="hero decision-hero" id="top">
     <nav class="nav shell" aria-label="主导航">
-      <a class="brand" href="#top">DBX Explore</a>
+      <a class="brand" href="#top">Data Intelligence Review</a>
       <div class="nav-links">
-        <a href="#proof">实测</a>
-        <a href="#architecture">架构</a>
-        <a href="#agent-evolution">Agent 新能力</a>
-        <a href="genie.html">Genie 深讲</a>
-        <a href="database-agent.html">云数据库 Agent</a>
-        <a href="huawei-rds-agent.html">华为云 RDS</a>
-        <a href="#access">内外部使用</a>
-        <a href="#cases">案例</a>
+        <a href="#decision">结论</a>
+        <a href="#baseline">市场基线</a>
+        <a href="../independent_exploration_2026-08-19/vendor-entry-atlas.html#capabilities">能力全集</a>
+        <a href="#huawei">华为差距</a>
+        <a href="#huawei-plan">华为方案</a>
+        <a href="#options">产品选择</a>
+        <a href="#gates">验证 Gate</a>
+        <a href="#databricks">实测</a>
         <a href="#videos">视频</a>
       </div>
     </nav>
-    <div class="hero-content shell">
-      <p class="eyebrow">数据湖 · 数据库 · 自然语言分析</p>
-      <h1>一份受治理的数据，<br><span>服务分析、应用与 Agent</span></h1>
-      <p class="lead">从数据进入 Lakehouse，到 SQL、Genie、Lakebase 和外部应用，解释 Databricks 的高频路径、独特点与适用边界。</p>
+    <div class="shell hero-content">
+      <p class="eyebrow">数据智能 · 数据库 · Agent 产品决策</p>
+      <h1>竞争已经从<span class="headline-word">“会回答”</span>，<br><span>转向可信地完成数据任务</span></h1>
+      <p class="lead">用 Databricks 真实工作区演示建立产品直觉，用 11 家厂商官方资料识别市场基线，再用 G1–G6 验证华为云到底应由 DataArts 迭代、数据库新建，还是共建一条客户旅程。</p>
       <div class="hero-actions">
-        <a class="button primary" href="#architecture">从全景图开始</a>
-        <a class="button secondary" href="genie.html">Genie 深度演示</a>
-        <a class="button secondary" href="database-agent.html">云数据库怎么接</a>
-        <a class="button secondary" href="huawei-rds-agent.html">华为云 RDS 落地</a>
-        <a class="button secondary" href="details/project-brief.html">查看完整研究约定</a>
+        <a class="button primary" href="#decision">先看决策结论</a>
+        <a class="button secondary capability-hero-button" href="../independent_exploration_2026-08-19/vendor-entry-atlas.html#capabilities">打开 67 项能力全集</a>
+        <a class="button secondary" href="#huawei">看华为差距</a>
+        <a class="button secondary" href="#huawei-plan">看华为方案</a>
+        <a class="button secondary" href="../independent_exploration_2026-08-19/agent-entry-governance-visual-report.html">打开友商可视报告</a>
       </div>
-      <div class="status-bar" role="status">
-        <span class="status-dot"></span>
-        AWS Free Edition 已实测 · 14 段录屏 · Warehouse 已停止
-      </div>
+      <div class="status-bar"><span class="status-dot"></span>Databricks 已实测 · 11 家厂商已完成公开资料研究 · 华为端到端能力仍待账号与客户验证</div>
     </div>
   </header>
 
   <main>
-    <section class="section proof-section" id="proof" aria-labelledby="proof-title">
-      <div class="shell">
-        <div class="section-heading compact">
-          <p class="eyebrow">2026-08-14 真实工作区结果</p>
-          <h2 id="proof-title">不是产品设想，关键链路已经跑通</h2>
-        </div>
-        <div class="proof-grid">
-          <article><strong>21,932</strong><span>内置 NY Taxi 样例行数</span></article>
-          <article><strong>14</strong><span>从 Volume 落成的 Delta 表</span></article>
-          <article><strong>18,498</strong><span>合成数据远端核对通过</span></article>
-          <article><strong>9 / 9</strong><span>业务与运维基线查询成功</span></article>
-          <article><strong>7 + 1</strong><span>Genie 数据源 + 受信示例</span></article>
-          <article><strong>3</strong><span>可解释数据库事故真值</span></article>
-        </div>
-        <p class="proof-note">OAuth Token 仅驻留内存；Starter Warehouse 已确认停止。录屏隐藏邮箱、头像和对象 ID，数据全部为内置样例或合成数据。</p>
+    <section class="section shell" id="decision" aria-labelledby="decision-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">EXECUTIVE ANSWER</p><h2 id="decision-title">现在应批准验证，不应先批准一个既定产品答案</h2></div>
+        <p>独立调研推翻了“数据库团队照着 Databricks 补五个服务、90 天交付”的过早收敛。真正的分水岭是跨产品对象、身份、策略、任务与证据能否连续。</p>
+      </div>
+      <div class="evidence-grid">
+        <article class="evidence-card observed">
+          <div class="evidence-label">[工作区实测]</div>
+          <h3>Databricks：对象连续性是体验基础</h3>
+          <p>同一治理数据可以进入 SQL、视图、Genie、多轮问答与后续应用；我们已用合成数据和工作区录屏验证其中的可用路径。</p>
+          <a href="genie.html">看 Genie 实现与多种入口 →</a>
+        </article>
+        <article class="evidence-card researched">
+          <div class="evidence-label">[官方资料研究]</div>
+          <h3>市场：Agent 已进入任务与工件层</h3>
+          <p>11 家厂商、67 项能力显示，入口正在从问答框走向“会话 + 专业工作台 + 外部 Tool”，竞争覆盖体验、上下文、策略、执行、保障五个平面。</p>
+          <a href="../independent_exploration_2026-08-19/vendor-entry-atlas.html#capabilities">进入 67 项能力全集 →</a>
+        </article>
+        <article class="evidence-card hypothesis">
+          <div class="evidence-label">[方案假设 · 待验证]</div>
+          <h3>华为：优先验证双平面共建</h3>
+          <p>DataArts 管数据与语义，RDS/DAS 管数据库执行，AgentArts 管任务编排，共享身份、策略、工件和 Trace；最终归属必须由 G1–G6 决定。</p>
+          <a href="#huawei">先看华为差距与方案摘要 →</a>
+        </article>
+      </div>
+      <div class="decision-callout">
+        <span>当前决策请求</span>
+        <strong>授权 DataArts × AgentArts × RDS/DAS 的联合端到端验证，拿到一个真实客户旅程的对象、权限、执行、工件、Trace 和商业证据。</strong>
       </div>
     </section>
 
-    <section class="section section-tint" id="agent-evolution" aria-labelledby="agent-evolution-title">
-      <div class="shell">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">AI Agent 之后新增了什么</p>
-            <h2 id="agent-evolution-title">从“帮人写代码”走向“受治理的数据入口”</h2>
-          </div>
-          <p>本项目只关注 Agent 如何读取、解释和操作数据，不展开模型训练与推理基础设施。</p>
-        </div>
-        <div class="evolution-grid">
-          <article><span>业务提问</span><h3>Genie Agents</h3><p>自然语言 → 只读 SQL → 表格/图表；领域专家维护 Sources、Instructions、Examples 与 Benchmark。</p></article>
-          <article><span>开发协作</span><h3>Genie Code</h3><p>在 Notebook、SQL、Pipeline 和 Dashboard 中利用当前上下文解释、生成与修复内容。</p></article>
-          <article><span>事务与状态</span><h3>Lakebase + Apps</h3><p>Lakehouse 保存分析事实；Postgres 承接低延迟事务、应用状态和 Agent state。</p></article>
-          <article><span>外部组合</span><h3>API / Agent Tool</h3><p>Conversation、Statement、Files API 与标准驱动把同一能力嵌入售后、运维和企业门户。</p></article>
-        </div>
-        <p class="boundary-note">关键变化不是 Agent 绕过 SQL/权限，而是把语义、治理、执行、反馈和外部工具连接起来；任何退款、改订单、发消息或数据库修复仍需审批。</p>
-        <div class="video-actions">
-          <a class="button dark" href="genie.html">进入 Genie 实现与多用法专题</a>
-          <a class="button outline" href="database-agent.html">RDS / PolarDB / TaurusDB 如何接入</a>
-          <a class="button outline" href="huawei-rds-agent.html">华为云 RDS 90 天怎么落地</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section shell" aria-labelledby="key-title">
-      <div class="section-heading compact">
-        <p class="eyebrow">领导先记住这五点</p>
-        <h2 id="key-title">Databricks 的核心价值</h2>
-      </div>
-      <div class="key-grid">
-        <article class="key-card">
-          <span>01</span>
-          <h3>不是单纯的数据湖</h3>
-          <p>Delta 为湖上数据增加可靠表语义，Unity Catalog 统一治理。</p>
-        </article>
-        <article class="key-card">
-          <span>02</span>
-          <h3>一份数据，多种入口</h3>
-          <p>SQL、Notebook、Dashboard、Genie、App 与外部工具共享数据基础。</p>
-        </article>
-        <article class="key-card">
-          <span>03</span>
-          <h3>分析与事务分工</h3>
-          <p>Lakehouse 做大规模分析；Lakebase 用 Postgres 承接低延迟事务。</p>
-        </article>
-        <article class="key-card">
-          <span>04</span>
-          <h3>自然语言仍是 SQL</h3>
-          <p>Genie 利用业务语义生成只读 SQL，权限仍由 Unity Catalog 控制。</p>
-        </article>
-        <article class="key-card">
-          <span>05</span>
-          <h3>内嵌快，外部可组合</h3>
-          <p>工作区减少配置；API、驱动和 Agent 工具适合自动化与系统集成。</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="section section-dark" id="architecture" aria-labelledby="architecture-title">
+    <section class="section section-dark" id="baseline" aria-labelledby="baseline-title">
       <div class="shell">
         <div class="section-heading">
-          <div>
-            <p class="eyebrow">一张图看懂</p>
-            <h2 id="architecture-title">数据从哪里来，最终到哪里去</h2>
-          </div>
-          <p>Unity Catalog 不是末端组件，而是横跨接入、处理、查询、分享与应用的治理层。</p>
+          <div><p class="eyebrow">MARKET BASELINE</p><h2 id="baseline-title">五个平面，组成一个可信任务闭环</h2></div>
+          <p>自然语言和 NL2SQL 只是体验与执行之间的一段。答案必须落到受治理执行与可复算工件；SQL 是证据，不是完整结果。</p>
         </div>
         <figure class="diagram-frame">
-          <img src="assets/diagrams/platform-data-paths.svg" alt="Databricks 数据湖、Lakebase、Genie 与外部使用的数据路径架构图">
-          <figcaption>实测：Files API → managed Volume → 14 个 Delta 表 → 3 个业务视图 → SQL/Genie。Federation、Sharing、Lakebase 只验证资料或入口。</figcaption>
+          <img src="assets/diagrams/data-intelligence-task-loop.svg" alt="数据智能任务闭环的体验、上下文、策略、执行与保障五个平面">
+          <figcaption>市场基线抽象来自 11 家厂商官方资料研究；它是分析框架，不是某一厂商的现有架构声明。</figcaption>
         </figure>
+        <div class="plane-grid" aria-label="五平面职责">
+          <article><span>01</span><h3>体验</h3><p>会话、工作台、Dashboard、SQL、API 与 Tool 都能进入同一任务。</p></article>
+          <article><span>02</span><h3>上下文</h3><p>资产、Owner、指标、语义、历史、新鲜度和引擎事实可被稳定引用。</p></article>
+          <article><span>03</span><h3>策略</h3><p>最终用户身份、用途、行列权限、预算和动作风险在执行端生效。</p></article>
+          <article><span>04</span><h3>执行</h3><p>SQL、指标、工具和 Workflow 有状态、可取消、可预演、可恢复。</p></article>
+          <article><span>05</span><h3>保障</h3><p>Artifact、Trace、Eval、Audit、Cost 和反馈证明结果可信且可运营。</p></article>
+        </div>
       </div>
     </section>
 
-    <section class="section shell" id="access" aria-labelledby="access-title">
+    <section class="section shell" id="market" aria-labelledby="market-title">
       <div class="section-heading">
-        <div>
-          <p class="eyebrow">最重要的对照</p>
-          <h2 id="access-title">同一能力：工作区内嵌 vs 外部调用</h2>
-        </div>
-        <p>差异不在“能不能调用”，而在身份、上下文、自动化责任和失败处理由谁承担。</p>
+        <div><p class="eyebrow">COMPETITIVE EVIDENCE</p><h2 id="market-title">主页看结论，证据层看全量矩阵</h2></div>
+        <p>评分用于暴露强弱项和验证优先级，不应当作权威排行、产品采购分数或账号实测结果。</p>
       </div>
-      <figure class="diagram-frame light">
-        <img src="assets/diagrams/embedded-vs-external.svg" alt="Databricks 工作区内嵌使用和外部应用或 Agent 调用对比图">
-      </figure>
-      <div class="comparison-strip">
-        <div>
-          <strong>内嵌独特点</strong>
-          <p>浏览器身份、Catalog 上下文、计算选择、SQL/图表和反馈体验由平台串联。</p>
-        </div>
-        <div>
-          <strong>外部独特点</strong>
-          <p>可嵌入门户、脚本、CI/CD 和 Agent，但必须显式管理 OAuth、连接、重试和审计。</p>
-        </div>
-        <div>
-          <strong>共同底线</strong>
-          <p>Unity Catalog 权限不能因换成 API 或 Agent 而绕过；写动作必须增加审批边界。</p>
-        </div>
+      <div class="research-numbers">
+        <div><strong>11</strong><span>家厂商产品旅程</span></div>
+        <div><strong>67</strong><span>项能力原子</span></div>
+        <div><strong>10</strong><span>个评价维度</span></div>
+        <div><strong>12</strong><span>类官方证据源</span></div>
+      </div>
+      <div class="market-insights">
+        <article><b>领先样本</b><h3>对象与工件贯通</h3><p>Databricks、Snowflake 等公开产品旅程的强项，不只是问答准确，而是语义对象、分析工件、外部入口与评测相互引用。</p></article>
+        <article><b>云厂商共同方向</b><h3>Agent 与数据专业面合流</h3><p>对话入口逐渐连接 BI、数据工程、数据库运维、治理与应用开发，而专业工作台仍保留深度操作。</p></article>
+        <article><b>华为公开组合</b><h3>模块覆盖不等于旅程闭环</h3><p>DataArts、AgentArts、RDS、DAS 等已有多个能力面；公开资料尚不能证明统一对象模型和端到端状态连续。</p></article>
+      </div>
+      <div class="link-rail">
+        <a class="capability-resource" href="../independent_exploration_2026-08-19/vendor-entry-atlas.html#capabilities"><b>67 项能力全集</b><span>支持矩阵、12 类数据源、前置准备与责任边界 →</span></a>
+        <a href="../independent_exploration_2026-08-19/agent-entry-governance-visual-report.html"><b>领导可视报告</b><span>入口、治理、分层评分和差距 →</span></a>
+        <a href="../independent_exploration_2026-08-19/vendor-entry-atlas.html"><b>11 家厂商入口图谱</b><span>逐家查看真实产品旅程 →</span></a>
+        <a href="details/agent-entry-evidence-ledger.html"><b>证据账本</b><span>回到官方来源与证据等级 →</span></a>
+        <a href="../independent_exploration_2026-08-19/agent-entry-governance-visual-report.html#scores"><b>评分与方法</b><span>查看模型输入，不把分数绝对化 →</span></a>
       </div>
     </section>
 
-    <section class="section section-tint" id="database-agent" aria-labelledby="database-agent-title">
+    <section class="section section-tint" id="huawei" aria-labelledby="huawei-title">
       <div class="shell">
         <div class="section-heading">
-          <div>
-            <p class="eyebrow">如果底座是 RDS / PolarDB / TaurusDB</p>
-            <h2 id="database-agent-title">缺的不是一个聊天框</h2>
+          <div><p class="eyebrow">HUAWEI GAP</p><h2 id="huawei-title">主要差距不是“少一个模块”，而是五处接缝</h2></div>
+          <p>公开资料能证明产品存在，不能证明它们在同一租户和同一任务里共享对象、权限、状态与证据；这些接缝必须实测。</p>
+        </div>
+        <div class="seam-grid">
+          <article><span>01</span><h3>对象接缝</h3><p>资产、指标、会话、任务、工件和动作是否有跨产品稳定 ID、版本与深链。</p></article>
+          <article><span>02</span><h3>身份接缝</h3><p>浏览器用户能否 on-behalf-of 穿透 Agent 与数据服务，并在数据库执行端强制权限。</p></article>
+          <article><span>03</span><h3>语义接缝</h3><p>DataArts 中的指标、Join 与治理策略能否被 DAS/RDS 和外部 Agent 直接复用。</p></article>
+          <article><span>04</span><h3>工具接缝</h3><p>内嵌入口和外部 Agent 是否共用权威 API/Tool，而非各自复制 Prompt 和权限逻辑。</p></article>
+          <article><span>05</span><h3>证据接缝</h3><p>一次任务能否贯通 Query ID、SQL、来源、新鲜度、策略、Artifact、Eval、Audit 与 Cost。</p></article>
+        </div>
+        <div class="comparison-strip gap-summary">
+          <div><strong>不是结论</strong><p>“DataArts 已经覆盖，所以数据库只接一个 Connector”——公开资料不足以证明。</p></div>
+          <div><strong>也不是结论</strong><p>“数据库部门应重做完整数据智能平台”——现有证据同样不支持。</p></div>
+          <div><strong>当前假设</strong><p>三个领域权威加共享控制面，以一条业务旅程验证组织和产品边界。</p></div>
+        </div>
+        <div class="huawei-plan-summary" id="huawei-plan">
+          <div class="huawei-plan-copy">
+            <p class="eyebrow">HUAWEI PLAN · 待验证方案</p>
+            <h3>不是重做一个全栈平台，而是把三个领域权威连成一条客户旅程</h3>
+            <p>当前优先验证“双平面联合产品”：前台允许从 DataArts、DAS/RDS 或企业门户进入；后台由统一对象、最终用户身份、策略、任务状态、工件和 Trace 保证连续。PostgreSQL 先承担首个数据库执行验证，多引擎在 Gate 之后扩展。</p>
           </div>
-          <p>云数据库已有 SQL、事务、只读节点与监控；要达到 Genie 类可信分析，还要补旧的平台前置层和新的 Agent 运营层。</p>
+          <div class="huawei-authority-summary" aria-label="华为方案四个责任面">
+            <div><b>DataArts</b><span>数据、资产、指标、Join、业务语义与分析工件权威</span></div>
+            <div><b>AgentArts</b><span>Plan、工具路由、模型路由、异步任务与失败恢复权威</span></div>
+            <div><b>RDS / DAS</b><span>PostgreSQL 安全查询、负载保护、诊断、预演与动作验证权威</span></div>
+            <div><b>共享控制面</b><span>Canonical ID、OBO、策略、Task/Artifact/Action State、Trace/Eval/Audit/Cost</span></div>
+          </div>
         </div>
-        <div class="comparison-strip">
-          <div><strong>平台前置</strong><p>统一 Catalog、身份、行列策略、Owner、分类、血缘、审计，以及 CDC / 联邦查询。</p></div>
-          <div><strong>业务语义</strong><p>权威视图、Metric、Join、同义词、时间/状态口径和经过 Review 的可信 SQL。</p></div>
-          <div><strong>Agent 产品化</strong><p>安全执行、可解释回答、Benchmark/Monitor、iframe/API，以及独立写动作审批网关。</p></div>
-        </div>
-        <p class="boundary-note"><strong>关键判断：</strong>Unity Catalog-like 是必要但不充分；Catalog 管治理，Semantic 管口径，Agent 管对话，Eval 与 Action Gateway 管可信和变更安全。</p>
         <div class="video-actions">
-          <a class="button dark" href="database-agent.html">查看十层架构、差距矩阵与三条接入路线</a>
-          <a class="button outline" href="huawei-rds-agent.html">华为云 RDS MySQL / PG 专项案例</a>
+          <a class="button dark" href="huawei-rds-agent.html#benchmark">展开差距与对标清单</a>
+          <a class="button outline" href="huawei-rds-agent.html#architecture">展开华为目标架构</a>
+          <a class="button outline" href="huawei-rds-agent.html#modules">查看六个落地模块</a>
         </div>
       </div>
     </section>
 
-    <section class="section section-tint" id="cases" aria-labelledby="cases-title">
+    <section class="section shell" id="options" aria-labelledby="options-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">PRODUCT OWNERSHIP</p><h2 id="options-title">四个可选方向，不在验证前锁死组织答案</h2></div>
+        <p>选项不是四套重复建设。G1–G6 的证据将决定统一入口和共享控制面由谁拥有、哪些能力留在领域产品、商业包装如何形成。</p>
+      </div>
+      <div class="option-grid">
+        <article><span>A</span><h3>数据库独立新产品</h3><p>RDS/DAS 拥有入口、语义、Agent 和运营闭环。</p><ul><li>优点：数据库场景闭环快</li><li>风险：重复治理、BI 与 Agent 平台</li><li>适用：跨产品复用被验证为不可行</li></ul></article>
+        <article><span>B</span><h3>DataArts 主导迭代</h3><p>DataArts 统一入口与智能分析，数据库提供 Connector 和诊断工具。</p><ul><li>优点：复用数据治理与 BI</li><li>风险：数据库执行深度和运维闭环不足</li><li>适用：对象、OBO 和工具平面已贯通</li></ul></article>
+        <article class="recommended-option"><span>C · 当前优先验证</span><h3>双平面联合产品</h3><p>DataArts 管数据语义，RDS/DAS 管执行，AgentArts 管编排，共享控制面串联。</p><ul><li>优点：保留领域权威、减少重建</li><li>风险：跨团队责任和 SLA 最难</li><li>条件：必须通过 G1–G6</li></ul></article>
+        <article><span>D</span><h3>联邦能力包</h3><p>不建新总入口，以标准 API/Tool、身份、工件和评测包嵌入各产品。</p><ul><li>优点：组织扰动较小</li><li>风险：客户旅程仍可能碎片化</li><li>适用：统一入口商业价值不成立</li></ul></article>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="gates" aria-labelledby="gates-title">
       <div class="shell">
         <div class="section-heading">
-          <div>
-            <p class="eyebrow">四条真实故事线</p>
-            <h2 id="cases-title">演示案例</h2>
-          </div>
-          <p>每个案例都将提供真实录屏、SVG、中文讲稿、外部视频和可复现步骤。</p>
+          <div><p class="eyebrow">DECISION GATES</p><h2 id="gates-title">每个 Gate 都要拿到可以否决方案的证据</h2></div>
+          <p>当前 Gate 是决策验证，不是伪装成“阶段”的固定开发路线。无法实测的能力保持 Unknown，不能用产品文档或原型图自动判定通过。</p>
         </div>
-        <div class="case-grid">
-          <article class="case-card featured">
-            <p class="tag">C1 · 平台主线</p>
-            <h3>高频 Lakehouse 流程</h3>
-            <p>样例或文件数据进入 Bronze，经清洗形成 Silver，再产出可查询与可分享的 Gold 数据。</p>
-            <ul>
-              <li>Lakeflow / SQL / Notebook</li>
-              <li>Delta 表与 Unity Catalog</li>
-              <li>Dashboard 与外部 SQL</li>
-            </ul>
-            <span class="verified">数据、SQL、Catalog、Lineage 与录屏已完成</span>
-          </article>
-          <article class="case-card">
-            <p class="tag">C2 · 自然语言</p>
-            <h3>对已有数据直接问问题</h3>
-            <p>对比手写 SQL、工作区 Genie 和外部 API/Agent，验证口径、SQL 与权限是否一致。</p>
-            <ul>
-              <li>中文问题与业务术语</li>
-              <li>Metric View / 元数据</li>
-              <li>错误问题与无权限边界</li>
-            </ul>
-            <span class="verified">可信 SQL + Genie 中文回答一致</span>
-          </article>
-          <article class="case-card">
-            <p class="tag">C3 · 智能售后</p>
-            <h3>订单、退款与售后政策</h3>
-            <p>用结构化数据回答售后问题，生成处理建议；任何写动作都经过人工确认。</p>
-            <ul>
-              <li>订单与客服工单</li>
-              <li>退款异常与趋势</li>
-              <li>App / Agent 外部入口</li>
-            </ul>
-            <span class="verified">700 条案例 · 18 条行动队列 · 已录屏</span>
-          </article>
-          <article class="case-card">
-            <p class="tag">C4 · 数据库运维</p>
-            <h3>指标、慢 SQL 与事件诊断</h3>
-            <p>关联监控、告警、变更和 Runbook，生成可追溯的诊断建议，而不是自动修改生产。</p>
-            <ul>
-              <li>异常时段与根因线索</li>
-              <li>慢查询与变更关联</li>
-              <li>工单草稿与审批边界</li>
-            </ul>
-            <span class="verified">3 个事故真值 · 已录屏</span>
-          </article>
+        <div class="gate-grid">
+          <article><b>G1</b><h3>对象连续性</h3><p>跨 DataArts、AgentArts、RDS/DAS 的稳定 ID、版本、引用和深链。</p><strong>输出：对象映射 + 一条实测链</strong></article>
+          <article><b>G2</b><h3>身份与权限</h3><p>最终用户 OBO、服务身份、策略决策和数据库执行端强制。</p><strong>输出：正向/越权用例 + 审计</strong></article>
+          <article><b>G3</b><h3>语义与正确性</h3><p>指标、Join、时间、状态口径复用，并对 Golden Questions 严格比对。</p><strong>输出：评测集 + 结果真值</strong></article>
+          <article><b>G4</b><h3>工具与动作</h3><p>内嵌和外部入口共用 Tool/API；异步、幂等、预演、审批和验证。</p><strong>输出：能力合同 + 动作证据</strong></article>
+          <article><b>G5</b><h3>运营与保障</h3><p>任务、SQL、策略、Artifact、Eval、Audit、Cost 和失败恢复共享 Trace。</p><strong>输出：端到端 Trace + 故障演练</strong></article>
+          <article><b>G6</b><h3>商业与组织</h3><p>客户是否为完整工作流付费，归属、RACI、SLA 和成本是否可承接。</p><strong>输出：设计伙伴证据 + 决策稿</strong></article>
+        </div>
+        <div class="gate-decision">
+          <div><span>通过</span><p>确定产品归属、P0 模块、目标架构、OKR 与分阶段路线。</p></div>
+          <div><span>部分通过</span><p>缩为数据库能力包或 DataArts 插件，保留已验证的领域权威。</p></div>
+          <div><span>不通过</span><p>停止大平台建设，只做高价值专业工作台与标准工具接口。</p></div>
+        </div>
+        <div class="video-actions">
+          <a class="button secondary" href="details/unknowns-and-validation.html">查看 25 个 Unknown 与验证合同</a>
+          <a class="button secondary" href="details/data-intelligence-decision-brief.html">打开 V2 决策 Brief</a>
         </div>
       </div>
     </section>
 
-    <section class="section shell" id="videos" aria-labelledby="videos-title">
+    <section class="section shell" id="stories" aria-labelledby="stories-title">
       <div class="section-heading">
-        <div>
-          <p class="eyebrow">不是只有文档</p>
-          <h2 id="videos-title">每个模块都有真实录屏与外部讲解</h2>
-        </div>
-        <p>真实录屏用于证明“怎么做”；页面默认播放中文有声版，无声原版仍保留；外部视频补充官方定位和不同视角。</p>
+        <div><p class="eyebrow">BUSINESS STORIES</p><h2 id="stories-title">先卖业务结果，再解释背后的 Agent 与数据库</h2></div>
+        <p>每个故事都必须展示：谁发起、用了哪些对象、策略在哪里执行、产出什么工件、业务如何继续、什么动作必须审批。</p>
       </div>
-      <div class="recording-grid">
-        <article class="recording-card">
-          <video controls preload="metadata" src="../videos/recordings/zh-voice/G1-genie-business-user-multi-use.mp4"></video>
-          <div><span>G1 · 61s · 真实 UI</span><h3>Genie 业务用户多种用法</h3><p>退款聚合、Show code、DBOps 报告、连续追问与审批边界</p></div>
+      <div class="story-grid">
+        <article>
+          <span>01 · 经营分析</span><h3>从“为什么毛利下降”到可发布的经营工件</h3>
+          <p>区域负责人追问渠道、品类和时间窗口，系统复用权威指标与 Join，保存分析工件并发布到看板。</p>
+          <dl><div><dt>客户买单点</dt><dd>减少取数等待与口径争议</dd></div><div><dt>数据库责任</dt><dd>可复算查询、新鲜度与负载保护</dd></div></dl>
         </article>
-        <article class="recording-card">
-          <video controls preload="metadata" src="../videos/recordings/zh-voice/G2-genie-authoring-monitor-benchmark.mp4"></video>
-          <div><span>G2 · 83s · 真实 UI</span><h3>Genie 配置、Monitor 与 Benchmark</h3><p>7 Sources、Instructions、Example、3 个回归问题与严格失败分析</p></div>
+        <article>
+          <span>02 · 智能售后</span><h3>从退款异常到有证据的客户处理建议</h3>
+          <p>联查订单、退款、客户、工单与政策，生成受影响客户清单、证据和建议；退款与发信单独审批。</p>
+          <dl><div><dt>客户买单点</dt><dd>缩短首答时间，提升一致性</dd></div><div><dt>数据库责任</dt><dd>实时状态、历史联查和安全查询</dd></div></dl>
         </article>
-        <article class="recording-card">
-          <video controls preload="metadata" src="../videos/recordings/zh-voice/G3-genie-embedded-vs-api-architecture.mp4"></video>
-          <div><span>G3 · 71s · 架构演示</span><h3>工作区、iframe、API 与多 Agent</h3><p>外部可组合性、身份/重试/审计责任与写动作 Gate；不冒充 API 实调</p></div>
+        <article>
+          <span>03 · 业务影响诊断</span><h3>从“结算变慢”到业务与数据库共同时间线</h3>
+          <p>应用 Owner 关联成功率、延迟、慢 SQL、等待、告警、变更和拓扑，形成事故证据包和修复提案。</p>
+          <dl><div><dt>客户买单点</dt><dd>降低损失窗口，而非只省 DBA 时间</dd></div><div><dt>数据库责任</dt><dd>引擎事实、诊断、预演和动作验证</dd></div></dl>
         </article>
-        <article class="recording-card">
-          <video controls preload="metadata" src="../videos/recordings/zh-voice/D1-cloud-database-governed-agent-architecture.mp4"></video>
-          <div><span>D1 · 79s · 架构演示</span><h3>云数据库如何接入 Genie 类能力</h3><p>数据库底座、Unity Catalog-like、语义、评测、三条接入路线与动作审批</p></div>
+        <article>
+          <span>04 · SaaS 内嵌</span><h3>伙伴不用重建 NL2SQL、权限和审计</h3>
+          <p>伙伴应用带最终用户与租户上下文调用 Tool/API，获得同源语义、任务状态和证据，而不是共享高权限连接。</p>
+          <dl><div><dt>客户买单点</dt><dd>更快给自身客户提供数据智能</dd></div><div><dt>数据库责任</dt><dd>隔离、配额、SLA 与稳定错误契约</dd></div></dl>
         </article>
-        <article class="recording-card">
-          <video controls preload="metadata" src="../videos/recordings/zh-voice/H1-huawei-rds-governed-agent.mp4"></video>
-          <div><span>H1 · 127s · 架构演示</span><h3>华为云 RDS：故事到 90 天落地</h3><p>RDS、DAS、DRS、DataArts 复用与新增服务、双引擎、六个 Gate 和 KPI</p></div>
-        </article>
-        <article class="recording-card">
-          <video controls preload="metadata" src="../videos/recordings/zh-voice/M02-catalog-delta-lineage.mp4"></video>
-          <div><span>M02 · 25s</span><h3>Delta 表与自动血缘</h3><p>Catalog → Schema → MANAGED Table → Details → Lineage</p></div>
-        </article>
-        <article class="recording-card">
-          <video controls preload="metadata" src="../videos/recordings/zh-voice/M05-data-ingestion-paths.mp4"></video>
-          <div><span>M05 · 14s</span><h3>数据接入入口</h3><p>文件/Volume、对象存储、数据库与 SaaS Connector</p></div>
-        </article>
-        <article class="recording-card">
-          <video controls preload="metadata" src="../videos/recordings/zh-voice/M09-genie-embedded-natural-language.mp4"></video>
-          <div><span>M09 · 34s</span><h3>内嵌 Genie Agent</h3><p>答案、SQL、Sources、Instructions 与 Example</p></div>
-        </article>
-        <article class="recording-card">
-          <video controls preload="metadata" src="../videos/recordings/zh-voice/C2-natural-language-trusted-sql.mp4"></video>
-          <div><span>C2 · 16s</span><h3>自然语言可信基线</h3><p>先固定 SQL 真值，再判断 Agent 是否答对</p></div>
-        </article>
-        <article class="recording-card">
-          <video controls preload="metadata" src="../videos/recordings/zh-voice/C3-intelligent-after-sales.mp4"></video>
-          <div><span>C3 · 16s</span><h3>智能售后</h3><p>18 条行动队列，分析自动化、写动作审批</p></div>
-        </article>
-        <article class="recording-card">
-          <video controls preload="metadata" src="../videos/recordings/zh-voice/C4-database-intelligent-operations.mp4"></video>
-          <div><span>C4 · 16s</span><h3>数据库智能运维</h3><p>事故上下文与 Runbook；只读诊断，不自动修库</p></div>
-        </article>
-      </div>
-      <div class="video-actions">
-        <a class="button dark" href="details/recordings.html">14 段录屏与讲稿</a>
-        <a class="button outline" href="details/external-videos.html">外部视频与建议片段</a>
-      </div>
-      <div class="external-strip" aria-label="主选外部视频">
-        <a href="https://www.youtube.com/watch?v=BMO90DI82Dc">Delta Lake 官方 Demo</a>
-        <a href="https://www.youtube.com/watch?v=TT-O-s28mGI">Lakeflow Connect</a>
-        <a href="https://www.youtube.com/watch?v=3_TpRj3z_Gs">AI/BI Genie</a>
-        <a href="https://www.youtube.com/watch?v=UQynsu6qklw">Lakebase Postgres</a>
       </div>
     </section>
 
-    <section class="section section-dark" id="scope" aria-labelledby="scope-title">
+    <section class="section proof-section" id="databricks" aria-labelledby="databricks-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div><p class="eyebrow">DATABRICKS LIVE PROOF</p><h2 id="databricks-title">领先样本不是纸面功能表，我们已经实际走过</h2></div>
+          <p>以下数字来自 2026-08-18 Free Edition 工作区和本项目合成数据；不外推为商业版功能、容量、SLA、成本或 API 权益。</p>
+        </div>
+        <div class="proof-grid">
+          <article><strong>14</strong><span>张 Delta managed tables</span></article>
+          <article><strong>7</strong><span>个 Genie 受治理数据源</span></article>
+          <article><strong>9/9</strong><span>个可信 SQL 查询通过真值验证</span></article>
+          <article><strong>3</strong><span>个业务视图：分析、售后、数据库运维</span></article>
+          <article><strong>11</strong><span>段真实工作区录屏</span></article>
+          <article><strong>14</strong><span>段普通话有声演示视频</span></article>
+        </div>
+        <p class="proof-note">已验证链路：合成数据 → Delta/Unity Catalog → SQL Warehouse/视图 → Genie Sources/Instructions → 自然语言问题 → SQL/结果/多轮追问。架构演示和华为方案录屏另行标识，不冒充工作区实测。</p>
+        <div class="video-actions">
+          <a class="button primary" href="genie.html">进入 Genie 深度演示</a>
+          <a class="button secondary" href="database-agent.html">看云数据库通用能力栈</a>
+          <a class="button secondary" href="details/recordings.html">查看全部 14 段录屏</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="videos" aria-labelledby="videos-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div><p class="eyebrow">DEMO PLAYLIST</p><h2 id="videos-title">领导讲主线，同事看实现，专项团队看证据</h2></div>
+          <p>默认播放普通话有声版。Genie 提供三段较长的分层录屏；外部视频用于补充厂商定位，不证明本账号已经开通对应能力。</p>
+        </div>
+        <div class="recording-grid">
+          <article class="recording-card">
+            <video controls preload="metadata" playsinline src="../videos/recordings/zh-voice/G1-genie-business-user-multi-use.mp4"></video>
+            <div><span>G1 · GENIE 业务路径</span><h3>业务问答与多轮使用</h3><p>从问题、解释、SQL、图表到继续追问，适合作为领导演示主片。</p></div>
+          </article>
+          <article class="recording-card">
+            <video controls preload="metadata" playsinline src="../videos/recordings/zh-voice/G2-genie-authoring-monitor-benchmark.mp4"></video>
+            <div><span>G2 · GENIE 作者路径</span><h3>Sources、Instructions、Monitor 与 Benchmark</h3><p>解释 Genie 如何从聊天体验变成可配置、可评测、可运营的产品。</p></div>
+          </article>
+          <article class="recording-card">
+            <video controls preload="metadata" playsinline src="../videos/recordings/zh-voice/G3-genie-embedded-vs-api-architecture.mp4"></video>
+            <div><span>G3 · 架构演示</span><h3>内嵌、API 与外部 Agent</h3><p>比较身份、上下文、异步状态、工具调用与责任边界；不冒充 API 生产实调。</p></div>
+          </article>
+          <article class="recording-card">
+            <video controls preload="metadata" playsinline src="../videos/recordings/zh-voice/C3-intelligent-after-sales.mp4"></video>
+            <div><span>C3 · 业务案例</span><h3>智能售后</h3><p>订单、退款与工单证据如何形成建议，以及写动作为什么要单独审批。</p></div>
+          </article>
+          <article class="recording-card">
+            <video controls preload="metadata" playsinline src="../videos/recordings/zh-voice/C4-database-intelligent-operations.mp4"></video>
+            <div><span>C4 · 业务影响</span><h3>数据库智能运维</h3><p>把引擎事实与业务影响连接起来，重点展示证据包而不自动修库。</p></div>
+          </article>
+          <article class="recording-card historical-recording">
+            <video controls preload="metadata" playsinline src="../videos/recordings/zh-voice/H1-huawei-rds-governed-agent.mp4"></video>
+            <div><span>H1 · PHASE 1 历史方案</span><h3>华为 RDS 90 天方案录屏</h3><p>保留用于解释研究演进；其中双引擎、五项服务和固定 90 天路线已不再是当前结论。</p></div>
+          </article>
+        </div>
+        <div class="video-actions">
+          <a class="button dark" href="details/recordings.html">全部录屏、时长与讲稿</a>
+          <a class="button outline" href="details/external-videos.html">各模块外部视频索引</a>
+          <a class="button outline" href="../independent_exploration_2026-08-19/huawei-product-ui-prototypes.html">华为产品 UI 原型（方案）</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="boundary" aria-labelledby="boundary-title">
       <div class="shell scope-grid">
-        <div><p class="eyebrow">一句话边界</p><h2 id="scope-title">已跑通核心链路，未虚构生产验证</h2></div>
+        <div>
+          <p class="eyebrow">EVIDENCE BOUNDARY</p>
+          <h2 id="boundary-title">把“看见了”与“建议做”分开</h2>
+        </div>
         <ul>
-          <li>已实测：Volume、Delta、Catalog/Lineage、SQL、Genie、售后与运维分析。</li>
-          <li>只看入口：Job/Pipeline、Lakebase；没有创建资源。</li>
-          <li>资料覆盖：Dashboard、Apps、Federation、Sharing；没有现场对象。</li>
-          <li>不可推出：生产 SLA、私网、合规、容量、成本与无人审批写操作。</li>
+          <li><strong>[工作区实测]</strong> 只覆盖本项目在 Databricks Free Edition 中实际观察和验证的路径。</li>
+          <li><strong>[官方资料研究]</strong> 证明公开可查的产品能力和入口，不证明目标账号、区域、版本或跨产品打通。</li>
+          <li><strong>[分析推断]</strong> 用于建立市场基线和差距优先级；评分不是权威排行。</li>
+          <li><strong>[方案假设]</strong> 双平面、共享控制面、UI 原型和后续模块都必须通过 G1–G6，不能写成现有能力。</li>
+          <li>所有业务数据为确定性合成数据；项目未连接或修改任何生产数据库，也不包含登录凭据、Cookie、Token 或组织标识。</li>
         </ul>
       </div>
     </section>
@@ -322,11 +304,8 @@
 
   <footer>
     <div class="shell footer-content">
-      <div>
-        <strong>Databricks Explore</strong>
-        <p>完整证据与简化演示分离，所有时间敏感内容标注截止日。</p>
-      </div>
-      <a href="#top">返回顶部 ↑</a>
+      <div><strong>数据智能与数据库 Agent 产品决策研究</strong><p>Databricks 实测、跨厂商公开资料研究与华为待验证方案分层展示。更新于 2026-08-20。</p></div>
+      <div class="footer-links"><a href="../independent_exploration_2026-08-19/vendor-entry-atlas.html#capabilities">能力全集</a><a href="#huawei">华为差距</a><a href="#huawei-plan">华为方案</a><a href="#top">返回顶部 ↑</a></div>
     </div>
   </footer>
 </body>

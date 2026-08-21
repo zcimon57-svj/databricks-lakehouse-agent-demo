@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="数据智能与数据库 Agent 产品决策 Brief（V2）">
+  <title>数据智能与数据库 Agent 产品决策 Brief（V2）</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../details.css">
+</head>
+<body class="detail-page">
+  <header class="detail-header" id="top">
+    <nav class="detail-nav shell" aria-label="详情页导航">
+      <a class="brand" href="../index.html#gates">← 返回决策首页</a>
+      <a href="../index.html">数据智能决策首页</a>
+    </nav>
+    <div class="shell detail-heading">
+      <p class="eyebrow">CURRENT DECISION CONTRACT</p>
+      <h1>数据智能与数据库 Agent 产品决策 Brief（V2）</h1>
+      <p>这是完整研究层；演示页保持精简，证据、边界、步骤和来源在这里展开。</p>
+    </div>
+  </header>
+  <main class="shell detail-layout">
+    <article class="markdown-body">
+<h1>数据智能与数据库 Agent 产品决策 Brief（V2）</h1>
+<blockquote>
+<p>状态：当前总目标与展示契约
+日期：2026-08-20
+关系：本文件是后续研究与汇报的总契约；<a href="project-brief.html"><code>00-project-brief.md</code></a> 保留为 Databricks 实测与演示交付的 Phase 1 记录，不被覆盖。</p>
+</blockquote>
+<h2>1. 一句话目标</h2>
+<p>通过真实 Databricks 演示、跨厂商产品旅程比较和华为云端到端验证，识别数据智能产品的新市场基线、华为跨产品接缝及数据库不可替代责任，支撑产品归属、投资范围和落地路线决策。</p>
+<p>这不是“照抄 Databricks 功能清单”，也不是预先决定由数据库团队、DataArts 或 AgentArts 单独建设。当前要先把可证明的事实、产品假设和关键未知项分开，再用验证 Gate 决定组织与产品边界。</p>
+<h2>2. 三条研究线</h2>
+<table>
+<thead>
+<tr>
+<th>研究线</th>
+<th>回答的问题</th>
+<th>当前材料</th>
+<th>证据边界</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A. Databricks 真实演示</td>
+<td>领先产品如何把数据、语义、分析、Agent 和外部入口串成用户旅程</td>
+<td>工作区实测、合成数据、SQL、14 段有声录屏、Genie 专题</td>
+<td>Free Edition 快照；不是商业版 SLA、容量或外部 API 生产验证</td>
+</tr>
+<tr>
+<td>B. 市场基线</td>
+<td>竞争焦点已经移动到哪里，哪些能力成为共同基线</td>
+<td>11 家厂商、67 项能力、10 个维度、官方资料证据账本和可视报告</td>
+<td>公开资料研究；评分是分析模型，不是权威基准或采购结论</td>
+</tr>
+<tr>
+<td>C. 华为产品决策</td>
+<td>差距发生在哪些产品接缝，谁应拥有入口、对象、策略、执行和证据</td>
+<td>DataArts / AgentArts / RDS / DAS 等公开资料、四种归属选项、未知项与验证 Gate</td>
+<td>尚未完成目标账号、跨产品、真实租户和客户工作流验证</td>
+</tr>
+</tbody></table>
+<h2>3. 当前可用结论</h2>
+<h3>3.1 已有证据支持的判断</h3>
+<ol>
+<li>数据智能竞争已不只是“自然语言生成 SQL”，而是从意图进入，到受治理执行，再到可复算工件、评测、审计和外部工具调用的完整任务闭环。</li>
+<li>市场基线可以用五个平面描述：体验、上下文、策略、执行、保障。单独的聊天入口、Catalog、NL2SQL 或数据库诊断都不足以形成闭环。</li>
+<li>Databricks 的领先样本价值主要在对象连续性：同一套治理对象和语义能够进入 SQL、Metric View、Genie、Dashboard、API 与评测，而不只是拥有更多孤立模块。</li>
+<li>华为云公开产品组合已经覆盖数据集成、治理、BI、数据库、Agent 编排等多类能力；当前最需要验证的是跨产品连续性，而不是简单统计“有没有模块”。</li>
+<li>对数据库产品而言，不可替代的责任是安全执行、引擎上下文、实时诊断、负载保护、动作控制和可验证结果；这不等于应由数据库团队重建完整 BI、治理与通用 Agent 平台。</li>
+</ol>
+<h3>3.2 当前方案假设</h3>
+<p>当前优先验证“双平面、一条客户旅程”：</p>
+<ul>
+<li>DataArts / BI 平面拥有数据资产、业务语义、分析工件与领域治理；</li>
+<li>数据库执行平面拥有只读查询、诊断、负载保护和高风险动作；</li>
+<li>AgentArts 或统一会话壳负责编排与多工具协作；</li>
+<li>共享控制面提供 canonical ID、on-behalf-of 身份、策略判定、任务/工件/动作状态、Trace、Eval、Audit 和 Cost。</li>
+</ul>
+<p>这只是待验证的产品架构假设，不是现网能力声明，也不预设最终组织归属。</p>
+<h2>4. 领导需要做的当前决策</h2>
+<p>当前不请求直接批准固定“90 天产品建设”，而是请求批准一轮有停止条件的联合验证，产出组织与产品归属所需的证据：</p>
+<table>
+<thead>
+<tr>
+<th>Gate</th>
+<th>要验证的核心问题</th>
+<th>必须拿到的判定证据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>G1 对象连续性</td>
+<td>DataArts、AgentArts、RDS/DAS 是否能引用同一资产、语义、会话与工件</td>
+<td>跨产品对象映射、稳定 ID、版本和深链实测</td>
+</tr>
+<tr>
+<td>G2 身份与权限</td>
+<td>最终用户身份能否 on-behalf-of 传递，策略能否在执行端强制</td>
+<td>正向/越权用例、审计记录、服务身份与用户身份边界</td>
+</tr>
+<tr>
+<td>G3 语义与正确性</td>
+<td>指标、Join、时间、状态等口径能否复用并被回归验证</td>
+<td>Golden Questions、严格结果比对、语义变更影响证据</td>
+</tr>
+<tr>
+<td>G4 工具与动作</td>
+<td>内嵌入口和外部 Agent 是否共用同一能力合同</td>
+<td>API/Tool 契约、异步状态、幂等、预演、审批和验证链</td>
+</tr>
+<tr>
+<td>G5 运营与保障</td>
+<td>是否具备端到端 Trace、Eval、Audit、Cost 和失败恢复</td>
+<td>一条真实任务的共享 Trace、评测集、故障注入与恢复记录</td>
+</tr>
+<tr>
+<td>G6 商业与组织</td>
+<td>客户是否为完整工作流付费，哪个团队适合承担产品责任</td>
+<td>设计伙伴访谈、场景基线、WTP/采购路径、RACI 与成本模型</td>
+</tr>
+</tbody></table>
+<p>任一 Gate 未通过，都应缩小或调整产品边界，而不是用演示效果替代证据。</p>
+<h2>5. 需要持续讲清的业务故事</h2>
+<ol>
+<li><strong>经营分析与追问</strong>：业务负责人从一个问题进入，得到受治理指标、证据 SQL、可保存工件，并继续发布到看板或触发后续任务。</li>
+<li><strong>智能售后</strong>：客服联查订单、退款、客户与工单，形成可引用的证据包；退款、改订单、发消息由独立动作工具审批执行。</li>
+<li><strong>数据库风险与业务影响</strong>：应用负责人从“为什么结算变慢”进入，关联业务指标、慢 SQL、告警、变更和拓扑；建议可自动生成，修复动作必须预演、审批与验证。</li>
+<li><strong>SaaS/伙伴内嵌</strong>：外部产品通过统一 Tool/API 复用数据语义、最终用户权限、任务状态和证据，而不是获得共享高权限数据库连接。</li>
+</ol>
+<p>每个故事都要同时展示业务结果、数据对象、身份策略、执行路径、工件、证据和动作边界。</p>
+<h2>6. 展示层契约</h2>
+<p>主页只展示领导决策需要的最小信息：</p>
+<ol>
+<li>一屏结论；</li>
+<li>三类证据；</li>
+<li>五平面市场基线；</li>
+<li>华为跨产品接缝；</li>
+<li>四种产品归属选项与当前待验证假设；</li>
+<li>G1–G6 决策 Gate；</li>
+<li>三个业务故事；</li>
+<li>Databricks 实测与精选录屏；</li>
+<li>证据边界与详细研究入口。</li>
+</ol>
+<p>67×11 能力矩阵、完整证据账本、评分细节、产品原型和历史方案不堆在主页；它们通过子页面展开，并始终标明“公开事实 / 分析推断 / 方案假设 / 待验证”。</p>
+<h2>7. 关键入口</h2>
+<ul>
+<li><a href="independent-findings.html"><code>../independent_exploration_2026-08-19/independent-findings.md</code></a>：独立研究综合结论</li>
+<li><a href="agent-entry-governance-deep-dive.html"><code>../independent_exploration_2026-08-19/agent-entry-governance-deep-dive.md</code></a>：Agent 入口、治理和共享控制面深挖</li>
+<li><a href="unknowns-and-validation.html"><code>../independent_exploration_2026-08-19/unknowns-and-validation.md</code></a>：未知项和验证计划</li>
+<li><a href="../../independent_exploration_2026-08-19/vendor-entry-atlas.html"><code>../independent_exploration_2026-08-19/vendor-entry-atlas.html</code></a>：11 家厂商入口旅程图谱</li>
+<li><a href="../../independent_exploration_2026-08-19/agent-entry-governance-visual-report.html"><code>../independent_exploration_2026-08-19/agent-entry-governance-visual-report.html</code></a>：领导可视化研究报告</li>
+<li><a href="live-workspace-validation.html"><code>research/03-live-workspace-validation.md</code></a>：Databricks 工作区实测</li>
+<li><a href="genie-guide.html"><code>research/04-genie-implementation-and-usage.md</code></a>：Genie 实现与使用方式</li>
+</ul>
+<h2>8. 历史材料处理</h2>
+<p>早期“华为云 RDS 受治理智能层 / 90 天 MVP”页面、SVG、H1 录屏和研究稿保留为 Phase 1 方案记录。独立调研已经说明，固定的双引擎范围、五个新增服务和 90 天建设承诺不能作为当前决策前提；新页面必须把它们标为历史方案，并以 G1–G6 验证结果作为后续路线输入。</p>
+
+    </article>
+  </main>
+  <footer>
+    <div class="shell footer-content">
+      <div><strong>数据智能与数据库 Agent 产品决策 Brief（V2）</strong><p>由项目内 Markdown 源文件生成；UTF-8 静态页面，可离线阅读。</p></div>
+      <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">返回顶部 ↑</a>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,82 +1,91 @@
-# Databricks Lakehouse、数据库与数据 Agent 演示
+# 数据智能、Databricks 与数据库 Agent 产品决策研究
 
-[![Deploy Databricks demo to GitHub Pages](https://github.com/zcimon57-svj/databricks-lakehouse-agent-demo/actions/workflows/pages.yml/badge.svg)](https://github.com/zcimon57-svj/databricks-lakehouse-agent-demo/actions/workflows/pages.yml)
+[![Deploy decision site to GitHub Pages](https://github.com/zcimon57-svj/databricks-lakehouse-agent-demo/actions/workflows/pages.yml/badge.svg)](https://github.com/zcimon57-svj/databricks-lakehouse-agent-demo/actions/workflows/pages.yml)
 
-一套面向领导、同事和数据平台团队的可复现演示包，聚焦 Databricks 的数据湖、Lakehouse、数据库、Genie 自然语言分析，以及云数据库接入治理型数据 Agent 所需的完整前置能力。
+一套面向领导、产品和数据/数据库/Agent 团队的决策与演示包。项目不再只回答“Databricks 怎么用”，而是用三层证据回答一个更重要的问题：数据智能竞争的新基线是什么，华为云的差距发生在哪些产品接缝，以及应由 DataArts 迭代、数据库新建，还是双平面共建。
 
-> 内容快照与工作区验证截止 2026-08-18。项目刻意弱化模型训练和通用推理基础设施，重点解释数据如何接入、治理、查询、分析并安全地交给 Agent 使用。
+> 当前总目标与展示契约见 [V2 决策 Brief](docs/02-data-intelligence-decision-brief.md)。原 [Databricks 项目 Brief](docs/00-project-brief.md) 保留为 Phase 1 实测与演示记录，不被覆盖。
 
-[在线演示](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/) · [内容索引](index.md) · [完整录屏索引](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/details/recordings.html) · [Genie 专题](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/genie.html) · [云数据库专题](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/database-agent.html) · [华为云 RDS 落地专题](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/huawei-rds-agent.html)
+[在线决策首页](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/) · [67 项能力全集](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/independent_exploration_2026-08-19/vendor-entry-atlas.html#capabilities) · [内容索引](index.md) · [友商可视报告](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/independent_exploration_2026-08-19/agent-entry-governance-visual-report.html) · [华为产品决策专题](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/huawei-rds-agent.html) · [Genie 专题](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/genie.html) · [全部录屏](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/details/recordings.html)
 
-![Databricks 数据主路径](site/assets/diagrams/platform-data-paths.svg)
+![数据智能可信任务闭环](site/assets/diagrams/data-intelligence-task-loop.svg)
 
-## 可以演示什么
+## 三条证据线
 
-- 高频主线：数据接入 → Delta 表 → Unity Catalog 治理 → Job/Pipeline → SQL Warehouse → BI/Genie/应用；
-- 对已有结构化数据进行中文自然语言分析，并展开生成的只读 SQL；
-- 智能售后：从 700 条合成工单生成 18 条行动队列，并把退款、改订单和消息发送留在审批边界外；
-- 数据库智能运维：关联指标、慢 SQL、告警、变更、事故和 Runbook，只做只读诊断；
-- Genie 的业务问答、Sources、Instructions、可信示例、Monitor、Benchmark 和多轮使用方式；
-- 工作区内嵌、iframe、Conversation API、Agent API/SSE 与外部多 Agent 的能力和责任差异；
-- RDS MySQL/PostgreSQL、PolarDB、TaurusDB 类产品接入 Genie 类能力时，需要补齐的 Unity Catalog-like、语义、可信 SQL、评测、审计和动作网关。
-- 华为云 RDS MySQL / PostgreSQL 专项：以客户事故故事串起 RDS、DAS、DRS、DataArts、智能体平台、IAM 与 APIG，给出复用/打通/新建矩阵、双引擎切片、六个 Gate、90 天 MVP 目标和华为云官方外部视频组合。
-
-## 主要入口
-
-| 入口 | 适合对象 | 内容 |
+| 研究线 | 解决的问题 | 当前状态 |
 |---|---|---|
-| [领导演示首页](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/index.html) | 领导、产品、跨团队评审 | 一屏一结论，串起平台能力、案例、录屏和架构图 |
-| [Genie 深度演示](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/genie.html) | 数据分析、数据平台、Agent 团队 | Genie 实现、多种用法、质量闭环和内外部集成 |
-| [云数据库到数据 Agent](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/database-agent.html) | 数据库、云数据库、平台架构团队 | 传统数据库需要保留和新增的能力、三条接入路线与 G0–G8 |
-| [华为云 RDS 受治理智能层](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/huawei-rds-agent.html) | 华为云 RDS、DAS/DRS、DataArts、Agent 与产品团队 | MySQL/PG 客户故事、现有能力映射、五个新增服务、90 天 Gate 与 KPI |
-| [14 段录屏与讲稿](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/details/recordings.html) | 演示人、培训和复盘 | 14 段中文有声版、14 段无声原版、时长和讲解重点 |
-| [外部视频索引](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/details/external-videos.html) | 延伸学习 | 按模块整理的官方与独立讲解视频 |
+| Databricks 真实演示 | 领先产品如何把数据、治理、语义、Genie 和外部入口串成用户旅程 | 已在 Free Edition 工作区用合成数据验证，并保留 11 段真实录屏 |
+| 11 家厂商公开资料研究 | 市场共同基线、领先样本和 Agent 入口演进是什么 | 已形成 67 项能力、10 个维度、证据账本、入口图谱和可视报告 |
+| 华为产品决策 | DataArts、AgentArts、RDS/DAS 的领域权威和产品归属如何确定 | 当前为公开资料研究与方案假设；需通过 G1–G6 账号、技术、客户和商业验证 |
 
-## 已验证的交付
+当前结论不是固定产品路线，而是优先验证“双平面、一条客户旅程”：DataArts 管数据与语义，RDS/DAS 管数据库执行，AgentArts 管任务编排，共享对象、OBO 身份、策略、任务/工件/动作状态、Trace、Eval、Audit 与 Cost。任何一项都必须保留为待验证假设，直到拿到端到端证据。
 
-- 11 段真实 AWS Databricks Free Edition 工作区录屏和 3 段本地架构演示；
+## 推荐入口
+
+| 入口 | 适合对象 | 核心内容 |
+|---|---|---|
+| [领导决策首页](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/index.html) | 领导、产品委员会、跨团队评审 | 一屏结论、三类证据、五平面基线、华为接缝、四种产品归属、G1–G6、业务故事与精选录屏 |
+| [67 项能力全集](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/independent_exploration_2026-08-19/vendor-entry-atlas.html#capabilities) | 产品、竞品、架构与实施团队 | 按能力域、厂商和证据状态筛选 67×11 矩阵，并查看 12 类数据源、前置准备、责任边界与 CSV |
+| [Agent 入口与治理可视报告](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/independent_exploration_2026-08-19/agent-entry-governance-visual-report.html) | 战略、竞品、架构团队 | 11 家厂商入口、分层评分、差距与共享控制面研究 |
+| [厂商入口图谱](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/independent_exploration_2026-08-19/vendor-entry-atlas.html) | 产品经理、竞品研究 | 逐家查看入口、专业工作台、外部 Agent 与治理旅程 |
+| [华为产品归属与验证](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/huawei-rds-agent.html) | DataArts、AgentArts、RDS/DAS 和决策团队 | Databricks 对标清单、六个产品模块、PG-first 业务故事、目标架构、四种归属选项和 G1–G6 |
+| [Genie 深度演示](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/genie.html) | 数据分析、平台和 Agent 团队 | Genie 实现、多种用法、Sources/Instructions、Monitor/Benchmark、内嵌/API/外部 Agent |
+| [云数据库到数据 Agent](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/database-agent.html) | 数据库和云数据库架构团队 | Unity Catalog-like、语义、安全执行、评测、动作网关和三条数据库接入路线 |
+| [14 段录屏与讲稿](https://zcimon57-svj.github.io/databricks-lakehouse-agent-demo/site/details/recordings.html) | 演示人、培训和复盘 | 普通话有声版、无声原版、时长、讲解重点和证据边界 |
+
+## 重点业务故事
+
+- 经营分析：从“为什么毛利下降”进入，复用权威指标和 Join，得到可复算答案、证据 SQL、可保存工件和后续任务；
+- 智能售后：联查订单、退款、客户与工单，生成客户证据包和行动队列；退款、改订单、发消息保持独立审批；
+- 业务影响与数据库诊断：把收入/成功率/延迟与慢 SQL、等待、告警、变更和拓扑放在同一时间线，降低业务损失窗口；
+- SaaS 内嵌：外部用户或 Agent 带最终用户与租户上下文复用语义、执行、任务状态和证据，不获得共享高权限数据库连接。
+
+## Databricks 实测交付
+
+- 11 段真实 AWS Databricks Free Edition 工作区录屏和 3 段本地架构/历史方案演示；
 - 14 段普通话有声 MP4，共 73 个按画面转场对齐的解说片段；
-- 8 张可离线展示的 SVG 架构图，其中两张专门描述华为云 RDS 目标架构与 90 天路线；
+- 11 张可离线展示的 SVG，其中新增五平面任务闭环、华为共享控制面总架构和六模块内部架构图集；
 - 14 份确定性合成数据，共 18,498 行；
 - 14 张 Delta managed tables、3 个业务视图、1 个 Genie Benchmark 表和 9/9 个可信 SQL 查询；
-- Genie 绑定 7 个受治理数据源，覆盖自然语言分析、智能售后和数据库运维案例；
-- HTML、SVG、视频、响度、站内链接、移动端宽度和隐私扫描均有本地验证记录。
+- Genie 绑定 7 个受治理数据源，覆盖自然语言分析、智能售后和数据库运维案例。
 
-配音媒体校验结果见 [中文配音校验记录](evidence/workspace/zh-voiceover-validation.md)，华为云方向的页面、SVG、H1 录屏与边界检查见 [专项校验记录](evidence/workspace/huawei-rds-agent-validation.md)。有声版为合成神经语音，不冒充真人录音；无声原版保持不变。
+配音校验见 [中文配音校验记录](evidence/workspace/zh-voiceover-validation.md)。H1 华为 RDS 双引擎 90 天录屏、旧 SVG 和早期研究稿保留为 **Phase 1 历史方案**；独立调研之后，它们不再代表当前立项承诺。
 
-## 证据边界
+## 证据标签与边界
 
-- 账号与功能验证是 2026-08-18 的 Free Edition 快照，不代表当前商业版权益、SLA、容量、网络、合规或成本；
-- G3、D1 和 H1 是明确标注的架构演示，不冒充该账号中的生产 API 或云数据库实调；
-- 项目没有连接或修改 RDS、PolarDB、TaurusDB 或其他生产数据库；
-- 所有写入 Databricks 的数据均为本项目生成的合成数据；
-- 仓库不包含 Google 密码、Cookie、OAuth Token、PAT、私有工作区域名、用户邮箱或组织 ID；
+- **[工作区实测]**：仅覆盖 2026-08-18 本项目在 Databricks Free Edition 中实际观察和验证的路径；
+- **[官方资料研究]**：证明公开可查的产品能力和入口，不证明目标账号、区域、版本或跨产品打通；
+- **[分析推断]**：用于市场基线与差距优先级，评分不是权威排行、性能 Benchmark 或采购结论；
+- **[方案假设]**：双平面、共享控制面、UI 原型、模块优先级和产品归属必须通过 G1–G6；
+- 项目没有登录华为云目标账号验证 DataArts/AgentArts/RDS/DAS 的端到端连续性，也没有连接或修改任何生产数据库；
+- 所有业务数据均为项目生成的合成数据；仓库不包含 Google 密码、Cookie、OAuth Token、PAT、用户邮箱、私有工作区主机或组织 ID；
 - 外部视频只保留链接和摘要，版权归原作者和发布方所有。
 
 ## 目录结构
 
 ```text
-site/                  精简演示 HTML、详情 HTML、CSS 和 SVG
-docs/                  完整研究稿、项目约定与来源
-videos/recordings/     14 段无声原版与 zh-voice/ 中文有声版
-videos/voiceover/      中文讲稿时间轴、构建报告与校验哈希
-videos/external/       外部视频索引
-data/synthetic/        确定性合成数据
-sql/                   Databricks SQL 初始化、案例与清理脚本
-notebooks/             可导入的 Notebook 源文件
-scripts/               数据生成、录屏、配音、渲染和校验脚本
-evidence/workspace/    本地验证记录和脱敏截图
+site/                               精简决策 HTML、专题、详情 CSS 和 SVG
+independent_exploration_2026-08-19/ 11 家厂商独立研究、证据账本、评分、可视报告和方案原型
+docs/                               V2 决策 Brief、Phase 1 约定与完整研究稿
+videos/recordings/                  14 段无声原版与 zh-voice/ 普通话有声版
+videos/voiceover/                   中文讲稿时间轴、构建报告与校验哈希
+videos/external/                    外部视频索引
+data/synthetic/                     确定性合成数据
+sql/                                Databricks SQL 初始化、案例与清理脚本
+notebooks/                          可导入的 Notebook 源文件
+scripts/                            数据生成、录屏、配音、渲染和校验脚本
+evidence/workspace/                 本地验证记录和脱敏截图
 ```
 
-## 本地预览
+## 本地预览与生成
 
 ```bash
 python3 -m http.server 8765 --bind 127.0.0.1
 ```
 
-然后访问 `http://127.0.0.1:8765/`。根页面会跳转到领导演示首页。
+访问 `http://127.0.0.1:8765/`。根页面会跳转到领导决策首页。
 
-## 重新生成与校验
+重新生成详情页和校验中文配音：
 
 ```bash
 npm ci
@@ -84,15 +93,7 @@ npm run render:details
 npm run validate:zh-voiceovers
 ```
 
-重新生成中文配音：
-
-```bash
-npm run build:zh-voiceovers
-```
-
-配音脚本优先复用 `videos/voiceover/cache/`。缓存缺失时会通过 `uvx edge-tts` 获取指定普通话语音，因此需要网络环境。
-
-确定性合成数据可使用以下命令重新生成和验证：
+确定性合成数据：
 
 ```bash
 python3 scripts/generate_synthetic_data.py
@@ -101,8 +102,8 @@ python3 scripts/validate_synthetic_data.py
 
 ## GitHub Pages
 
-`.github/workflows/pages.yml` 会在 `main` 分支更新时发布经过筛选的静态展示包，只包含根入口、`site/`、录屏及配音证明文件，不会部署本地工具、依赖或凭据状态。
+`.github/workflows/pages.yml` 在 `main` 分支更新时发布筛选后的静态展示包：根入口、`site/`、完整独立调研目录、录屏及配音证明文件。它不会部署本地工具、依赖、浏览器状态或凭据。
 
 ## 技术与商标说明
 
-本项目是独立的研究和演示材料，不是 Databricks 官方项目。Databricks、Delta Lake、Unity Catalog、Lakeflow、Lakebase 和 Genie 等名称及商标归其各自权利人所有。
+本项目是独立研究和演示材料，不是 Databricks 或华为云官方项目。Databricks、Delta Lake、Unity Catalog、Lakeflow、Lakebase、Genie、DataArts、AgentArts、RDS 和 DAS 等名称及商标归其各自权利人所有。

@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1740" viewBox="0 0 1600 1740" role="img" aria-labelledby="title desc">
+  <title id="title">华为云数据智能六个产品模块内部架构</title>
+  <desc id="desc">统一任务壳、共享对象身份、语义可信分析、PostgreSQL 执行诊断、工具动作网关、工件评测运营六个模块的输入、核心服务、领域执行和验收证据流。</desc>
+  <defs>
+    <linearGradient id="header" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#10252b"/><stop offset="1" stop-color="#1d4850"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#10252b" flood-opacity=".10"/></filter>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#6e9189"/></marker>
+    <style>
+      .zh { font-family: Inter, "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .eyebrow { font-size: 19px; font-weight: 800; letter-spacing: 2px; fill: #9de0cd; }
+      .main { font-size: 42px; font-weight: 800; fill: #fff; }
+      .sub { font-size: 20px; fill: #c4d4d6; }
+      .module { font-size: 18px; font-weight: 800; letter-spacing: 1px; fill: #e6533c; }
+      .module-title { font-size: 27px; font-weight: 800; fill: #142126; }
+      .owner { font-size: 17px; fill: #65767a; }
+      .box-title { font-size: 18px; font-weight: 800; fill: #142126; }
+      .box-body { font-size: 16px; fill: #627176; }
+      .done { font-size: 16px; font-weight: 800; fill: #246e5d; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1740" rx="30" fill="#f7f5f0"/>
+  <rect width="1600" height="210" rx="30" fill="url(#header)"/>
+  <rect y="180" width="1600" height="30" fill="#183d44"/>
+  <text x="70" y="68" class="zh eyebrow">MODULE ARCHITECTURE · PROPOSED HYPOTHESIS</text>
+  <text x="70" y="126" class="zh main">六个模块，各自有输入、领域权威、状态与验收证据</text>
+  <text x="70" y="170" class="zh sub">模块可以由不同团队实现，但 canonical ID、OBO、策略、Task / Artifact / Action State 与 Trace 不得分叉。</text>
+
+  <!-- M0 -->
+  <g transform="translate(58 244)">
+    <rect width="1484" height="220" rx="22" fill="#fff" stroke="#d9dfdc" filter="url(#shadow)"/>
+    <g transform="translate(28 30)">
+      <text class="zh module">P0 · M0</text><text y="43" class="zh module-title">统一任务壳</text><text y="75" class="zh owner">Owner 假设：联合体验层</text>
+      <rect y="105" width="238" height="47" rx="12" fill="#ffe8df"/>
+      <text x="119" y="135" text-anchor="middle" class="zh done">验收：跨入口继续同一任务</text>
+    </g>
+    <g transform="translate(330 35)">
+      <rect width="240" height="150" rx="17" fill="#f2f5f4"/><text x="120" y="45" text-anchor="middle" class="zh box-title">多入口上下文</text><text x="120" y="78" text-anchor="middle" class="zh box-body">DAS · DataArts · Portal</text><text x="120" y="106" text-anchor="middle" class="zh box-body">API / Agent Tool</text>
+      <path d="M252 75 H292" stroke="#6e9189" stroke-width="3" marker-end="url(#arrow)"/>
+      <g transform="translate(305)"><rect width="240" height="150" rx="17" fill="#e7effb"/><text x="120" y="45" text-anchor="middle" class="zh box-title">Conversation / Task</text><text x="120" y="78" text-anchor="middle" class="zh box-body">User · Tenant · Purpose</text><text x="120" y="106" text-anchor="middle" class="zh box-body">Object · Time window</text></g>
+      <path d="M557 75 H597" stroke="#6e9189" stroke-width="3" marker-end="url(#arrow)"/>
+      <g transform="translate(610)"><rect width="240" height="150" rx="17" fill="#eee8f7"/><text x="120" y="45" text-anchor="middle" class="zh box-title">结构化任务视图</text><text x="120" y="78" text-anchor="middle" class="zh box-body">Answer · Evidence</text><text x="120" y="106" text-anchor="middle" class="zh box-body">Artifact · Next action</text></g>
+      <path d="M862 75 H902" stroke="#6e9189" stroke-width="3" marker-end="url(#arrow)"/>
+      <g transform="translate(915)"><rect width="205" height="150" rx="17" fill="#dff3ed"/><text x="102" y="45" text-anchor="middle" class="zh box-title">深链与 Handoff</text><text x="102" y="78" text-anchor="middle" class="zh box-body">状态不丢失</text><text x="102" y="106" text-anchor="middle" class="zh box-body">入口可替换</text></g>
+    </g>
+  </g>
+
+  <!-- M1 -->
+  <g transform="translate(58 486)">
+    <rect width="1484" height="220" rx="22" fill="#fff" stroke="#d9dfdc" filter="url(#shadow)"/>
+    <g transform="translate(28 30)"><text class="zh module">P0 · M1</text><text y="43" class="zh module-title">共享对象与身份</text><text y="75" class="zh owner">Owner 假设：共享控制面</text><rect y="105" width="238" height="47" rx="12" fill="#ffe8df"/><text x="119" y="135" text-anchor="middle" class="zh done">验收：越权在执行端拒绝</text></g>
+    <g transform="translate(330 35)">
+      <rect width="240" height="150" rx="17" fill="#f2f5f4"/><text x="120" y="45" text-anchor="middle" class="zh box-title">IAM / 最终用户</text><text x="120" y="78" text-anchor="middle" class="zh box-body">User · Service identity</text><text x="120" y="106" text-anchor="middle" class="zh box-body">Tenant · Purpose</text>
+      <path d="M252 75 H292" stroke="#6e9189" stroke-width="3" marker-end="url(#arrow)"/>
+      <g transform="translate(305)"><rect width="240" height="150" rx="17" fill="#e7effb"/><text x="120" y="45" text-anchor="middle" class="zh box-title">Canonical Registry</text><text x="120" y="78" text-anchor="middle" class="zh box-body">Object ID · Version</text><text x="120" y="106" text-anchor="middle" class="zh box-body">Owner · Deep link</text></g>
+      <path d="M557 75 H597" stroke="#6e9189" stroke-width="3" marker-end="url(#arrow)"/>
+      <g transform="translate(610)"><rect width="240" height="150" rx="17" fill="#eee8f7"/><text x="120" y="45" text-anchor="middle" class="zh box-title">OBO / Policy Decision</text><text x="120" y="78" text-anchor="middle" class="zh box-body">RBAC · ABAC · Row/Column</text><text x="120" y="106" text-anchor="middle" class="zh box-body">Allow · Deny · Reason</text></g>
+      <path d="M862 75 H902" stroke="#6e9189" stroke-width="3" marker-end="url(#arrow)"/>
+      <g transform="translate(915)"><rect width="205" height="150" rx="17" fill="#dff3ed"/><text x="102" y="45" text-anchor="middle" class="zh box-title">领域强制 + Audit</text><text x="102" y="78" text-anchor="middle" class="zh box-body">DataArts / PG</text><text x="102" y="106" text-anchor="middle" class="zh box-body">同一决策证据</text></g>
+    </g>
+  </g>
+
+  <!-- M2 -->
+  <g transform="translate(58 728)">
+    <rect width="1484" height="220" rx="22" fill="#fff" stroke="#d9dfdc" filter="url(#shadow)"/>
+    <g transform="translate(28 30)"><text class="zh module">P0 · M2</text><text y="43" class="zh module-title">语义与可信分析</text><text y="75" class="zh owner">Owner 假设：DataArts / BI</text><rect y="105" width="238" height="47" rx="12" fill="#ffe8df"/><text x="119" y="135" text-anchor="middle" class="zh done">验收：严格结果真值通过</text></g>
+    <g transform="translate(330 35)">
+      <rect width="240" height="150" rx="17" fill="#f2f5f4"/><text x="120" y="45" text-anchor="middle" class="zh box-title">治理数据对象</text><text x="120" y="78" text-anchor="middle" class="zh box-body">Asset · Owner · Lineage</text><text x="120" y="106" text-anchor="middle" class="zh box-body">Freshness · Quality</text>
+      <path d="M252 75 H292" stroke="#6e9189" stroke-width="3" marker-end="url(#arrow)"/>
+      <g transform="translate(305)"><rect width="240" height="150" rx="17" fill="#e7effb"/><text x="120" y="45" text-anchor="middle" class="zh box-title">Semantic Contract</text><text x="120" y="78" text-anchor="middle" class="zh box-body">Metric · Dimension · Join</text><text x="120" y="106" text-anchor="middle" class="zh box-body">Time · Status · Synonym</text></g>
+      <path d="M557 75 H597" stroke="#6e9189" stroke-width="3" marker-end="url(#arrow)"/>
+      <g transform="translate(610)"><rect width="240" height="150" rx="17" fill="#eee8f7"/><text x="120" y="45" text-anchor="middle" class="zh box-title">NL2SQL / Trusted SQL</text><text x="120" y="78" text-anchor="middle" class="zh box-body">Plan · Citation · Explain</text><text x="120" y="106" text-anchor="middle" class="zh box-body">PG / Analytics route</text></g>
+      <path d="M862 75 H902" stroke="#6e9189" stroke-width="3" marker-end="url(#arrow)"/>
+      <g transform="translate(915)"><rect width="205" height="150" rx="17" fill="#dff3ed"/><text x="102" y="45" text-anchor="middle" class="zh box-title">Golden Questions</text><text x="102" y="78" text-anchor="middle" class="zh box-body">Strict result eval</text><text x="102" y="106" text-anchor="middle" class="zh box-body">Version regression</text></g>
+    </g>
+  </g>
+
+  <!-- M3 -->
+  <g transform="translate(58 970)">
+    <rect width="1484" height="220" rx="22" fill="#fff" stroke="#d9dfdc" filter="url(#shadow)"/>
+    <g transform="translate(28 30)"><text class="zh module">P0 · M3</text><text y="43" class="zh module-title">PG 执行与诊断</text><text y="75" class="zh owner">Owner 假设：RDS / DAS</text><rect y="105" width="238" height="47" rx="12" fill="#ffe8df"/><text x="119" y="135" text-anchor="middle" class="zh done">验收：安全且不伤生产</text></g>
+    <g transform="translate(330 35)">
+      <rect width="240" height="150" rx="17" fill="#f2f5f4"/><text x="120" y="45" text-anchor="middle" class="zh box-title">问题与策略决策</text><text x="120" y="78" text-anchor="middle" class="zh box-body">User · Object · Budget</text><text x="120" y="106" text-anchor="middle" class="zh box-body">Semantic plan</text>
+      <path d="M252 75 H292" stroke="#6e9189" stroke-width="3" marker-end="url(#arrow)"/>
+      <g transform="translate(305)"><rect width="240" height="150" rx="17" fill="#e7effb"/><text x="120" y="45" text-anchor="middle" class="zh box-title">Query Gateway</text><text x="120" y="78" text-anchor="middle" class="zh box-body">Read-only · Timeout</text><text x="120" y="106" text-anchor="middle" class="zh box-body">Scan · Concurrency · Cancel</text></g>
+      <path d="M557 75 H597" stroke="#6e9189" stroke-width="3" marker-end="url(#arrow)"/>
+      <g transform="translate(610)"><rect width="240" height="150" rx="17" fill="#eee8f7"/><text x="120" y="45" text-anchor="middle" class="zh box-title">PostgreSQL / DAS Tools</text><text x="120" y="78" text-anchor="middle" class="zh box-body">SQL · Wait · Slow SQL</text><text x="120" y="106" text-anchor="middle" class="zh box-body">Alert · Change · Topology</text></g>
+      <path d="M862 75 H902" stroke="#6e9189" stroke-width="3" marker-end="url(#arrow)"/>
+      <g transform="translate(915)"><rect width="205" height="150" rx="17" fill="#dff3ed"/><text x="102" y="45" text-anchor="middle" class="zh box-title">Execution Evidence</text><text x="102" y="78" text-anchor="middle" class="zh box-body">Query ID · Freshness</text><text x="102" y="106" text-anchor="middle" class="zh box-body">Explain · Error</text></g>
+    </g>
+  </g>
+
+  <!-- M4 -->
+  <g transform="translate(58 1212)">
+    <rect width="1484" height="220" rx="22" fill="#fff" stroke="#d9dfdc" filter="url(#shadow)"/>
+    <g transform="translate(28 30)"><text class="zh module">P1 · M4</text><text y="43" class="zh module-title">工具与动作网关</text><text y="75" class="zh owner">Owner 假设：联合工具面</text><rect y="105" width="238" height="47" rx="12" fill="#ffe8df"/><text x="119" y="135" text-anchor="middle" class="zh done">验收：内外部结果一致</text></g>
+    <g transform="translate(330 35)">
+      <rect width="240" height="150" rx="17" fill="#f2f5f4"/><text x="120" y="45" text-anchor="middle" class="zh box-title">内嵌 / 外部调用方</text><text x="120" y="78" text-anchor="middle" class="zh box-body">Widget · API · Agent</text><text x="120" y="106" text-anchor="middle" class="zh box-body">User · Tenant · Idempotency</text>
+      <path d="M252 75 H292" stroke="#6e9189" stroke-width="3" marker-end="url(#arrow)"/>
+      <g transform="translate(305)"><rect width="240" height="150" rx="17" fill="#e7effb"/><text x="120" y="45" text-anchor="middle" class="zh box-title">Authoritative API / Tool</text><text x="120" y="78" text-anchor="middle" class="zh box-body">Schema · Async · Cancel</text><text x="120" y="106" text-anchor="middle" class="zh box-body">Quota · Retry · Error</text></g>
+      <path d="M557 75 H597" stroke="#6e9189" stroke-width="3" marker-end="url(#arrow)"/>
+      <g transform="translate(610)"><rect width="240" height="150" rx="17" fill="#eee8f7"/><text x="120" y="45" text-anchor="middle" class="zh box-title">Action State Machine</text><text x="120" y="78" text-anchor="middle" class="zh box-body">Propose · Preview · Approve</text><text x="120" y="106" text-anchor="middle" class="zh box-body">Execute · Verify · Rollback</text></g>
+      <path d="M862 75 H902" stroke="#6e9189" stroke-width="3" marker-end="url(#arrow)"/>
+      <g transform="translate(915)"><rect width="205" height="150" rx="17" fill="#dff3ed"/><text x="102" y="45" text-anchor="middle" class="zh box-title">领域执行器</text><text x="102" y="78" text-anchor="middle" class="zh box-body">Refund / Message</text><text x="102" y="106" text-anchor="middle" class="zh box-body">PG action / Verify</text></g>
+    </g>
+  </g>
+
+  <!-- M5 -->
+  <g transform="translate(58 1454)">
+    <rect width="1484" height="220" rx="22" fill="#fff" stroke="#d9dfdc" filter="url(#shadow)"/>
+    <g transform="translate(28 30)"><text class="zh module">P1 · M5</text><text y="43" class="zh module-title">工件、评测与运营</text><text y="75" class="zh owner">Owner 假设：共享保障面</text><rect y="105" width="238" height="47" rx="12" fill="#ffe8df"/><text x="119" y="135" text-anchor="middle" class="zh done">验收：完整回放与回归</text></g>
+    <g transform="translate(330 35)">
+      <rect width="240" height="150" rx="17" fill="#f2f5f4"/><text x="120" y="45" text-anchor="middle" class="zh box-title">Task Event Stream</text><text x="120" y="78" text-anchor="middle" class="zh box-body">Object · Policy · Tool</text><text x="120" y="106" text-anchor="middle" class="zh box-body">SQL · Result · Action</text>
+      <path d="M252 75 H292" stroke="#6e9189" stroke-width="3" marker-end="url(#arrow)"/>
+      <g transform="translate(305)"><rect width="240" height="150" rx="17" fill="#e7effb"/><text x="120" y="45" text-anchor="middle" class="zh box-title">Artifact + Trace Store</text><text x="120" y="78" text-anchor="middle" class="zh box-body">Answer · Query · Chart</text><text x="120" y="106" text-anchor="middle" class="zh box-body">Evidence pack · Version</text></g>
+      <path d="M557 75 H597" stroke="#6e9189" stroke-width="3" marker-end="url(#arrow)"/>
+      <g transform="translate(610)"><rect width="240" height="150" rx="17" fill="#eee8f7"/><text x="120" y="45" text-anchor="middle" class="zh box-title">Eval / Monitor</text><text x="120" y="78" text-anchor="middle" class="zh box-body">Correctness · Permission</text><text x="120" y="106" text-anchor="middle" class="zh box-body">Latency · Failure · Drift</text></g>
+      <path d="M862 75 H902" stroke="#6e9189" stroke-width="3" marker-end="url(#arrow)"/>
+      <g transform="translate(915)"><rect width="205" height="150" rx="17" fill="#dff3ed"/><text x="102" y="45" text-anchor="middle" class="zh box-title">Release / Operations</text><text x="102" y="78" text-anchor="middle" class="zh box-body">Gate · Audit · Cost</text><text x="102" y="106" text-anchor="middle" class="zh box-body">Feedback · Rollback</text></g>
+    </g>
+  </g>
+</svg>

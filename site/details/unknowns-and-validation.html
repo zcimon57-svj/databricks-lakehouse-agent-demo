@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="华为产品决策 Unknown 与验证合同">
+  <title>华为产品决策 Unknown 与验证合同</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../details.css">
+</head>
+<body class="detail-page">
+  <header class="detail-header" id="top">
+    <nav class="detail-nav shell" aria-label="详情页导航">
+      <a class="brand" href="../huawei-rds-agent.html#gates">← 返回华为验证 Gate</a>
+      <a href="../index.html">数据智能决策首页</a>
+    </nav>
+    <div class="shell detail-heading">
+      <p class="eyebrow">UNKNOWNS &amp; VALIDATION</p>
+      <h1>华为产品决策 Unknown 与验证合同</h1>
+      <p>这是完整研究层；演示页保持精简，证据、边界、步骤和来源在这里展开。</p>
+    </div>
+  </header>
+  <main class="shell detail-layout">
+    <article class="markdown-body">
+<h1>Unknown 与后续验证协议</h1>
+<h2>当前验证边界</h2>
+<p>本轮尚无经授权的华为云、Databricks 或其他厂商账号级控制台验证。因此，公开页面之外的可见菜单、实际权限继承、端到端成功率、区域/Edition 可用性、配额、账单、性能、失败行为与支持流程均不能标记为“实际观察”。</p>
+<h2>1. 决策相关 Unknown</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Unknown</th>
+<th>为什么公开资料无法闭合</th>
+<th>会改变什么决策</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>U01</td>
+<td>Studio、Insight、Fabric、LakeFormation 是否共享稳定资源 ID</td>
+<td>文档分别描述各产品 API，未找到跨产品对象契约</td>
+<td>决定是增强现有骨架还是只能做联邦集成</td>
+</tr>
+<tr>
+<td>U02</td>
+<td>Studio 架构/目录/质量对象能否被 Insight 助手直接引用</td>
+<td>官网只证明产品可搭配，没有公开引用路径</td>
+<td>决定是否会形成两套语义/治理</td>
+</tr>
+<tr>
+<td>U03</td>
+<td>Insight 数据集/助手/评测是否有可版本化的导入导出、Git 和发布 Gate</td>
+<td>API 概览不能证明完整 ALM</td>
+<td>决定能否持续生产运营，而非手工配置</td>
+</tr>
+<tr>
+<td>U04</td>
+<td>IAM 用户、Insight 用户/组、Studio 权限、LakeFormation 权限和数据库 Role/RLS 如何贯通</td>
+<td>各产品各自描述权限，没有端到端身份图</td>
+<td>决定联合产品能否安全成立</td>
+</tr>
+<tr>
+<td>U05</td>
+<td>Insight NL Query、UI、iframe/Ticket 和未来 Agent/MCP 是否按同一最终用户执行</td>
+<td>公开材料描述入口，但未证明身份/错误一致性</td>
+<td>决定能否作为外部产品能力销售</td>
+</tr>
+<tr>
+<td>U06</td>
+<td>Insight 列脱敏文档所述明文查看行为是否仍存在</td>
+<td>文档明确描述，但缺少账号、Edition 和修订解释</td>
+<td>属于上线前安全 Gate</td>
+</tr>
+<tr>
+<td>U07</td>
+<td>助手评测的指标、SQL/结果等价、权限负例、BadCase 保留和 API</td>
+<td>公开评测页只证明部分 UI 流程</td>
+<td>决定正确性运营是已有能力还是重大缺口</td>
+</tr>
+<tr>
+<td>U08</td>
+<td>助手失败问答是否进入可审计 Trace</td>
+<td>会话历史文档称仅记录成功问答</td>
+<td>决定能否发现静默失败和回归</td>
+</tr>
+<tr>
+<td>U09</td>
+<td>DataArts Fabric 的 GA/Preview、Region、Edition、计费和与其他 DataArts 产品关系</td>
+<td>产品页和 PDF 不能闭合账号可用性</td>
+<td>决定是否是可复用底座还是路线信号</td>
+</tr>
+<tr>
+<td>U10</td>
+<td>LakeFormation 是否治理 Fabric/Studio/Insight 的同一物理表与业务对象</td>
+<td>当前只证明湖 Catalog 与路径权限</td>
+<td>决定“统一 Catalog”类比是否成立</td>
+</tr>
+<tr>
+<td>U11</td>
+<td>RDS/DAS/DWS 能否输出稳定的数据库证据对象和短期 OBO 工具</td>
+<td>目前有控制台/API/MCP 示例，但没有统一契约证据</td>
+<td>决定数据库侧要新建什么，而不是是否重做 BI</td>
+</tr>
+<tr>
+<td>U12</td>
+<td>自然语言直查数据库的只读路由、预算、超时、取消、并发和结果限制由谁执行</td>
+<td>连接文档不足以证明控制面</td>
+<td>属于生产上线 Gate</td>
+</tr>
+<tr>
+<td>U13</td>
+<td>数据库查询历史的完整度、水位、丢失/截断能否传给上层答案</td>
+<td>RDS 文档已说明采集可能不完整</td>
+<td>决定能否做可信故障/影响分析</td>
+</tr>
+<tr>
+<td>U14</td>
+<td>华为云是否已有内部 Agent Runtime、模型网关、工具注册、审批与审计服务</td>
+<td>内部能力不在公开证据范围</td>
+<td>决定联合建设的复用边界</td>
+</tr>
+<tr>
+<td>U15</td>
+<td>各产品在目标 Region/Edition 的真实菜单、配额、延迟、价格和支持状态</td>
+<td>本轮没有任何授权账号</td>
+<td>决定短期可交付范围</td>
+</tr>
+<tr>
+<td>U16</td>
+<td>Databricks、Microsoft、Google、Snowflake 等文档能力在中国客户目标环境是否可采购</td>
+<td>全球文档不能代表中国区/合规/合同</td>
+<td>影响竞品压力，不改变技术事实</td>
+</tr>
+<tr>
+<td>U17</td>
+<td>Databricks 25/30 表、旧 Preview/新无标记等文档冲突的实际行为</td>
+<td>官方页面更新时间与命名迁移不同步</td>
+<td>影响精确竞品基线，不能自行消歧</td>
+</tr>
+<tr>
+<td>U18</td>
+<td>DataArts 目标客户最愿意为哪条任务链付费</td>
+<td>产品供给证据不等于需求证据</td>
+<td>决定新品、增值模块或能力内含</td>
+</tr>
+<tr>
+<td>U19</td>
+<td>客户已有 BI/数据平台/Agent 时可接受的迁移与凭据成本</td>
+<td>公开产品文档不能回答</td>
+<td>决定统一平台还是开放联邦产品包</td>
+</tr>
+<tr>
+<td>U20</td>
+<td>联合建设是否能设立唯一端到端 Owner、SLO 和故障路由</td>
+<td>属于内部组织事实，外部研究无权推断</td>
+<td>决定方案 C 是否优于 A/B/D</td>
+</tr>
+<tr>
+<td>U21</td>
+<td>Databricks Genie One 是否能在同一消费对话中创建、发布、停止和恢复 Lakeflow 接入任务，并继承同一最终用户身份与 Trace</td>
+<td>官方资料证明 Lakeflow/Genie Code/Unity Catalog 各自能力，但未证明 Genie One 独立闭合所有接入操作</td>
+<td>决定华为应对标平台能力总和，还是直接把“对话接数”视为 Databricks 已交付体验</td>
+</tr>
+<tr>
+<td>U22</td>
+<td>Databricks 各托管连接器在目标云/Region 的源对象、CDC、Schema 演进、延迟、配额、费用与回写边界</td>
+<td>连接器能力按源、云、Region 和状态变化，概览不能替代逐项核验</td>
+<td>决定首发连接器、联邦/复制策略和竞品差距</td>
+</tr>
+<tr>
+<td>U23</td>
+<td>阿里云 DataWorks DI/Governance Agent 在目标 Region/Edition 可执行的精确源—目标—动作矩阵，以及写操作的最小权限、幂等、停止/恢复、后验验证与回滚语义</td>
+<td>文档展示强流程，但“80+ 连接器”等总量不能证明每个 Agent 动作都可用；账号、费用和写入行为未实测</td>
+<td>决定国内对标范围和高风险治理动作能否进入自动执行</td>
+</tr>
+<tr>
+<td>U24</td>
+<td>Quick BI、DataWorks Data Agent 与 DMS MCP 是否共享同一 Session、最终用户委托、资源 ID、策略决策、Artifact、Trace 和评测回归</td>
+<td>公开文档分产品描述，未找到端到端对象/身份合同</td>
+<td>决定阿里云是强产品组合还是已经形成真正统一入口</td>
+</tr>
+<tr>
+<td>U25</td>
+<td>华为现有 DataArts、DRS/CDM、Catalog/质量/血缘与数据库服务是否有可供统一 Agent 使用的 source/pipeline/asset API、稳定 ID、状态事件、水位、取消/恢复和验证合同</td>
+<td>公开产品存在不等于内部接口可直接复用；本轮无账号或内部证据</td>
+<td>决定方案一复用比例、方案二 <code>ingest-lite</code> 边界和首期工期</td>
+</tr>
+</tbody></table>
+<h2>2. 验证前置条件</h2>
+<p>任何账号级验证开始前必须同时满足：</p>
+<ol>
+<li>用户另行明确授权具体云账号、Region、Edition 和可执行动作；本任务书本身不构成授权。</li>
+<li>只使用隔离 Sandbox、平台样例或合成数据；不接入客户/公司数据和生产数据库。</li>
+<li>每个测试用户使用单独、最小权限身份；不读取、复制或展示 Cookie、密码、Token、AK/SK。</li>
+<li>默认只读。创建 Sandbox 资源、开启公测、产生费用、修改权限或执行数据库动作均需单独批准。</li>
+<li>预先设置费用上限、资源清理 Owner 和终止时间；清理也是外部写操作，须在授权范围内。</li>
+<li>截图和日志在进入报告前去除账号、项目、Region 内部标识、端点、凭据和业务数据。</li>
+</ol>
+<p>如果任一前置条件不满足，保留 <code>Unknown</code>，不得用营销材料、其他 Region 或个人账号猜测补齐。</p>
+<h2>3. 五个验证 Gate</h2>
+<h3>G1：产品骨架与对象贯通</h3>
+<p><strong>要回答：</strong> DataArts 是否已有可持续演进的共享对象骨架。</p>
+<p>在获得授权后，选择同一 Region、明确 Edition 的隔离项目，以一份合成订单数据验证：</p>
+<ol>
+<li>Studio 创建/登记的数据连接、表、目录、业务术语、质量规则能否被 Insight/Fabric/LakeFormation 通过稳定 ID 发现；</li>
+<li>是否需要重复创建连接、上传驱动、复制凭据、重新描述字段或重新授权；</li>
+<li>Schema/字段/指标修改后，哪些下游对象自动更新、失效、告警或要求重同步；</li>
+<li>UI 和 API 返回的资源 ID、Owner、版本、Region、状态是否一致；</li>
+<li>是否有导出、导入、版本、Review、发布、回滚和影响分析。</li>
+</ol>
+<p><strong>通过证据：</strong> 一张真实对象关系图、脱敏 API 响应、变更前后记录、每个重复配置点和明确的产品 Owner。</p>
+<p><strong>停止条件：</strong> 需要生产连接、长期凭据、收费开通或无法隔离的数据时立即停止并请求授权。</p>
+<h3>G2：身份、权限与入口一致性</h3>
+<p><strong>要回答：</strong> “同一个助手”在 UI、API、iframe 和 Agent 中是否真的是同一安全边界。</p>
+<p>合成数据至少包含：公开列、敏感列、两组互斥行、不可访问表。创建 A/B 两个最终用户和一个受限服务身份，执行同一问题矩阵：</p>
+<table>
+<thead>
+<tr>
+<th>测试</th>
+<th>UI</th>
+<th>NL Query API</th>
+<th>iframe/Ticket</th>
+<th>外部 Agent/MCP（若可用）</th>
+<th>期望</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>允许的行/列</td>
+<td>必测</td>
+<td>必测</td>
+<td>必测</td>
+<td>必测</td>
+<td>结果一致，审计主体为真实用户或明确服务身份</td>
+</tr>
+<tr>
+<td>禁止的行</td>
+<td>必测</td>
+<td>必测</td>
+<td>必测</td>
+<td>必测</td>
+<td>不在建议、SQL、结果、缓存或错误中泄漏</td>
+</tr>
+<tr>
+<td>掩码列</td>
+<td>必测</td>
+<td>必测</td>
+<td>必测</td>
+<td>必测</td>
+<td>所有路径遵守同一策略；任何明文路径立即阻断上线</td>
+</tr>
+<tr>
+<td>无权表</td>
+<td>必测</td>
+<td>必测</td>
+<td>必测</td>
+<td>必测</td>
+<td>明确权限不足，不返回空值伪装成功</td>
+</tr>
+<tr>
+<td>转发/过期 Ticket</td>
+<td>不适用</td>
+<td>不适用</td>
+<td>必测</td>
+<td>不适用</td>
+<td>过期拒绝；转发风险可控且可审计</td>
+</tr>
+<tr>
+<td>服务身份</td>
+<td>不适用</td>
+<td>必测</td>
+<td>视模式</td>
+<td>必测</td>
+<td>数据范围被明确展示，不冒充最终用户</td>
+</tr>
+</tbody></table>
+<p><strong>通过证据：</strong> 每个入口的身份链、策略决策、Query ID、审计记录和负例结果。</p>
+<p><strong>安全否决：</strong> 任一路径能读取无权行/列、掩码明文或绕过数据库 RLS，则 G2 不通过。</p>
+<h3>G3：业务问数的正确性与持续运营</h3>
+<p><strong>要回答：</strong> 能否从 Demo 走到可回归的业务产品。</p>
+<p>使用合成订单/退款/库存/财务数据建立最小 Ground Truth：</p>
+<ul>
+<li>20 个直接指标问题；</li>
+<li>20 个 Join、时间、状态、币种与去重问题；</li>
+<li>10 个歧义/需澄清问题；</li>
+<li>10 个权限负例；</li>
+<li>10 个数据过期、空结果、大结果、超时和无效 Schema 问题；</li>
+<li>5 条多轮任务链与 5 条越界/Prompt injection 场景。</li>
+</ul>
+<p>对每个样本保存：问题、期望口径、Golden/parameterized SQL 或结果、允许误差、数据快照、身份、实际 SQL、实际结果、Trace、延迟、费用、失败类别和评审结论。然后分别修改模型、Prompt、Schema、语义和权限，运行回归。</p>
+<p><strong>通过条件不是单一“准确率”：</strong></p>
+<ul>
+<li>权限负例零泄漏；</li>
+<li>确定性指标命中可信资产或结果等价；</li>
+<li>歧义可澄清，不静默猜测；</li>
+<li>失败有机器可识别状态和 Trace；</li>
+<li>版本变更可比较、阻断、回滚；</li>
+<li>BadCase 有 Owner 和修复后回归证据。</li>
+</ul>
+<h3>G4：数据库原生调查与动作安全</h3>
+<p><strong>要回答：</strong> 哪些能力必须由数据库产品提供，以及能否安全供 DataArts/Agent 使用。</p>
+<p>在合成 PostgreSQL/MySQL 类 Sandbox 中构造：慢查询、锁等待、连接耗尽、复制滞后、计划变化、失败 DDL 和过期统计。分三层验证：</p>
+<ol>
+<li><strong>只读调查：</strong> 元数据、实时状态、计划、日志、指标和查询历史能否关联到同一事件；</li>
+<li><strong>业务关联：</strong> 上层是否只通过脱敏证据 ID 将 DB 事件与订单/收入等指标关联；</li>
+<li><strong>动作：</strong> KILL/限流/参数/索引/DDL 只生成草案，静态校验和风险分级后进入人工审批；执行需要幂等键、超时、审计和后置验证。</li>
+</ol>
+<p>必测失败：主库负载过高、只读副本滞后、扫描预算超限、取消、权限撤回、Agent 重试、重复提交、审批过期、动作后验证失败。</p>
+<p><strong>安全否决：</strong> Prompt 是唯一护栏、上层持有长期高权凭据、没有取消/预算、写操作无需明确确认、无法关联执行人与 Query/Order ID，任一成立则 G4 不通过。</p>
+<h3>G5：商业、运营与客户付费</h3>
+<p><strong>要回答：</strong> 哪个产品归属能规模销售，而不只是技术可行。</p>
+<p>需要三类证据：</p>
+<ol>
+<li><strong>产品运营：</strong> Region/Edition/GA、配额、计量、账单、SLA、升级/降级、数据保留、故障和支持 Owner；</li>
+<li><strong>客户旅程：</strong> 首次开通、接数、首个可信答案、分享/嵌入、月度运营所需人数与时间；</li>
+<li><strong>需求验证：</strong> 对目标客户分别测试经营问数、售后联查、财务证据、DB 故障和 SaaS 嵌入五类任务，记录现有替代方案、迁移成本、愿付费主体和否决条件。</li>
+</ol>
+<p>官方案例只能证明案例中公开的流程，不能替代目标客户访谈、报价或试点数据。</p>
+<h2>4. 方案选择的硬判据</h2>
+<table>
+<thead>
+<tr>
+<th>判据</th>
+<th>A 数据库新产品</th>
+<th>B DataArts 迭代</th>
+<th>C 联合双平面</th>
+<th>D 联邦产品包</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>G1 共享对象/API 成熟</td>
+<td>低时加分</td>
+<td>高时加分</td>
+<td>中高时加分</td>
+<td>低但开放接口稳定时加分</td>
+</tr>
+<tr>
+<td>G2 最终用户权限可贯通</td>
+<td>需自行重建</td>
+<td>必须通过</td>
+<td>必须通过</td>
+<td>每条集成路径必须通过</td>
+</tr>
+<tr>
+<td>G3 现有问数评测骨架</td>
+<td>不可复用时加分</td>
+<td>可扩展时加分</td>
+<td>可共享时加分</td>
+<td>可外部调用时加分</td>
+</tr>
+<tr>
+<td>G4 DB 安全工具面</td>
+<td>必须具备</td>
+<td>必须由 DB 提供</td>
+<td>核心条件</td>
+<td>以受控 MCP/API 提供</td>
+</tr>
+<tr>
+<td>G5 独立 DB 客户付费</td>
+<td>强时加分</td>
+<td>弱时加分</td>
+<td>跨角色任务强时加分</td>
+<td>已有平台客户强时加分</td>
+</tr>
+<tr>
+<td>唯一端到端 Owner/SLO</td>
+<td>新产品 Owner</td>
+<td>DataArts Owner</td>
+<td>必须设共同唯一 Owner</td>
+<td>集成产品 Owner</td>
+</tr>
+</tbody></table>
+<p>在 G1-G5 没有证据前，任何方案都只能是验证假设，不能进入人员、季度、预算或架构承诺。</p>
+<h2>5. 证据记录模板</h2>
+<p>每次后续验证新增一条，不覆盖本轮记录：</p>
+<pre><code class="language-text">验证 ID：
+日期/时区：
+厂商/云/Region/Edition/版本/功能状态：
+账号类型与权限（脱敏）：
+测试对象：样例/合成；禁止真实数据
+入口：UI/API/SDK/iframe/MCP
+前置条件：
+操作（只读/已授权写入）：
+预期：
+实际：
+结果：PASS / FAIL / PARTIAL / BLOCKED
+证据：截图、请求 ID、Query ID、审计 ID、计费记录（均脱敏）
+失败类别：权限/语义/数据/模型/配额/网络/产品/文档/Unknown
+可复现步骤：
+影响的 Unknown/Gate/方案：
+Owner 与下一验证：
+停止与清理状态：
+</code></pre>
+
+    </article>
+  </main>
+  <footer>
+    <div class="shell footer-content">
+      <div><strong>华为产品决策 Unknown 与验证合同</strong><p>由项目内 Markdown 源文件生成；UTF-8 静态页面，可离线阅读。</p></div>
+      <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">返回顶部 ↑</a>
+    </div>
+  </footer>
+</body>
+</html>

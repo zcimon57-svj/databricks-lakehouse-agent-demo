@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Databricks 真实工作区验证">
+  <title>Databricks 真实工作区验证</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../details.css">
+</head>
+<body class="detail-page">
+  <header class="detail-header" id="top">
+    <nav class="detail-nav shell" aria-label="详情页导航">
+      <a class="brand" href="../index.html#databricks">← 返回 Databricks 实测</a>
+      <a href="../index.html">数据智能决策首页</a>
+    </nav>
+    <div class="shell detail-heading">
+      <p class="eyebrow">LIVE WORKSPACE VALIDATION</p>
+      <h1>Databricks 真实工作区验证</h1>
+      <p>这是完整研究层；演示页保持精简，证据、边界、步骤和来源在这里展开。</p>
+    </div>
+  </header>
+  <main class="shell detail-layout">
+    <article class="markdown-body">
+<h1>真实工作区验证记录</h1>
+<p>信息截止：2026-08-17（数据与 Genie 核心操作执行于 2026-08-14；Genie 深度评测与长录屏补充于 2026-08-17）<br>证据状态：<code>WORKSPACE_VERIFIED + GENIE_VERIFIED + RECORDED</code><br>隐私状态：邮箱、用户 ID、Workspace ID、Warehouse ID、Catalog 私有名称、OAuth code 和 Token 均未记录</p>
+<h2>1. 可用性结论</h2>
+<p>该 AWS Databricks 工作区真实可用，不只是登录页可达：</p>
+<ul>
+<li>OAuth U2M 身份验证成功，身份为 Active；</li>
+<li>Unity Catalog API 可访问；</li>
+<li>SQL Warehouse 可以从停止状态启动并执行 SQL；</li>
+<li><code>samples.nyctaxi.trips</code> 可查询；</li>
+<li>Files API 可以向 Unity Catalog managed Volume 上传文件；</li>
+<li>SQL Warehouse 可以从 Volume 读取 CSV 并创建 Delta managed tables；</li>
+<li>完成验证后 Warehouse 可以恢复到 <code>STOPPED</code>。</li>
+</ul>
+<p>UI 左上角直接显示 <code>Databricks Free Edition</code>，因此版本已经明确确认，不再是特征推断。官方当前限制与实测一致：Serverless-only、一个最大 2X-Small 的 SQL Warehouse、受配额约束的 Jobs/Lakeflow/Apps/Lakebase 等能力。</p>
+<h2>2. 第一轮只读能力清单</h2>
+<table>
+<thead>
+<tr>
+<th>对象</th>
+<th>真实结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>身份</td>
+<td>HTTP 200，Active；未记录身份值</td>
+</tr>
+<tr>
+<td>Catalog</td>
+<td>3 个；包含 <code>samples</code>、<code>system</code> 和 1 个非标准 Catalog</td>
+</tr>
+<tr>
+<td>SQL Warehouse</td>
+<td>1 个；<code>2X-Small</code>、<code>PRO</code>、初始 <code>STOPPED</code></td>
+</tr>
+<tr>
+<td>Genie Agent/Space</td>
+<td>初始 1 个与本项目无关；随后通过 UI 新建本项目 Agent</td>
+</tr>
+<tr>
+<td>Traditional Cluster</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Jobs</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Pipelines</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Apps</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Workspace 根目录</td>
+<td>3 个 Directory</td>
+</tr>
+<tr>
+<td>Lakebase</td>
+<td>Compute 中入口可见，并提示迁移到 Lakebase Postgres 新首页；未创建 Project/Instance</td>
+</tr>
+</tbody></table>
+<h2>3. 样例 SQL 验证</h2>
+<p>执行语句：</p>
+<pre><code class="language-sql">SELECT COUNT(*) AS trip_count
+FROM samples.nyctaxi.trips;
+</code></pre>
+<p>结果：</p>
+<ul>
+<li>Statement Execution API：HTTP 200；</li>
+<li>Query state：<code>SUCCEEDED</code>；</li>
+<li><code>trip_count=21932</code>；</li>
+<li>Warehouse 状态：<code>STOPPED → STARTING → RUNNING → STOPPED</code>；</li>
+<li>无数据写入。</li>
+</ul>
+<h2>4. 合成数据灌入</h2>
+<p>目标对象：</p>
+<ul>
+<li>Schema：<code>dbx_demo_20260814</code>；</li>
+<li>Managed Volume：<code>seed_files</code>；</li>
+<li>Delta managed tables：14；</li>
+<li>Views：3。</li>
+</ul>
+<p>结果：</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th align="right">结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>上传文件</td>
+<td align="right">14</td>
+</tr>
+<tr>
+<td>上传字节</td>
+<td align="right">1,221,837</td>
+</tr>
+<tr>
+<td>Delta 表</td>
+<td align="right">14</td>
+</tr>
+<tr>
+<td>Delta 表总行数</td>
+<td align="right">18,498</td>
+</tr>
+<tr>
+<td>本地/远端行数核对</td>
+<td align="right">PASS</td>
+</tr>
+<tr>
+<td>业务视图</td>
+<td align="right">3</td>
+</tr>
+<tr>
+<td><code>after_sales_cases</code></td>
+<td align="right">700 行</td>
+</tr>
+<tr>
+<td><code>dbops_incident_context</code></td>
+<td align="right">3 行</td>
+</tr>
+<tr>
+<td>回滚</td>
+<td align="right">未触发</td>
+</tr>
+<tr>
+<td>最终 Warehouse 状态</td>
+<td align="right">STOPPED</td>
+</tr>
+</tbody></table>
+<p>表清单：</p>
+<ul>
+<li>售后域：<code>customers</code>、<code>products</code>、<code>orders</code>、<code>order_items</code>、<code>refunds</code>、<code>support_tickets</code>、<code>support_policies</code>；</li>
+<li>数据库运维域：<code>db_instances</code>、<code>db_metrics</code>、<code>slow_queries</code>、<code>alerts</code>、<code>changes</code>、<code>incidents</code>、<code>runbooks</code>；</li>
+<li>视图：<code>after_sales_cases</code>、<code>daily_sales</code>、<code>dbops_incident_context</code>。</li>
+</ul>
+<h2>5. 安全边界</h2>
+<ul>
+<li>仅上传固定种子生成的合成数据；</li>
+<li>邮箱使用 <code>example.invalid</code>，主机使用 <code>.invalid</code>；</li>
+<li>所有创建对象位于新建的独立 Schema；</li>
+<li>写入脚本在发现同名 Schema 已存在时会拒绝覆盖；</li>
+<li>中途失败只允许 <code>DROP</code> 本轮刚创建的 Schema，不操作用户既有对象；</li>
+<li>Token 仅存在于运行进程内，未写入 <code>.databrickscfg</code> 或 token cache；</li>
+<li>每次由脚本启动的 Warehouse 都在结束后主动停止。</li>
+</ul>
+<h2>6. 真实 UI 与录屏结果</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>UI 证据</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>M01</td>
+<td>Home + New 菜单</td>
+<td>Free Edition 标签；数据、Notebook、Query、Dashboard、Genie Agent、Metric View、Job、ETL Pipeline、App 等入口</td>
+</tr>
+<tr>
+<td>M02</td>
+<td>Catalog Explorer</td>
+<td><code>dbx_demo_20260814</code>、orders=MANAGED、Details、到售后/销售视图的自动 Lineage</td>
+</tr>
+<tr>
+<td>M05</td>
+<td>Data Ingestion</td>
+<td>文件/Volume 与对象存储、数据库、SaaS Connector 入口</td>
+</tr>
+<tr>
+<td>M06</td>
+<td>Jobs &amp; Pipelines</td>
+<td>Ingestion pipeline、ETL pipeline、Job 三类入口；当前无已有资源</td>
+</tr>
+<tr>
+<td>M07/M10</td>
+<td>Compute</td>
+<td>2X-Small Serverless Starter Warehouse；Lakebase 入口；未创建实例</td>
+</tr>
+<tr>
+<td>M09</td>
+<td>Genie Agent</td>
+<td>中文问题、正确答案/图表、Show code、7 Sources、Instructions、1 Curated Example</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>SQL Editor</td>
+<td>可信自然语言问题基线，结果西南 3、华南 2、东北 1、华北 1</td>
+</tr>
+<tr>
+<td>C3</td>
+<td>SQL Editor</td>
+<td>18 条售后行动队列和写动作审批边界</td>
+</tr>
+<tr>
+<td>C4</td>
+<td>SQL Editor</td>
+<td>3 个数据库事故根因/Runbook 上下文和修复审批边界</td>
+</tr>
+</tbody></table>
+<p>所有录屏均为真实工作区、1440×758 左右、H.264、4 fps、内嵌中文字幕；无音轨。账号头像已模糊，邮箱和 UUID 自动替换。完整文件、时长和 SHA-256 见 <code>videos/recordings/README.md</code>。</p>
+<h2>7. 集中评测结果</h2>
+<p>一次内存态 OAuth 长会话完成了下列操作：</p>
+<ul>
+<li>创建 <code>genie_benchmark_questions</code> Delta 表，保存 10 个可信问题和审批边界；</li>
+<li><code>DESCRIBE DETAIL orders</code> 成功；</li>
+<li><code>DESCRIBE HISTORY orders</code> 返回 2 条历史记录；</li>
+<li>9/9 个业务与数据库运维基线查询成功；</li>
+<li>在用户个人 Workspace 中导入 10 单元 SQL 演示 Notebook；</li>
+<li>注册对象总数为 18：14 个基础表、3 个视图、1 个基准表。</li>
+</ul>
+<p>可信答案摘要：</p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>真实结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>工单总数</td>
+<td>700</td>
+</tr>
+<tr>
+<td>未解决 P1 工单最多区域</td>
+<td>西南 3；华南 2；东北 1；华北 1</td>
+</tr>
+<tr>
+<td>退款总额最高原因</td>
+<td>与描述不符：80,135.35</td>
+</tr>
+<tr>
+<td>VIP 平均解决时间</td>
+<td>2,041.64 分钟，28 条有效样本</td>
+</tr>
+<tr>
+<td>非 VIP 平均解决时间</td>
+<td>1,729.10 分钟，502 条有效样本</td>
+</tr>
+<tr>
+<td>最近有订单日期/渠道</td>
+<td>2026-08-01；partner；1 单；931.83</td>
+</tr>
+<tr>
+<td>负面 P1/P2 未解决工作队列</td>
+<td>18</td>
+</tr>
+<tr>
+<td>数据库事故</td>
+<td>3</td>
+</tr>
+</tbody></table>
+<p>其他初始实际资源：</p>
+<ul>
+<li>AI/BI Dashboard：0；</li>
+<li>Unity Catalog Connection：0；</li>
+<li>Delta Sharing Share：0；</li>
+<li>Database Instance：0；</li>
+<li>Genie Space：1，但初始列表内容没有引用 <code>dbx_demo_20260814</code>。</li>
+</ul>
+<h2>8. Genie Agent 配置与实测</h2>
+<p>通过 UI 新建并配置了一个明确绑定本项目数据的 Genie Agent：</p>
+<ul>
+<li>7 个 Sources：<code>after_sales_cases</code>、<code>refunds</code>、<code>support_policies</code>、<code>dbops_incident_context</code>、<code>runbooks</code>、<code>orders</code>、<code>customers</code>；</li>
+<li>中文业务指令：未解决口径、表选择优先级、未知处理、只读 SQL、所有业务/运维写动作需要人工审批；</li>
+<li>1 个 Curated Example：真实运行过的售后优先行动队列 SQL；</li>
+<li>问题：哪个区域未解决的 P1 售后工单最多，并说明数据表；</li>
+<li>结果：西南 3、华南 2、东北 1、华北 1，使用 <code>after_sales_cases</code>；</li>
+<li>与可信 SQL 基线完全一致；</li>
+<li>UI 可展开生成 SQL并生成柱状图。</li>
+</ul>
+<p>2026-08-17 深化验证：</p>
+<ul>
+<li>在真实 Agent 中加入 3 个 Agent-mode Benchmarks（P1 区域、所有状态退款、三个数据库事故），每题含 Ground-truth SQL 和 Evaluation note；</li>
+<li>三次批量运行均保留，最终有效运行是 10:27:28，Accuracy=33%（1/3）；</li>
+<li>P1 题通过；退款题事实正确但因额外行/列不满足严格输出契约；DBOps 可见答案完整却被评测器标成 <code>Empty Result</code>，保留为人工复核；</li>
+<li>正常 Agent 会话成功回答所有状态退款（80,135.35）、三个事故及后续审批边界问题；</li>
+<li>新增 Genie 实现架构、多入口对比 SVG，以及 G1 业务使用、G2 配置评测、G3 外部集成架构三段长视频。</li>
+</ul>
+<h2>9. 最终资源与边界</h2>
+<ul>
+<li>Starter SQL Warehouse：2026-08-16 清理脚本返回 <code>STOPPED / already_stopped</code>；</li>
+<li>OAuth broker/socket：已到期退出，不再运行；</li>
+<li>Job/Pipeline/Dashboard/App/Lakebase Project/Share/Connection：没有为本演示创建；</li>
+<li>合成数据 Schema 与 Genie Agent 保留，便于用户后续演示；清理 SQL 见 <code>sql/99-cleanup-demo.sql</code>；</li>
+<li>Free Edition 不提供生产 SLA，不能从本轮推导企业级性能、容量、私网、合规或真实数据安全结论。</li>
+</ul>
+
+    </article>
+  </main>
+  <footer>
+    <div class="shell footer-content">
+      <div><strong>Databricks 真实工作区验证</strong><p>由项目内 Markdown 源文件生成；UTF-8 静态页面，可离线阅读。</p></div>
+      <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">返回顶部 ↑</a>
+    </div>
+  </footer>
+</body>
+</html>

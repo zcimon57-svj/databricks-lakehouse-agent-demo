@@ -406,7 +406,7 @@
       <div class="cap-subhead"><h3>3. 从流程和架构判断准确性保障与易用度</h3><p>答案准确性不只取决于模型：数据接入、最终用户权限、业务语义、可信逻辑、执行验证和回归运营必须形成闭环。</p></div>${flowDiagram()}<div class="score-criteria"><article><h4>准确性保障能力 / 10</h4><p>业务语义 20% + 可信逻辑 15% + 查询与结果验证 20% + 评测与回归 20% + 执行链路与证据 15% + 权限正确性 10%。这是保障能力评分，不是实际答对率。</p></article><article><h4>获得可信答案的易用度 / 10</h4><p>许可与账号 15% + 数据接入 20% + 语义准备负担 25% + 作者测试 15% + 消费分发 15% + 失败修复 10%。分数越高，得到“可相信的第一答”所需客户工作越少。</p></article></div>${readinessCards()}
       <div class="cap-note">不要把 0.2–0.5 分的小差解释成真实测试排名：本研究没有 11 家同题、同数据、同权限账号测试。Snowflake/Databricks 的高分来自公开质量保障较完整；AWS 的高易用来自入口与连接广度；华为的低易用来自官方明确要求预计算指标、预拼宽表等客户准备；百度的大区间主要来自公开证据不足。</div>
       <div class="cap-subhead"><h3>4. 平台做什么、客户需要做什么</h3><p>展开厂商卡片查看首次使用前的准备、平台自动化边界、客户持续责任和主要使用成本。这是“为什么同样一个聊天框，落地成本不同”的核心。</p></div>${responsibilityCards()}
-      <div class="cap-link-row"><a href="./agent-entry-evidence-ledger.md">复核官方证据账本</a><a href="./agent-entry-governance-deep-dive.md#3b-细粒度能力全集数据源与接入方式前置准备与责任边界">阅读文字版方法与结论</a><a href="./agent-entry-governance-visual-report.html#capability-gap">返回主报告摘要</a></div>`;
+      <div class="cap-link-row"><a href="../site/details/agent-entry-evidence-ledger.html">复核官方证据账本</a><a href="../site/details/agent-entry-governance-deep-dive.html">阅读文字版方法与结论</a><a href="./agent-entry-governance-visual-report.html#capability-gap">返回主报告摘要</a></div>`;
     const filters = ["cap-domain-filter", "cap-vendor-filter", "cap-status-filter"].map(id => document.getElementById(id));
     const apply = () => renderCapabilityTable(filters[0].value, filters[1].value, filters[2].value);
     filters.forEach(control => control.addEventListener("change", apply));
@@ -422,7 +422,7 @@
       <div class="cap-subhead"><h3>八类能力的公开证据覆盖摘要</h3><p>100 代表该能力域每一项都有“支持”的官方证据；“限用”和“组合”折算，“待证”不能按“不支持”解读。完整 67×11 可筛选矩阵在厂商能力详册。</p></div>${coverageTable()}
       <div class="cap-subhead"><h3>六类关键数据源：直接可用、接入后可用，还是仅作工具？</h3><p>这张摘要解释为何“支持 40+ 数据源”不能直接换算成 Agent 易用度。悬停状态标签可查看具体路径。</p></div>${sourceLegend()}${sourceTable(keySources)}
       <div class="cap-subhead"><h3>准确性保障能力 / 获得可信答案的易用度</h3><p>前者看业务语义、验证、评测、执行链路和授权；后者看许可、接入、前置准备、测试、分发和修复成本。两者均为公开架构推断，不是统一测试集测得的实际准确率。</p></div>${readinessCards()}
-      <div class="cap-link-row"><a href="./vendor-entry-atlas.html#capabilities">打开 67 项能力全集、12 类数据源与责任卡</a><a href="./agent-entry-evidence-ledger.md">复核证据账本</a></div>`;
+      <div class="cap-link-row"><a href="./vendor-entry-atlas.html#capabilities">打开 67 项能力全集、12 类数据源与责任卡</a><a href="../site/details/agent-entry-evidence-ledger.html">复核证据账本</a></div>`;
   }
 
   const full = document.getElementById("capability-full");

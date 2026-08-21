@@ -8,6 +8,7 @@
     "record:huawei-rds": "node scripts/record_huawei_rds_agent.mjs http://127.0.0.1:8765/site/huawei-rds-agent.html videos/recordings/H1-huawei-rds-governed-agent.mp4",
     "build:zh-voiceovers": "node scripts/build_zh_voiceovers.mjs",
     "render:details": "node scripts/render_markdown_pages.mjs",
+    "validate:decision-site": "node scripts/validate_decision_site.mjs",
     "validate:zh-voiceovers": "node scripts/validate_zh_voiceovers.mjs"
   },
   "devDependencies": {

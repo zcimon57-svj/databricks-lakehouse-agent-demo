@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
+  <title id="title">华为云数据智能双平面与共享控制面方案假设</title>
+  <desc id="desc">统一任务入口连接 DataArts 数据语义权威、AgentArts 编排权威和 RDS DAS 数据库执行权威，底部共享身份、策略、任务、工件、追踪评测与成本。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0e2329"/><stop offset="1" stop-color="#183e45"/></linearGradient>
+    <linearGradient id="entry" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#e6533c"/><stop offset="1" stop-color="#f08b68"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#071317" flood-opacity=".3"/></filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#9de0cd"/></marker>
+    <style>
+      .zh { font-family: Inter, "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .eyebrow { font-size: 19px; font-weight: 800; letter-spacing: 2px; fill: #9de0cd; }
+      .h1 { font-size: 42px; font-weight: 800; fill: #fff; }
+      .h2 { font-size: 28px; font-weight: 800; fill: #142126; }
+      .body { font-size: 20px; fill: #53666b; }
+      .darkbody { font-size: 20px; fill: #b7cbcf; }
+      .label { font-size: 18px; font-weight: 800; fill: #e6533c; }
+      .pill { font-size: 18px; font-weight: 700; fill: #29463f; }
+    </style>
+  </defs>
+  <rect width="1600" height="980" rx="30" fill="url(#bg)"/>
+  <text x="76" y="78" class="zh eyebrow">PROPOSED HYPOTHESIS · MUST PASS G1–G6</text>
+  <text x="76" y="134" class="zh h1">双平面、一条客户旅程、三个领域权威、一个共享控制面</text>
+  <text x="76" y="174" class="zh darkbody">这是一张待验证目标图，不代表当前产品已经端到端打通，也不预设最终组织归属。</text>
+
+  <g transform="translate(76 218)">
+    <rect width="1448" height="112" rx="22" fill="url(#entry)" filter="url(#shadow)"/>
+    <text x="32" y="45" class="zh" font-size="18" font-weight="800" fill="#ffe6dd">统一且可替换的任务入口</text>
+    <text x="32" y="82" class="zh" font-size="29" font-weight="800" fill="#fff">RDS / DAS 内嵌　·　DataArts 工作台　·　企业门户　·　API / Agent Tool</text>
+    <rect x="1172" y="25" width="246" height="62" rx="16" fill="#fff" fill-opacity=".16" stroke="#fff" stroke-opacity=".25"/>
+    <text x="1295" y="63" text-anchor="middle" class="zh" font-size="19" font-weight="800" fill="#fff">Conversation + Task ID</text>
+  </g>
+
+  <path d="M800 336 V380" stroke="#9de0cd" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <g transform="translate(76 398)" filter="url(#shadow)">
+    <rect width="430" height="300" rx="24" fill="#fff"/>
+    <rect width="430" height="9" rx="4" fill="#5f88c7"/>
+    <text x="28" y="54" class="zh label" fill="#416da9">DATAARTS / BI PLANE</text>
+    <text x="28" y="104" class="zh h2">数据与语义权威</text>
+    <text x="28" y="151" class="zh body">资产 / Owner / 分类 / 血缘</text>
+    <text x="28" y="188" class="zh body">指标 / 维度 / Join / 同义词</text>
+    <text x="28" y="225" class="zh body">分析工件 / Dashboard / 数据服务</text>
+    <rect x="28" y="252" width="207" height="36" rx="10" fill="#e7effb"/>
+    <text x="131" y="276" text-anchor="middle" class="zh pill">Canonical data objects</text>
+  </g>
+
+  <g transform="translate(585 398)" filter="url(#shadow)">
+    <rect width="430" height="300" rx="24" fill="#fff"/>
+    <rect width="430" height="9" rx="4" fill="#8868b2"/>
+    <text x="28" y="54" class="zh label" fill="#76559f">AGENTARTS / ORCHESTRATION</text>
+    <text x="28" y="104" class="zh h2">任务与工具编排权威</text>
+    <text x="28" y="151" class="zh body">Plan / Tool routing / Context</text>
+    <text x="28" y="188" class="zh body">异步状态 / Retry / Handoff</text>
+    <text x="28" y="225" class="zh body">模型路由 / Agent 协作 / 反馈</text>
+    <rect x="28" y="252" width="196" height="36" rx="10" fill="#eee8f7"/>
+    <text x="126" y="276" text-anchor="middle" class="zh pill">Canonical task state</text>
+  </g>
+
+  <g transform="translate(1094 398)" filter="url(#shadow)">
+    <rect width="430" height="300" rx="24" fill="#fff"/>
+    <rect width="430" height="9" rx="4" fill="#2e9277"/>
+    <text x="28" y="54" class="zh label" fill="#237961">RDS / DAS · PG FIRST</text>
+    <text x="28" y="104" class="zh h2">数据库执行权威</text>
+    <text x="28" y="151" class="zh body">只读 SQL / Query Guard / Budget</text>
+    <text x="28" y="188" class="zh body">指标 / 慢 SQL / 告警 / 变更 / 拓扑</text>
+    <text x="28" y="225" class="zh body">Preview / Approval / Action / Verify</text>
+    <rect x="28" y="252" width="211" height="36" rx="10" fill="#ddf3ed"/>
+    <text x="134" y="276" text-anchor="middle" class="zh pill">Canonical execution state</text>
+  </g>
+
+  <path d="M291 708 V748 M800 708 V748 M1309 708 V748" stroke="#9de0cd" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <g transform="translate(76 766)">
+    <rect width="1448" height="138" rx="22" fill="#dff3ed" stroke="#88cbb9" stroke-width="2"/>
+    <text x="32" y="43" class="zh" font-size="18" font-weight="800" fill="#237961">共享控制面 · 不应由 Prompt 或某个入口私有</text>
+    <text x="32" y="88" class="zh" font-size="25" font-weight="800" fill="#142126">Canonical IDs　·　OBO Identity　·　Policy Decision　·　Task / Artifact / Action State</text>
+    <text x="32" y="120" class="zh body">Trace　·　Evaluation　·　Audit　·　Cost　·　Quota　·　Failure contract　·　Deep link</text>
+  </g>
+
+  <g transform="translate(76 928)">
+    <text x="0" y="0" class="zh" font-size="18" fill="#91a9ae">G1 对象连续性　 G2 身份权限　 G3 语义正确性　 G4 工具动作　 G5 运营保障　 G6 商业组织</text>
+    <text x="1448" y="0" text-anchor="end" class="zh" font-size="18" font-weight="800" fill="#f08b68">任一 Gate 不通过：缩小或调整产品边界</text>
+  </g>
+</svg>

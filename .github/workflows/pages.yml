@@ -1,4 +1,4 @@
-name: Deploy Databricks demo to GitHub Pages
+name: Deploy data intelligence decision site to GitHub Pages
 
 on:
   push:
@@ -32,6 +32,7 @@ jobs:
           mkdir -p _site/videos/voiceover
           cp index.html _site/index.html
           cp -R site _site/site
+          cp -R independent_exploration_2026-08-19 _site/independent_exploration_2026-08-19
           cp -R videos/recordings _site/videos/recordings
           cp videos/voiceover/zh-CN-narration.json _site/videos/voiceover/
           cp videos/voiceover/build-report.json _site/videos/voiceover/

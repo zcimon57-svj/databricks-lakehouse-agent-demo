@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="11 家厂商独立探索基础证据账本">
+  <title>11 家厂商独立探索基础证据账本</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../details.css">
+</head>
+<body class="detail-page">
+  <header class="detail-header" id="top">
+    <nav class="detail-nav shell" aria-label="详情页导航">
+      <a class="brand" href="independent-research-index.html">← 返回独立研究索引</a>
+      <a href="../index.html">数据智能决策首页</a>
+    </nav>
+    <div class="shell detail-heading">
+      <p class="eyebrow">BASE EVIDENCE LEDGER</p>
+      <h1>11 家厂商独立探索基础证据账本</h1>
+      <p>这是完整研究层；演示页保持精简，证据、边界、步骤和来源在这里展开。</p>
+    </div>
+  </header>
+  <main class="shell detail-layout">
+    <article class="markdown-body">
+<h1>证据账本</h1>
+<blockquote>
+<p>本账本只登记本轮重新访问的直接官方来源。核验日期均为 2026-08-19；页面本身的发布日期、区域、Edition 和 GA/Preview 状态另列。搜索摘要和第三方内容仅可用于发现，不进入事实证据。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>厂商/产品</th>
+<th>证据类型</th>
+<th>直接来源</th>
+<th>可支持的最小声明</th>
+<th>云/区域/版本/Edition/状态</th>
+<th>限制或冲突</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>H01</td>
+<td>华为云 DataArts Studio</td>
+<td>官方产品文档</td>
+<td><a href="https://support.huaweicloud.com/productdesc-dataartsstudio/dataartsstudio_07_001.html" target="_blank" rel="noreferrer">什么是 DataArts Studio</a></td>
+<td>Studio 包含管理、集成、架构、开发、质量、目录、数据服务和安全，使用湖/数据库作为底层引擎</td>
+<td>华为云；页面当前版；Region 未列</td>
+<td>不证明与 Insight 共享对象模型</td>
+</tr>
+<tr>
+<td>H02</td>
+<td>DataArts Studio</td>
+<td>官方产品文档</td>
+<td><a href="https://support.huaweicloud.com/productdesc-dataartsstudio/dataartsstudio_07_009.html" target="_blank" rel="noreferrer">版本规格</a></td>
+<td>新购有免费/初级/专家/企业版，不同 Edition 覆盖能力不同</td>
+<td>更新 2026-02-11</td>
+<td>旧模式仍可能存在；账号 Edition 需核验</td>
+</tr>
+<tr>
+<td>H03</td>
+<td>DataArts Studio</td>
+<td>官方计费文档</td>
+<td><a href="https://support.huaweicloud.com/productdesc-dataartsstudio/dataartsstudio_07_015.html" target="_blank" rel="noreferrer">计费说明</a></td>
+<td>基础实例加增量包；升级会新建集成集群并需迁移旧连接/作业</td>
+<td>更新 2026-06-25</td>
+<td>另有 OBS/APIG/EIP 等费用；不能据此计算目标账号 TCO</td>
+</tr>
+<tr>
+<td>H04</td>
+<td>DataArts Studio</td>
+<td>官方 API 文档</td>
+<td><a href="https://support.huaweicloud.com/api-dataartsstudio/dataartsstudio_02_0007.html" target="_blank" rel="noreferrer">API 概览</a></td>
+<td>集成、开发、管理、架构、质量、目录、服务和安全有 REST API</td>
+<td>更新 2025-05-09；国际版更新更晚</td>
+<td>API 存在不证明跨模块事务或与 Insight 资源 ID 一致</td>
+</tr>
+<tr>
+<td>H05</td>
+<td>DataArts Studio</td>
+<td>官方 SDK 文档</td>
+<td><a href="https://support.huaweicloud.com/sdkreference-dataartsstudio/dataartsstudio_06_0001.html" target="_blank" rel="noreferrer">SDK 概览</a></td>
+<td>多模块提供 Java/Python/Go SDK，数据服务另有更多语言</td>
+<td>更新 2026-05-21</td>
+<td>具体 API 覆盖率需逐端点核验</td>
+</tr>
+<tr>
+<td>H06</td>
+<td>Studio 连接 RDS</td>
+<td>官方用户指南</td>
+<td><a href="https://support.huaweicloud.com/intl/en-us/usermanual-dataartsstudio/dataartsstudio_01_1303.html" target="_blank" rel="noreferrer">连接 RDS</a></td>
+<td>连接 RDS 需 CDM Agent、网络/安全组等条件；Agent 超过 200 活动线程会排队</td>
+<td>华为云国际站；Region/AZ/VPC 约束</td>
+<td>“支持 RDS”不是零配置或无负载风险</td>
+</tr>
+<tr>
+<td>H07</td>
+<td>DataArts Insight</td>
+<td>官方产品文档</td>
+<td><a href="https://support.huaweicloud.com/productdesc-dataartsinsight/dataartsinsight_01_0002.html" target="_blank" rel="noreferrer">什么是 DataArts Insight</a></td>
+<td>Insight 是独立企业 BI 服务，提供控制台和 HTTPS API</td>
+<td>更新 2026-02-24</td>
+<td>官网性能/模型能力描述是官方声明，不是实测</td>
+</tr>
+<tr>
+<td>H08</td>
+<td>Insight 智能分析助手</td>
+<td>官方用户指南</td>
+<td><a href="https://support.huaweicloud.com/usermanual-dataartsinsight/dataartsinsight_03_1001.html" target="_blank" rel="noreferrer">助手概述</a></td>
+<td>支持多轮，但文档建议短、清楚问题，以一问一答为主，用户复核，响应通常不少于 10 秒</td>
+<td>PUBLIC BETA；数据源列表见页面</td>
+<td>“多轮”与“主要一问一答”是同页边界，不应择一忽略</td>
+</tr>
+<tr>
+<td>H09</td>
+<td>Insight 智能分析助手</td>
+<td>官方用户指南</td>
+<td><a href="https://support.huaweicloud.com/usermanual-dataartsinsight/dataartsinsight_03_0302.html" target="_blank" rel="noreferrer">创建与配置助手</a></td>
+<td>需项目、数据源、数据集、助手和表语义同步；字段/同义词变化需重同步</td>
+<td>华为云；Beta 关联上下文</td>
+<td>配置成本和重同步行为需要账号验证</td>
+</tr>
+<tr>
+<td>H10</td>
+<td>Insight 智能分析助手</td>
+<td>官方用户指南</td>
+<td><a href="https://support.huaweicloud.com/usermanual-dataartsinsight/dataartsinsight_03_5071.html" target="_blank" rel="noreferrer">助手配置</a></td>
+<td>可配置模型、Prompt、场景、多数据集、同义词、关键词与实体</td>
+<td>页面当前版</td>
+<td>不等同于统一企业语义对象或版本化发布</td>
+</tr>
+<tr>
+<td>H11</td>
+<td>Insight 智能分析助手</td>
+<td>官方用户指南</td>
+<td><a href="https://support.huaweicloud.com/usermanual-dataartsinsight/dataartsinsight_03_5074.html" target="_blank" rel="noreferrer">问题详情</a></td>
+<td>可见关键词改写、检索、Prompt、语义 SQL、DQE、物理 SQL；历史只记成功问答且近 30 天</td>
+<td>更新约 2025-09</td>
+<td>DQE 是后处理；不证明能消除业务口径错误</td>
+</tr>
+<tr>
+<td>H12</td>
+<td>Insight 智能分析助手</td>
+<td>官方用户指南</td>
+<td><a href="https://support.huaweicloud.com/usermanual-dataartsinsight/dataartsinsight_03_5080.html" target="_blank" rel="noreferrer">助手评测</a></td>
+<td>管理员可上传评测集、标注、比较助手和看 BadCase</td>
+<td>更新 2025-07-07</td>
+<td>公开页未闭合权限负例、CI Gate、长期保留等</td>
+</tr>
+<tr>
+<td>H13</td>
+<td>DataArts Insight</td>
+<td>官方 API 文档</td>
+<td><a href="https://support.huaweicloud.com/api-dataartsinsight/dataartsinsight_api_0008.html" target="_blank" rel="noreferrer">API 概览</a></td>
+<td>有工作空间、数据源、数据集、权限、Dashboard/大屏、嵌入和助手 API</td>
+<td>更新 2025-11-25</td>
+<td>API 生命周期和所有对象的 CI/CD 能力需逐项核验</td>
+</tr>
+<tr>
+<td>H14</td>
+<td>Insight NL Query</td>
+<td>官方 API 文档</td>
+<td><a href="https://support.huaweicloud.com/api-dataartsinsight/InvokeNlQuery.html" target="_blank" rel="noreferrer">InvokeNlQuery</a></td>
+<td>可传 subject/dialog/dataset/message，返回数据、SQL、insight</td>
+<td>更新 2025-12-16</td>
+<td>dialog_id 证明接口字段，不足以证明任意多轮语义稳定性</td>
+</tr>
+<tr>
+<td>H15</td>
+<td>Insight 嵌入</td>
+<td>官方用户指南</td>
+<td><a href="https://support.huaweicloud.com/usermanual-dataartsinsight/dataartsinsight_03_0455.html" target="_blank" rel="noreferrer">嵌入</a></td>
+<td>Dashboard/大屏/助手可嵌入；助手仅 Ticket 认证，Ticket 绑定权限并有寿命/次数</td>
+<td>更新 2025-06-26</td>
+<td>有效 Ticket 持有者可见对应资产/数据，需保护 Ticket</td>
+</tr>
+<tr>
+<td>H16</td>
+<td>Insight 行权限</td>
+<td>官方用户指南</td>
+<td><a href="https://support.huaweicloud.com/usermanual-dataartsinsight/dataartsinsight_03_0210.html" target="_blank" rel="noreferrer">行权限</a></td>
+<td>数据集可按固定规则或用户标签限制行</td>
+<td>华为云；页面当前版</td>
+<td>需验证问数、导出、嵌入各路径一致性</td>
+</tr>
+<tr>
+<td>H17</td>
+<td>Insight 列权限</td>
+<td>官方用户指南</td>
+<td><a href="https://support.huaweicloud.com/usermanual-dataartsinsight/dataartsinsight_03_0209.html" target="_blank" rel="noreferrer">列权限</a></td>
+<td>支持禁止与掩码；文档还描述部分 Dashboard/大屏路径可查看掩码列明文</td>
+<td>更新 2025-09-17</td>
+<td>高风险文档声明，必须账号复核；不可外推所有版本</td>
+</tr>
+<tr>
+<td>H18</td>
+<td>Insight 数据源</td>
+<td>官方用户指南</td>
+<td><a href="https://support.huaweicloud.com/usermanual-dataartsinsight/dataartsinsight_03_0101.html" target="_blank" rel="noreferrer">数据源</a></td>
+<td>支持多种仓库/数据库/API 数据源，要求相应 Region/Project/网络配置</td>
+<td>华为云；页面当前版</td>
+<td>数据源支持不证明统一治理或负载保护</td>
+</tr>
+<tr>
+<td>H19</td>
+<td>Insight 规格/计费</td>
+<td>官方产品与计费文档</td>
+<td><a href="https://support.huaweicloud.com/productdesc-dataartsinsight/dataartsinsight_01_0006.html" target="_blank" rel="noreferrer">产品规格</a>、<a href="https://support.huaweicloud.com/price-dataartsinsight/dataartsinsight_04_0003.html" target="_blank" rel="noreferrer">助手计费</a></td>
+<td>企业版按用户数等规格；助手存在公测/共享模型/自有模型相关说明</td>
+<td>文档更新日期不同</td>
+<td>状态与销售方式可能漂移，需合同和账号复核</td>
+</tr>
+<tr>
+<td>H20</td>
+<td>DataArts Fabric</td>
+<td>官方产品文档</td>
+<td><a href="https://support.huaweicloud.com/productdesc-fabric/dataartsfabric_01_0003.html" target="_blank" rel="noreferrer">产品优势</a></td>
+<td>Fabric 提供 Serverless SQL 与 Ray Data/Train/Serve 等数据+AI开发能力</td>
+<td>更新 2026-01-22</td>
+<td>Region、Edition、GA、与 Studio/Insight 对象贯通为 Unknown</td>
+</tr>
+<tr>
+<td>H21</td>
+<td>LakeFormation</td>
+<td>官方产品文档</td>
+<td><a href="https://support.huaweicloud.com/intl/zh-cn/productdesc-lakeformation/lakeformation_01_0001.html" target="_blank" rel="noreferrer">产品介绍</a>、<a href="https://support.huaweicloud.com/productdesc-lakeformation/lakeformation_01_0030.html" target="_blank" rel="noreferrer">权限机制</a></td>
+<td>提供湖 Catalog/DB/Table/Function、OBS 路径、权限与 API/SDK；IAM 与 LakeFormation 权限均需通过</td>
+<td>华为云；页面当前版</td>
+<td>对 Insight/RDS/业务指标的治理覆盖未证明</td>
+</tr>
+<tr>
+<td>H22</td>
+<td>LakeFormation</td>
+<td>官方约束文档</td>
+<td><a href="https://support.huaweicloud.com/intl/zh-cn/productdesc-lakeformation/lakeformation_01_0022.html" target="_blank" rel="noreferrer">使用限制</a></td>
+<td>不支持跨 Region/实例统一元数据权限；部分自定义 Catalog 子对象暂不支持鉴权</td>
+<td>更新 2025-07-22</td>
+<td>直接限制“全局统一目录”的外推</td>
+</tr>
+<tr>
+<td>H23</td>
+<td>DAS</td>
+<td>官方产品文档</td>
+<td><a href="https://support.huaweicloud.com/productdesc-das/das_01_0002.html" target="_blank" rel="noreferrer">DAS 产品介绍</a></td>
+<td>DAS 提供 Web 数据库开发、性能、慢/全量 SQL 与诊断</td>
+<td>更新 2025-07-03</td>
+<td>不证明已与 DataArts 共享证据对象</td>
+</tr>
+<tr>
+<td>H24</td>
+<td>RDS DBA</td>
+<td>官方用户指南</td>
+<td><a href="https://support.huaweicloud.com/usermanual-rds-mysql/rds_08_0037.html" target="_blank" rel="noreferrer">智能 DBA</a></td>
+<td>RDS 控制台提供会话、KILL、SQL 限流、性能与容量功能</td>
+<td>更新 2026-01-12</td>
+<td>需要多项较宽服务权限；具体最小权限需复核</td>
+</tr>
+<tr>
+<td>H25</td>
+<td>RDS SQL 洞察</td>
+<td>官方用户指南</td>
+<td><a href="https://support.huaweicloud.com/usermanual-rds-mysql/rds_08_0032.html" target="_blank" rel="noreferrer">SQL 洞察</a></td>
+<td>全量 SQL 默认关闭；高流量/长度限制会造成丢失或截断，并有采集开销</td>
+<td>更新 2026-05-14</td>
+<td>诊断证据可能不完整，回答必须暴露采集边界</td>
+</tr>
+<tr>
+<td>H26</td>
+<td>DAS MCP</td>
+<td>官方最佳实践/代码</td>
+<td><a href="https://support.huaweicloud.com/bestpractice-das/das_best_practice_01_0017.html" target="_blank" rel="noreferrer">DAS MCP 最佳实践</a>、<a href="https://github.com/huaweicloud-samples/iaas-mcp-server" target="_blank" rel="noreferrer">官方样例仓库</a></td>
+<td>公测样例可暴露 RDS/DAS/CES 等 MCP 工具</td>
+<td>更新 2025-12-15；PUBLIC BETA</td>
+<td>样例使用 AK/SK 且工具可产生收费资源；不证明托管生产安全面</td>
+</tr>
+<tr>
+<td>H27</td>
+<td>DWS MCP</td>
+<td>官方开发指南</td>
+<td><a href="https://support.huaweicloud.com/intl/en-us/devg-911-dws/dws_04_1464.html" target="_blank" rel="noreferrer">DWS MCP</a></td>
+<td>DWS 指定版本提供元数据、活动、查询与系统信息 MCP 工具</td>
+<td>更新 2026-07-02；DWS &gt;= 9.1.1.200</td>
+<td><code>execute_query</code> 的只读/审批硬约束未由该页说明</td>
+</tr>
+<tr>
+<td>D01</td>
+<td>Databricks Unity Catalog</td>
+<td>官方文档</td>
+<td><a href="https://docs.databricks.com/aws/en/data-governance/unity-catalog" target="_blank" rel="noreferrer">Unity Catalog</a></td>
+<td>统一治理表/视图/卷/函数/模型/服务等对象及权限、血缘、审计、共享</td>
+<td>AWS 文档更新 2026-07-23</td>
+<td>“统一”不等于跨 Region 一个 metastore</td>
+</tr>
+<tr>
+<td>D02</td>
+<td>Unity Catalog</td>
+<td>官方文档</td>
+<td><a href="https://docs.databricks.com/aws/en/data-governance/unity-catalog/create-metastore" target="_blank" rel="noreferrer">metastore</a>、<a href="https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-lineage" target="_blank" rel="noreferrer">lineage</a></td>
+<td>每 Region 一个 metastore；共享 metastore 的工作空间可自动记录列级血缘</td>
+<td>2026 当前文档</td>
+<td>跨 Region/账号边界需单独设计</td>
+</tr>
+<tr>
+<td>D03</td>
+<td>Unity Catalog 权限</td>
+<td>官方文档</td>
+<td><a href="https://docs.databricks.com/aws/en/data-governance/unity-catalog/filters-and-masks" target="_blank" rel="noreferrer">row filters and masks</a></td>
+<td>支持行过滤/列掩码，但外部 API、克隆、时间旅行、共享等有多项限制</td>
+<td>更新 2026-07-30</td>
+<td>不能宣称所有访问路径策略等价</td>
+</tr>
+<tr>
+<td>D04</td>
+<td>Unity Catalog semantics</td>
+<td>官方文档</td>
+<td><a href="https://docs.databricks.com/aws/en/uc-semantics/" target="_blank" rel="noreferrer">语义层</a>、<a href="https://docs.databricks.com/aws/en/uc-semantics/metric-views/" target="_blank" rel="noreferrer">metric views</a></td>
+<td>指标、维度、Join 和 Agent 元数据可成为 UC 对象，供 SQL/BI/Genie/外部工具使用</td>
+<td>AWS 当前文档</td>
+<td>主对象页未给出明确 GA 日期；子能力状态不同</td>
+</tr>
+<tr>
+<td>D05</td>
+<td>Metric views</td>
+<td>官方文档</td>
+<td><a href="https://docs.databricks.com/gcp/en/uc-semantics/metric-views/feature-availability" target="_blank" rel="noreferrer">功能可用性</a>、<a href="https://docs.databricks.com/aws/en/dashboards/manage/data-modeling/local-metric-views" target="_blank" rel="noreferrer">local metric views</a></td>
+<td>不同 runtime 支持不同特性；本地 metric views 与物化等仍有 Preview</td>
+<td>更新 2026-07</td>
+<td>不应把全部 semantic 能力统一标记 GA</td>
+</tr>
+<tr>
+<td>D06</td>
+<td>Databricks Genie</td>
+<td>官方文档</td>
+<td><a href="https://docs.databricks.com/aws/en/genie/" target="_blank" rel="noreferrer">Genie family</a></td>
+<td>Genie One、Genie Agents、Genie Code 共享受治理数据基础但面向不同用户</td>
+<td>更新 2026-07-20</td>
+<td>统一品牌不等于所有入口同阶段</td>
+</tr>
+<tr>
+<td>D07</td>
+<td>Genie Agents</td>
+<td>官方文档</td>
+<td><a href="https://docs.databricks.com/aws/en/genie/set-up" target="_blank" rel="noreferrer">创建与管理</a></td>
+<td>Agent 最多 30 表/视图，需 Pro/Serverless SQL；作者计算凭据嵌入，数据按用户权限</td>
+<td>更新 2026-07-08</td>
+<td>作者离职/凭据失效是运营风险</td>
+</tr>
+<tr>
+<td>D08</td>
+<td>Genie 质量运营</td>
+<td>官方文档</td>
+<td><a href="https://docs.databricks.com/aws/en/genie-agents/monitor" target="_blank" rel="noreferrer">监控与评测</a></td>
+<td>支持 SQL 查看/编辑、反馈、人工复核、最多 500 条 benchmark、结果/LLM judge</td>
+<td>更新 2026-07-29</td>
+<td>5000 行、排序/截断和详情保留期影响评测；反馈不自动学习</td>
+</tr>
+<tr>
+<td>D09</td>
+<td>Genie 失败行为</td>
+<td>官方文档</td>
+<td><a href="https://docs.databricks.com/aws/en/genie-agents/troubleshooting" target="_blank" rel="noreferrer">故障排查</a></td>
+<td>长上下文可降质或阻塞；作者移除会破坏查询；关键问题推荐 trusted assets</td>
+<td>2026 当前文档</td>
+<td>证明产品有显式失败边界，不证明实际成功率</td>
+</tr>
+<tr>
+<td>D10</td>
+<td>Genie API</td>
+<td>官方 API 文档</td>
+<td><a href="https://docs.databricks.com/aws/en/genie-agents/conversation-api" target="_blank" rel="noreferrer">Genie Agents API</a></td>
+<td>Conversation API 支持有状态多轮，Management API 支持创建/配置/部署；需异步轮询</td>
+<td>更新 2026-07-30</td>
+<td>可视化等子能力 Beta；旧页面仍有 Preview 标记，存在文档漂移</td>
+</tr>
+<tr>
+<td>D11</td>
+<td>Genie Agent Mode</td>
+<td>官方发布说明/API</td>
+<td><a href="https://docs.databricks.com/gcp/en/ai-bi/release-notes/2026" target="_blank" rel="noreferrer">2026 发布说明</a>、<a href="https://docs.databricks.com/aws/en/genie-agents/api" target="_blank" rel="noreferrer">Agent Mode API</a></td>
+<td>Agent Mode 2026-07-02 GA；程序化 Agent Mode API 仍 Beta</td>
+<td>API 更新 2026-07-24</td>
+<td>UI GA 不应外推 API GA</td>
+</tr>
+<tr>
+<td>D12</td>
+<td>AI/BI Dashboard</td>
+<td>官方文档</td>
+<td><a href="https://docs.databricks.com/aws/en/dashboards/share/embedding/" target="_blank" rel="noreferrer">嵌入</a></td>
+<td>Dashboard 支持嵌入和发布者凭据/个人数据权限模式</td>
+<td>更新 2026-06-26</td>
+<td>不同模式的审计主体和数据暴露范围不同</td>
+</tr>
+<tr>
+<td>D13</td>
+<td>Lakehouse Federation</td>
+<td>官方文档</td>
+<td><a href="https://docs.databricks.com/aws/en/query-federation/database-federation" target="_blank" rel="noreferrer">Database Federation</a></td>
+<td>外部数据库以只读 foreign catalog 查询；官方建议临时/POC</td>
+<td>更新 2026-07-13</td>
+<td>无缓存、大结果单流/内存、命名等限制；不等于生产 CDC</td>
+</tr>
+<tr>
+<td>D14</td>
+<td>Lakeflow Connect</td>
+<td>官方文档</td>
+<td><a href="https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/cdc-overview" target="_blank" rel="noreferrer">CDC 概览</a></td>
+<td>托管 MySQL/PostgreSQL/SQL Server CDC 写入 Delta，连接为 UC 对象</td>
+<td>更新 2026-06-18</td>
+<td>各连接器限制和 Region 需单列验证</td>
+</tr>
+<tr>
+<td>D15</td>
+<td>Managed MCP</td>
+<td>官方文档</td>
+<td><a href="https://docs.databricks.com/gcp/en/agents/mcp/managed-mcp" target="_blank" rel="noreferrer">托管 MCP</a>、<a href="https://docs.databricks.com/aws/en/agents/mcp-tools/genie-mcp" target="_blank" rel="noreferrer">Genie One MCP</a></td>
+<td>托管 MCP 可暴露 UC 数据/函数；Genie One MCP 提供引用与 deep link</td>
+<td>Public Preview/Beta；更新 2026-07/08</td>
+<td>需要 workspace preview；不能作为已普遍生产可用</td>
+</tr>
+<tr>
+<td>D16</td>
+<td>Genie Agent MCP</td>
+<td>官方文档</td>
+<td><a href="https://docs.databricks.com/aws/en/agents/mcp-tools/genie-agent" target="_blank" rel="noreferrer">per-agent MCP</a></td>
+<td>单 Agent MCP 按请求执行 UC 权限、只读且无对话历史</td>
+<td>更新 2026-08-03</td>
+<td>页面称最多 25 表，与 Agent 设置页 30 表冲突，需版本核验</td>
+</tr>
+<tr>
+<td>D17</td>
+<td>Mosaic AI/MLflow</td>
+<td>官方文档</td>
+<td><a href="https://docs.databricks.com/aws/en/generative-ai/agent-framework/build-genai-apps" target="_blank" rel="noreferrer">Agent Framework</a>、<a href="https://docs.databricks.com/aws/en/mlflow3/genai/eval-monitor" target="_blank" rel="noreferrer">MLflow 评测与监控</a></td>
+<td>支持 Agent 构建、部署、Trace、离线/在线评测与 review app</td>
+<td>部分外部 Agent 服务/监控为 Beta</td>
+<td>通用 Agent 评测与 Genie benchmark 是不同产品面</td>
+</tr>
+<tr>
+<td>D18</td>
+<td>Genie 计费</td>
+<td>官方发布说明</td>
+<td><a href="https://docs.databricks.com/gcp/en/ai-bi/release-notes/2026" target="_blank" rel="noreferrer">2026 AI/BI 发布说明</a></td>
+<td>用户使用 Genie One/Agents 免费延至 2027-01-31；服务主体不含在免费范围</td>
+<td>发布 2026-08-03</td>
+<td>促销不可作为长期价格；不同 Cloud 价格需报价页</td>
+</tr>
+<tr>
+<td>D19</td>
+<td>Lakebase 监控</td>
+<td>官方文档</td>
+<td><a href="https://docs.databricks.com/aws/en/oltp/projects/query-performance" target="_blank" rel="noreferrer">Query performance</a>、<a href="https://docs.databricks.com/aws/en/oltp/projects/metrics" target="_blank" rel="noreferrer">Metrics</a></td>
+<td>有查询统计、慢查询、CPU/内存/连接/死锁/复制等数据库监控</td>
+<td>更新 2026-06</td>
+<td><code>pg_stat_statements</code> 可在挂起/重启后丢失，需高级遥测持久化</td>
+</tr>
+<tr>
+<td>D20</td>
+<td>Lakebase AI 诊断</td>
+<td>官方文档</td>
+<td><a href="https://docs.databricks.com/aws/en/oltp/projects/ai-assisted-troubleshooting" target="_blank" rel="noreferrer">AI-assisted troubleshooting</a>、<a href="https://docs.databricks.com/aws/en/oltp/projects/observability-genie" target="_blank" rel="noreferrer">Genie fix</a></td>
+<td>会话/等待、计划、DDL、指标、日志写入 UC；Genie 调查和修复逐步确认</td>
+<td>Beta；AWS/Azure Lakebase Autoscaling；更新 2026-07</td>
+<td>需要 Preview、运行 compute 和指定 UC 目标；不是全数据库通用能力</td>
+</tr>
+<tr>
+<td>D21</td>
+<td>Lakebase API</td>
+<td>官方文档</td>
+<td><a href="https://docs.databricks.com/aws/en/oltp/projects/api-usage" target="_blank" rel="noreferrer">Autoscaling API</a></td>
+<td>管理 API/SDK/CLI 支持长操作与重试，409 冲突是预期行为</td>
+<td>API Beta；更新 2026-05-15</td>
+<td>生产客户端需轮询、退避并区分管理 API 与数据访问</td>
+</tr>
+<tr>
+<td>D22</td>
+<td>Lakeflow Connect</td>
+<td>官方文档</td>
+<td><a href="https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/" target="_blank" rel="noreferrer">托管连接器</a>、<a href="https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/query-based-pipeline" target="_blank" rel="noreferrer">查询式接入</a></td>
+<td>托管数据库/SaaS/文件/流连接器；查询式接入可选 UC 目标、连接、Schema 与表，并按计划读取外部数据库</td>
+<td>更新 2026-07；各连接器状态不同</td>
+<td>需要 UC、Serverless 网络、连接与权限；配置面不等于 Genie One 对话已自动完成</td>
+</tr>
+<tr>
+<td>D23</td>
+<td>Auto Loader</td>
+<td>官方文档</td>
+<td><a href="https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/schema" target="_blank" rel="noreferrer">Schema 推断与演进</a></td>
+<td>对对象文件推断 Schema、处理新列，并可把意外字段保留到 rescued data</td>
+<td>更新 2026-07-10</td>
+<td>文件格式和演进模式有约束；自动推断不等于业务语义正确</td>
+</tr>
+<tr>
+<td>D24</td>
+<td>Unity Catalog 数据管理</td>
+<td>官方文档</td>
+<td><a href="https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-discovery" target="_blank" rel="noreferrer">数据发现</a>、<a href="https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring" target="_blank" rel="noreferrer">质量监控</a>、<a href="https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-classification" target="_blank" rel="noreferrer">敏感分类</a></td>
+<td>Discover/Catalog Explorer、自动血缘、质量异常/画像及 Agentic 敏感分类组成资产管理链路</td>
+<td>更新 2026-07/08；分类含 Beta 子项</td>
+<td>需要 UC/Serverless/权限；分类含 LLM 且结果需 Review，不证明零误报</td>
+</tr>
+<tr>
+<td>C01</td>
+<td>AWS Amazon Quick</td>
+<td>官方用户指南</td>
+<td><a href="https://docs.aws.amazon.com/quick/latest/userguide/gen-bi-data-q-and-a.html" target="_blank" rel="noreferrer">Generative BI</a></td>
+<td>Topic Q&amp;A 可返回多图和解释“如何理解问题”，支持消歧与反馈</td>
+<td>Enterprise/Pro 能力依 Edition</td>
+<td>未给出 Ground Truth 自动回归机制</td>
+</tr>
+<tr>
+<td>C02</td>
+<td>Amazon Quick</td>
+<td>官方用户指南</td>
+<td><a href="https://docs.aws.amazon.com/quick/latest/userguide/topics-performance.html" target="_blank" rel="noreferrer">Topic performance</a></td>
+<td>作者可看可回答/不可回答、反馈、消歧和问题历史</td>
+<td>Enterprise Edition</td>
+<td>运营数据不等于程序化结果等价评测</td>
+</tr>
+<tr>
+<td>C03</td>
+<td>Amazon Quick</td>
+<td>官方用户/API 文档</td>
+<td><a href="https://docs.aws.amazon.com/quick/latest/userguide/topics-data-rls.html" target="_blank" rel="noreferrer">RLS in topics</a>、<a href="https://docs.aws.amazon.com/quick/latest/userguide/embedding-gen-bi.html" target="_blank" rel="noreferrer">嵌入</a></td>
+<td>Topic 遵守 RLS；Generative Q&amp;A 支持注册/匿名嵌入与 per-user 设置</td>
+<td>AWS；当前文档</td>
+<td>匿名嵌入的身份/标签配置必须正确</td>
+</tr>
+<tr>
+<td>C04</td>
+<td>AWS SageMaker Unified Studio</td>
+<td>官方用户指南</td>
+<td><a href="https://docs.aws.amazon.com/sagemaker-unified-studio/latest/userguide/sql-query-data-agent.html" target="_blank" rel="noreferrer">Data Agent</a></td>
+<td>可多轮生成 SQL、先给复杂任务计划、接受后执行、根据错误修复</td>
+<td>AWS；2026 当前文档</td>
+<td>面向查询编辑器/Notebook，不等同于业务 BI Agent</td>
+</tr>
+<tr>
+<td>C05</td>
+<td>SageMaker Unified Studio</td>
+<td>官方用户指南</td>
+<td><a href="https://docs.aws.amazon.com/sagemaker-unified-studio/latest/userguide/concepts.html" target="_blank" rel="noreferrer">Catalog/项目概念</a>、<a href="https://docs.aws.amazon.com/sagemaker-unified-studio/latest/userguide/catalog-iam-manage-access.html" target="_blank" rel="noreferrer">访问审批</a></td>
+<td>项目是协作/权限边界；Catalog 订阅批准后生成 Lake Formation grant</td>
+<td>IAM/IdC 模式不同</td>
+<td>共享执行 Role 的项目会共享相应访问，需谨慎设计</td>
+</tr>
+<tr>
+<td>C06</td>
+<td>AWS Bedrock AgentCore</td>
+<td>官方开发指南</td>
+<td><a href="https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/evaluations-types.html" target="_blank" rel="noreferrer">Evaluations</a>、<a href="https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/observability.html" target="_blank" rel="noreferrer">Observability</a></td>
+<td>有在线、按需、批量评测和 OTEL/CloudWatch Trace/指标</td>
+<td>dataset evaluation 子能力 Preview</td>
+<td>通用 Agent 运营能力不自动理解数据语义</td>
+</tr>
+<tr>
+<td>C07</td>
+<td>Microsoft Fabric Data Agent</td>
+<td>官方 Learn</td>
+<td><a href="https://learn.microsoft.com/en-us/fabric/data-science/concept-data-agent" target="_blank" rel="noreferrer">Data Agent concepts</a></td>
+<td>GA；查询 OneLake 中 warehouse/lakehouse/semantic model/KQL/ontology，生成只读 SQL/DAX/KQL</td>
+<td>GA；需 F2/P1+；更新 2026-05-11</td>
+<td>非英语/非结构化/跨 Region 不支持，输出最多 25x25，历史可能丢失</td>
+</tr>
+<tr>
+<td>C08</td>
+<td>Fabric Data Agent</td>
+<td>官方 Learn</td>
+<td><a href="https://learn.microsoft.com/en-us/fabric/data-science/evaluate-data-agent" target="_blank" rel="noreferrer">评测 SDK</a></td>
+<td>Python SDK 用问题+期望答案评测，保留实际答案、结果和步骤</td>
+<td>评测功能 Preview；更新 2026-05-04</td>
+<td>LLM critic 可定制但仍需人工校准</td>
+</tr>
+<tr>
+<td>C09</td>
+<td>Fabric Data Agent</td>
+<td>官方 Learn</td>
+<td><a href="https://learn.microsoft.com/en-us/fabric/data-science/data-agent-source-control" target="_blank" rel="noreferrer">ALM/源代码控制</a>、<a href="https://learn.microsoft.com/en-us/fabric/data-science/data-agent-microsoft-copilot-studio" target="_blank" rel="noreferrer">Copilot Studio</a></td>
+<td>有 Git/部署管线；发布后可供 Power BI/Copilot Studio/Foundry 等消费</td>
+<td>部分消费路径 Preview</td>
+<td>service principal 只支持 ALM；跨 compliance boundary 需注意</td>
+</tr>
+<tr>
+<td>C10</td>
+<td>Microsoft Fabric</td>
+<td>官方 Learn</td>
+<td><a href="https://learn.microsoft.com/en-us/fabric/fundamentals/microsoft-fabric-overview" target="_blank" rel="noreferrer">Fabric overview</a></td>
+<td>OneLake 是 tenant-wide 统一存储，Fabric 工作负载共享数据基础</td>
+<td>Microsoft Fabric 当前版</td>
+<td>单一存储不等于所有语义/权限/Agent 功能同阶段</td>
+</tr>
+<tr>
+<td>C11</td>
+<td>Google Looker</td>
+<td>官方文档</td>
+<td><a href="https://docs.cloud.google.com/looker/docs/conversational-analytics-overview" target="_blank" rel="noreferrer">Conversational Analytics</a></td>
+<td>用 LookML 语义模型作为真源，Agent 最多连接 5 个 Explore，可发布/共享</td>
+<td>Google Cloud；当前文档</td>
+<td>verified queries 在部分 Looker 版本仍 Preview；需验证输出</td>
+</tr>
+<tr>
+<td>C12</td>
+<td>Google BigQuery</td>
+<td>官方文档</td>
+<td><a href="https://docs.cloud.google.com/bigquery/docs/conversational-analytics" target="_blank" rel="noreferrer">Conversational Analytics</a>、<a href="https://docs.cloud.google.com/bigquery/docs/create-data-agents" target="_blank" rel="noreferrer">创建 Data Agent 与 verified queries</a></td>
+<td>Data Agent 支持数据源、指令、Glossary、verified query、多步分析与 API</td>
+<td>BigQuery；2026 当前版</td>
+<td>官方建议 Agent 范围约 20 源以内，整体最多 100 knowledge sources；成本/429</td>
+</tr>
+<tr>
+<td>C13</td>
+<td>Google CA API</td>
+<td>官方发布说明</td>
+<td><a href="https://docs.cloud.google.com/gemini/data-agents/conversational-analytics-api/release-notes" target="_blank" rel="noreferrer">API release notes</a></td>
+<td>2026-06-23 v1 API 对 BigQuery/Looker GA，并支持区域端点</td>
+<td>GA 限 BigQuery/Looker；其他源/特性状态不同</td>
+<td>总体限制页仍有 Preview 标记，必须按数据源拆分状态</td>
+</tr>
+<tr>
+<td>C14</td>
+<td>Google CA API</td>
+<td>官方文档</td>
+<td><a href="https://docs.cloud.google.com/gemini/data-agents/conversational-analytics-api/known-limitations" target="_blank" rel="noreferrer">Known limitations</a>、<a href="https://docs.cloud.google.com/gemini/data-agents/conversational-analytics-api/access-control" target="_blank" rel="noreferrer">IAM</a></td>
+<td>有行数/Token/结果大小/配额/可视化限制；默认使用调用用户数据源凭据</td>
+<td>更新 2026-07-29</td>
+<td>大结果降低推理准确率；权限/认证失败不重试</td>
+</tr>
+<tr>
+<td>C15</td>
+<td>Snowflake Cortex Analyst</td>
+<td>官方文档</td>
+<td><a href="https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-analyst" target="_blank" rel="noreferrer">Cortex Analyst</a></td>
+<td>API-first NL2SQL，使用 semantic view/model，遵守 Snowflake RBAC</td>
+<td>Snowflake 当前文档；Region/模型配置相关</td>
+<td>模型由服务选择，模型限制会降低 fallback</td>
+</tr>
+<tr>
+<td>C16</td>
+<td>Snowflake Semantic Views</td>
+<td>官方文档</td>
+<td><a href="https://docs.snowflake.com/en/user-guide/views-semantic/overview" target="_blank" rel="noreferrer">Semantic Views</a></td>
+<td>语义视图是 schema-level 对象，定义实体、指标、关系，可 SQL 查询/共享/供 Analyst</td>
+<td>Snowflake 当前文档</td>
+<td>Routing Mode 仍有 Preview 子能力</td>
+</tr>
+<tr>
+<td>C17</td>
+<td>Snowflake Analyst</td>
+<td>官方 API/评测文档</td>
+<td><a href="https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-analyst/rest-api" target="_blank" rel="noreferrer">REST API</a>、<a href="https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-analyst-evaluations" target="_blank" rel="noreferrer">evaluations</a></td>
+<td>API 支持多轮、反馈和多语义模型路由；评测用 verified query</td>
+<td>Snowflake 当前版</td>
+<td>多轮看不到前次查询结果；评测不支持多轮且数据集人工维护</td>
+</tr>
+<tr>
+<td>C18</td>
+<td>Snowflake Cortex Agents</td>
+<td>官方文档</td>
+<td><a href="https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-agents" target="_blank" rel="noreferrer">Agents</a>、<a href="https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-agents-monitor" target="_blank" rel="noreferrer">监控</a></td>
+<td>Agent 编排 Analyst/Search/函数/过程，有 thread、反馈、Trace、工具监控</td>
+<td>部分工具/Native App 状态分别 GA/Preview</td>
+<td>使用用户 default role 而非当前 role，需正确配置；工具可有副作用</td>
+</tr>
+<tr>
+<td>C19</td>
+<td>Oracle Select AI Agent</td>
+<td>官方数据库文档</td>
+<td><a href="https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/adbsb/about-select-ai-agents.html" target="_blank" rel="noreferrer">Select AI Agent</a></td>
+<td>数据库内 Agent 支持 NL2SQL、RAG、PL/SQL、REST、计划/反思/多轮记忆</td>
+<td>Autonomous AI DB/Oracle 版本能力不同</td>
+<td>必须查 capability matrix，不可跨版本外推</td>
+</tr>
+<tr>
+<td>C20</td>
+<td>Oracle Autonomous DB MCP</td>
+<td>官方安全文档</td>
+<td><a href="https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/adbsb/security.html" target="_blank" rel="noreferrer">MCP security</a></td>
+<td>MCP 遵守 VPD/RAS 与数据库权限，但不自动限于 SELECT；客户决定暴露工具</td>
+<td>Autonomous AI Database 当前文档</td>
+<td>明确要求最小权限；数据可能离开 DB；不能只靠工具描述</td>
+</tr>
+<tr>
+<td>C21</td>
+<td>Oracle Analytics</td>
+<td>官方文档</td>
+<td><a href="https://docs.oracle.com/en/cloud/paas/analytics-cloud/acabi/oracle-analytics-ai-assistants-features.html" target="_blank" rel="noreferrer">AI Assistants</a>、<a href="https://docs.oracle.com/en/cloud/paas/analytics-cloud/acubi/oracle-analytics-ai-agents.html" target="_blank" rel="noreferrer">AI Agents</a></td>
+<td>Analytics AI 支持问数/可视化、数据准备、语义元数据与 RAG Agent</td>
+<td>OAC；Region/模型能力可能不同</td>
+<td>与 Select AI/OCI Agent 是不同产品面，跨面共享对象为 Unknown</td>
+</tr>
+<tr>
+<td>C22</td>
+<td>阿里云 DataWorks</td>
+<td>官方帮助</td>
+<td><a href="https://help.aliyun.com/zh/dataworks/user-guide/overview" target="_blank" rel="noreferrer">DataWorks Data Agent</a></td>
+<td>覆盖同步配置、SQL/Python 开发、诊断、图表等数据工作</td>
+<td>2026-04-15 起商业化；列有支持 Region</td>
+<td>不等同于业务问数/BI 产品</td>
+</tr>
+<tr>
+<td>C23</td>
+<td>阿里云 Quick BI</td>
+<td>官方帮助</td>
+<td><a href="https://help.aliyun.com/zh/quick-bi/user-guide/quick-bi-open-skill-manual" target="_blank" rel="noreferrer">小Q Skill</a>、<a href="https://help.aliyun.com/zh/quick-bi/user-guide/prepare-data/" target="_blank" rel="noreferrer">数据准备</a></td>
+<td>小Q问数有数据集配置、知识、权限、SQL/图表/结论、开放 API/Skill</td>
+<td>AIPro/增值模块/Edition 与文档相关</td>
+<td>旧智能问答已下线；当前小Q状态不能与旧功能混用</td>
+</tr>
+<tr>
+<td>C24</td>
+<td>阿里云 DMS MCP</td>
+<td>官方帮助</td>
+<td><a href="https://help.aliyun.com/zh/dms/use-cases/deploy-dms-mcp" target="_blank" rel="noreferrer">DMS MCP</a></td>
+<td>MCP 支持元数据、执行 SQL、NL2SQL、变更工单、审批、日志、修复/优化</td>
+<td>DMS 当前文档</td>
+<td>快速指南使用高权策略/凭据示例，生产需最小权限与 STS</td>
+</tr>
+<tr>
+<td>C25</td>
+<td>阿里云 DMS</td>
+<td>官方权限/公告</td>
+<td><a href="https://help.aliyun.com/zh/dms/permissions/" target="_blank" rel="noreferrer">DMS 权限</a>、<a href="https://help.aliyun.com/zh/dms/product-overview/announcement-dms-security-collaboration-purchase-adjustment" target="_blank" rel="noreferrer">2026 版本调整</a></td>
+<td>实例/库/表/行/敏感列及查询/变更/导出分权，安全协同含审批/审核/审计</td>
+<td>2026-06-11 新购版本调整</td>
+<td>权限策略与旧权限体系叠加，需防止意外扩大权限</td>
+</tr>
+<tr>
+<td>C26</td>
+<td>腾讯 DataBuddy</td>
+<td>官方 FAQ</td>
+<td><a href="https://cloud.tencent.com/document/product/1835/135597" target="_blank" rel="noreferrer">DataBuddy FAQ</a></td>
+<td>声明统一元数据/语义、OBO、危险 SQL 拦截、三要素人工确认、双层权限</td>
+<td>更新 2026-08-12；新产品</td>
+<td>多个效果数字为官方声明且未实测；账号/Region/成熟度 Unknown</td>
+</tr>
+<tr>
+<td>C27</td>
+<td>腾讯 DatabaseClaw</td>
+<td>官方文档</td>
+<td><a href="https://cloud.tencent.com/document/product/1813/130681" target="_blank" rel="noreferrer">DatabaseClaw</a>、<a href="https://cloud.tencent.com/document/product/1813/132895" target="_blank" rel="noreferrer">Agent 集成</a></td>
+<td>VPC 内部署，数据库诊断 Skill，L1-L4 确认、高危 Deny、Session 审计与 API</td>
+<td>文档称内测；另有 2026-06-19 商业化公告</td>
+<td>状态冲突需账号/销售复核；只证明腾讯产品，不证明华为内部能力</td>
+</tr>
+<tr>
+<td>C28</td>
+<td>火山引擎 Data Agent</td>
+<td>官方文档</td>
+<td><a href="https://www.volcengine.com/docs/86760/2552692?lang=zh" target="_blank" rel="noreferrer">新版 Data Agent</a>、<a href="https://www.volcengine.com/docs/86760/1946686" target="_blank" rel="noreferrer">查询链路</a></td>
+<td>有语义/知识/Prompt/召回配置、多轮、OpenAPI/H5；官方承认首轮 SQL 错误会影响全链路</td>
+<td>SaaS/私有化边界不同；更新 2026-06</td>
+<td>官方“千亿秒级”等是声明，不是本轮观察</td>
+</tr>
+<tr>
+<td>C29</td>
+<td>百度 Sugar BI</td>
+<td>官方文档</td>
+<td><a href="https://cloud.baidu.com/doc/SUGAR/s/Llpqgy2kv" target="_blank" rel="noreferrer">智能问数概述</a>、<a href="https://intl.cloud.baidu.com/zh/doc/SUGAR/s/0lv4o09bf-intl" target="_blank" rel="noreferrer">旧 AI 问答下线</a></td>
+<td>新智能问数有模型、权限、知识、澄清与嵌入；旧 AI 问答已在 2024 下线</td>
+<td>新功能邀测且仅私有部署；旧/新文档并存</td>
+<td>产品代际必须区分；不能把下线旧能力计为当前 SaaS 能力</td>
+</tr>
+<tr>
+<td>C30</td>
+<td>阿里云 DataWorks DI Agent</td>
+<td>官方帮助</td>
+<td><a href="https://help.aliyun.com/zh/dataworks/user-guide/introduction-to-data-integration-and-ai-native-capabilities" target="_blank" rel="noreferrer">DI Agent</a></td>
+<td>自然语言创建/管理单表与整库、离线与实时同步；自动探测 Schema、映射、资源与调度，确认后发布；另含 ChatDB 与多模态 ETL</td>
+<td>2026 当前文档；需购买 Data Agent 与 Serverless 资源组</td>
+<td>文档宣称复用 80+ 连接器，但具体源/动作/Region 要逐项核验；官方声明不是本轮账号实测</td>
+</tr>
+<tr>
+<td>C31</td>
+<td>阿里云 Data Governance Agent</td>
+<td>官方帮助</td>
+<td><a href="https://help.aliyun.com/zh/dataworks/user-guide/data-governance-agent" target="_blank" rel="noreferrer">数据治理 Agent</a></td>
+<td>可用自然语言定义扫描，生成治理方案/SQL Diff，确认后修复并复检；支持周期扫描、标签与代码检查</td>
+<td>2026 当前文档；列有开放 Region</td>
+<td>自动 SQL 修改/任务停用可能影响生产，必须保留变更流程、审批和权威后验</td>
+</tr>
+<tr>
+<td>C32</td>
+<td>阿里云 Data Map / DataWorks 版本</td>
+<td>官方帮助</td>
+<td><a href="https://help.aliyun.com/zh/dataworks/user-guide/data-map/" target="_blank" rel="noreferrer">数据地图</a>、<a href="https://help.aliyun.com/zh/dataworks/billing-of-dataworks-advanced-editions" target="_blank" rel="noreferrer">版本能力</a></td>
+<td>资产搜索、详情、预览、血缘、分类/专辑与质量/安全治理形成数据管理面</td>
+<td>多项功能依 Standard/Professional/Enterprise 或增值模块</td>
+<td>版本碎片化增加准备和购买成本；连接器数量不能替代端到端动作覆盖</td>
+</tr>
+</tbody></table>
+
+    </article>
+  </main>
+  <footer>
+    <div class="shell footer-content">
+      <div><strong>11 家厂商独立探索基础证据账本</strong><p>由项目内 Markdown 源文件生成；UTF-8 静态页面，可离线阅读。</p></div>
+      <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">返回顶部 ↑</a>
+    </div>
+  </footer>
+</body>
+</html>

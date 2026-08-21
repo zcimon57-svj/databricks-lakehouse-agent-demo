@@ -1,0 +1,4127 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="华为数据智能追赶产品计划（方案假设）">
+  <title>华为数据智能追赶产品计划（方案假设）</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../details.css">
+</head>
+<body class="detail-page">
+  <header class="detail-header" id="top">
+    <nav class="detail-nav shell" aria-label="详情页导航">
+      <a class="brand" href="../huawei-rds-agent.html#materials">← 返回华为方案材料</a>
+      <a href="../index.html">数据智能决策首页</a>
+    </nav>
+    <div class="shell detail-heading">
+      <p class="eyebrow">PROPOSED PRODUCT PLAN</p>
+      <h1>华为数据智能追赶产品计划（方案假设）</h1>
+      <p>这是完整研究层；演示页保持精简，证据、边界、步骤和来源在这里展开。</p>
+    </div>
+  </header>
+  <main class="shell detail-layout">
+    <article class="markdown-body">
+<h1>华为云 Data Intelligence：能力目标驱动的 Harness-first 领先产品落地方案</h1>
+<ul>
+<li>方案基准日：2026-08-20</li>
+<li>方案性质：基于公开资料与独立竞品探索形成的产品设计建议，不代表华为云已立项或承诺</li>
+<li>事实边界：未进行华为云内部接口、账号、区域、容量、成本与团队资源验证</li>
+<li>工作名：<code>Data Intelligence Agent</code>；CLI 示例统一使用占位命令 <code>di</code></li>
+<li>核心目标：<strong>让用户或外部 Agent 用一句话完成接入数据、生成数据产品、管理数据、查数、分析、建知识、查数据库和受控行动；优先跑通“接入—资产化—使用—治理”的完整数据生命周期，而不是只做运维咨询。</strong></li>
+<li>实现原则：先锁定客户可感知的能力组合和优先级，再选择两种组织/架构承载；Harness、Goal Contract、CLI/MCP、权限和证据是执行内核，不替代产品能力定义。</li>
+</ul>
+<blockquote>
+<p>信息标签：<code>官方</code>表示官方资料可直接证明；<code>推断</code>表示由多个事实推导；<code>建议</code>表示目标设计；<code>待证</code>表示必须通过内部接口或真实运行验证。本文不把“能启动 CLI”写成“可生产交付”，也不把公开资料缺失写成产品缺失。</p>
+</blockquote>
+<hr>
+<h2>0. 一页决策</h2>
+<h3>0.1 先定产品能力目标，再选方案和架构</h3>
+<p>产品首先要回答：**用户到底可以用一句话做成哪些事情，哪几件先做。**首期不是泛化的“Agent 完成任务”，而是集中做成四条主线：数据接入与资产化、智能问数与基础分析、数据知识构建、数据库洞察。</p>
+<table>
+<thead>
+<tr>
+<th>时间</th>
+<th>对外能力目标</th>
+<th>集中范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0–3 月</td>
+<td>一句话接入/导入数据、生成资产草稿、问数据、做基础分析、查数据库</td>
+<td>一个数据库、一个文件源、一个数据域、四条完整能力主线</td>
+</tr>
+<tr>
+<td>3–6 月</td>
+<td>智能治理、知识生命周期、外部 Agent 调用、极少安全行动</td>
+<td>版本/影响/漂移、质量/分类、CLI/MCP/API 同能力</td>
+</tr>
+<tr>
+<td>6–18 月</td>
+<td>主动智能、跨域知识和更多可验证行动</td>
+<td>主动调查、订阅、行业知识包、平台级 SLO</td>
+</tr>
+</tbody></table>
+<p>本文因此按以下顺序组织：</p>
+<ol>
+<li><strong>产品能力目标</strong>：功能叫什么、用户一句话能做成什么、优先做哪几项、短中长期扩到哪里；</li>
+<li><strong>两种方案</strong>：比较产品边界、Owner、依赖和路线，再分别展开两套完整架构；</li>
+<li><strong>共同与专属模块</strong>：明确必须同源的内核，以及因方案不同才存在的模块；</li>
+<li><strong>技术细节</strong>：最后下钻 Harness、Session/Event、ECS、CLI/MCP、语义、NL2SQL、数据库调查和评测。</li>
+</ol>
+<p>两种方案共享同一能力命名和调用协议，但首要能力不同：方案一以多源接入、数据产品、问数分析和治理为中心；方案二以一个数据库的接入/资产化、数据库洞察和数据库上的问数为中心。两者的人机入口都是统一对话 Agent，接入方案、Pipeline、治理报告、表图与专业工件在回复中生成；CLI/MCP/API 面向 Harness 和外部 Agent。两者共享 Harness Adapter、Session/Event、<code>di</code> CLI/MCP、Artifact/Evidence 与安全评测。</p>
+<h3>0.2 当前决策建议</h3>
+<table>
+<thead>
+<tr>
+<th>决策项</th>
+<th>方案一：华为云竞争力优先</th>
+<th>方案二：数据库部门绿地突围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>产品内核</td>
+<td>同一套 Goal/Task、Harness Adapter、Session/Event、Artifact/Evidence、CLI/MCP 契约</td>
+<td>同一套，不另造第二种架构</td>
+</tr>
+<tr>
+<td>组织方式</td>
+<td>各部门交付版本化能力包，共同发布一个产品</td>
+<td>数据库部门先拥有端到端最小闭环，其他部门以后通过适配器接入</td>
+</tr>
+<tr>
+<td>首期依赖</td>
+<td>只有签署接口、SLO、版本和权限契约的共享能力才能成为硬依赖</td>
+<td>除 ECS、模型端点和数据库只读接口外，其他华为云服务均为可选增强</td>
+</tr>
+<tr>
+<td>入口</td>
+<td>公司级统一对话 Agent，可嵌入 DataArts/数据库；外部 Agent 走 CLI/MCP/API</td>
+<td>新独立对话 Agent + 数据库实例页嵌入对话；外部 Agent 走 CLI/MCP/API</td>
+</tr>
+<tr>
+<td>速度优势</td>
+<td>能复用成熟语义、BI、IAM 和数据库能力时更快达到高上限</td>
+<td>一台 ECS 即可起步，不等待跨部门平台排期</td>
+</tr>
+<tr>
+<td>最大风险</td>
+<td>组织依赖拖慢产品；组件都存在但端到端仍断裂</td>
+<td>数据库部门不自觉扩成通用数据平台，或长期维护开源分叉</td>
+</tr>
+</tbody></table>
+<p><code>建议</code>：技术工作先按方案二的低依赖方式启动，不等待组织讨论；同时给方案一 2–4 周书面 Gate。若公司级 Owner、共同 OKR、能力包契约和发布权成立，同一代码升格为方案一；不成立则由数据库部门继续拥有闭环。</p>
+<h3>0.3 首期明确做与不做</h3>
+<table>
+<thead>
+<tr>
+<th>首期必须做</th>
+<th>首期明确不做</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>一台 ECS 上可重复部署的完整纵向样例</td>
+<td>自研通用 Agent Loop 或照搬 LangChain/LangGraph 工作流作为核心</td>
+</tr>
+<tr>
+<td>一主一备 Harness；同一 Adapter 契约</td>
+<td>同时把六个 Harness 集成到生产</td>
+</tr>
+<tr>
+<td>数据接入/资产化、智能问数/分析、数据知识、数据库洞察四条主线</td>
+<td>CCE/Kubernetes、Kafka、Temporal、通用 Debezium 平台、复杂微服务</td>
+</tr>
+<tr>
+<td>首月 35–40 个高价值 CLI/MCP 原子能力，完整合同保留近 90 项</td>
+<td>重建完整 BI、Catalog、数据开发和通用 Agent 平台</td>
+</tr>
+<tr>
+<td>Git 管理的语义包、Skills、Verified Queries、评测集</td>
+<td>把 Prompt、聊天历史或 GUI 当成唯一知识和状态</td>
+</tr>
+<tr>
+<td>Runner 隔离、短期授权、查询预算、取消与审计</td>
+<td>因“首期无 HA”而延期安全、权限和证据链</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>1. 产品能力目标：先回答产品让用户“一句话做成什么”</h2>
+<h3>1.1 产品总定位与推荐命名</h3>
+<p>产品目标不是管理 Agent 的一次执行，而是形成一组客户可理解、可购买、可持续使用的数据智能能力：</p>
+<blockquote>
+<p><strong>让业务用户、数据人员、DBA 或外部 Agent 用自然语言完成接入数据、生成数据产品、管理与使用数据、查数据库和受控行动，并得到可复核的结果。</strong></p>
+</blockquote>
+<p>建议采用“一套产品、多个能力模式”的命名，不为每个场景再造一个 Agent：</p>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>推荐名称</th>
+<th>面向客户的含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>公司级产品/统一入口</td>
+<td><strong>Data Intelligence｜数据智能</strong></td>
+<td>面向业务数据、数据平台和数据库的统一自然语言工作入口</td>
+</tr>
+<tr>
+<td>方案一产品承载</td>
+<td><strong>DataArts Intelligence</strong></td>
+<td>DataArts 内的智能问数、分析、知识、治理和数据库能力包</td>
+</tr>
+<tr>
+<td>方案二产品承载</td>
+<td><strong>Database Intelligence｜数据库智能</strong></td>
+<td>数据库部门独立交付的问数、查库、诊断和数据库知识产品</td>
+</tr>
+<tr>
+<td>一级能力模式</td>
+<td><strong>数据接入与准备、智能问数、智能分析、数据知识构建、数据库洞察、智能治理、安全行动、主动智能</strong></td>
+<td>Agent 根据用户目标自动选择能力；用户不需要先选 Harness、模型或内部 Agent</td>
+</tr>
+</tbody></table>
+<p>中文对话示例可以直接使用动词：<strong>接数据、导数据、生成数据产品、管数据、问数据、做分析、建知识、查数据库、执行动作</strong>。这些不是首页按钮，而是同一输入框能够理解的客户任务。CLI、MCP、REST 和嵌入 SDK 是能力调用面，不应被包装成独立的客户价值目标。</p>
+<h3>1.2 产品能力全集与优先级</h3>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>正式功能名</th>
+<th>用户会怎么说</th>
+<th>产品必须完成什么</th>
+<th>主要交付物</th>
+<th>优先级</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C0</td>
+<td><strong>数据接入与准备</strong></td>
+<td>“把订单库接进来；14 张表直查、4 张交易表实时同步，再导入这批供应商文件。”</td>
+<td>在直查、一次导入、定时同步和 CDC 间给出可解释选择；完成连接/权限/网络检查、Schema 探测与映射、样例/质量预检、发布和数据到达验证</td>
+<td>接入方案、数据源卡、Schema 映射、Pipeline 草稿、质量/敏感预检、freshness/水位证据</td>
+<td><strong>P0 核心 1</strong></td>
+</tr>
+<tr>
+<td>C1</td>
+<td><strong>智能问数</strong></td>
+<td>“最近 30 天华东各地区退款率是多少？”</td>
+<td>发现数据、理解口径、必要时澄清、生成和执行安全 SQL、多轮追问</td>
+<td>表、图、SQL、参数、口径、query_id、证据</td>
+<td><strong>P0 核心 2</strong></td>
+</tr>
+<tr>
+<td>C2</td>
+<td><strong>智能分析</strong></td>
+<td>“哪些地区显著上升？为什么？与上月相比影响多大？”</td>
+<td>完成趋势、对比、分群、异常、贡献和假设验证，区分事实与推断</td>
+<td>分析画布、关键发现、证据、可复算报告</td>
+<td><strong>P0 核心 3</strong></td>
+</tr>
+<tr>
+<td>C3</td>
+<td><strong>数据知识构建</strong></td>
+<td>“扫描订单库，生成客户 360 数据产品和客户—订单—退款知识网络草稿。”</td>
+<td>从 Schema、样例、文档与血缘生成清洗表/视图、指标语义、实体关系、Join、同义词、质量规则和 Verified Query 候选</td>
+<td>数据产品蓝图、可视知识网络、候选语义包、冲突/缺口、Review 任务</td>
+<td><strong>P0 核心 4：先生成草稿</strong></td>
+</tr>
+<tr>
+<td>C4</td>
+<td><strong>数据库洞察</strong></td>
+<td>“订单库昨晚为什么变慢？哪些 SQL 和变更影响最大？”</td>
+<td>查询实例状态、容量、Top SQL、锁、等待、计划、指标和变更，形成证据调查</td>
+<td>数据库体检/调查报告、证据时间线、候选原因与建议</td>
+<td><strong>P0 核心 5：方案二首要差异</strong></td>
+</tr>
+<tr>
+<td>C5</td>
+<td><strong>智能治理</strong></td>
+<td>“扫描订单域的敏感字段、质量和血缘，给我修复计划。”</td>
+<td>P0 先做资产发现、质量/敏感分类、血缘候选和可审核治理计划；P1 扩到跨源影响、Owner、策略、生命周期和受控修复</td>
+<td>资产清单、治理任务、影响图、质量结果、待审批变更</td>
+<td><strong>P0 最小闭环 / P1 完整治理</strong></td>
+</tr>
+<tr>
+<td>C6</td>
+<td><strong>安全行动</strong></td>
+<td>“取消这条异常查询，并确认业务恢复。”</td>
+<td>生成动作方案，经过策略和人工审批后幂等执行，并从权威系统验证结果</td>
+<td>审批、执行、后置验证、补偿/回滚证据</td>
+<td>P1 极少动作；P2 扩展</td>
+</tr>
+<tr>
+<td>C7</td>
+<td><strong>主动智能</strong></td>
+<td>“每天监控退款率，异常时自动分析并通知我。”</td>
+<td>由指标、质量或数据库事件触发调查，生成解释、订阅和下一步建议</td>
+<td>主动洞察、告警调查包、周期报告、动作草案</td>
+<td>P2</td>
+</tr>
+</tbody></table>
+<p>“知识图谱”在这里不是让模型随意画一张图。产品要构建的是<strong>可治理的数据知识网络</strong>：节点包括业务实体、数据对象、指标、维度、规则、Owner 和 Verified Query；边包括业务关系、Join、血缘、派生和影响。所有推断关系必须带来源、置信度和 Review 状态。</p>
+<h4>建议优先级评分</h4>
+<p>下表是<strong>投资优先级设计分，不是华为云现状能力分</strong>。按客户价值/频次 25%、华为权威能力与差异化 20%、对后续能力的飞轮价值 20%、首期可交付性 15%、安全可控性 10%、多入口复用 10% 评分；内部客户基线、接口和团队容量验证后必须重算。</p>
+<table>
+<thead>
+<tr>
+<th>能力</th>
+<th align="right">方案一优先分</th>
+<th align="right">方案二优先分</th>
+<th>排序解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C0 数据接入与准备</td>
+<td align="right"><strong>94</strong></td>
+<td align="right"><strong>91</strong></td>
+<td>已成为客户可独立感知的 Agent 任务；决定首次价值、数据新鲜度和后续所有能力上限</td>
+</tr>
+<tr>
+<td>C1 智能问数</td>
+<td align="right"><strong>91</strong></td>
+<td align="right"><strong>86</strong></td>
+<td>高频入口、客户容易理解、能直接验证知识/权限/SQL 全链</td>
+</tr>
+<tr>
+<td>C2 智能分析</td>
+<td align="right"><strong>88</strong></td>
+<td align="right">73</td>
+<td>公司级产品价值高；DB 方案首期只做趋势/对比/贡献</td>
+</tr>
+<tr>
+<td>C3 数据知识构建</td>
+<td align="right"><strong>92</strong></td>
+<td align="right"><strong>82</strong></td>
+<td>从已有库生成数据产品与知识，降低准备成本并形成准确率飞轮</td>
+</tr>
+<tr>
+<td>C4 数据库洞察</td>
+<td align="right">84</td>
+<td align="right"><strong>95</strong></td>
+<td>数据库权威上下文最强差异化；方案二第一优先</td>
+</tr>
+<tr>
+<td>C5 智能治理</td>
+<td align="right"><strong>87</strong></td>
+<td align="right">68</td>
+<td>资产发现、质量/敏感/血缘最小闭环前移；全平台治理仍分阶段</td>
+</tr>
+<tr>
+<td>C6 安全行动</td>
+<td align="right">61</td>
+<td align="right">64</td>
+<td>价值高但事故半径大，必须等待只读能力、审批与后置验证成熟</td>
+</tr>
+<tr>
+<td>C7 主动智能</td>
+<td align="right">68</td>
+<td align="right">70</td>
+<td>长期粘性强，但依赖稳定知识、事件、评测和动作边界</td>
+</tr>
+</tbody></table>
+<p>据此，方案一首期资源顺序为 <strong>C0 → C3 → C1 → C2 → C5 最小闭环 → C4</strong>；方案二为 <strong>C4 → C0 → C1 → C3 → C2 → C5 最小闭环</strong>。这不是平均铺开：首个纵向样例把“接订单库 → 生成资产草稿 → 问数 → 查库”串成一条故事，完整跨源治理和高风险动作仍后置。</p>
+<h3>1.3 真正应该集中投资的四条主线</h3>
+<h4>主线 A：数据接入 + 资产化</h4>
+<p>这是把已有数据库和新增文件变成可用数据资产的第一条客户旅程，而不是后台配置工作：</p>
+<blockquote>
+<p>一句话描述来源与用途 → Agent 比较直查、一次导入、定时同步和 CDC → 检查网络/权限/源端前提 → 探测 Schema、字段和样例 → 预览映射、质量和敏感风险 → 确认后发布 → 验证数据到达与水位 → 生成可用资产候选。</p>
+</blockquote>
+<p>首期不追求连接器数量。一个数据库引擎和 CSV/Parquet 必须把以上闭环做完整，并让用户知道哪些步骤由产品自动完成、哪些必须由数据 Owner 决策。只显示“连接成功”不算完成。</p>
+<h4>主线 B：智能问数 + 基础智能分析</h4>
+<p>这是最容易被业务用户理解、使用频率最高、也最能验证统一入口价值的能力。首期必须形成：</p>
+<blockquote>
+<p>一句话提问 → 找到正确数据与口径 → 安全查询 → 生成表图 → 做趋势/对比/贡献分析 → 给出 SQL、口径和证据。</p>
+</blockquote>
+<p>“生成了一条可执行 SQL”不算完成；能够回答追问、解释口径、识别歧义并交付可复核分析，才是产品能力。</p>
+<h4>主线 C：数据知识构建</h4>
+<p>这是把存量数据库从“能连”提升为“能被业务正确使用”的能力。首期不先建设庞大的知识图谱平台，而是实现：</p>
+<blockquote>
+<p>一句话选择数据域 → 自动扫描 Schema/样例/文档/血缘 → 生成清洗表或视图建议、指标/维度/Join、实体关系、同义词、质量规则和 Verified Query 草稿 → Owner 可视化 Review → 发布后直接服务问数与分析。</p>
+</blockquote>
+<p>首期目标是“生成高质量可审核的数据产品与知识草稿”，不是“模型自动发布全部资产”。3–6 个月再补版本、影响、漂移、冲突合并、API/共享/RAG 等交付形态。</p>
+<h4>主线 D：数据库洞察</h4>
+<p>这是数据库部门最不可替代、也最能与通用 BI/问数产品拉开差异的能力。首期集中完成：</p>
+<blockquote>
+<p>一句话查实例信息 → 一句话查运行状态 → 一句话调查慢 SQL/锁/等待/计划变化 → 生成证据时间线和处置建议。</p>
+</blockquote>
+<p>业务数据分析和数据库运行分析使用同一入口、身份和工件，但底层证据必须来自数据库权威接口。</p>
+<p>资产发现、质量预检、敏感扫描和生成资产的最小血缘属于主线 A/C 的 P0 闭环；跨域策略、生命周期和大规模自动修复属于 C5 P1。这样既不把治理推迟到最后，也不在首月重建完整治理平台。</p>
+<h3>1.4 九条“一句话”产品旅程</h3>
+<table>
+<thead>
+<tr>
+<th>产品旅程</th>
+<th>用户输入示例</th>
+<th>能力组合</th>
+<th>用户最后得到什么</th>
+<th>产品验收重点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>一句话接入数据库</strong></td>
+<td>“连接订单库；维表直查，交易表每天同步，订单明细做 CDC。”</td>
+<td>C0 + C5 最小预检</td>
+<td>接入方式比较、前置条件、表清单/映射、Pipeline 草稿、成本/新鲜度与发布确认</td>
+<td>不盲目复制；权限/网络/CDC 前提明确；数据到达可验证</td>
+</tr>
+<tr>
+<td><strong>一句话导入新数据</strong></td>
+<td>“导入这批供应商 CSV，以后每天从 OBS 同目录增量加载。”</td>
+<td>C0 + C5 最小预检</td>
+<td>Schema 推断、字段映射、质量/敏感预检、隔离行、目标表和调度草稿</td>
+<td>Schema 演进不静默丢列；坏数据不污染可信表</td>
+</tr>
+<tr>
+<td><strong>一句话生成数据产品</strong></td>
+<td>“扫描 CRM 和订单库，生成客户 360 数据产品草稿。”</td>
+<td>C0 + C3 + C5</td>
+<td>清洗表/视图、指标语义、实体关系、质量规则、血缘和缺口清单</td>
+<td>自动生成只到草稿；每项资产有来源、Owner 和验收标准</td>
+</tr>
+<tr>
+<td><strong>一句话管理数据</strong></td>
+<td>“检查订单域敏感字段、质量和血缘，给我修复计划。”</td>
+<td>C5 + C3</td>
+<td>资产清单、敏感分类、质量结果、血缘/影响、待审批治理任务</td>
+<td>推断血缘有标签；修复前看 Diff/影响并审批</td>
+</tr>
+<tr>
+<td><strong>一句话问数据</strong></td>
+<td>“上季度各产品线收入和毛利率是多少？”</td>
+<td>C0 + C1</td>
+<td>表图、口径、SQL、数据时间和证据</td>
+<td>结果等价、权限正确、口径可解释</td>
+</tr>
+<tr>
+<td><strong>一句话做分析</strong></td>
+<td>“收入下降主要来自哪些客户和产品？排除汇率影响。”</td>
+<td>C1 + C2 + C3</td>
+<td>多步分析、贡献拆解、假设与反证、报告</td>
+<td>分析步骤可复算，事实与推断分离</td>
+</tr>
+<tr>
+<td><strong>一句话建知识</strong></td>
+<td>“为订单域建立客户、订单、商品、退款的知识网络。”</td>
+<td>C0 + C3 + C5 最小 Review</td>
+<td>实体关系图、指标/Join/规则候选、冲突和缺口</td>
+<td>来源可追溯，推断不自动发布</td>
+</tr>
+<tr>
+<td><strong>一句话查数据库</strong></td>
+<td>“这个实例容量、复制延迟和最近变更怎么样？”</td>
+<td>C0 + C4</td>
+<td>实例状态卡、趋势、异常和相关证据</td>
+<td>时间窗、实例身份和数据新鲜度准确</td>
+</tr>
+<tr>
+<td><strong>一句话调查故障</strong></td>
+<td>“昨晚 22 点后订单库为何变慢？”</td>
+<td>C4 + C2</td>
+<td>SQL/锁/等待/计划/变更时间线、候选原因和下一步</td>
+<td>相关性不冒充根因，证据缺口明确</td>
+</tr>
+</tbody></table>
+<p>九条旅程都留在同一个对话 Agent 中；“接入数据”和“管理数据”不是再造两个工作台。专业向导、Pipeline 图、质量报告和审批只作为当前回复的可展开工件。</p>
+<h3>1.5 分阶段能力目标</h3>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>对外可宣传的产品能力</th>
+<th>必须做成的范围</th>
+<th>暂不承诺</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0–2 周：纵向验证</strong></td>
+<td>一句话接入数据库、导入文件、问数据、查数据库</td>
+<td>一个数据库、一个数据域、CSV/Parquet；直查或快照导入；Schema/质量/敏感预检；问数表图/SQL/证据；一条慢 SQL 调查；数据产品草稿</td>
+<td>任意连接器、通用 CDC、复杂知识图谱、自动动作、生产 SLA</td>
+</tr>
+<tr>
+<td><strong>1 个月：首个可用版本</strong></td>
+<td>接入与准备 + 智能问数 + 基础分析 + 数据库洞察</td>
+<td>一个引擎和文件源的接入闭环；5–10 指标、10 Verified Query、20 问数 Gold；8–10 个数据库诊断能力；趋势/对比/贡献分析</td>
+<td>预测、复杂归因、跨库 Join、高风险动作；方案二不承诺通用 CDC</td>
+</tr>
+<tr>
+<td><strong>2–3 个月：Private Beta</strong></td>
+<td>增加“一句话生成数据产品/建知识/管数据”</td>
+<td>一个业务域可生成、Review、发布清洗表/语义/关系/质量/Verified 草稿；方案一扩多源/CDC，方案二补一个引擎 CDC；3–5 个伙伴连续使用四条主线</td>
+<td>全企业知识图谱、全自动发布、完整跨域治理</td>
+</tr>
+<tr>
+<td><strong>3–6 个月：形成飞轮</strong></td>
+<td>完整智能治理 + 外部 Agent 接入 + 极少安全行动</td>
+<td>知识版本/影响/漂移，质量/分类/血缘任务，CLI/MCP/API 同能力，取消 Query/Session 等低风险动作</td>
+<td>跨域自主行动、无人审批生产变更</td>
+</tr>
+<tr>
+<td><strong>6–18 个月：平台壁垒</strong></td>
+<td>主动智能 + 跨域数据知识 + 更多受控行动</td>
+<td>跨源分析、主动调查、行业知识包、订阅、可验证动作和真实 SLO 触发的 HA</td>
+<td>不经安全和客户价值 Gate 的“大而全 Agent 平台”</td>
+</tr>
+</tbody></table>
+<p>这里的阶段不是组件开发顺序，而是<strong>客户能够说出哪句话、产品能够完整做成哪件事</strong>。</p>
+<h3>1.6 两种方案对能力目标的不同排序</h3>
+<table>
+<thead>
+<tr>
+<th>产品能力</th>
+<th>方案一：公司竞争力优先</th>
+<th>方案二：数据库绿地突围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C0 数据接入与准备</td>
+<td><strong>首要能力</strong>：统一 DataArts 多源、批量/实时/CDC、Catalog 与权限，用对话生成和管理接入任务</td>
+<td><strong>首要能力之一</strong>：一个 DB 主引擎 + CSV/Parquet；直查/快照导入先闭环，CDC 后加</td>
+</tr>
+<tr>
+<td>C1 智能问数</td>
+<td><strong>首要能力</strong>：多源业务问数与统一 BI Artifact</td>
+<td><strong>首要能力之一</strong>：直接查询数据库业务数据</td>
+</tr>
+<tr>
+<td>C2 智能分析</td>
+<td><strong>首要能力</strong>：趋势、对比、贡献、异常逐步扩展到复杂分析</td>
+<td>首期只做服务于问数和 DB 调查的基础分析</td>
+</tr>
+<tr>
+<td>C3 数据知识构建</td>
+<td><strong>核心壁垒</strong>：DataArts 承载企业级语义/知识生命周期</td>
+<td>首期 Git/轻服务承载 DB 域知识草稿，保留 DataArts Adapter</td>
+</tr>
+<tr>
+<td>C4 数据库洞察</td>
+<td>数据库团队以版本化能力包进入统一产品</td>
+<td><strong>第一差异化能力</strong>：查库、诊断、证据和低风险处置</td>
+</tr>
+<tr>
+<td>C5 智能治理</td>
+<td>P0 接入时完成发现/质量/敏感/血缘预检；3–6 月扩到跨域策略和生命周期</td>
+<td>P0 只做 DB 资产、质量/敏感/血缘草稿；不复制企业治理平台</td>
+</tr>
+<tr>
+<td>C6 安全行动</td>
+<td>长期扩展到跨域审批与动作</td>
+<td>先做取消 Query/Session，再逐个增加可验证 DB 动作</td>
+</tr>
+<tr>
+<td>C7 主动智能</td>
+<td>跨数据与数据库事件的公司级长期能力</td>
+<td>聚焦数据库异常、容量和慢 SQL 的主动调查</td>
+</tr>
+</tbody></table>
+<p>因此两种方案并非只在组织上不同：</p>
+<ul>
+<li><strong>方案一的产品中心是“多源接入与资产化 + 问数分析 + 知识治理”，数据库洞察是强能力包；</strong></li>
+<li><strong>方案二的产品中心是“一个数据库的接入/资产化 + 数据库洞察 + 数据库上的问数”，轻量知识治理用于提高准确率并保留升格路径。</strong></li>
+</ul>
+<h3>1.7 能力依赖关系与产品边界</h3>
+<blockquote>
+<p>数据接入与准备 → 资产发现/最小治理 → 数据产品与知识草稿 → 智能问数/分析 → 持续治理/安全行动。数据库洞察从数据库权威上下文切入，同时为接入水位、问数、分析和知识网络补充实例证据；主动智能建立在所有能力的事件、评测和安全闭环之上。</p>
+</blockquote>
+<ul>
+<li>Harness、Goal Contract、Session、Event、Artifact、权限和评测是<strong>执行内核</strong>，不是对外产品目标；</li>
+<li>CLI/MCP/API 是<strong>统一调用面</strong>，不是一项孤立能力；</li>
+<li>语义、知识图谱和 Verified Query 首期允许自动生成候选，但可信模式只能使用已审核资产；</li>
+<li>图表和聊天是结果展示，不是独立竞争力；</li>
+<li>每个技术模块必须明确支撑 C0–C7 中的哪项能力，否则不进入路线图。</li>
+</ul>
+<h4>产品能力到功能模块/原子域的映射</h4>
+<table>
+<thead>
+<tr>
+<th>产品能力</th>
+<th>主要功能模块</th>
+<th>主要 <code>di</code> 原子域</th>
+<th>不应该另建什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C0 数据接入与准备</td>
+<td>Source Onboarding、Path Advisor、Schema/Profile、Mapping、Pipeline Draft/Preview/Publish、Freshness/Watermark Verify</td>
+<td>身份、数据源、接入、目录、质量</td>
+<td>另一个只负责聊天的“接数 Agent”；为每种源自建一套 UI</td>
+</tr>
+<tr>
+<td>C1 智能问数</td>
+<td>数据发现、语义解析、Verified、NL2SQL、SQL Guard、表图证据</td>
+<td>身份、目录、语义、SQL、工件</td>
+<td>与 C2 分开的 SQL/权限/Artifact 栈</td>
+</tr>
+<tr>
+<td>C2 智能分析</td>
+<td>Analysis Plan、趋势/比较/分群/贡献、假设验证、报告画布</td>
+<td>SQL、结果 Profile/Compare、质量、工件</td>
+<td>只读结果后再交给无证据的通用总结 Agent</td>
+</tr>
+<tr>
+<td>C3 数据知识构建</td>
+<td>Asset Inventory、Clean/View Draft、Metric/Graph/Verified Draft、Validate、Review、Publish、Diff/Impact/Rollback</td>
+<td>目录、接入、知识、语义、质量、保证</td>
+<td>只存在 Prompt 中、不可版本化的“Agent 记忆”</td>
+</tr>
+<tr>
+<td>C4 数据库洞察</td>
+<td>实例状态、体检、Top SQL、锁/等待、计划/指标/变更时间线</td>
+<td>诊断、SQL、保证、工件</td>
+<td>让 DataArts 或 Harness 用通用 SQL 猜实例事实</td>
+</tr>
+<tr>
+<td>C5 智能治理</td>
+<td>资产发现、分类分级、质量、血缘、影响、策略、Owner Workflow、Schema 漂移</td>
+<td>目录、接入、知识、质量、保证</td>
+<td>首期重建完整治理平台；让模型无 Review 修改生产资产</td>
+</tr>
+<tr>
+<td>C6 安全行动</td>
+<td>Action Plan、策略、审批、执行、后置验证、补偿</td>
+<td>动作、诊断写操作、保证</td>
+<td>Harness 直连权威系统执行自由写操作</td>
+</tr>
+<tr>
+<td>C7 主动智能</td>
+<td>订阅、触发器、异常调查、周期报告、动作草案</td>
+<td>质量、诊断、工件、动作、保证</td>
+<td>在 C1–C6 不稳定前建设复杂自主多 Agent</td>
+</tr>
+</tbody></table>
+<h3>1.8 明确不优先建设的产品能力</h3>
+<ul>
+<li>首期不建设通用 Agent Builder、Agent 市场或复杂多 Agent 编排；</li>
+<li>不把“任意自然语言都能生成 SQL”作为卖点，优先把签署场景做准；</li>
+<li>不承诺模型自动发布企业知识图谱，先做好候选、证据、Review 和回滚；</li>
+<li>不首期复制完整 BI、数据开发、Catalog 或治理平台；</li>
+<li>不在只读问数、分析和调查没有稳定前开放高风险数据库动作；</li>
+<li>不用聊天 UI、模型数量、Tool 数或知识节点数量代替客户能力完成度。</li>
+</ul>
+<h3>1.9 执行保障（折叠）：不是产品能力目标</h3>
+<p>下面保留 Goal Contract、完成判据和状态机作为执行内核设计，避免 Agent 把“输出了一段话”误报为能力已完成；它们不再作为产品能力或投资主线。</p>
+<details>
+<summary>展开执行合同与完成判据</summary><p>每次调用 C0–C7 能力时，产品内部仍需固定以下执行合同；这些字段不作为首页功能名称：</p>
+<table>
+<thead>
+<tr>
+<th>执行字段</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>actor / context</td>
+<td>固定最终用户、租户、数据源、实例、时间和用途</td>
+</tr>
+<tr>
+<td>objective / deliverables</td>
+<td>固定本次调用要交付的表、图、报告、知识草稿或动作结果</td>
+</tr>
+<tr>
+<td>success criteria</td>
+<td>绑定该能力的结果、证据和安全验收规则</td>
+</tr>
+<tr>
+<td>constraints</td>
+<td>固定只读/动作模式、权限、预算、时限和 freshness</td>
+</tr>
+<tr>
+<td>evidence / stop conditions</td>
+<td>规定必须返回的来源，以及何时以 partial/blocked 停止</td>
+</tr>
+</tbody></table>
+<p>状态统一为 draft → clarifying → accepted → planning → executing → validating → completed / partially_completed / blocked / cancelled / failed。只有对应能力的 Completion Oracle 通过，才能标记 completed。</p>
+<p>例如：智能问数检查结果等价、语义、权限和证据；数据知识构建检查来源、冲突、置信度和 Review 状态；数据库洞察检查实例身份、时间线、反证与证据缺口；安全行动检查审批、幂等和权威后置状态。</p>
+</details><hr>
+<h2>2. 两种方案总览与选择</h2>
+<h3>2.1 决策对比</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>方案一：华为云竞争力优先</th>
+<th>方案二：数据库部门绿地突围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>能力中心</td>
+<td>C1 智能问数、C2 智能分析、C3 知识构建、C5 智能治理；C4 DB 洞察作为强能力包</td>
+<td>C4 数据库洞察 + 数据库上的 C1 问数；C3 DB 域知识草稿提高准确率</td>
+</tr>
+<tr>
+<td>产品边界</td>
+<td>问数、分析、知识、治理、数据库洞察 + 多入口嵌入</td>
+<td>数据库数据问数、基础分析、知识草稿、查库/诊断与证据报告</td>
+</tr>
+<tr>
+<td>目标用户</td>
+<td>数据消费者、分析师、数据工程师、DBA、应用 Agent</td>
+<td>DBA、开发者、数据库运维和使用数据库数据的业务人员</td>
+</tr>
+<tr>
+<td>产品入口</td>
+<td>人：公司级统一对话，可嵌入 DataArts/DB；Agent：CLI/MCP/API</td>
+<td>人：独立对话 + DB 实例页嵌入；Agent：CLI/MCP/API</td>
+</tr>
+<tr>
+<td>唯一 Owner</td>
+<td>公司级 Data Intelligence 总 Owner</td>
+<td>数据库部门产品 Owner</td>
+</tr>
+<tr>
+<td>逻辑架构</td>
+<td>统一对话入口 + 控制面 + 可替换 Harness + 多部门能力包</td>
+<td>对话 Web + 模块化单体 + 隔离 Runner + DB 权威 Tool Gateway</td>
+</tr>
+<tr>
+<td>硬依赖</td>
+<td>IAM、DataArts、数据库、Agent/AI 平台中通过契约 Gate 的能力</td>
+<td>ECS、模型端点、一个数据库只读接口；其他均为可选 Adapter</td>
+</tr>
+<tr>
+<td>首期部署</td>
+<td>先用纵向样例验证，正式产品逐步承载到共享云服务并按 SLO 建 HA</td>
+<td>单 ECS Docker Compose；无 HA/生产 SLA，但安全、取消和证据完整</td>
+</tr>
+<tr>
+<td>Harness/模型</td>
+<td>同一 Bake-off，一主一备；平台团队可承载但不能锁定</td>
+<td>同一 Bake-off，一主一备；本地 Adapter 直接控制版本与回滚</td>
+</tr>
+<tr>
+<td>语义与 BI</td>
+<td>DataArts 成为权威承载者，前提是稳定 ID、版本、ACL、事件和作者 API 通过 Gate</td>
+<td>Git YAML/JSON + Verified Query 起步；以后通过 DataArts Adapter 替换或增强</td>
+</tr>
+<tr>
+<td>数据库能力</td>
+<td>数据库部门交付版本化 SQL/诊断能力包</td>
+<td>数据库部门直接拥有方言、SQL、安全、计划、锁、会话、指标和变更证据</td>
+</tr>
+<tr>
+<td>身份授权</td>
+<td>IAM 最终用户委托贯穿多服务；跨产品 OBO 是成立条件</td>
+<td>首期做最小 IAM→DB 主体映射和短期凭据代理，不自建长期用户密码</td>
+</tr>
+<tr>
+<td>通用数据/BI 上限</td>
+<td><strong>最高</strong></td>
+<td>中；接入 DataArts 能力包后提高</td>
+</tr>
+<tr>
+<td>数据库深度与可控性</td>
+<td>高，但取决于公司 Backlog 中数据库优先级</td>
+<td><strong>最高</strong></td>
+</tr>
+<tr>
+<td>首个纵向样例速度</td>
+<td>可在 2 周完成，但不能等待全部组织条件</td>
+<td><strong>最直接</strong></td>
+</tr>
+<tr>
+<td>主要成本</td>
+<td>跨部门契约、协调和统一发布成本</td>
+<td>小队全栈建设、轻量重复和开源升级维护成本</td>
+</tr>
+<tr>
+<td>最大风险</td>
+<td>名义协作、实际多套入口和状态；每个部门都完成但任务仍失败</td>
+<td>范围膨胀成通用数据平台，或临时实现长期固化</td>
+</tr>
+<tr>
+<td>退出/升级路径</td>
+<td>Gate 不成立立即降为方案二，不停止技术样例</td>
+<td>公司级条件成熟后把本地模块替换为能力包，平滑升格方案一</td>
+</tr>
+<tr>
+<td>适合条件</td>
+<td>有强 Sponsor、总 Owner、共同 OKR、稳定接口和一个发布列车</td>
+<td>组织授权不足，但数据库团队拥有端到端小队、预算和发布权</td>
+</tr>
+</tbody></table>
+<h3>2.2 决策树</h3>
+<pre><code class="language-text">能否在 2–4 周内签署总 Owner + 共同 OKR + 能力包契约？
+  ├─ 能：方案一；同时用单 ECS 纵向样例验证，不等待“大平台”
+  └─ 不能：方案二；数据库部门拥有产品闭环，保留所有适配器
+
+无论哪条路线：
+  先跑通“接订单库/导文件 → 生成资产草稿 → 问数据 → 查数据库”的统一纵向故事 → Harness Bake-off → 做深能力 → 再扩规模
+</code></pre>
+<p><code>当前建议</code>：技术工作立即按方案二的低依赖单 ECS 方式启动；组织上给方案一 2–4 周 Gate。若公司级条件成立，同一代码与能力包平滑升格为方案一，不推倒重来。</p>
+<h3>2.3 统一对话 Agent 与十种回答画册</h3>
+<p>产品不是一系列 Dashboard、按钮或能力工作台。人只面对一个类似 ChatGPT / Genie 的对话 Agent；用户描述目标后，Agent 自动路由接入、导入、资产生成、治理、问数、分析、知识、数据库或动作能力，并把接入方案、Pipeline、质量报告、资产蓝图、图表、知识图、诊断时间线和审批卡直接嵌入回复。来源、配置 Diff、query_id、权限和运行步骤是该回复的可展开附件。完整可浏览原型见 <a href="../../independent_exploration_2026-08-19/huawei-product-ui-prototypes.html"><code>huawei-product-ui-prototypes.html</code></a>；以下均为<strong>产品设计示意</strong>，不是华为云现网截图、已发布能力或交付承诺，画面使用合成数据。</p>
+<table>
+<thead>
+<tr>
+<th>对话回答</th>
+<th>用户问题</th>
+<th>Agent 回复中的结构化工件</th>
+<th>可信边界</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>接入现有数据库</td>
+<td>连接订单库；维表直查、交易表同步</td>
+<td>路径比较 + 表清单/映射 + 前置检查 + Pipeline 草稿 + 发布确认</td>
+<td>连接器与权限以目标 Region 实测为准；CDC 前提不满足时不伪装可用</td>
+</tr>
+<tr>
+<td>导入新数据</td>
+<td>导入供应商 CSV，以后每天增量加载</td>
+<td>Schema/Profile + 映射 + 敏感/质量预检 + 隔离行 + 目标表/调度草稿</td>
+<td>新列、坏行和截断显式展示；用户确认目标和保留策略后才写入</td>
+</tr>
+<tr>
+<td>从现有库生成数据产品</td>
+<td>扫描 CRM/订单库，生成客户 360 草稿</td>
+<td>资产蓝图 + 清洗表/视图 + 指标/实体/Join + 质量/血缘 + 缺口/Owner</td>
+<td>自动结果均为候选；没有业务口径和 Owner 的资产不能标记可信</td>
+</tr>
+<tr>
+<td>数据治理</td>
+<td>检查订单域敏感字段、质量和血缘</td>
+<td>覆盖度 + 发现清单 + 质量规则 + 血缘/影响 + 待审批修复 Diff</td>
+<td>推断血缘/分类与权威事实分开；修复动作默认不执行</td>
+</tr>
+<tr>
+<td>综合经营</td>
+<td>今天经营上最需要关注什么</td>
+<td>文字结论 + 重点事项 + 趋势图 + 来源附件</td>
+<td>多域串联仍是只读；原因不足时引导追问</td>
+</tr>
+<tr>
+<td>智能问数</td>
+<td>最近 30 天华东各地区退款率是多少</td>
+<td>文字结论 + 指标卡 + 趋势图 + 明细表</td>
+<td>口径、SQL、query_id、数据时间和 RLS 可展开</td>
+</tr>
+<tr>
+<td>智能分析</td>
+<td>上海为什么上升，排除规模影响</td>
+<td>分析结论 + 贡献图 + 事实/推断/Unknown</td>
+<td>相关性不冒充因果，缺失数据明确展示</td>
+</tr>
+<tr>
+<td>知识构建</td>
+<td>建立订单域知识网络并先给草稿</td>
+<td>生成说明 + 知识图 + 冲突/来源/Review</td>
+<td>候选关系不自动发布，Owner 审核后才生效</td>
+</tr>
+<tr>
+<td>数据库调查</td>
+<td>订单库昨晚为什么变慢</td>
+<td>候选结论 + 诊断时间线 + 假设/反证</td>
+<td>相关性不冒充唯一根因，P0 全只读</td>
+</tr>
+<tr>
+<td>安全行动</td>
+<td>只取消阻塞会话 8472</td>
+<td>风险说明 + 一次性动作合同 + 审批卡</td>
+<td>P1；未审批不执行，权威后置验证才算完成</td>
+</tr>
+</tbody></table>
+<p><a href="../../independent_exploration_2026-08-19/huawei-product-ui-prototypes.html#connect"><img src="../../independent_exploration_2026-08-19/assets/huawei-product-ui/connect.png" alt="接入现有数据库回答"></a></p>
+<p><a href="../../independent_exploration_2026-08-19/huawei-product-ui-prototypes.html#import"><img src="../../independent_exploration_2026-08-19/assets/huawei-product-ui/import.png" alt="导入新数据回答"></a></p>
+<p><a href="../../independent_exploration_2026-08-19/huawei-product-ui-prototypes.html#derive"><img src="../../independent_exploration_2026-08-19/assets/huawei-product-ui/derive.png" alt="生成数据产品回答"></a></p>
+<p><a href="../../independent_exploration_2026-08-19/huawei-product-ui-prototypes.html#govern"><img src="../../independent_exploration_2026-08-19/assets/huawei-product-ui/govern.png" alt="数据治理回答"></a></p>
+<p><a href="../../independent_exploration_2026-08-19/huawei-product-ui-prototypes.html#brief"><img src="../../independent_exploration_2026-08-19/assets/huawei-product-ui/home.png" alt="综合经营回答"></a></p>
+<p><a href="../../independent_exploration_2026-08-19/huawei-product-ui-prototypes.html#ask"><img src="../../independent_exploration_2026-08-19/assets/huawei-product-ui/ask.png" alt="智能问数回答"></a></p>
+<p><a href="../../independent_exploration_2026-08-19/huawei-product-ui-prototypes.html#analyze"><img src="../../independent_exploration_2026-08-19/assets/huawei-product-ui/analyze.png" alt="智能分析回答"></a></p>
+<p><a href="../../independent_exploration_2026-08-19/huawei-product-ui-prototypes.html#knowledge"><img src="../../independent_exploration_2026-08-19/assets/huawei-product-ui/knowledge.png" alt="知识构建回答"></a></p>
+<p><a href="../../independent_exploration_2026-08-19/huawei-product-ui-prototypes.html#database"><img src="../../independent_exploration_2026-08-19/assets/huawei-product-ui/database.png" alt="数据库调查回答"></a></p>
+<p><a href="../../independent_exploration_2026-08-19/huawei-product-ui-prototypes.html#action"><img src="../../independent_exploration_2026-08-19/assets/huawei-product-ui/action.png" alt="安全行动审批回答"></a></p>
+<h3>2.4 数据建设与管理补全：竞品事实、产品全集与责任边界</h3>
+<h4>2.4.1 为什么必须前移</h4>
+<ul>
+<li><strong><code>官方声明</code> 阿里云 DataWorks</strong>：DI Agent 已把单表/整库、离线/实时同步做成自然语言任务，能探测 Schema、生成字段映射与调度、展示表清单和配置摘要，用户确认后发布；同一文档还描述了文件/多模态 ETL、Embedding 和对已接数据源的 ChatDB 管理。它证明“对话接数”已经是直接竞争基线，而不只是未来构想。<a href="https://help.aliyun.com/zh/dataworks/user-guide/introduction-to-data-integration-and-ai-native-capabilities" target="_blank" rel="noreferrer">DI Agent</a></li>
+<li><strong><code>官方声明</code> Databricks</strong>：Lakeflow Connect 覆盖托管数据库/SaaS/文件/流接入，外部数据库还可在 Unity Catalog 下联邦只读；Auto Loader 提供文件 Schema 推断、演进和异常字段保留；Unity Catalog 提供发现、自动血缘、质量监控和敏感分类。<a href="https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/" target="_blank" rel="noreferrer">Lakeflow Connect</a> · <a href="https://docs.databricks.com/gcp/en/query-federation" target="_blank" rel="noreferrer">Lakehouse Federation</a> · <a href="https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/schema" target="_blank" rel="noreferrer">Auto Loader Schema</a> · <a href="https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-discovery" target="_blank" rel="noreferrer">Data discovery</a></li>
+<li><strong><code>推断</code></strong>：阿里当前更清楚地展示“对话直接创建/管理接入任务”；Databricks 的平台治理、零复制/复制路径和 Schema 演进更系统，但官方材料仍把部分接入配置放在向导/API/Genie Code，而不是证明 Genie One 已独立承担所有数据工程操作。</li>
+<li><strong><code>建议</code></strong>：华为不应只追平其中一个入口。领先目标是同一对话完成“选路径 → 接入 → 资产化 → 使用 → 治理 → 追踪”，且每一步继承最终用户身份、可预览、可停止、可回滚并有权威证据。</li>
+</ul>
+<h4>2.4.2 去重后的数据建设与管理功能全集</h4>
+<table>
+<thead>
+<tr>
+<th>产品任务</th>
+<th>Agent 必须能做</th>
+<th>回复内工件</th>
+<th>阶段</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>接入已有数据库</strong></td>
+<td>发现可用连接或引导新建；测试网络/身份/权限；探测数据库、表、主键、变更能力和数据量；比较直查/快照/定时/CDC；生成表选择、字段映射、目标命名与资源计划</td>
+<td>路径比较卡、前置检查、表清单、Schema Diff、Pipeline 草稿、成本/新鲜度估计</td>
+<td>P0 一个引擎闭环；P1 多源/CDC</td>
+</tr>
+<tr>
+<td><strong>导入新文件/对象</strong></td>
+<td>上传或绑定 OBS/S3/目录；识别 CSV/JSON/Parquet/Excel 等格式；推断 Schema/编码/分区；检测坏行、新列、PII 和重复；选择隔离/补列/拒绝策略；发布一次或周期任务</td>
+<td>文件画像、字段映射、质量/敏感报告、隔离区预览、目标表和调度草稿</td>
+<td>P0 CSV/Parquet；P1 多格式/目录增量</td>
+</tr>
+<tr>
+<td><strong>连续同步与演进</strong></td>
+<td>支持全量、增量、全量+增量、CDC；记录 snapshot/watermark；处理 Schema 演进、断点续传、重复和延迟；提供暂停/恢复/重跑与数据到达验证</td>
+<td>Pipeline 状态、水位、延迟、Schema 变更、重复/坏数告警、验证结果</td>
+<td>方案一 P0/P1；方案二 P1</td>
+</tr>
+<tr>
+<td><strong>资产发现与理解</strong></td>
+<td>生成库表清单、Schema/Profile、主外键与候选关系、字段业务说明、热度/新鲜度、Owner 候选和可用范围；搜索、预览、请求访问</td>
+<td>资产地图、表/字段卡、关系图、权限缺口、Unknown</td>
+<td>P0</td>
+</tr>
+<tr>
+<td><strong>从现有库生成数据产品</strong></td>
+<td>生成清洗层表/视图、客户 360/订单域等主题资产、指标/维度/Join、知识网络、Verified Query、质量规则、敏感策略、血缘、API/共享/RAG 索引候选</td>
+<td>数据产品蓝图、生成清单、来源与置信度、依赖/成本、缺口、Owner Review</td>
+<td>P0 草稿；P1 发布/服务化</td>
+</tr>
+<tr>
+<td><strong>质量与敏感治理</strong></td>
+<td>推荐并运行完整性、唯一性、范围、及时性和业务规则；分类敏感字段；建议掩码/访问策略；发现异常后生成修复计划</td>
+<td>覆盖度、问题样例、规则结果、分类标签、策略 Diff、待审批任务</td>
+<td>P0 发现/草稿；P1 自动化闭环</td>
+</tr>
+<tr>
+<td><strong>血缘、影响与生命周期</strong></td>
+<td>区分自动采集和推断血缘；展示上下游、Owner、口径版本；评估 Schema/指标变更影响；管理认证/废弃、保留和删除</td>
+<td>血缘/影响图、版本 Diff、受影响任务与用户、生命周期任务</td>
+<td>P1</td>
+</tr>
+<tr>
+<td><strong>运行与运营</strong></td>
+<td>查看状态、吞吐、延迟、费用、失败原因；自然语言暂停/恢复/重跑；周期巡检；从 BadCase 修复映射/规则</td>
+<td>运行时间线、SLA/费用、诊断报告、动作合同、后置验证</td>
+<td>P0 状态/停止；P1 主动巡检</td>
+</tr>
+</tbody></table>
+<h4>2.4.3 接入方式不是一个开关：Agent 必须解释选择</h4>
+<table>
+<thead>
+<tr>
+<th>路径</th>
+<th>适合场景</th>
+<th>产品自动完成</th>
+<th>用户仍需决定</th>
+<th>P0 边界</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>直查/联邦</strong></td>
+<td>数据不能复制、低频探索、先验证价值</td>
+<td>连接测试、能力/代价探测、谓词下推建议、只读保护</td>
+<td>允许访问的库表、源库负载预算、数据用途</td>
+<td>方案一/二均可先做一个 DB；不宣称所有源适合生产高并发</td>
+</tr>
+<tr>
+<td><strong>一次导入</strong></td>
+<td>文件或数据库快照、离线分析</td>
+<td>Schema/Profile、映射、目标表、坏数隔离、导入和行数/校验和验证</td>
+<td>目标位置、覆盖/追加、保留与敏感策略</td>
+<td>两方案 P0；方案二首发主复制方式</td>
+</tr>
+<tr>
+<td><strong>定时同步</strong></td>
+<td>分钟/小时/天级新鲜度</td>
+<td>增量字段候选、调度、断点、水位和延迟监控</td>
+<td>频率、窗口、费用和目标 SLA</td>
+<td>方案一首月；方案二 P1</td>
+</tr>
+<tr>
+<td><strong>CDC</strong></td>
+<td>交易表低延迟连续复制</td>
+<td>检查主键/日志/版本、全量起点、位点、Schema 演进和恢复计划</td>
+<td>源端开关与授权、容忍延迟、重复语义、故障切换</td>
+<td>不作为通用首月承诺；逐引擎 Capability Manifest 开放</td>
+</tr>
+</tbody></table>
+<h4>2.4.4 “从已有数据库能生成什么”必须直接回答</h4>
+<table>
+<thead>
+<tr>
+<th>可生成对象</th>
+<th>自动化程度</th>
+<th>必须补的人工语境</th>
+<th>发布条件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>库表资产清单、Schema/Profile、索引/约束与热度</td>
+<td>高</td>
+<td>数据用途和扫描范围</td>
+<td>只读扫描完成，样例受权限/脱敏约束</td>
+</tr>
+<tr>
+<td>表/字段业务说明、领域归类、Owner 候选</td>
+<td>中</td>
+<td>组织术语、职责和业务文档</td>
+<td>Owner Review；模型推断显式标记</td>
+</tr>
+<tr>
+<td>主外键/Join/实体关系与知识网络</td>
+<td>中</td>
+<td>缺失外键、业务基数和例外规则</td>
+<td>数据样例验证 + Owner Review</td>
+</tr>
+<tr>
+<td>清洗表/视图、主题宽表、客户 360 等数据产品蓝图</td>
+<td>中</td>
+<td>目标用户、SLA、粒度、保留和成本</td>
+<td>Pipeline Dry-run、质量 Gate、回滚计划</td>
+</tr>
+<tr>
+<td>指标、维度、同义词、Verified Query</td>
+<td>中</td>
+<td>权威口径、时间/币种/过滤和适用范围</td>
+<td>Gold/结果等价评测 + 语义 Owner Review</td>
+</tr>
+<tr>
+<td>质量规则、敏感分类、掩码/访问策略</td>
+<td>中高</td>
+<td>法务/合规等级、误报处置、例外</td>
+<td>样例确认、影响分析、策略审批</td>
+</tr>
+<tr>
+<td>血缘与影响</td>
+<td>采集血缘高；推断血缘中低</td>
+<td>外部系统关系、手工流程</td>
+<td>来源类型可见；推断不能冒充权威血缘</td>
+</tr>
+<tr>
+<td>API、共享数据集、特征/向量/RAG 索引候选</td>
+<td>中</td>
+<td>消费合同、更新频率、ACL、模型用途</td>
+<td>数据产品 Owner + 安全/成本 Gate</td>
+</tr>
+</tbody></table>
+<h4>2.4.5 厂商做什么、用户必须做什么</h4>
+<table>
+<thead>
+<tr>
+<th>环节</th>
+<th>产品/厂商负责</th>
+<th>用户/数据 Owner 负责</th>
+<th>不允许的捷径</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>身份与网络</td>
+<td>引导、最小权限模板、连通/撤权/过期验证、凭据托管</td>
+<td>提供或批准最终用户/服务身份、VPC/白名单、用途</td>
+<td>把长期数据库密码交给 Harness</td>
+</tr>
+<tr>
+<td>路径选择</td>
+<td>给出直查/导入/定时/CDC 的成本、时效、负载、风险比较</td>
+<td>确认数据驻留、SLA、源库负载预算和费用</td>
+<td>Agent 只因“实时”二字自动开启 CDC</td>
+</tr>
+<tr>
+<td>Schema/映射</td>
+<td>自动探测、候选映射、类型兼容、目标命名、Dry-run</td>
+<td>确认主键、业务含义、字段删留和冲突</td>
+<td>静默截断、强转类型或丢弃新列</td>
+</tr>
+<tr>
+<td>数据质量/敏感</td>
+<td>画像、规则/分类候选、问题样例、隔离建议</td>
+<td>确认阈值、敏感等级、误报和豁免</td>
+<td>LLM 自行把生产数据标为“可信”</td>
+</tr>
+<tr>
+<td>发布与运行</td>
+<td>生成版本化 Pipeline，执行、监控、暂停、恢复、验证与审计</td>
+<td>批准写入、调度、费用和生产窗口</td>
+<td>只有模型一句“成功”，没有目标端行数/水位验证</td>
+</tr>
+<tr>
+<td>资产/知识发布</td>
+<td>生成可审核草稿、来源、置信度、影响和回滚</td>
+<td>业务口径、Owner、认证/废弃裁决</td>
+<td>自动发布指标、血缘推断或访问策略</td>
+</tr>
+</tbody></table>
+<h4>2.4.6 两种方案的具体承载</h4>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>方案一：华为云竞争力优先</th>
+<th>方案二：数据库绿地突围</th>
+<th>固定合同</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Connection Registry</td>
+<td>复用 DataArts 数据源/IAM 对象，统一映射到 product source ID</td>
+<td>新建轻注册表；P0 仅一个 RDS/PostgreSQL 类引擎和 CSV/Parquet，凭据进 Credential Broker</td>
+<td>source_id、subject、purpose、capability、expiry、network status</td>
+</tr>
+<tr>
+<td>Ingestion Planner</td>
+<td>新建对话规划与比较层；调用 DataArts 批/实时/CDC 能力包</td>
+<td>新建 <code>ingest-lite</code>；直查用只读驱动，快照/文件用数据库原生导出与 Arrow/Parquet，预留 <code>IngestionBackend</code></td>
+<td>plan revision、mode、tables、mapping、SLA、budget、prerequisites</td>
+</tr>
+<tr>
+<td>Pipeline Executor</td>
+<td>DataArts/DRS/流处理作为权威执行器，产品只持 task/pipeline ID</td>
+<td>同一 ECS Worker 首期做一次导入和受控定时任务；不首期引入 Kafka/Flink/Debezium，单引擎 CDC 过 Gate 后再接</td>
+<td>publish/stop/resume/status/watermark/verify/error</td>
+</tr>
+<tr>
+<td>Asset &amp; Catalog</td>
+<td>DataArts Catalog/数据地图为权威对象，补 Agent 草稿/Review</td>
+<td>PostgreSQL 元数据 + Git YAML/JSON + OBS/本地加密工件；保留 DataArts Adapter</td>
+<td>asset ID/version/owner/source/ACL/status/evidence</td>
+</tr>
+<tr>
+<td>Quality/Classification/Lineage</td>
+<td>复用 DataArts 权威能力并补自然语言任务、覆盖度和 Review</td>
+<td>P0 做 profile、规则候选、敏感候选和生成 Pipeline 血缘；不复制全域策略平台</td>
+<td>observed/inferred、rule version、sample、impact、review state</td>
+</tr>
+<tr>
+<td>Data Product Builder</td>
+<td>统一生成表/视图、指标语义、知识、Verified、API/共享候选</td>
+<td>先生成 DB 域清洗视图、指标/关系/Verified 草稿；P1 扩服务形态</td>
+<td>product draft、deliverables、dependencies、SLA、owner、release Gate</td>
+</tr>
+</tbody></table>
+<p><strong>方案一的领先点</strong>：多源接入和治理广度更快形成，对话层负责把分散能力变成一个连续任务。<strong>方案二的领先点</strong>：把一个数据库的“直查/导入—资产化—问数—诊断”做得最深、最快部署；不能用“未来可接 DataArts”掩盖首期连接器和跨域治理范围有限。</p>
+<hr>
+<h2>3. 方案一：华为云竞争力优先</h2>
+<h3>3.1 产品边界</h3>
+<p>方案一建设公司级 <code>DataArts Intelligence</code>：人从统一对话 Agent 直接描述目标，产品自动路由接入、资产生成、问数、分析、知识、数据库、治理或动作能力；同一对话也可嵌入 DataArts 和数据库控制台。外部 Agent 通过 CLI/MCP/API 调用相同能力。所有入口恢复同一 Goal/Task/Session，不分别创建彼此割裂的“接数 Agent”“DataArts Agent”“DB Agent”和“治理 Agent”。</p>
+<p>它的产品中心是 C0 数据接入与准备、C1/C2 问数分析、C3 数据知识构建和 C5 智能治理；C4 数据库洞察由数据库团队作为强能力包交付。各领域继续保留权威对象与操作面，但不得再拥有彼此不兼容的 source/pipeline/asset、知识、会话、权限、工具和证据协议。</p>
+<h3>3.2 方案一完整架构</h3>
+<pre><code class="language-text">┌────────────────────────────────────────────────────────────────────┐
+│ 公司级统一入口面                                                   │
+│ 人：对话 Agent Web | DataArts/DB 控制台嵌入对话 | IM 对话         │
+│ Agent：di CLI | MCP | REST API                                   │
+└───────────────────────────────┬────────────────────────────────────┘
+                                │ 自然语言目标/上下文；能力自动路由
+┌───────────────────────────────▼────────────────────────────────────┐
+│ 公司级产品能力层                                                   │
+│ C0 接入 | C1 问数 | C2 分析 | C3 知识 | C4 DB洞察 | C5治理 | C6/C7│
+└───────────────────────────────┬────────────────────────────────────┘
+                                │ capability / user / tenant / context
+┌───────────────────────────────▼────────────────────────────────────┐
+│ 公司级产品控制面                                                   │
+│ Goal/Task | Session | Event | Artifact | Approval | IAM/OBO/Audit│
+└───────────────────────────────┬────────────────────────────────────┘
+                                │ Harness Protocol v1
+┌───────────────────────────────▼────────────────────────────────────┐
+│ 可替换执行面                                                       │
+│ Harness Adapter → 主/备 Harness → 隔离 Runner → Skills            │
+└───────────────────────────────┬────────────────────────────────────┘
+                                │ short-lived task token
+┌───────────────────────────────▼────────────────────────────────────┐
+│ 统一 Tool Gateway / di CLI/MCP / Policy / Budget / Credential     │
+└──────────────┬─────────────────┬──────────────────┬────────────────┘
+               │                 │                  │
+      ┌────────▼────────┐ ┌──────▼──────┐ ┌────────▼──────────────┐
+      │ DataArts 能力包 │ │ 数据库能力包 │ │ IAM/模型/外部能力包   │
+      │ 源/目录/语义/BI │ │ SQL/诊断/动作 │ │ 身份/模型/业务动作     │
+      └────────┬────────┘ └──────┬──────┘ └────────┬──────────────┘
+               └─────────────────┴──────────────────┘
+                                 │
+                    统一 Evidence / Trace / Eval / Audit
+</code></pre>
+<p>架构关键点：产品控制面只有一套；部门通过版本化能力包接入，不让入口直接调用部门私有 Agent；Harness 可以替换，但 user、resource、semantic、query、artifact、approval 和 trace 的统一 ID 不随之变化。</p>
+<h3>3.3 方案一模块承载与选型</h3>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>首选承载/选型</th>
+<th>建设方式</th>
+<th>成为硬依赖的 Gate</th>
+<th>禁止复制</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>公司级入口与嵌入 SDK</td>
+<td>总 Owner 下的产品团队新建统一壳层；复用 DataArts Insight 表图组件</td>
+<td>新建壳层，复用渲染</td>
+<td>同一 Task 可在统一页、DataArts 和 DB 控制台恢复</td>
+<td>各部门第二套聊天会话</td>
+</tr>
+<tr>
+<td>Goal/Task/Session/Event/Artifact</td>
+<td>产品团队维护统一协议、Goal 状态机与服务</td>
+<td>共同新建</td>
+<td>Goal 确认、Oracle、部分完成、续流、取消、ACL、恢复和审计契约通过</td>
+<td>Harness 私有 Session 直接暴露给页面</td>
+</tr>
+<tr>
+<td>Harness Adapter/Runner</td>
+<td>六候选 Bake-off 后一主一备；隔离 Runner</td>
+<td>集成现成 Harness，自建 Adapter</td>
+<td>契约、权限、取消、版本固定和 Gold 回归通过</td>
+<td>自研通用 Agent Loop</td>
+</tr>
+<tr>
+<td>Tool Gateway 与 <code>di</code> CLI/MCP</td>
+<td>产品团队拥有合同；领域团队交付能力包实现</td>
+<td>共同新建协议，复用领域 API</td>
+<td>Schema、错误、SLO、权限、预算、审计齐全</td>
+<td>每部门私有 MCP 语义和错误码</td>
+</tr>
+<tr>
+<td>接入规划与 Pipeline</td>
+<td>DataArts 数据集成/DRS/流处理为权威执行器；产品团队新建 Path Advisor 与对话任务层</td>
+<td>复用执行面，补统一计划/预览/发布/水位验证</td>
+<td>source/pipeline 稳定 ID；批/实时/CDC 能力、停止/恢复、错误和目标端验证通过</td>
+<td>产品团队重建通用连接器/调度平台</td>
+</tr>
+<tr>
+<td>资产/数据知识/语义/Verified</td>
+<td>DataArts 作为权威承载者</td>
+<td>复用并补数据产品/知识生成与 Review 能力</td>
+<td>资产/实体/关系/指标稳定 ID、来源、版本、ACL、作者 API、影响与回滚通过</td>
+<td>产品团队复制完整 Catalog/知识平台</td>
+</tr>
+<tr>
+<td>质量/敏感/血缘</td>
+<td>DataArts 权威能力 + 统一治理任务工件</td>
+<td>复用扫描/规则/策略，补 P0 预检与自然语言计划</td>
+<td>observed/inferred 来源、规则版本、问题样例、影响和审批通过</td>
+<td>让模型直接改生产规则或访问策略</td>
+</tr>
+<tr>
+<td>SQL/数据库调查</td>
+<td>数据库部门能力包</td>
+<td>复用 DAS/RDS/DWS API 并补齐缺口</td>
+<td>最终用户权限、方言、负载、取消、证据和正负例通过</td>
+<td>DataArts 或 Harness 自行直连数据库</td>
+</tr>
+<tr>
+<td>IAM/OBO/Credential Broker</td>
+<td>IAM/安全团队</td>
+<td>优先复用，必要时补薄代理</td>
+<td>委托、短期凭据、撤权、过期和 DB 审计主体通过</td>
+<td>产品保存长期数据库账号</td>
+</tr>
+<tr>
+<td>Model Gateway/Trace/Eval</td>
+<td>AgentArts/公共 AI 团队通过 Gate 后承载；否则轻量兼容实现</td>
+<td>竞标承载、保持 Adapter</td>
+<td>API、SLO、成本、取消、Trace、升级/回滚通过</td>
+<td>领域 Gold 判分逻辑上收为通用指标</td>
+</tr>
+<tr>
+<td>表图报告与分享</td>
+<td>DataArts Insight/产品体验团队</td>
+<td>复用受控 Artifact schema</td>
+<td>ACL、版本、导出/分享、撤销和水印通过</td>
+<td>执行模型生成的任意 HTML/JS</td>
+</tr>
+<tr>
+<td>运行与数据持久化</td>
+<td>正式阶段优先 CCE/RDS/OBS 等共享服务；纵向样例可单 ECS</td>
+<td>分阶段演进</td>
+<td>SLO、容量、容灾和成本触发，不预先平台化</td>
+<td>为组织完整而提前拆复杂微服务</td>
+</tr>
+</tbody></table>
+<p>如果 AgentArts 的 Runtime/Gateway/Eval 能在两周内通过相应 Gate，可承载对应模块；否则首发使用轻量实现并保留 Adapter。<strong>它是竞标承载者，不是启动前置依赖。</strong></p>
+<h3>3.4 目标组织形态</h3>
+<pre><code class="language-text">公司级 Sponsor
+       │
+Data Intelligence 总 Owner（产品、预算、版本唯一 DRI）
+       │
+┌──────┼──────────┬──────────┬──────────┬──────────┐
+体验/入口  Session/Harness  DataArts包  数据库包   IAM/安全
+       └──────────── 同一契约 / 同一 Gold Tasks ───────────┘
+</code></pre>
+<p>不是建立长期联席委员会，而是把各部门变成同一个产品的“能力包供应方”。</p>
+<h3>3.5 公司级共同 OKR</h3>
+<table>
+<thead>
+<tr>
+<th>Objective</th>
+<th>公司共同 KR（建议值，先测基线）</th>
+<th>各部门如何贡献</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>做成 C0 接入与资产化</td>
+<td>一个 DB + 文件源从自然语言到首个可用资产；直查/导入/定时/CDC 选择可解释；源/目标行数、水位和 Schema 验证完整</td>
+<td>DataArts 提供权威执行/Catalog/治理，DB 提供源端能力，产品交连续对话旅程</td>
+</tr>
+<tr>
+<td>做成 C1/C2 智能问数分析</td>
+<td>20 个问数 Gold 达签署阈值；趋势/对比/贡献步骤可复算；权限负例全部阻断</td>
+<td>DataArts 提供知识/语义与渲染，DB 提供安全执行，产品交完整旅程</td>
+</tr>
+<tr>
+<td>做成 C3 数据知识构建</td>
+<td>一个域可从 Schema/样例/文档生成数据产品与知识草稿；来源/冲突/Review/发布/回滚完整</td>
+<td>DataArts 负责权威资产/知识生命周期，产品/Harness 负责低门槛生成与 Review 体验</td>
+</tr>
+<tr>
+<td>做成 C4 数据库洞察</td>
+<td>查实例、查状态和故障调查覆盖 8–10 个核心能力，证据时间线完整</td>
+<td>数据库团队对实例证据、方言、计划、锁、等待和变更深度负责</td>
+</tr>
+<tr>
+<td>首次价值更快</td>
+<td>从连接数据到首个探索答案 ≤30 分钟；从空白域到首版知识草稿 ≤60 分钟（均待实测）</td>
+<td>DataArts 降低接入/知识准备；入口和 Harness 降低操作成本</td>
+</tr>
+<tr>
+<td>信任链不断裂</td>
+<td>核心任务 user/resource/semantic/query/artifact/trace 关联率 100%</td>
+<td>IAM、DataArts、DB、Agent 平台共同过契约测试</td>
+</tr>
+<tr>
+<td>可持续演进</td>
+<td>主备 Harness 每日兼容；任何版本升级 Gold 回归无 MATERIAL 退化</td>
+<td>产品团队维护 Adapter；领域团队维护能力包</td>
+</tr>
+<tr>
+<td>证明商业价值</td>
+<td>5–10 个设计伙伴；至少 3 个持续 4 周使用真实任务</td>
+<td>产品与销售按任务结果而非 Demo 次数验收</td>
+</tr>
+</tbody></table>
+<h3>3.6 部门 KR，避免“各自都完成”</h3>
+<table>
+<thead>
+<tr>
+<th>团队</th>
+<th>建议 KR</th>
+<th>不接受的 KR</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>产品/体验</td>
+<td>接入资产化、问数分析、知识构建、数据库洞察四条主线全链可用；用户能理解证据和失败</td>
+<td>页面数、聊天入口数</td>
+</tr>
+<tr>
+<td>DataArts</td>
+<td>接入 Pipeline、资产、语义/Verified 版本化；变更事件和 ACL 一致；低准备时间</td>
+<td>新增指标数、连接器数而无成功旅程</td>
+</tr>
+<tr>
+<td>数据库</td>
+<td>目标引擎 P0 Tool 通过正/负/负载用例；取消与审计成功</td>
+<td>MCP 数量、诊断项数量</td>
+</tr>
+<tr>
+<td>Agent/AI 平台</td>
+<td>一主一备兼容、Trace 覆盖、模型路由与成本可控</td>
+<td>Agent 数、模型数</td>
+</tr>
+<tr>
+<td>IAM/安全</td>
+<td>最终用户/明确服务主体传递、撤权及时、零凭据泄漏</td>
+<td>只完成方案评审</td>
+</tr>
+</tbody></table>
+<h3>3.7 公司级仓库与发布合同</h3>
+<pre><code class="language-text">data-intelligence/
+├─ contracts/            Harness、Tool、Artifact、Error schema
+├─ gateway/              Session、Runner、Tool Gateway
+├─ adapters/             harness/dataarts/database/iam/model
+├─ packs/
+│  ├─ dataarts/          语义/目录/BI 能力包
+│  ├─ rds-postgresql/    引擎能力包
+│  └─ gaussdb/           引擎能力包
+├─ product/              Web 与嵌入组件
+└─ evals/                公司共同 Gold Tasks
+</code></pre>
+<p>每个能力包必须声明：版本、Owner、支持区域/引擎、权限模型、SLO、配额、错误、弃用期、回滚版本、正/负例。缺少任一项只能标 <code>实验</code>，不能成为共同 GA 依赖。</p>
+<h3>3.8 方案一成立的五个 Gate</h3>
+<ol>
+<li>唯一总 Owner 对范围、预算、优先级和发布有最终裁决权；</li>
+<li>DataArts、数据库、Agent/IAM 各签一个可执行能力包契约；</li>
+<li>用一个真实身份跑通 UI → Harness → Tool → Authority → Audit；</li>
+<li>共同 Gold Task 失败不能以“我的组件成功”关闭；</li>
+<li>至少一个发布周期使用共同 Backlog、共同 Scoreboard 和共同 Release Train。</li>
+</ol>
+<p>任一 Gate 不能在 2–4 周内落实，立即切换方案二，避免名义联合。</p>
+<hr>
+<h2>4. 方案二：数据库部门绿地突围</h2>
+<h3>4.1 产品定位</h3>
+<p><code>Database Intelligence｜数据库智能</code>（工作名）是数据库部门拥有的 Conversation-first 数据与数据库 Agent 产品：</p>
+<ul>
+<li>首发做深 C4 数据库洞察，同时把同一数据库的 C0 直查/快照导入、C1 智能问数、C2 基础分析、C3 数据产品/知识草稿和 C5 最小治理串成一条闭环；</li>
+<li>以 Harness + DB Skills + <code>di</code> CLI/MCP 为核心；</li>
+<li>新 Web 是统一对话壳，只渲染 Message、Harness Event 与回复内 Artifact；</li>
+<li>DataArts、AgentArts、DAS 等只通过可替换 Adapter 接入，不等待其成为硬依赖；</li>
+<li>不重建完整 DataArts Studio、BI、Catalog 或通用 Agent Builder；P0 只把一个引擎和 CSV/Parquet 做完整，明确展示范围而不冒充“80+ 连接器”。</li>
+</ul>
+<h3>4.2 方案二完整架构</h3>
+<pre><code class="language-text">┌──────────────────────────────────────────────────────────────┐
+│ 统一入口面                                                   │
+│ 人：对话 Agent Web | DB 实例页嵌入对话                     │
+│ Agent：di CLI | MCP | REST API                             │
+└───────────────────────────┬──────────────────────────────────┘
+                            │ 自然语言目标/DB 上下文；能力自动路由
+┌───────────────────────────▼──────────────────────────────────┐
+│ DB 产品能力层                                                │
+│ C4 DB洞察 | C0 DB/文件接入 | C1/2 问数分析 | C3/5 资产治理  │
+└───────────────────────────┬──────────────────────────────────┘
+                            │ capability / IAM user / db context
+┌───────────────────────────▼──────────────────────────────────┐
+│ 单 ECS：模块化单体控制面                                    │
+│ edge | Goal/Session API | Event | Artifact | Approval | Audit│
+├───────────────────────────┬──────────────────────────────────┤
+│ runner-manager/launcher   │ tool-gateway / credential       │
+│      │                    │ policy / budget / cancel        │
+│  隔离 agent-runner-*      │                                  │
+│  Harness + Skills         │                                  │
+└──────────────┬────────────┴────────────────┬─────────────────┘
+               │ Harness Protocol / task token│
+       ┌───────▼────────┐          ┌─────────▼────────────────┐
+       │ PostgreSQL     │          │ DB/接入权威能力           │
+       │ Session/Event  │          │ IAM/Schema/SQL/Import    │
+       │ Asset/Eval meta│          │ Plan/Lock/Wait/Metric    │
+       └───────┬────────┘          │ Change/Cancel/Audit      │
+               │                   └─────────┬────────────────┘
+       ┌───────▼────────┐                    │
+       │ Artifact/Files │          可选 DataArts / AgentArts Adapter
+       │ Parquet/OBS    │
+       └────────────────┘
+</code></pre>
+<p>一台 ECS 是首期部署边界，不是长期逻辑边界：Session、Harness Adapter、Tool、Artifact、Credential 和 Eval 仍有独立接口；以后可逐个迁到 CCE/RDS/OBS/共享平台，而不改变页面、Skill 和 <code>di</code> Tool 合同。</p>
+<h3>4.3 首期模块与具体选型</h3>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>首期选择</th>
+<th>自建/复用</th>
+<th>为什么</th>
+<th>后续替换路径</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>对话入口</td>
+<td>React 或 Vue 对话 SPA + Session API；沿用团队成熟栈二选一</td>
+<td>新建对话壳</td>
+<td>人只面对统一 Agent；回复按受控 schema 渲染图、表、知识图、时间线和审批卡</td>
+<td>可嵌入公司入口或 DB 实例页，消息/工件协议不变</td>
+</tr>
+<tr>
+<td>Harness</td>
+<td>六候选 Smoke；前三 Bake-off；第 7 天一主一备</td>
+<td>集成</td>
+<td>现成 Loop、Session、工具与多轮能力，避免自研</td>
+<td>Adapter 后替换，不改 GUI/Tool</td>
+</tr>
+<tr>
+<td>Goal/Session/Event/Artifact</td>
+<td>数据库部门模块化单体</td>
+<td>新建</td>
+<td>保证目标、完成 Oracle、会话恢复、取消、证据和 ACL 不受 Harness 私有实现控制</td>
+<td>按 SLO 拆分服务</td>
+</tr>
+<tr>
+<td>Runner</td>
+<td>Docker 隔离容器 + narrow launcher</td>
+<td>新建控制层，复用容器运行时</td>
+<td>Pi 等候选没有完整产品安全边界，不能让 Runner 直连权威系统</td>
+<td>迁 CCE Job/受管 Sandbox</td>
+</tr>
+<tr>
+<td>Tool Gateway</td>
+<td><code>di</code> CLI/MCP 共用实现 + Policy/Credential/Budget/Audit</td>
+<td>新建控制层，复用 DB API</td>
+<td>数据库权限、SQL、安全和证据是不可外包边界</td>
+<td>将通用部分接入公司 Gateway</td>
+</tr>
+<tr>
+<td><code>ingest-lite</code> / Connection Registry</td>
+<td>一个 DB 只读驱动 + 原生快照导出；CSV/Parquet 用 Arrow/Parquet 处理；OBS/加密卷承载文件；<code>IngestionBackend</code> 适配器</td>
+<td>新建轻量控制层，复用 DB/OBS 能力</td>
+<td>两周跑通直查与一次导入；Schema/坏数/敏感预检、停止和目标端验证完整</td>
+<td>接入 DataArts 批/实时执行面；单引擎 CDC 过 Gate 后增加</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>PostgreSQL</td>
+<td>复用成熟数据库</td>
+<td>单机足够；schema 从第一天含 tenant、revision、trace</td>
+<td>迁 RDS/高可用 PostgreSQL</td>
+</tr>
+<tr>
+<td>工件</td>
+<td>加密本地卷；具备条件优先 OBS 对象引用</td>
+<td>复用</td>
+<td>快速落地，同时避免把大结果塞进会话表</td>
+<td>迁 OBS，不改 Artifact ID</td>
+</tr>
+<tr>
+<td>图表</td>
+<td>ECharts 或 Vega-Lite 受控 spec；按团队现有资产二选一</td>
+<td>复用</td>
+<td>不执行模型生成的任意 JS</td>
+<td>可替换 DataArts Insight Renderer</td>
+</tr>
+<tr>
+<td>DB 域资产/知识/语义</td>
+<td>Schema/样例/文档扫描 + Profile/质量/敏感候选 + Git YAML/JSON + Review + Verified Query</td>
+<td>新建轻量资产包</td>
+<td>支持一句话生成清洗视图、指标/关系/规则可审核草稿，不先建企业知识平台</td>
+<td>接入 DataArts 稳定 Catalog/知识/治理对象 API</td>
+</tr>
+<tr>
+<td>模型</td>
+<td>华为云允许的模型端点，经薄 model-proxy</td>
+<td>复用模型，自建薄代理</td>
+<td>Harness 不持有密钥，不把模型绑定进产品协议</td>
+<td>接入公司 Model Gateway</td>
+</tr>
+<tr>
+<td>Trace/Eval</td>
+<td>Event/Evidence 自有表 + OpenTelemetry 兼容导出；Gold Oracle 自有</td>
+<td>新建领域判分，复用标准导出</td>
+<td>通用 Trace 不能替代 SQL 结果、安全和负载 Oracle</td>
+<td>AgentArts 通过 Gate 后承载通用部分</td>
+</tr>
+</tbody></table>
+<p>这里的“二选一”不是同时维护两套：React/Vue、ECharts/Vega-Lite 均由现有团队栈和供应链 Gate 一次性决定；架构只固定输入/输出协议。</p>
+<h3>4.4 数据库部门必须自己掌握</h3>
+<ul>
+<li>Harness/Tool/Artifact 契约与 Adapter；</li>
+<li>数据库身份映射、凭据代理、Role/RLS 和撤权；</li>
+<li>方言、AST、只读、EXPLAIN、预算、执行、取消；</li>
+<li>实例/Schema/会话/锁/计划/指标/变更证据模型；</li>
+<li>领域 Skills、Gold Tasks、结果等价和负载/权限评测；</li>
+<li>工件证据、动作审批与后置验证。</li>
+</ul>
+<h3>4.5 可以内嵌或以后替换</h3>
+<ul>
+<li>Harness 本身；</li>
+<li>前端组件、图表、SQL Parser、Telemetry SDK；</li>
+<li>模型 Gateway、通用 Trace/Eval；</li>
+<li>DataArts 的 Catalog/语义/BI 适配；</li>
+<li>IM Channel；Hermes 等候选的现成 Gateway 只能作为 Channel Adapter，不让其成为数据权限真相。</li>
+</ul>
+<h3>4.6 明确的范围封顶</h3>
+<p>首期只支持：</p>
+<ol>
+<li>一个主引擎（建议 RDS for PostgreSQL 或内部证据最完整的引擎，需 Gate）；</li>
+<li>一个文件入口：手工上传或 OBS 目录中的 CSV/Parquet；</li>
+<li>一条完整纵向故事：直查/快照导入 → Schema/质量/敏感预检 → DB 域数据产品/知识草稿 → 问数/分析 → DB 调查；</li>
+<li>探索/可信两种只读模式；一次导入是受控写任务，必须预览并验证；</li>
+<li>两周约 18–20 个、首月 35–40 个 P0 原子能力；</li>
+<li>Web + API/MCP；IM 仅在真实客户需要时接；</li>
+<li>5–10 个设计伙伴以内的 Private Beta。</li>
+</ol>
+<p>首期不接：通用连接器平台、跨源复杂 ETL、任意 SaaS/流接入、通用 CDC、完整 BI、通用 Agent 市场、多云、跨 Region HA、自动高风险写动作、全引擎覆盖。</p>
+<h3>4.7 最小团队形态</h3>
+<p>下列为 <code>建议容量包</code>，实际人数是内部 <code>待证</code>：</p>
+<table>
+<thead>
+<tr>
+<th>工作流</th>
+<th align="right">建议容量</th>
+<th>主要交付</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>产品/UX</td>
+<td align="right">1–2</td>
+<td>Gold Journey、统一对话壳、回复工件、设计伙伴</td>
+</tr>
+<tr>
+<td>Session/Harness</td>
+<td align="right">2</td>
+<td>Gateway、Adapter、Runner、Event</td>
+</tr>
+<tr>
+<td>DB Tool/Security</td>
+<td align="right">2–3</td>
+<td>CLI/MCP、权限、SQL、诊断、取消</td>
+</tr>
+<tr>
+<td>Web/Artifact</td>
+<td align="right">1–2</td>
+<td>页面、表图报告、ACL</td>
+</tr>
+<tr>
+<td>Eval/SRE/Security</td>
+<td align="right">1–2（可共享）</td>
+<td>Gold、负例、部署、恢复、供应链</td>
+</tr>
+</tbody></table>
+<p>若没有至少一条端到端全栈小队，方案二也会变成多个“组件兼职”，速度优势不成立。</p>
+<h3>4.8 数据库部门 OKR</h3>
+<table>
+<thead>
+<tr>
+<th>Objective</th>
+<th>建议 KR</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>两周证明可运行内核</td>
+<td>新 ECS 从镜像到样例任务 ≤30 分钟；约 18–20 个 P0 Tool；DB 直查和 CSV/Parquet 一次导入可完成；停止/取消与目标端验证可复核</td>
+</tr>
+<tr>
+<td>一月证明问数/分析/DB 洞察可用</td>
+<td>20 个问数 Gold；基础分析可复算；8–10 个 DB 诊断能力；所有权限负例阻断</td>
+</tr>
+<tr>
+<td>三月证明资产飞轮与客户价值</td>
+<td>一个 DB 域数据产品/知识草稿可生成/Review/发布；单引擎定时同步或 CDC 过 Gate；3–5 个伙伴持续使用四条主线；人工时间下降</td>
+</tr>
+<tr>
+<td>保留替换能力</td>
+<td>主备 Harness 契约通过率 100%；切换不修改 GUI/Tool；版本升级可一键回退</td>
+</tr>
+</tbody></table>
+<p>所有数值是立项目标，需用真实基线重估。</p>
+<hr>
+<h2>5. 两种方案共同实现的模块与选型</h2>
+<blockquote>
+<p>本章先明确无论选择哪种组织路线都不能分叉的产品内核；详细协议、工具与任务流程在后续章节展开。</p>
+</blockquote>
+<h3>5.1 选型状态</h3>
+<ul>
+<li><code>固定</code>：两种方案都必须采用的产品协议或安全边界，不再重复评选；</li>
+<li><code>评选</code>：已有明确候选与同题 Oracle，必须在限定时间内选出一个主选；</li>
+<li><code>适配</code>：公司服务通过 Gate 就复用，未通过时使用轻量实现，但接口不变。</li>
+</ul>
+<h3>5.2 共同模块全集</h3>
+<table>
+<thead>
+<tr>
+<th>共同模块</th>
+<th>状态与首期选型</th>
+<th>为什么两种方案都需要</th>
+<th>方案一承载</th>
+<th>方案二承载</th>
+<th>不变合同</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Capability Catalog</td>
+<td><code>固定</code>：C0–C7 ID、名称、版本、输入输出、前置条件和可用范围</td>
+<td>两种方案必须使用同一客户能力语言，不能把同名能力做成不同产品</td>
+<td>公司产品 Owner；各域交能力包</td>
+<td>DB Owner 先开放 C0–C5 的窄范围子集</td>
+<td>capability id/version/scope/input/output/availability</td>
+</tr>
+<tr>
+<td>执行合同</td>
+<td><code>固定</code>：Goal Contract + Completion Oracle + 终态规则</td>
+<td>保证每次 C0–C7 调用有明确交付和权威终态，不能以 Harness 退出当完成</td>
+<td>公司产品 Owner + 领域 Oracle</td>
+<td>DB 产品 Owner + DB Oracle</td>
+<td>capability/goal/deliverable/criteria/evidence/terminal state</td>
+</tr>
+<tr>
+<td>Task/Session API</td>
+<td><code>固定</code>：REST/JSON 发命令，SSE 续流事件；PostgreSQL 记录状态</td>
+<td>多入口必须恢复同一目标，不能把聊天记录当状态机</td>
+<td>公司级产品控制面</td>
+<td>模块化单体 <code>session-api</code></td>
+<td>goal/task/session/turn/revision/idempotency</td>
+</tr>
+<tr>
+<td>Harness Adapter</td>
+<td><code>评选</code>：六候选 Smoke、前三 Bake-off、一主一备</td>
+<td>不自研 Loop，同时避免产品锁死在一个 CLI</td>
+<td>产品团队/AgentArts 竞标承载</td>
+<td>DB 产品团队直接维护</td>
+<td>Harness Protocol v1</td>
+</tr>
+<tr>
+<td>隔离 Runner</td>
+<td><code>固定</code>：首期 Docker 非 root、只读根盘、限额；不挂长期凭据</td>
+<td>任意 Harness 都可能调用文件、进程和网络，不能等生产期再隔离</td>
+<td>平台 Runner 或 CCE Sandbox</td>
+<td>单 ECS per-session container</td>
+<td>image digest/task token/quota/cancel</td>
+</tr>
+<tr>
+<td>Skills 资产包</td>
+<td><code>固定</code>：Git 版本化 <code>SKILL.md</code>，只描述流程，不复制 Tool schema</td>
+<td>让任务流程可审阅、回归和跨 Harness 使用</td>
+<td>公司 <code>packs/skills</code></td>
+<td>DB 产品 <code>product-pack/skills</code></td>
+<td>skill id/version/compatible tools</td>
+</tr>
+<tr>
+<td><code>di</code> CLI/MCP</td>
+<td><code>固定</code>：一套实现同时暴露 CLI 与 MCP</td>
+<td>CLI 适合 Harness/调试，MCP 适合外部 Agent；行为必须一致</td>
+<td>各部门能力包实现、共同合同</td>
+<td>DB 团队实现 P0 子集</td>
+<td>JSON schema/error/idempotency/audit</td>
+</tr>
+<tr>
+<td>Tool Gateway</td>
+<td><code>固定</code>：确定性 Policy、Credential、Budget、Audit；生产 Runner 不开放任意 Shell</td>
+<td>Agent 只能提出工具意图，最终授权和执行必须在权威边界</td>
+<td>公司共同控制面</td>
+<td>DB 模块化单体</td>
+<td>user/resource/purpose/risk/tool decision</td>
+</tr>
+<tr>
+<td>身份与短期凭据</td>
+<td><code>适配</code>：IAM 主体 → 短期 task token → 权威系统凭据</td>
+<td>凭据不能进入 Prompt、聊天历史或 Runner 文件</td>
+<td>IAM/OBO/Credential Broker</td>
+<td>最小 IAM→DB 映射与本地 Broker</td>
+<td>subject/delegation/expiry/revocation</td>
+</tr>
+<tr>
+<td>Capability Manifest</td>
+<td><code>固定</code>：按 Region、引擎、版本返回支持能力与限制</td>
+<td>Agent 不能靠 Prompt 猜某环境是否支持工具</td>
+<td>各能力包签名发布</td>
+<td>每个 DB 引擎 Adapter 发布</td>
+<td>capability/version/limit/SLO</td>
+</tr>
+<tr>
+<td>Connection Registry</td>
+<td><code>固定</code>：连接引用、主体、用途、能力、网络状态和有效期；不保存到 Prompt</td>
+<td>接入、问数、治理和 DB 调查必须指向同一 source 身份</td>
+<td>DataArts/IAM 对象映射</td>
+<td>轻量 PostgreSQL Registry + Credential Broker</td>
+<td>source id/subject/purpose/capability/expiry</td>
+</tr>
+<tr>
+<td>Ingestion Planner/Executor</td>
+<td><code>适配</code>：统一直查/一次/定时/CDC 计划、预览、发布、停止、水位和目标验证合同</td>
+<td>用户不应跨产品理解不同接入模式；Agent 不能把“连接成功”误报为数据可用</td>
+<td>DataArts/DRS/流处理执行，产品承载规划</td>
+<td><code>ingest-lite</code> 一次导入；P1 单引擎增量/CDC</td>
+<td>plan/pipeline id/revision/mode/mapping/status/watermark/verify</td>
+</tr>
+<tr>
+<td>Asset/Profile/Governance</td>
+<td><code>适配</code>：资产清单、Profile、敏感/质量/血缘候选与 Review；P0 区分 observed/inferred</td>
+<td>从已有库生成数据产品和可信问数都依赖这层</td>
+<td>DataArts Catalog/治理权威对象</td>
+<td>DB 域轻量资产包 + Git Review</td>
+<td>asset id/version/owner/source/quality/classification/lineage</td>
+</tr>
+<tr>
+<td>数据知识接口</td>
+<td><code>适配</code>：扫描、草稿、校验、Review、发布合同；首期可由 Git 承载</td>
+<td>C3 是问数/分析准确率和低准备体验的共同底座</td>
+<td>DataArts 企业知识/语义对象</td>
+<td>DB 域 Git Knowledge Pack</td>
+<td>entity/relation/metric/source/confidence/review/version</td>
+</tr>
+<tr>
+<td>SQL 安全执行</td>
+<td><code>固定</code>：参数化、引擎权威解析/EXPLAIN、只读事务、预算、query_id、取消</td>
+<td>NL2SQL 正确不等于可以安全执行</td>
+<td>数据库能力包</td>
+<td>DB Tool Gateway</td>
+<td>normalized SQL/policy/estimate/cancel</td>
+</tr>
+<tr>
+<td>Artifact/Evidence</td>
+<td><code>固定</code>：元数据入 PostgreSQL，大对象使用加密对象引用</td>
+<td>页面、分享、审计和外部 Agent 都要复核同一结果</td>
+<td>公司 Artifact 服务/Insight Renderer</td>
+<td>本地加密卷或 OBS Adapter</td>
+<td>artifact id/hash/ACL/source/version</td>
+</tr>
+<tr>
+<td>Trace/Eval</td>
+<td><code>适配</code>：统一 Event/Evidence，OpenTelemetry 兼容导出；领域 Gold Oracle 自有</td>
+<td>通用 Trace 不能替代结果等价、权限和数据库负载判定</td>
+<td>AgentArts 通过 Gate 后承载通用部分</td>
+<td>本地 Event/Eval runner</td>
+<td>trace id + oracle result + version set</td>
+</tr>
+<tr>
+<td>模型代理</td>
+<td><code>适配</code>：薄 model-proxy，密钥不进入 Harness；记录模型版本、Token 与时延</td>
+<td>模型必须可换、可计量、可按 Region/合规路由</td>
+<td>公司 Model Gateway</td>
+<td>单机 model-proxy</td>
+<td>model ref/policy/usage/error</td>
+</tr>
+<tr>
+<td>对话 UI Renderer</td>
+<td><code>固定</code>：消费受控 Message/Event/Artifact/Approval schema</td>
+<td>两种方案承载位置不同，但必须共享一个对话形态，不能分别理解 Harness 私有 stdout</td>
+<td>统一对话入口与嵌入 SDK</td>
+<td>新 DB 对话 Web</td>
+<td>message/plan/tool/artifact/evidence/approval</td>
+</tr>
+<tr>
+<td>Gold/Eval Runner</td>
+<td><code>固定</code>：固定数据快照、语义、Skill、Tool 与模型版本重放</td>
+<td>Harness、模型或能力包升级必须有共同裁决</td>
+<td>公司共同 Scoreboard</td>
+<td>DB 产品 CI/离线 runner</td>
+<td>task/oracle/failure owner/regression</td>
+</tr>
+</tbody></table>
+<h3>5.3 共同模块的代码边界</h3>
+<pre><code class="language-text">core-contracts/        # Capability/Goal/Session/Event/Artifact/Tool/Error schema
+harness-adapters/      # 一主一备 Adapter；无领域权限逻辑
+runner/                # 隔离、配额、生命周期
+tool-gateway/          # Policy/Credential/Budget/Audit
+di-tools/              # CLI/MCP 共用实现与能力包 SDK
+data-knowledge/        # Scan/Draft/Validate/Review/Publish/Diff/Impact
+product-packs/         # Skills/Knowledge/Semantic/Verified/Gold/Policy
+eval-runner/           # 结果、安全、权限、成本和恢复 Oracle
+ui-renderer/           # 受控事件与工件组件
+</code></pre>
+<p>方案一和方案二可以位于不同仓库或发布列车，但以上 schema 必须同源、版本兼容并由同一契约测试裁决。若未来从方案二升格方案一，迁移的是模块承载位置，不是重新定义协议。</p>
+<hr>
+<h2>6. 两种方案各自专属的模块与选型</h2>
+<blockquote>
+<p>本章只列由组织边界和产品范围造成的差异模块；不能把共同模块复制成两套。</p>
+</blockquote>
+<h3>6.1 方案一专属模块</h3>
+<table>
+<thead>
+<tr>
+<th>专属模块</th>
+<th>具体选型</th>
+<th>为什么只属于方案一</th>
+<th>首期 Gate/P0</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>公司级统一产品壳层</td>
+<td>新建统一 Task/Artifact 壳层，提供 DataArts/DB 嵌入 SDK；复用现有表图组件</td>
+<td>需要跨产品恢复同一任务与工件</td>
+<td>三个入口使用同一 session_id，状态与权限一致</td>
+</tr>
+<tr>
+<td>能力包注册与合规</td>
+<td>Git/制品库发布签名 Pack Manifest；自动校验版本、SLO、权限和弃用期</td>
+<td>多部门协作必须把“口头可用”变成机器合同</td>
+<td>DataArts、DB、IAM/Agent 各交付一个通过契约测试的包</td>
+</tr>
+<tr>
+<td>Canonical Resource ID</td>
+<td>建立 source/pipeline/asset/dataset/entity/relation/metric/db/query/artifact 的跨域映射服务</td>
+<td>多权威系统必须关联同一资源而不复制对象</td>
+<td>四条首期能力旅程 100% 可回溯到权威 ID</td>
+</tr>
+<tr>
+<td>跨服务 IAM/OBO</td>
+<td>IAM 委托 + Credential Broker + 撤权事件</td>
+<td>公司级任务跨 DataArts、DB 和其他服务，不能退化为共享服务账号</td>
+<td>允许/拒绝/撤权/过期四组测试全部通过</td>
+</tr>
+<tr>
+<td>共同 Release Train</td>
+<td>一个 Backlog、Scoreboard、版本列车和发布裁决者</td>
+<td>多部门独立发布会让端到端任务持续漂移</td>
+<td>连续一个发布周期执行，不接受组件自报完成</td>
+</tr>
+<tr>
+<td>多领域 Artifact/分享</td>
+<td>DataArts Insight 或统一 Renderer 承载跨源表图报告、ACL、分享和撤销</td>
+<td>方案一服务通用分析与多团队协作</td>
+<td>表/图/SQL/证据使用同一 Artifact ID 与 ACL</td>
+</tr>
+<tr>
+<td>平台级运行面</td>
+<td>在真实 SLO 触发后采用 CCE/RDS/OBS、队列和多 AZ</td>
+<td>公司级 GA 才需要平台级容量与 HA</td>
+<td>先测容量与故障基线，不因组织形态预建微服务</td>
+</tr>
+</tbody></table>
+<h3>6.2 方案二专属模块</h3>
+<table>
+<thead>
+<tr>
+<th>专属模块</th>
+<th>具体选型</th>
+<th>为什么只属于方案二</th>
+<th>首期 Gate/P0</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DB Intelligence 对话入口</td>
+<td>对话 SPA + Session API + DB 实例页嵌入对话</td>
+<td>不背负既有产品导航；人只面对统一 Agent，可由一个小队快速迭代</td>
+<td>新 ECS 30 分钟内可起服务并完成样例对话</td>
+</tr>
+<tr>
+<td>单 ECS 安装/升级器</td>
+<td>Docker Compose、固定镜像 digest、配置模板、备份/恢复/回退脚本</td>
+<td>方案二用低依赖部署换速度</td>
+<td>干净 ECS 安装、升级失败回滚、会话恢复均演练</td>
+</tr>
+<tr>
+<td>DB Context Onboarding</td>
+<td>实例选择、IAM→DB Role 映射、只读用途、预算和连通测试向导</td>
+<td>公司统一入口可能复用 DataArts 项目；绿地产品必须自己闭合首次连接</td>
+<td>只读连接、无权、撤权和凭据过期路径清楚</td>
+</tr>
+<tr>
+<td>Engine Capability Manifest</td>
+<td>每引擎发布 Schema/SQL/EXPLAIN/Cancel/Diagnostics 能力与限制</td>
+<td>数据库新品直接面对多版本/多 Region 差异</td>
+<td>首发只签一个主引擎，未声明能力不展示</td>
+</tr>
+<tr>
+<td>DB Evidence Collector</td>
+<td>统一采集计划、Top SQL、会话、锁、等待、指标和变更 ID，并校准时区/采样窗</td>
+<td>这是数据库产品形成差异的领域资产</td>
+<td>调查工件能区分事实、相关性、推断和证据缺口</td>
+</tr>
+<tr>
+<td>DB 域知识构建</td>
+<td>Schema/文档扫描、知识草稿、Git YAML/JSON、关系图、Review 和 Verified SQL</td>
+<td>不等待 DataArts 作者 API，也不建设完整企业知识平台</td>
+<td>1 个领域可生成实体/指标/关系草稿；5–10 指标、10 Verified</td>
+</tr>
+<tr>
+<td>本地运维页</td>
+<td>Runner、队列、Token/查询预算、版本、Trace、BadCase 和恢复状态</td>
+<td>单 ECS 无平台团队兜底，必须让小队看见运行状态</td>
+<td>取消、磁盘水位、失败归因和版本回滚可操作</td>
+</tr>
+<tr>
+<td>公司能力 Adapter 空位</td>
+<td><code>dataarts/agentarts/iam/model</code> Adapter 接口和契约测试，默认非硬依赖</td>
+<td>保留升格方案一的路径而不提前耦合</td>
+<td>使用 stub/轻量实现也能跑；正式服务通过 Gate 后替换</td>
+</tr>
+</tbody></table>
+<h3>6.3 明确不属于“专属模块”的内容</h3>
+<p>能力命名、执行合同、数据知识对象、Harness、Session/Event、Runner、<code>di</code> CLI/MCP、Tool Gateway、Artifact/Evidence、Skill、Gold/Eval 都是共同内核。方案一可能由共享部门承载，方案二可能由数据库团队暂时承载，但不能因此形成两套对象、错误码或前端协议。</p>
+<hr>
+<h2>7. 方案依据：现成 Harness 已经足够，差异在嵌入与控制</h2>
+<h3>7.1 六个候选的官方证据</h3>
+<table>
+<thead>
+<tr>
+<th>候选</th>
+<th>官方资料已经证明</th>
+<th>关键约束</th>
+<th>对本产品的角色</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>OpenCode</td>
+<td><code>opencode serve</code> 提供无头 HTTP Server、OpenAPI 3.1、Session/Message/Event/Permission/Abort API；官方 JS/TS SDK 可启动 Server 或连接已有 Server；MIT</td>
+<td>暴露到非本机时仅有的基础认证不足以替代产品级 IAM；实际稳定性与升级兼容需压测</td>
+<td><code>建议</code>作为首个主选候选，最适合统一对话壳 + Server 适配</td>
+</tr>
+<tr>
+<td>Pi</td>
+<td><code>pi --mode rpc</code> 通过 stdin/stdout 使用 JSONL 命令与事件；支持 prompt、steer、abort、session、扩展和直接 <code>AgentSession</code> SDK；MIT</td>
+<td>官方明确说明没有内建文件、进程、网络与凭据权限系统，必须容器化并在 Tool Gateway 再授权</td>
+<td><code>建议</code>作为最小、可控的备选候选和协议基线</td>
+</tr>
+<tr>
+<td>DeepSeek Harness</td>
+<td>官方仓库提供 Web、headless profile、Python SDK、持久 SessionEvent、Tool Pipeline、Sandbox/Approval 插件缝；MIT</td>
+<td>官方标为 Developer Preview，并明确会发生破坏兼容的变化</td>
+<td><code>建议</code>进入战略孵化，不直接成为首期唯一生产内核</td>
+</tr>
+<tr>
+<td>Hermes Agent</td>
+<td>同一 Agent Core 可由 ACP、TUI Gateway JSON-RPC、HTTP+SSE 驱动；覆盖 Session、Cancel、Approval、Skills、MCP、IM Gateway 和 headless server；MIT</td>
+<td>功能面很宽，默认记忆、自学习、渠道和插件面需要裁剪；供应链与策略面比极简 Harness 更大</td>
+<td><code>建议</code>参加同题评测；若 IM/多渠道是首发关键，其优先级上升</td>
+</tr>
+<tr>
+<td>Codex</td>
+<td>App Server 提供 thread/turn、流事件、审批、interrupt、Skills；<code>codex exec --json</code> 输出 JSONL 并支持 resume；App Server 实现公开</td>
+<td>服务、模型、区域、企业授权、数据处理和可再分发边界需单独闭合；不能把个人订阅凭据用于产品</td>
+<td><code>建议</code>作为协议与质量标杆；只有合规/商业 Gate 通过才成为可选 Adapter</td>
+</tr>
+<tr>
+<td>Claude Code / Agent SDK</td>
+<td>CLI 支持 print、stream-json、resume、MCP 与权限；Agent SDK 提供同一 Agent Loop、Session、Hooks、Skills、MCP、审批和部署指导</td>
+<td>官方要求面向第三方产品使用 API key 与商业条款，不能转用用户个人 Claude.ai 登录或额度</td>
+<td><code>建议</code>作为质量标杆和受许可的可选 Adapter，不是需要“采购的云 Agent 产品”</td>
+</tr>
+</tbody></table>
+<p>官方来源见文末。以上只证明接口形态，不证明其在华为云目标任务上的正确率、时延、并发、故障恢复和商业可用性。</p>
+<h3>7.2 文档适配初筛分，不是最终选型分</h3>
+<p>下表按本产品的<strong>工程适配性</strong>打分，满分 100。它不包含真实 NL2SQL/诊断质量，不能代替 Bake-off。</p>
+<table>
+<thead>
+<tr>
+<th>候选</th>
+<th align="right">嵌入协议 20</th>
+<th align="right">控制/许可 20</th>
+<th align="right">Skills/Tools 15</th>
+<th align="right">审批安全 15</th>
+<th align="right">单机部署 15</th>
+<th align="right">成熟/运维 15</th>
+<th align="right">初筛总分</th>
+<th>当前判断</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>OpenCode</td>
+<td align="right">19</td>
+<td align="right">20</td>
+<td align="right">14</td>
+<td align="right">12</td>
+<td align="right">14</td>
+<td align="right">12</td>
+<td align="right"><strong>91</strong></td>
+<td>暂列主选候选</td>
+</tr>
+<tr>
+<td>Hermes</td>
+<td align="right">19</td>
+<td align="right">20</td>
+<td align="right">15</td>
+<td align="right">12</td>
+<td align="right">11</td>
+<td align="right">11</td>
+<td align="right"><strong>88</strong></td>
+<td>多渠道强，需裁剪</td>
+</tr>
+<tr>
+<td>Codex</td>
+<td align="right">20</td>
+<td align="right">10</td>
+<td align="right">15</td>
+<td align="right">15</td>
+<td align="right">13</td>
+<td align="right">15</td>
+<td align="right"><strong>88</strong></td>
+<td>协议标杆，商业/区域 Gate</td>
+</tr>
+<tr>
+<td>Pi</td>
+<td align="right">18</td>
+<td align="right">20</td>
+<td align="right">14</td>
+<td align="right">6</td>
+<td align="right">15</td>
+<td align="right">11</td>
+<td align="right"><strong>84</strong></td>
+<td>极简备选，平台补安全</td>
+</tr>
+<tr>
+<td>Claude Agent SDK</td>
+<td align="right">18</td>
+<td align="right">7</td>
+<td align="right">15</td>
+<td align="right">15</td>
+<td align="right">13</td>
+<td align="right">15</td>
+<td align="right"><strong>83</strong></td>
+<td>质量标杆，商业条款 Gate</td>
+</tr>
+<tr>
+<td>DeepSeek Harness</td>
+<td align="right">17</td>
+<td align="right">20</td>
+<td align="right">14</td>
+<td align="right">12</td>
+<td align="right">12</td>
+<td align="right">5</td>
+<td align="right"><strong>80</strong></td>
+<td>架构潜力高，Preview 风险</td>
+</tr>
+</tbody></table>
+<p>评分解释：</p>
+<ul>
+<li><code>控制/许可</code>看能否自托管、替换模型、审计依赖和合法嵌入，不代表软件质量；</li>
+<li><code>审批安全</code>只看官方可见机制。Pi 分低并不意味着不能安全使用，而是安全责任将更多落到本产品；</li>
+<li><code>成熟/运维</code>对官方 Preview 与大范围快速变化扣分；</li>
+<li>任何候选如果出现越权、凭据泄漏、取消无效或无法固定版本，直接淘汰，不以总分补偿。</li>
+</ul>
+<h3>7.3 选型不是“谁功能多”，而是同题淘汰</h3>
+<p><code>建议</code>采用三段式选型：</p>
+<ol>
+<li><strong>48 小时 Smoke</strong>：六个候选各跑 3 个只读任务，验证安装、结构化事件、Session、MCP/CLI、取消、错误码和许可证；无法无头运行或无法锁版本直接退出。</li>
+<li><strong>5 天 Bake-off</strong>：进入下一轮的 3 个候选，在同一 ECS、同一模型、同一 Skills、同一 <code>di</code> 工具和同一数据快照上各跑 20 个 Gold Tasks × 3 次。</li>
+<li><strong>第 7 天决策</strong>：只保留一主一备。主选用于产品，备选每天跑兼容测试；其余只保留文档级 Adapter 设计，不进入发布物。</li>
+</ol>
+<p>商业 Harness 无法使用同一模型时，必须拆成两条榜：</p>
+<ul>
+<li><code>Harness 工程榜</code>：开源候选使用同一模型，比较 Harness 本身；</li>
+<li><code>原生组合榜</code>：每个候选使用推荐模型，比较用户最终效果与成本。</li>
+</ul>
+<p>不能把两条榜混成一个“准确率”。</p>
+<hr>
+<h2>8. 一个产品内核：Harness 可替换，能力和证据归华为云</h2>
+<h3>8.1 逻辑架构</h3>
+<pre><code class="language-text">┌──────────────────────────────────────────────────────────────────┐
+│ 人：统一对话 Agent Web | DB 实例页嵌入对话 | IM 对话             │
+│ Agent：di CLI | MCP | REST API                                   │
+└──────────────────────────────┬───────────────────────────────────┘
+                               │ 自然语言目标/上下文；能力自动路由
+┌──────────────────────────────▼───────────────────────────────────┐
+│ Capability Catalog / Router                                      │
+│ C0 接入 · C1 问数 · C2 分析 · C3 知识 · C4 DB洞察 · C5–C7      │
+└──────────────────────────────┬───────────────────────────────────┘
+                               │ capability / user / tenant / context
+┌──────────────────────────────▼───────────────────────────────────┐
+│ Session Gateway                                                   │
+│ AuthN/Z · Session State · Event Stream · Approval · Artifact ACL │
+└──────────────────────────────┬───────────────────────────────────┘
+                               │ Harness Protocol v1
+┌──────────────────────────────▼───────────────────────────────────┐
+│ Harness Adapter                                                   │
+│ opencode | pi | dsh | hermes | codex | claude                    │
+└──────────────────────────────┬───────────────────────────────────┘
+                               │ prompt + skills + tool policy
+┌──────────────────────────────▼───────────────────────────────────┐
+│ 每会话隔离 Runner：一主 Harness；任意 Bash/文件能力默认关闭或限域 │
+└──────────────────────────────┬───────────────────────────────────┘
+                               │ short-lived task token
+┌──────────────────────────────▼───────────────────────────────────┐
+│ 华为云 Tool Gateway                                               │
+│ di CLI / MCP · Policy · Credential Broker · Budget · Audit       │
+└───────────────┬────────────────┬────────────────┬────────────────┘
+                │                │                │
+        DataArts/Insight       DB/DAS/RDS       IAM/Model/Other
+        语义与分析权威         数据库权威        身份与外部权威
+</code></pre>
+<h3>8.2 组件边界</h3>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>必须拥有</th>
+<th>明确不拥有</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>薄入口</td>
+<td>会话、进度、审批、表/图/报告/证据展示</td>
+<td>Agent 计划、SQL 拼接、权限真相</td>
+</tr>
+<tr>
+<td>Capability Catalog/Router</td>
+<td>C0–C7 稳定 ID、版本、适用对象、输入输出、前置条件和方案可用范围</td>
+<td>Harness 选择、权限裁决或领域执行逻辑</td>
+</tr>
+<tr>
+<td>Session Gateway</td>
+<td>统一身份、会话状态、Event、Artifact、审批和取消</td>
+<td>业务语义、数据库密码、厂商私有事件长期落库</td>
+</tr>
+<tr>
+<td>Harness Adapter</td>
+<td>把统一协议映射到候选 Harness；处理进程生命周期和事件归一化</td>
+<td>数据权限决策、SQL 安全决策</td>
+</tr>
+<tr>
+<td>Harness</td>
+<td>理解目标、规划、选择 Skill/Tool、有限重试、生成解释</td>
+<td>决定数据库权限、绕过策略、直接持有长期凭据</td>
+</tr>
+<tr>
+<td>Skills</td>
+<td>领域流程、选择工具的策略、停止条件、输出要求</td>
+<td>重复定义每个 API 参数；Skills 不是第二套 API 目录</td>
+</tr>
+<tr>
+<td><code>di</code> CLI/MCP</td>
+<td>确定性数据访问、语义解析、SQL 校验/执行、诊断、工件、审计</td>
+<td>自由推理和开放式任务规划</td>
+</tr>
+<tr>
+<td>Tool Gateway</td>
+<td>身份映射、短期令牌、风险策略、预算、调用审计</td>
+<td>把共享高权账号交给 Runner</td>
+</tr>
+<tr>
+<td>Authority</td>
+<td>数据、知识/语义、指标、Role/RLS、实例状态、模型的真实状态</td>
+<td>让聊天文本变成权威状态</td>
+</tr>
+</tbody></table>
+<h3>8.3 从第一天就固定的三种模式</h3>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>数据准备</th>
+<th>允许输出</th>
+<th>产品标识</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>探索</td>
+<td>只有只读连接、Schema 和统计信息</td>
+<td>候选 SQL、探索性答案、未知项</td>
+<td><code>探索</code>：不可作为正式指标口径</td>
+</tr>
+<tr>
+<td>可信</td>
+<td>语义包、指标、Join、Verified Query 已通过 Review</td>
+<td>可复算答案、表/图/报告、完整证据</td>
+<td><code>可信</code>：绑定语义版本和数据快照</td>
+</tr>
+<tr>
+<td>动作</td>
+<td>可信模式 + 动作策略 + 审批人 + 后置验证</td>
+<td>动作草案；经审批后执行与验证</td>
+<td><code>动作</code>：首期默认关闭</td>
+</tr>
+</tbody></table>
+<p>这同时解决“是否必须预置”的矛盾：首问不强迫客户先建完整数据集，但没有经过治理的结果必须显式降级为探索结果。</p>
+<hr>
+<h2>9. Harness Protocol v1：把 GUI 与具体 Agent 解耦</h2>
+<p>本章只定义 C0–C7 每次调用的执行保障，不定义产品能力优先级。每个 task 首先引用稳定的 capability_id/version，再用 Goal Contract 固定本次具体交付。</p>
+<h3>9.1 九个最小命令</h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>输入要点</th>
+<th>输出/行为</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>create_task</code></td>
+<td>capability_id/version、Goal Contract draft、tenant、user、context、harness、skill/tool policy</td>
+<td>返回 capability/goal/task/session ID；状态为 draft/clarifying</td>
+</tr>
+<tr>
+<td><code>submit_input</code></td>
+<td>task_id、message/clarification answer、goal_patch、idempotency_key</td>
+<td>补齐或修改 Goal；已接受 Goal 修改时产生新 revision</td>
+</tr>
+<tr>
+<td><code>accept_goal</code></td>
+<td>goal_id、expected_revision、accepted criteria/constraints</td>
+<td>冻结本轮交付物、完成条件、预算与 Evidence 要求后开始规划</td>
+</tr>
+<tr>
+<td><code>resume_task</code></td>
+<td>task_id、expected_revision</td>
+<td>恢复 Goal、计划、Harness 会话和未完成状态；拒绝静默漂移</td>
+</tr>
+<tr>
+<td><code>stream_event</code></td>
+<td>task_id、cursor</td>
+<td>从游标继续 SSE/WebSocket 事件，允许断线重连</td>
+</tr>
+<tr>
+<td><code>approve_tool</code></td>
+<td>request_id、decision、scope、reason</td>
+<td>只允许对当前请求/会话的显式授权</td>
+</tr>
+<tr>
+<td><code>cancel_task</code></td>
+<td>task_id、reason、expected_revision</td>
+<td>中断 Harness、在途工具和数据库 Query，进入 cancelling/cancelled</td>
+</tr>
+<tr>
+<td><code>export_artifact</code></td>
+<td>artifact_id、format</td>
+<td>导出有 ACL、版本与 hash 的工件</td>
+</tr>
+<tr>
+<td><code>close_task</code></td>
+<td>task_id、retention_policy</td>
+<td>关闭 Runner，保留 Goal、Oracle、事件和工件</td>
+</tr>
+</tbody></table>
+<h3>9.2 统一事件，不让前端理解六套私有协议</h3>
+<pre><code class="language-json">{
+  &quot;spec_version&quot;: &quot;harness.events/v1&quot;,
+  &quot;event_id&quot;: &quot;evt_01...&quot;,
+  &quot;capability_id&quot;: &quot;c2.smart_analysis&quot;,
+  &quot;capability_version&quot;: &quot;1.0&quot;,
+  &quot;goal_id&quot;: &quot;goal_01...&quot;,
+  &quot;goal_revision&quot;: 3,
+  &quot;task_id&quot;: &quot;task_01...&quot;,
+  &quot;session_id&quot;: &quot;ses_01...&quot;,
+  &quot;seq&quot;: 42,
+  &quot;time&quot;: &quot;2026-08-20T10:00:00+08:00&quot;,
+  &quot;type&quot;: &quot;tool_call&quot;,
+  &quot;source&quot;: {&quot;harness&quot;: &quot;opencode&quot;, &quot;version&quot;: &quot;pinned-digest&quot;},
+  &quot;payload&quot;: {},
+  &quot;trace_id&quot;: &quot;tr_01...&quot;
+}
+</code></pre>
+<p>首期支持十一类稳定事件：</p>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>GUI 如何呈现</th>
+<th>是否持久化</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>message</code></td>
+<td>Agent/用户消息</td>
+<td>是，按保留策略</td>
+</tr>
+<tr>
+<td><code>goal</code></td>
+<td>目标、交付物、约束、缺失项、revision 和接受状态</td>
+<td>是，完整版本</td>
+</tr>
+<tr>
+<td><code>plan</code></td>
+<td>当前步骤、完成/待办</td>
+<td>是</td>
+</tr>
+<tr>
+<td><code>tool_call</code></td>
+<td>工具、去敏参数、风险、状态</td>
+<td>是</td>
+</tr>
+<tr>
+<td><code>tool_result</code></td>
+<td>摘要、证据引用、错误码</td>
+<td>是</td>
+</tr>
+<tr>
+<td><code>artifact</code></td>
+<td>表、图、SQL、报告、诊断包</td>
+<td>只存引用与元数据；内容进工件存储</td>
+</tr>
+<tr>
+<td><code>approval_required</code></td>
+<td>风险、影响范围、允许选项</td>
+<td>是</td>
+</tr>
+<tr>
+<td><code>validation</code></td>
+<td>Completion Oracle、通过/失败项和证据缺口</td>
+<td>是</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>queued/running/waiting/cancelling</td>
+<td>是</td>
+</tr>
+<tr>
+<td><code>error</code></td>
+<td>可操作错误与重试建议</td>
+<td>是</td>
+</tr>
+<tr>
+<td><code>completed</code></td>
+<td>goal revision、交付物、Oracle、usage、证据完整度</td>
+<td>是</td>
+</tr>
+</tbody></table>
+<h3>9.3 状态机与硬约束</h3>
+<pre><code class="language-text">draft → clarifying → accepted → planning → executing → validating
+                                                   │        │
+                                                   │        ├→ completed
+                                                   │        ├→ partially_completed
+                                                   │        └→ blocked
+                                                   ├→ waiting_approval → executing
+                                                   ├→ cancelling → cancelled
+                                                   └→ failed
+</code></pre>
+<ul>
+<li>每个状态变更使用 revision；旧 revision 的审批、消息和取消请求拒绝执行；</li>
+<li><code>cancel_task</code> 不仅结束模型流，还要把 query_id 传给数据库取消接口；</li>
+<li>Adapter 不认识的私有事件保存为 <code>vendor_event</code> 调试附件，不能直接成为 GUI 逻辑；</li>
+<li><code>completed</code> 必须引用已接受的 goal revision，并附 Completion Oracle 结果；不允许 Harness 进程退出即假定成功；</li>
+<li>主、备 Harness 每晚跑同一份契约测试，任何事件协议漂移先阻断升级。</li>
+</ul>
+<h3>9.4 Artifact / Evidence 协议</h3>
+<pre><code class="language-json">{
+  &quot;artifact_id&quot;: &quot;art_01...&quot;,
+  &quot;capability_id&quot;: &quot;c2.smart_analysis&quot;,
+  &quot;goal_id&quot;: &quot;goal_01...&quot;,
+  &quot;goal_revision&quot;: 3,
+  &quot;task_id&quot;: &quot;task_01...&quot;,
+  &quot;type&quot;: &quot;chart&quot;,
+  &quot;title&quot;: &quot;近 30 天退款率&quot;,
+  &quot;content_ref&quot;: &quot;obs://.../artifact.json&quot;,
+  &quot;content_sha256&quot;: &quot;...&quot;,
+  &quot;acl_ref&quot;: &quot;policy://tenant/workspace/resource&quot;,
+  &quot;completion_oracle_ref&quot;: &quot;eval://goal_01/rev_3&quot;,
+  &quot;created_by&quot;: {&quot;user_id&quot;: &quot;u...&quot;, &quot;session_id&quot;: &quot;ses...&quot;},
+  &quot;evidence&quot;: [
+    {&quot;kind&quot;: &quot;query&quot;, &quot;query_id&quot;: &quot;q...&quot;, &quot;sql_hash&quot;: &quot;...&quot;},
+    {&quot;kind&quot;: &quot;semantic&quot;, &quot;version&quot;: &quot;git:4f2...&quot;},
+    {&quot;kind&quot;: &quot;source&quot;, &quot;resource_id&quot;: &quot;db...&quot;, &quot;freshness&quot;: &quot;...&quot;}
+  ]
+}
+</code></pre>
+<p>只有带 ACL、内容 hash、证据引用和来源版本的输出才称为 Artifact；聊天里的 Markdown 表格只是一种展示。</p>
+<hr>
+<h2>10. 方案二首期部署细节：一台 ECS，但逻辑边界完整</h2>
+<blockquote>
+<p>本章是方案二的首期物理部署展开。方案一可复用它做纵向样例，但正式承载位置由第 3.3 节的公司级模块 Gate 决定，不能把“单 ECS”误读为方案一最终架构。</p>
+</blockquote>
+<h3>10.1 Docker Compose 拓扑</h3>
+<pre><code class="language-text">ECS（建议起始规格仅作容量测试基线，不是承诺）
+│
+├─ edge              Nginx/Caddy：TLS、静态资源、反向代理
+├─ web               薄前端
+├─ session-api       Auth、Session、Event、Artifact、Approval API
+├─ runner-manager    只允许启动签名镜像与固定资源参数
+├─ runner-launcher   窄接口代理；不把 Docker Socket 暴露给 session-api
+├─ agent-runner-*    每个活跃会话一个隔离容器；主 Harness + Skills
+├─ tool-gateway      di CLI/MCP、策略、短期凭据、预算、审计
+├─ postgres          会话、事件、策略引用、工件元数据、评测结果
+├─ artifact-store    首期加密本地卷；有条件即切 OBS
+└─ model-proxy       可选：统一模型端点、配额、脱敏日志与成本统计
+</code></pre>
+<h3>10.2 为什么不是“Runner 直接连数据库”</h3>
+<pre><code class="language-text">错误路径：Runner + DB 密码 → 任意 shell / Prompt / Trace 都可能读取凭据
+
+目标路径：Runner → 短期 task token → Tool Gateway
+                                   → 以最终用户/受限服务主体换取连接
+                                   → 执行固定 di 原子能力
+                                   → 返回去敏结果与 evidence_id
+</code></pre>
+<p>Runner 从不获得长期数据库密码。即使 Harness 被提示注入诱导，也只能请求 Tool Gateway 公开的动作；Gateway 再按主体、资源、用途和预算判断。</p>
+<h3>10.3 单机也不能省略的安全基线</h3>
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>首期硬要求</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>容器</td>
+<td>非 root、只读根文件系统、临时工作卷、CPU/内存/PID/磁盘限制、镜像 digest 固定</td>
+</tr>
+<tr>
+<td>工具</td>
+<td>生产 Profile 关闭 Harness 自带任意 Bash/文件写；只开放 <code>di</code> 和必要只读工具</td>
+</tr>
+<tr>
+<td>网络</td>
+<td>Runner 仅访问模型端点和 Tool Gateway；Tool Gateway 才能访问白名单数据源</td>
+</tr>
+<tr>
+<td>凭据</td>
+<td>CSMS/KMS 或等价托管；按任务注入短期引用，不进 Prompt、Event、日志和 Artifact</td>
+</tr>
+<tr>
+<td>数据库</td>
+<td>只读 Role、只读事务、statement timeout、row/byte/scan/concurrency budget、cancel</td>
+</tr>
+<tr>
+<td>数据</td>
+<td>结果行数限制、敏感列遮蔽、下载/分享 ACL、到期删除</td>
+</tr>
+<tr>
+<td>供应链</td>
+<td>SBOM、镜像签名、锁版本、依赖漏洞扫描、主备回滚镜像</td>
+</tr>
+<tr>
+<td>审计</td>
+<td>user/tenant/session/tool/query/policy/approval/trace 全链关联</td>
+</tr>
+</tbody></table>
+<h3>10.4 首期允许与不允许</h3>
+<table>
+<thead>
+<tr>
+<th>Private Beta 可接受</th>
+<th>即使 Private Beta 也不可接受</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>单 ECS、计划维护窗口、有限并发、人工恢复</td>
+<td>共享高权数据库账号、明文凭据、无租户字段</td>
+</tr>
+<tr>
+<td>PostgreSQL 单实例、每日备份、人工验证恢复</td>
+<td>只有备份没有恢复演练</td>
+</tr>
+<tr>
+<td>本地加密工件卷、短保留期</td>
+<td>结果无限保存、无 ACL 分享链接</td>
+</tr>
+<tr>
+<td>Runner 异常后重新建容器</td>
+<td>取消只停 UI、不停模型/SQL</td>
+</tr>
+<tr>
+<td>限定设计伙伴和合成/脱敏数据</td>
+<td>对外宣称生产 SLA、HA 或全引擎支持</td>
+</tr>
+</tbody></table>
+<h3>10.5 扩容触发器，不按日期预建平台</h3>
+<table>
+<thead>
+<tr>
+<th>可观测触发器</th>
+<th>演进动作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>单机资源持续超过阈值、排队时间违反 SLO</td>
+<td>Runner 迁到 CCE/CCI；Session API 保持不变</td>
+</tr>
+<tr>
+<td>Postgres/工件成为故障主因</td>
+<td>状态迁 RDS，工件迁 OBS</td>
+</tr>
+<tr>
+<td>多服务需要独立扩缩或团队独立发布</td>
+<td>按 Session、Runner、Tool Gateway 边界拆分</td>
+</tr>
+<tr>
+<td>Event 消费者超过两类且出现重放需求</td>
+<td>再引入消息流，不首期上 Kafka</td>
+</tr>
+<tr>
+<td>长任务、补偿和重试图复杂到状态机无法维护</td>
+<td>再评估工作流引擎，不首期上 Temporal</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>11. 原子执行面摘要：全集移至文末附录</h2>
+<p>产品能力、运行画面和客户旅程优先于 Tool 清单。CLI/MCP 仍是一套实现、两种 Agent 接口；两周约实现 18–20 个、首月精选 35–40 个，完整 88 项目录、风险与阶段统一放在文末 <a href="#appendix-a-atomic">附录 A</a>，供研发拆解和契约评审时按需查阅。</p>
+<hr>
+<h2>12. 数据知识构建与 Skills：把“一句话建知识”做成产品能力</h2>
+<h3>12.1 “一句话建知识”的完整产品流程</h3>
+<pre><code class="language-text">用户：为订单域建立客户、订单、商品、退款的数据知识网络
+  │
+  ├─1. 选择数据域、数据源、允许读取的业务文档和目标用途
+  ├─2. 扫描 Schema、主外键、约束、统计、样例、血缘和已有指标
+  ├─3. 从表/字段/文档中生成实体、属性、指标、维度、同义词和枚举候选
+  ├─4. 生成业务关系、Join 路径、基数、派生、血缘和影响边候选
+  ├─5. 将每个节点/边绑定来源、证据、置信度、推断方法和负责人候选
+  ├─6. 校验循环、冲突、重复实体、危险 Join、公式、权限和敏感字段
+  ├─7. 可视化呈现“已确认 / 候选 / 冲突 / 缺失”四种状态
+  ├─8. Owner 批量接受、修改、拒绝或分派 Review；Agent 不自动发布推断
+  ├─9. 发布不可变版本，生成 Diff、Gold/Verified 回归和回滚点
+  └─10. 问数/分析直接引用知识 ID；Schema/文档变化触发漂移与影响任务
+</code></pre>
+<p>首期只支持一个业务域、一个主数据库和少量文档，目标是生成高质量可审核草稿。产品必须允许用户在 30–60 分钟内从空白数据域得到第一版知识网络，而不是要求先手工建完全部指标和关系；具体时间需由真实测试校准。</p>
+<h3>12.2 数据知识对象模型</h3>
+<table>
+<thead>
+<tr>
+<th>对象/关系</th>
+<th>自动发现来源</th>
+<th>Agent 可以做什么</th>
+<th>必须由人确认的内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>业务实体/属性</td>
+<td>表名、字段、主键、注释、文档、样例</td>
+<td>聚类重复对象、推荐名称和描述</td>
+<td>业务含义、主实体、Owner</td>
+</tr>
+<tr>
+<td>指标/维度</td>
+<td>SQL、报表、字段、文档、成功问数</td>
+<td>生成公式、粒度、过滤和候选测试</td>
+<td>业务口径、适用范围、审批状态</td>
+</tr>
+<tr>
+<td>业务关系</td>
+<td>外键、命名、文档、查询历史</td>
+<td>推荐实体关系和方向</td>
+<td>真实业务语义</td>
+</tr>
+<tr>
+<td>Join</td>
+<td>主外键、唯一性、统计、Verified SQL</td>
+<td>推断路径、基数和风险</td>
+<td>允许 Join、去重和时间有效性</td>
+</tr>
+<tr>
+<td>同义词/枚举</td>
+<td>文档、字段值、问法和反馈</td>
+<td>生成中英文同义词与候选映射</td>
+<td>有歧义的业务词</td>
+</tr>
+<tr>
+<td>血缘/派生/影响</td>
+<td>SQL、任务、报表和平台血缘</td>
+<td>合并成可查询关系网络</td>
+<td>缺失链路和跨系统映射</td>
+</tr>
+<tr>
+<td>Verified Query</td>
+<td>成功会话、参数化 SQL、结果规则</td>
+<td>生成候选、测试和适用条件</td>
+<td>数据专家 Review 与发布</td>
+</tr>
+<tr>
+<td>策略/质量规则</td>
+<td>分类、敏感字段、统计和历史规则</td>
+<td>推荐规则与检查范围</td>
+<td>强制策略、豁免和审批人</td>
+</tr>
+</tbody></table>
+<p>知识节点的最小状态为 <code>candidate → in_review → approved → published → deprecated</code>；任意自动推断必须保留 <code>source_refs</code>、<code>confidence</code>、<code>generated_by</code> 和 <code>review_status</code>。已发布版本不可原地覆盖，只能产生新版本并允许回滚。</p>
+<h3>12.3 首期新增的知识构建 CLI/MCP</h3>
+<table>
+<thead>
+<tr>
+<th>CLI（占位）</th>
+<th>MCP Tool</th>
+<th>风险</th>
+<th>阶段</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>di knowledge scan</code></td>
+<td><code>di.knowledge.scan</code></td>
+<td>读</td>
+<td>P0</td>
+<td>扫描 Schema、约束、文档、血缘和已有资产</td>
+</tr>
+<tr>
+<td><code>di knowledge draft</code></td>
+<td><code>di.knowledge.draft</code></td>
+<td>算</td>
+<td>P0</td>
+<td>生成实体、指标、关系、Join、规则和 Verified 候选</td>
+</tr>
+<tr>
+<td><code>di knowledge validate</code></td>
+<td><code>di.knowledge.validate</code></td>
+<td>算</td>
+<td>P0</td>
+<td>检查冲突、重复、循环、基数、公式、权限和敏感字段</td>
+</tr>
+<tr>
+<td><code>di knowledge graph</code></td>
+<td><code>di.knowledge.graph</code></td>
+<td>读</td>
+<td>P0</td>
+<td>返回受控知识网络视图及状态/证据</td>
+</tr>
+<tr>
+<td><code>di knowledge review</code></td>
+<td><code>di.knowledge.review</code></td>
+<td>写</td>
+<td>P0</td>
+<td>接受、修改、拒绝或分派候选，不直接发布</td>
+</tr>
+<tr>
+<td><code>di knowledge publish</code></td>
+<td><code>di.knowledge.publish</code></td>
+<td>写</td>
+<td>P1</td>
+<td>经过策略与 Owner 审批后发布不可变版本</td>
+</tr>
+<tr>
+<td><code>di knowledge diff</code></td>
+<td><code>di.knowledge.diff</code></td>
+<td>读</td>
+<td>P1</td>
+<td>对比两个知识版本及来源变化</td>
+</tr>
+<tr>
+<td><code>di knowledge impact</code></td>
+<td><code>di.knowledge.impact</code></td>
+<td>算</td>
+<td>P1</td>
+<td>评估变化对问数、分析、报表、策略和 Gold 的影响</td>
+</tr>
+<tr>
+<td><code>di knowledge rollback</code></td>
+<td><code>di.knowledge.rollback</code></td>
+<td>写</td>
+<td>P1</td>
+<td>将服务指针回退到已验证版本，保留完整审计</td>
+</tr>
+</tbody></table>
+<p>这些 Tool 与文末附录 A 使用同一实现规范。Web、外部 Agent 和 Harness 调用的是同一知识对象与版本，不能再各自维护 Prompt 内的“隐形知识”。</p>
+<h3>12.4 首期用 Git 版本化，不先造庞大知识平台</h3>
+<pre><code class="language-text">product-pack/
+├─ manifest.yaml                 # 兼容 Harness/di/引擎版本
+├─ skills/
+│  ├─ ask-data/SKILL.md
+│  ├─ investigate-db/SKILL.md
+│  └─ publish-report/SKILL.md
+├─ semantic/
+│  ├─ domains/sales.yaml
+│  ├─ metrics/refund_rate.yaml
+│  ├─ joins/order_customer.yaml
+│  ├─ synonyms/zh-CN.yaml
+│  └─ enums/order_status.yaml
+├─ verified_queries/
+│  ├─ weekly_refund_rate.sql
+│  └─ weekly_refund_rate.test.yaml
+├─ gold_tasks/
+│  ├─ ask-data/
+│  ├─ db-diagnosis/
+│  └─ permission-negative/
+└─ policies/
+   ├─ tool-policy.yaml
+   └─ data-budget.yaml
+</code></pre>
+<p>语义条目最小结构：</p>
+<pre><code class="language-yaml">id: metric.refund_rate
+name: 退款率
+owner: finance-analytics
+definition: refunded_orders / paid_orders
+grain: [day, region]
+filters:
+  paid_orders: &quot;payment_status = &#39;paid&#39;&quot;
+  refunded_orders: &quot;refund_status = &#39;completed&#39;&quot;
+allowed_joins: [join.order_region]
+freshness_slo: PT2H
+verified_queries: [vq.weekly_refund_rate]
+review:
+  status: approved
+  approved_by: role:data-steward
+</code></pre>
+<h3>12.5 谁准备什么</h3>
+<table>
+<thead>
+<tr>
+<th>内容</th>
+<th>厂商自动承担</th>
+<th>客户/用户最小责任</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据接入</td>
+<td>连接测试、Schema/约束/统计抓取、方言与能力识别</td>
+<td>选择数据源，授予只读身份和允许用途</td>
+</tr>
+<tr>
+<td>探索问答</td>
+<td>自动搜索表字段、抽样、生成/校验/执行 SQL</td>
+<td>对歧义做选择；理解结果标为探索</td>
+</tr>
+<tr>
+<td>可信指标</td>
+<td>提供模板、静态校验、影响分析、Gold Test</td>
+<td>指标 Owner 审批公式、Join、过滤和口径</td>
+</tr>
+<tr>
+<td>Verified Query</td>
+<td>从成功会话生成候选、自动参数化和回归</td>
+<td>数据专家 Review 后发布</td>
+</tr>
+<tr>
+<td>权限</td>
+<td>映射 IAM/数据库角色、执行负例和撤权测试</td>
+<td>管理真实角色、RLS/列权限和审批人</td>
+</tr>
+<tr>
+<td>持续运营</td>
+<td>BadCase 聚类、回归、漂移告警、版本对比</td>
+<td>对业务语义变化做最终确认</td>
+</tr>
+</tbody></table>
+<p>产品领先点不是让用户“零配置永久准确”，而是把探索结果转成可信资产的成本降到最低，并且清楚告诉用户现在处于哪一种模式。</p>
+<h3>12.6 Skill 的边界</h3>
+<p>一个 <code>ask-data</code> Skill 只描述：</p>
+<ol>
+<li>先确认主体、数据源和时间范围；</li>
+<li>优先搜索语义与 Verified Query；</li>
+<li>何时必须澄清；</li>
+<li>调用哪些 <code>di</code> 原子能力；</li>
+<li>最多允许几次修复；</li>
+<li>什么情况下拒绝回答；</li>
+<li>最终必须交付哪些 Artifact/Evidence。</li>
+</ol>
+<p>它不复制 <code>di sql execute</code> 的全部参数，不内嵌数据库密码，不把 Golden SQL 写进自然语言 Prompt。</p>
+<hr>
+<h2>13. 智能问数与智能分析：从安全查询走向可复算分析</h2>
+<h3>13.1 运行流程</h3>
+<pre><code class="language-text">用户问题
+  │
+  ├─1. auth/context：确认主体、源、模式、预算
+  ├─2. catalog search + schema inspect：找候选对象
+  ├─3. semantic resolve + verified search：解析口径/复用已验证查询
+  ├─4. ambiguity gate：存在多个有效口径就问用户，不猜
+  ├─5. Harness 生成参数化 SQL 草案
+  ├─6. sql normalize → validate → prepare：AST、只读、对象/列/函数权限
+  ├─7. explain → estimate → policy check：计划、扫描、并发、超时预算
+  ├─8. execute：只读事务，返回 query_id
+  ├─9. result profile/compare：空值、时间窗、基线、结果等价
+  ├─10. artifact table/chart/sql/evidence：生成可复核工件
+  └─11. 回答：数据事实 / 推断 / 建议 / Unknown 分开呈现
+</code></pre>
+<h3>13.2 三种关键失败必须有明确行为</h3>
+<table>
+<thead>
+<tr>
+<th>失败</th>
+<th>产品行为</th>
+<th>禁止行为</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>语义歧义</td>
+<td>展示 2–4 个候选口径、差异和 Owner，让用户选择</td>
+<td>Agent 自行挑一个最像的指标</td>
+</tr>
+<tr>
+<td>SQL 不安全/超预算</td>
+<td>给出具体被拒原因，尝试缩小时间、列或聚合；最多两次</td>
+<td>改写策略或拆分调用绕过预算</td>
+</tr>
+<tr>
+<td>数据过期/无权</td>
+<td>标注 freshness 或拒绝，提供申请/切换路径</td>
+<td>用缓存旧结果或缺列结果假装完整</td>
+</tr>
+</tbody></table>
+<h3>13.3 修复循环必须有上限</h3>
+<ul>
+<li>单个问题最多 2 次 SQL 自动修复；</li>
+<li>第 3 次失败输出诊断包：原问题、语义候选、SQL hash、错误码、已尝试修复和建议人工动作；</li>
+<li>相同错误签名不得原样重试；</li>
+<li><code>AUTH_DENIED</code>、<code>UNSAFE_SQL</code>、<code>BUDGET_EXCEEDED</code> 默认不可通过模型重试改变；</li>
+<li>查询超时先尝试缩小范围或使用已验证聚合，不自动升高数据库预算。</li>
+</ul>
+<h3>13.4 准确率不是一个数字</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>判定方式</th>
+<th align="right">建议权重</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>业务语义正确</td>
+<td>指标、粒度、时间、过滤、Join 与 Gold Intent 一致</td>
+<td align="right">20%</td>
+</tr>
+<tr>
+<td>结果等价</td>
+<td>固定快照上与 Gold Result 等价，不要求 SQL 字符串相同</td>
+<td align="right">25%</td>
+</tr>
+<tr>
+<td>安全与权限</td>
+<td>允许用例成功；拒绝/撤权/注入负例全部阻断</td>
+<td align="right">20%</td>
+</tr>
+<tr>
+<td>澄清质量</td>
+<td>该问时问、不该问时不打断，候选清楚</td>
+<td align="right">10%</td>
+</tr>
+<tr>
+<td>证据完整</td>
+<td>SQL/参数/query_id/语义版本/freshness/主体齐全</td>
+<td align="right">10%</td>
+</tr>
+<tr>
+<td>鲁棒性</td>
+<td>超时、Schema 变化、空结果、网络中断后行为正确</td>
+<td align="right">10%</td>
+</tr>
+<tr>
+<td>成本时延</td>
+<td>在正确性通过后比较 P50/P95 与 Token/查询成本</td>
+<td align="right">5%</td>
+</tr>
+</tbody></table>
+<p>安全出现一次越权即硬失败，不参与加权平均。</p>
+<h3>13.5 C2 智能分析的能力边界</h3>
+<table>
+<thead>
+<tr>
+<th>分析能力</th>
+<th>用户示例</th>
+<th>P0/P1</th>
+<th>产品实现要求</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>趋势与周期比较</td>
+<td>“过去 12 周趋势如何？同比/环比变化多大？”</td>
+<td>P0</td>
+<td>统一时间粒度、完整区间、基线和异常点证据</td>
+</tr>
+<tr>
+<td>分群与分布</td>
+<td>“新老客户、地区和产品线的分布有什么差异？”</td>
+<td>P0</td>
+<td>明确分群规则、样本量、缺失值和权限过滤</td>
+</tr>
+<tr>
+<td>贡献拆解</td>
+<td>“收入下降主要由哪些客户、产品和地区贡献？”</td>
+<td>P0</td>
+<td>贡献合计可回到总变化；避免把相关性写成因果</td>
+</tr>
+<tr>
+<td>漏斗/留存/队列</td>
+<td>“注册到付费在哪一步流失？不同批次留存如何？”</td>
+<td>P1</td>
+<td>固定事件定义、窗口、去重和人群口径</td>
+</tr>
+<tr>
+<td>异常与候选归因</td>
+<td>“哪些变化异常？可能与哪些事件相关？”</td>
+<td>P1</td>
+<td>给出基线、阈值、候选解释、反证和未观测因素</td>
+</tr>
+<tr>
+<td>预测与情景</td>
+<td>“按当前趋势下季度会怎样？提价 5% 的情景如何？”</td>
+<td>P1/P2</td>
+<td>明确模型、假设、区间、训练窗和不可用于因果承诺</td>
+</tr>
+</tbody></table>
+<p>智能分析不能只是让模型总结表格。每个数字结论必须引用产生它的 query/artifact；每个推断必须列出假设和替代解释；多步分析必须保存 Analysis Plan，使用户可以修改一个口径或过滤条件后重算全链。</p>
+<hr>
+<h2>14. 数据库洞察：方案二的第一差异化产品能力</h2>
+<h3>14.1 真实流程</h3>
+<p>用户问：“昨晚 22:00 后订单库为什么变慢？”</p>
+<pre><code class="language-text">绑定实例与时间窗
+ → db snapshot / metrics / timeline
+ → top-sql / waits / locks / sessions
+ → plan-diff / change events
+ → correlate 形成候选因果链
+ → Harness 区分证据、相关性与推断
+ → 交付 Diagnosis Artifact
+ → 可选 Action Plan（首期不执行）
+</code></pre>
+<p>Diagnosis Artifact 至少包含：</p>
+<ul>
+<li>实例、引擎、版本、时间窗、数据新鲜度；</li>
+<li>Top SQL、等待、锁、指标、计划和变更事件引用；</li>
+<li>已证实事实、相关性、推断与替代假设；</li>
+<li>每条建议的收益、风险、适用前提和验证方法；</li>
+<li>若证据不足，明确下一步需要什么，不生成“确定根因”。</li>
+</ul>
+<h3>14.2 为什么这条旅程能形成华为云差异</h3>
+<p><code>推断</code>：通用 Harness 的规划能力可以买时间，但只有数据库产品能稳定提供引擎方言、执行计划、Role/RLS、实时会话、锁、复制、实例变更和负载保护。领先产品应让同一个 Harness 调用数据库权威工具，而不是再做一个会聊天的 DBA 页面。</p>
+<h3>14.3 P0 与 P1 边界</h3>
+<ul>
+<li>P0：全只读，输出调查报告和动作草案；</li>
+<li>P1：仅引入少量可验证动作，如取消指定 Query/Session；</li>
+<li>P1 动作必须含：风险级别、审批、幂等键、超时、权威后置验证和审计；</li>
+<li>参数修改、索引创建、扩容、切换等高风险动作在真实事故演练通过前不开放给 Agent。</li>
+</ul>
+<hr>
+<h2>15. 对话界面合同：十种回答共享一个 Agent 壳</h2>
+<p>第 2.3 节和 <a href="../../independent_exploration_2026-08-19/huawei-product-ui-prototypes.html"><code>huawei-product-ui-prototypes.html</code></a> 展示的是一个对话 Agent 的十种回答，不是十个功能页面。本章固定共同信息架构：用户消息、Agent 文字结论、回复内结构化工件、回复附件和下一轮输入。接入、导入、资产生成、治理、问数、分析、知识、数据库和动作只改变 Agent 选择的能力与工件类型，不改变产品入口。</p>
+<h3>15.1 信息架构</h3>
+<pre><code class="language-text">┌──────────────────────────────────────────────────────────────────┐
+│ Data Intelligence Agent ｜ 当前业务/实例上下文 ｜ 可信模式       │
+├──────────────────────────────────────────────────────────────────┤
+│ 用户消息：最近 30 天哪些地区退款率明显上升？为什么？             │
+│                                                                  │
+│ Agent 回复                                                       │
+│   文字结论：上海上升最明显；已排除规模效应……                    │
+│   运行摘要：5 次只读查询完成 · 结果回总通过 · 可展开              │
+│   ┌──────────────────────────────────────────────────────────┐   │
+│   │ 回复内工件：接入方案 / Pipeline / 治理报告 / 图表 / 知识图 │  │
+│   └──────────────────────────────────────────────────────────┘   │
+│   附件：来源 · SQL · query_id · ACL · 时间 · Evidence · Trace    │
+│   操作：复制 · 保存 · Review/审批 · 继续追问                     │
+├──────────────────────────────────────────────────────────────────┤
+│ 输入框：继续追问或提出新目标                                    │
+└──────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3>15.2 页面必须让用户看到什么</h3>
+<table>
+<thead>
+<tr>
+<th>用户问题</th>
+<th>页面元素</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>我该从哪里开始？</td>
+<td>只有统一对话输入框；可从 DataArts/DB 上下文原位打开，但不要求先选能力菜单</td>
+</tr>
+<tr>
+<td>该直查还是复制？</td>
+<td>回复里的四路径比较、源端前置、费用/负载/新鲜度和推荐理由；选择后才生成 Pipeline 草稿</td>
+</tr>
+<tr>
+<td>导入会改什么？</td>
+<td>Schema/字段映射 Diff、目标表、坏数隔离、敏感发现、调度和写入影响；发布前可修改</td>
+</tr>
+<tr>
+<td>已有库能生成什么？</td>
+<td>回复里的资产蓝图：清洗表/视图、指标/Join、知识网络、质量/策略/血缘及每项缺口和 Owner</td>
+</tr>
+<tr>
+<td>Agent 如何理解我的目标？</td>
+<td>必要时在回复中澄清口径、对象、时间窗、交付物与约束；Goal revision 可展开</td>
+</tr>
+<tr>
+<td>Agent 现在在做什么？</td>
+<td>回复下的运行摘要；展开后看计划步骤、当前工具、耗时与可取消状态</td>
+</tr>
+<tr>
+<td>为什么问我？</td>
+<td>当前回复里的歧义候选、差异与影响；默认不替用户选择</td>
+</tr>
+<tr>
+<td>答案是什么？</td>
+<td>Agent 先给文字结论，再嵌入最合适的接入/Pipeline、治理、图、表、知识图、时间线或审批卡</td>
+</tr>
+<tr>
+<td>答案从哪来？</td>
+<td>同一回复附件中的数据源、Pipeline/资产版本、时间、水位、语义版本、SQL、query_id、freshness、ACL</td>
+</tr>
+<tr>
+<td>这是事实还是猜测？</td>
+<td>回复正文和工件中的事实/推断/建议/Unknown 标签</td>
+</tr>
+<tr>
+<td>执行会发生什么？</td>
+<td>回复内审批卡显示风险、对象、参数、影响范围、有效期和验证条件</td>
+</tr>
+<tr>
+<td>如何继续工作？</td>
+<td>直接追问；或在回复上保存、下载、分享、Review、审批、复用为 Verified Query</td>
+</tr>
+</tbody></table>
+<h3>15.3 页面不应该做什么</h3>
+<ul>
+<li>不解析每个 Harness 的自然语言 stdout 来猜工具状态；</li>
+<li>不把“接入、导入、资产、治理、问数、分析、建知识、查数据库”做成一排需要用户先选择的 Dashboard 或功能按钮；</li>
+<li>不为每项能力跳转到一套独立工作台；专业详情只能作为当前回复的展开工件；</li>
+<li>不在浏览器保存模型密钥或数据库密码；</li>
+<li>不让模型返回任意 HTML/JavaScript 直接执行；图表只接收受控 schema；</li>
+<li>不用“思考过程”替代可复核证据；</li>
+<li>不以聊天消息是否完成来判断 SQL 或动作是否完成。</li>
+</ul>
+<hr>
+<h2>16. 产品能力驱动的 2 周 / 1 个月 / 3 个月落地路线</h2>
+<p>路线以第 1 章 C0–C7 中哪些能力已经形成完整客户旅程验收，不以组件或接口数量验收。</p>
+<h3>16.1 前 2 周：跑通“接入—资产—问数—查库”一条纵向故事</h3>
+<table>
+<thead>
+<tr>
+<th>天</th>
+<th>共同内核交付</th>
+<th>方案一追加</th>
+<th>方案二追加</th>
+<th>Exit Gate</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>D1–2</td>
+<td>固定纵向故事、九条用户话术和交付物；六 Harness Smoke；接入/权限依赖清单</td>
+<td>指定 C0–C5 能力包 Owner</td>
+<td>建数据库部门 DRI 小队</td>
+<td>至少 3 个候选能启动同一故事；数据源/文件范围固定</td>
+</tr>
+<tr>
+<td>D3–5</td>
+<td>12 个 <code>di</code> Tool；合成 PostgreSQL + CSV/Parquet；Schema/Profile、质量/敏感和资产草稿</td>
+<td>打通一个 DataArts 数据源/接入只读适配</td>
+<td><code>ingest-lite</code> 直查 + 一次导入；本地 Git 资产/知识包</td>
+<td>接入计划可预览；目标数据到达可验证；资产候选有来源</td>
+</tr>
+<tr>
+<td>D6–7</td>
+<td>20 Task Bake-off；选一主一备</td>
+<td>签共同 Gold 和错误语义</td>
+<td>固定镜像与回滚</td>
+<td>选型记录含失败证据</td>
+</tr>
+<tr>
+<td>D8–10</td>
+<td>单 ECS Compose；Goal/Task/Session、接入任务、取消、Artifact、Audit</td>
+<td>IAM/AgentArts 可复用 Gate</td>
+<td>自有轻 Gateway/Registry 跑通</td>
+<td>新 ECS 30 分钟内起服务；凭据不进 Harness</td>
+</tr>
+<tr>
+<td>D11–14</td>
+<td>原子能力扩至约 18–20 个；十种回答进入桌面/移动 Web</td>
+<td>DataArts/DB/IAM 按纵向旅程共同验收</td>
+<td>设计伙伴 Demo 包</td>
+<td>导入、问数、DB 调查可复核；资产/治理推断未自动发布</td>
+</tr>
+</tbody></table>
+<h3>16.2 第 1 个月：做成接入准备、智能问数、基础分析和数据库洞察首个可用版</h3>
+<ul>
+<li>Adapter：主备 Harness 都通过 Session/Event/Approval/Cancel 契约；</li>
+<li>接入：一个数据库 + CSV/Parquet，支持直查和一次导入；方案一另通过 DataArts 增加定时/CDC 路径，方案二只生成未开放路径的前置检查和计划，不伪装执行；</li>
+<li>准备：Schema/Profile、字段映射、坏数隔离、敏感/质量候选、目标行数/校验和或水位验证；</li>
+<li>能力：35–40 个精选 P0 <code>di</code> Tool，覆盖接入/资产、问数/分析、知识草稿与 DB 洞察；</li>
+<li>语义：1 个业务域、5–10 个指标、10 个 Verified Queries、20 个 Gold Questions；</li>
+<li>智能问数：探索/可信模式、歧义澄清、SQL 验证/预算/执行/取消、表/图/SQL/Evidence；</li>
+<li>智能分析：趋势、同比/环比、分群、贡献拆解和事实/推断分层；</li>
+<li>数据库洞察：实例状态、Top SQL、锁、等待、计划、指标和变更时间线的 8–10 个诊断能力；</li>
+<li>安全：Runner 限域、短期 task token、无 DB 密码、权限负例、Prompt/Tool 注入测试；</li>
+<li>运维：固定镜像、SBOM、每日备份、一次恢复演练、主备切换演练；</li>
+<li>产品：用户在同一对话直接说“接入/导入、生成数据产品、管数据、问数据、做分析、查数据库”，Agent 自动路由，不要求先选能力菜单；成功探索可提交为知识/Verified 候选。</li>
+</ul>
+<p><code>M1 Gate</code>：接入计划与目标端验证完整；Schema 变更/坏数/权限失败可解释且不污染可信表；20 个问数 Gold 结果等价达到建议阈值；基础分析可复算；DB 调查证据完整；所有安全负例通过。</p>
+<h3>16.3 第 2–3 个月：补齐数据产品生成与治理闭环并验证四条主线价值</h3>
+<ul>
+<li>一个业务域可从 Schema、样例、业务文档和血缘生成清洗表/视图、实体、指标、关系、Join、同义词、质量规则、分类和 Verified Query 草稿；</li>
+<li>提供数据产品蓝图与知识网络、来源/置信度、冲突/缺口、Owner Review、发布和回滚；</li>
+<li>方案一扩展多源、定时与 CDC；方案二只在单引擎主键/日志/恢复/重复语义和负载 Gold 通过后开放增量或 CDC；</li>
+<li>发布后的知识资产立即服务智能问数、分析和数据库调查，BadCase 可以定位到并修复对应知识节点；</li>
+<li>支持第 2 个引擎仅在 Capability Manifest 与 Gold 通过后开放；</li>
+<li>3–5 个设计伙伴，使用合成、脱敏或授权的非生产只读数据；</li>
+<li>Web、API、MCP 共享同一问数、分析、知识和 DB 能力；</li>
+<li>BadCase → 知识/Tool/Skill 修复 → 回归 → 灰度形成周节奏；</li>
+<li>模型/Harness/Skill/语义/Tool 每次升级都有对比分；</li>
+<li>方案一若成立，接入 DataArts 知识/语义/Artifact 与 AgentArts Trace/Eval；否则继续使用轻量知识包和 Adapter Stub。</li>
+</ul>
+<p><code>M3 Gate</code>：资产/知识/分类/血缘推断来源可追溯、冲突可 Review、未审核资产不进入可信问数；至少 3 个伙伴连续 4 周使用四条主线；连续 4 周没有越权、凭据或静默坏数事故。</p>
+<h3>16.4 三个月后扩展的产品能力</h3>
+<ul>
+<li>C0/C5 扩展：更多源、连续同步、Schema 演进、分类分级、质量、血缘、影响和策略任务；</li>
+<li>C6 安全行动：先取消 Query/Session，再逐个开放有审批、幂等和后置验证的低风险动作；</li>
+<li>C7 主动智能：指标/质量/数据库事件触发调查、订阅和报告；</li>
+<li>跨源知识网络、更多引擎、更多领域包与行业模板；</li>
+<li>外部 Agent 的 CLI/MCP/API 同能力调用；</li>
+<li>只有真实并发、恢复目标和客户价值触发时，才建设 Runner 多机调度、CCE/CCI、托管状态和跨可用区。</li>
+</ul>
+<hr>
+<h2>17. 评测、发布与停止规则</h2>
+<h3>17.1 Harness Bake-off 评分</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th align="right">权重</th>
+<th>Oracle</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Gold Task 可信完成</td>
+<td align="right">30%</td>
+<td>结果/诊断工件通过领域判分</td>
+</tr>
+<tr>
+<td>安全与权限</td>
+<td align="right">25%</td>
+<td>负例全部阻断；任一越权硬失败</td>
+</tr>
+<tr>
+<td>协议与恢复</td>
+<td align="right">15%</td>
+<td>Event 顺序、断线续流、Resume、Cancel</td>
+</tr>
+<tr>
+<td>Tool/Evidence</td>
+<td align="right">10%</td>
+<td>调用正确、参数去敏、证据完整</td>
+</tr>
+<tr>
+<td>鲁棒与修复</td>
+<td align="right">10%</td>
+<td>Schema 变化、超时、空结果、上游故障</td>
+</tr>
+<tr>
+<td>成本与时延</td>
+<td align="right">10%</td>
+<td>只在前五项通过后比较 P50/P95/Token</td>
+</tr>
+</tbody></table>
+<h3>17.2 六类故障归因</h3>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>例子</th>
+<th>Owner</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Harness</td>
+<td>不规划、循环、Session/事件错误</td>
+<td>Adapter/Harness Owner</td>
+</tr>
+<tr>
+<td>Skill</td>
+<td>工具顺序、停止条件或输出要求错误</td>
+<td>领域 Skill Owner</td>
+</tr>
+<tr>
+<td>Semantic</td>
+<td>指标、Join、同义词、版本错误</td>
+<td>数据域 Owner</td>
+</tr>
+<tr>
+<td>Tool</td>
+<td>AST、方言、执行、取消或错误码错误</td>
+<td>CLI/MCP Owner</td>
+</tr>
+<tr>
+<td>Authority</td>
+<td>数据过期、权限、数据库/接口异常</td>
+<td>权威系统 Owner</td>
+</tr>
+<tr>
+<td>Product</td>
+<td>GUI 隐藏风险、工件/ACL/审批错误</td>
+<td>产品 Owner</td>
+</tr>
+</tbody></table>
+<p>不允许所有 BadCase 都归为“模型不准”。</p>
+<h3>17.3 发布 Gate</h3>
+<ol>
+<li><strong>契约 Gate</strong>：主备 Adapter、Tool schema、Event 和 Artifact 兼容；</li>
+<li><strong>正确 Gate</strong>：Gold Intent/Result/诊断证据达标；</li>
+<li><strong>安全 Gate</strong>：越权、注入、凭据、危险 SQL、撤权、取消全部通过；</li>
+<li><strong>运营 Gate</strong>：Trace、成本、错误、备份恢复、回滚可用；</li>
+<li><strong>客户 Gate</strong>：真实任务节省时间或提升决策，不以提问数计成功。</li>
+</ol>
+<h3>17.4 停止或转向条件</h3>
+<ul>
+<li>现成 Harness 无法在不改核心的情况下限制 Tool/凭据/网络；</li>
+<li>主备在相同 Gold Tasks 上持续低于最低可信阈值，且问题不是 Tool/Semantic 可修复；</li>
+<li>需要维护大规模永久分叉才能嵌入；</li>
+<li>商业/许可/区域不允许产品化使用；</li>
+<li>设计伙伴只愿意看 Demo，不愿提供可量化真实任务；</li>
+<li>方案一没有总 Owner 与共同发布权，却继续以联合名义推进。</li>
+</ul>
+<hr>
+<h2>18. 可直接立项的 Epic</h2>
+<table>
+<thead>
+<tr>
+<th>Epic</th>
+<th>关键 Story</th>
+<th>完成定义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E0 Capability Portfolio</td>
+<td>C0–C7 命名、四条投资主线、九条“一句话”旅程和两方案能力边界</td>
+<td>产品、研发和能力包 Owner 使用同一能力地图与优先级</td>
+</tr>
+<tr>
+<td>E0B Execution Contract</td>
+<td>Goal Contract、澄清、revision、Oracle、partial/blocked 终态</td>
+<td>执行合同只保证能力可靠，不再替代产品能力定义</td>
+</tr>
+<tr>
+<td>E1 Harness Bake-off</td>
+<td>安装、锁版本、同题运行、采集事件/成本/失败</td>
+<td>一主一备决策与可复现实验包</td>
+</tr>
+<tr>
+<td>E2 Adapter v1</td>
+<td>Session、Message、Event、Approval、Cancel、Artifact</td>
+<td>两个 Harness 通过同一契约测试</td>
+</tr>
+<tr>
+<td>E3 ECS Package</td>
+<td>Compose、签名镜像、配置、升级、回滚、备份</td>
+<td>全新 ECS 可按 Runbook 起服务并恢复</td>
+</tr>
+<tr>
+<td>E4 Tool Gateway</td>
+<td>task token、策略、凭据、预算、审计</td>
+<td>Runner 无 DB 凭据也能完成任务</td>
+</tr>
+<tr>
+<td>E5 Data CLI/MCP</td>
+<td>两周约 18–20 个、首月 35–40 个精选 P0 Tool；统一 schema/error/evidence</td>
+<td>接入资产、问数分析、知识草稿、DB 洞察四条主线可用；CLI/MCP 一致</td>
+</tr>
+<tr>
+<td>E6 Data Knowledge</td>
+<td>Schema/文档/血缘扫描、实体/指标/关系/Join/规则候选、Review、Verified Query</td>
+<td>一个域可生成知识草稿；来源可追溯；未审核不发布；变化触发回归</td>
+</tr>
+<tr>
+<td>E7 Smart Ask &amp; Analysis</td>
+<td>NL2SQL、澄清、表图、趋势/对比/贡献、两次修复上限</td>
+<td>20 问数 Gold 达 Gate，基础分析步骤可复算</td>
+</tr>
+<tr>
+<td>E8 Database Insight</td>
+<td>实例状态、SQL/锁/等待/计划/指标/变更时间线</td>
+<td>查库与故障调查产生证据报告</td>
+</tr>
+<tr>
+<td>E9 Thin Web</td>
+<td>会话、计划、工具、表图、证据、审批、停止</td>
+<td>不依赖 Harness 私有事件</td>
+</tr>
+<tr>
+<td>E10 Guarantee</td>
+<td>Trace、Eval、BadCase、权限/注入、升级对比</td>
+<td>每次发布自动生成 Scorecard</td>
+</tr>
+<tr>
+<td>E11 DataArts Adapter</td>
+<td>Catalog/Semantic/Artifact 只读接入</td>
+<td>不可用时核心仍能启动</td>
+</tr>
+<tr>
+<td>E12 AgentArts Adapter</td>
+<td>Model/Trace/Eval/Gateway 能力验证</td>
+<td>通过才升级为硬依赖</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>19. 内部待证清单</h2>
+<table>
+<thead>
+<tr>
+<th>Unknown</th>
+<th>会改变什么</th>
+<th>最小验证</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>允许使用的模型端点、数据驻留、配额和价格</td>
+<td>Harness 组合、成本与区域</td>
+<td>在目标 Region 跑 20 Task × 3，记录实际 Token/时延/数据边界</td>
+</tr>
+<tr>
+<td>开源组件进入华为云产品的合规、SBOM 与漏洞流程</td>
+<td>OpenCode/Pi/Hermes/DSH 能否发布</td>
+<td>法务/开源办对固定 commit 与依赖树出具结论</td>
+</tr>
+<tr>
+<td>Codex/Claude 面向客户产品的商业、区域和身份可用性</td>
+<td>是否只做标杆或可选 Adapter</td>
+<td>使用企业 API 路径完成法务与数据处理评审；禁止个人订阅代替</td>
+</tr>
+<tr>
+<td>AgentArts 是否有稳定可嵌入 Runtime/Gateway/Trace/Eval API 与 SLO</td>
+<td>方案一模块承载、方案二是否复用</td>
+<td>同一只读 Tool 做部署、取消、Trace、评测、升级和故障演练</td>
+</tr>
+<tr>
+<td>DataArts 语义/指标/数据集是否有稳定版本 ID、事件与作者 API</td>
+<td>公司级语义包能否自动化</td>
+<td>修改语义后从 API/助手/Artifact 验证版本、ACL、回滚</td>
+</tr>
+<tr>
+<td>IAM 到数据库最终用户委托和撤权链</td>
+<td>是否需要 Credential Broker 自建</td>
+<td>允许/拒绝/撤权/过期四组测试，核对 DB 审计主体</td>
+</tr>
+<tr>
+<td>各引擎元数据、SQL、诊断、取消能力的 GA/区域/性能</td>
+<td>首发引擎和 Capability Manifest</td>
+<td>每引擎 30 个正负用例 + 负载观测</td>
+</tr>
+<tr>
+<td>设计伙伴真实任务、频次、失败率与愿付价格</td>
+<td>Roadmap、HA 与商业包装</td>
+<td>3–5 个伙伴连续 4 周任务基线</td>
+</tr>
+<tr>
+<td>公司级总 Owner、预算、团队容量和发布权</td>
+<td>选方案一还是方案二</td>
+<td>2–4 周书面 Gate，不以口头支持替代</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>20. 关键官方来源</h2>
+<h3>Harness 与嵌入接口</h3>
+<ul>
+<li><a href="https://dev.opencode.ai/docs/server/" target="_blank" rel="noreferrer">OpenCode Server：无头 HTTP、OpenAPI、Sessions、Events</a></li>
+<li><a href="https://opencode.ai/docs/sdk" target="_blank" rel="noreferrer">OpenCode SDK</a></li>
+<li><a href="https://github.com/anomalyco/opencode" target="_blank" rel="noreferrer">OpenCode 官方仓库与 MIT License</a></li>
+<li><a href="https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/rpc.md" target="_blank" rel="noreferrer">Pi RPC Mode：JSONL 命令与事件</a></li>
+<li><a href="https://github.com/earendil-works/pi" target="_blank" rel="noreferrer">Pi 官方仓库：SDK、扩展、权限边界、MIT</a></li>
+<li><a href="https://github.com/deepseek-ai/deepseek-harness" target="_blank" rel="noreferrer">DeepSeek Harness 官方仓库：Developer Preview、Web 与 MIT</a></li>
+<li><a href="https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/architecture.md" target="_blank" rel="noreferrer">DeepSeek Harness 架构：SessionEvent、Tool Pipeline、插件缝</a></li>
+<li><a href="https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/user/guide/python-sdk.md" target="_blank" rel="noreferrer">DeepSeek Harness Python SDK</a></li>
+<li><a href="https://github.com/NousResearch/hermes-agent/blob/main/website/docs/developer-guide/programmatic-integration.md" target="_blank" rel="noreferrer">Hermes Programmatic Integration：ACP、JSON-RPC、HTTP+SSE</a></li>
+<li><a href="https://github.com/NousResearch/hermes-agent/blob/main/website/docs/reference/cli-commands.md" target="_blank" rel="noreferrer">Hermes CLI、Skills、MCP、Gateway 与 headless server</a></li>
+<li><a href="https://github.com/NousResearch/hermes-agent" target="_blank" rel="noreferrer">Hermes 官方仓库与 MIT License</a></li>
+<li><a href="https://developers.openai.com/codex/app-server" target="_blank" rel="noreferrer">Codex App Server：Thread/Turn、Event、Approval、Interrupt</a></li>
+<li><a href="https://developers.openai.com/codex/noninteractive" target="_blank" rel="noreferrer">Codex Non-interactive：JSONL 与 Resume</a></li>
+<li><a href="https://code.claude.com/docs/en/cli-usage" target="_blank" rel="noreferrer">Claude Code CLI：stream-json、resume、MCP、permission</a></li>
+<li><a href="https://code.claude.com/docs/en/agent-sdk/overview" target="_blank" rel="noreferrer">Claude Agent SDK：Session、Hooks、Skills、MCP、审批与商业条款</a></li>
+</ul>
+<h3>Databricks 数据接入与治理标杆</h3>
+<ul>
+<li><a href="https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/" target="_blank" rel="noreferrer">Lakeflow Connect 托管连接器：数据库、SaaS、文件与流</a></li>
+<li><a href="https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/query-based-pipeline" target="_blank" rel="noreferrer">基于查询的数据库接入 Pipeline：选择 Catalog、连接、Schema 与表</a></li>
+<li><a href="https://docs.databricks.com/gcp/en/query-federation" target="_blank" rel="noreferrer">Lakehouse Federation：Unity Catalog 下的外部数据库只读访问</a></li>
+<li><a href="https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/schema" target="_blank" rel="noreferrer">Auto Loader Schema 推断、演进与异常字段保留</a></li>
+<li><a href="https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-discovery" target="_blank" rel="noreferrer">Unity Catalog 数据发现、Catalog Explorer 与自动血缘</a></li>
+<li><a href="https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring" target="_blank" rel="noreferrer">Unity Catalog 数据质量监控</a></li>
+<li><a href="https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-classification" target="_blank" rel="noreferrer">Unity Catalog 敏感数据自动分类与标签</a></li>
+<li><a href="https://docs.databricks.com/gcp/en/uc-semantics/metric-views/basic-modeling" target="_blank" rel="noreferrer">Metric views：从表构建受治理业务指标和语义</a></li>
+</ul>
+<h3>阿里云对话式数据建设标杆</h3>
+<ul>
+<li><a href="https://help.aliyun.com/zh/dataworks/user-guide/introduction-to-data-integration-and-ai-native-capabilities" target="_blank" rel="noreferrer">DataWorks DI Agent：对话创建/管理同步、ChatDB 与多模态 ETL</a></li>
+<li><a href="https://help.aliyun.com/zh/dataworks/user-guide/overview/" target="_blank" rel="noreferrer">DataWorks Data Agent：集成、开发、运维、治理、分析全链路</a></li>
+<li><a href="https://help.aliyun.com/zh/dataworks/user-guide/data-integration-overview" target="_blank" rel="noreferrer">DataWorks 数据集成概述：离线、实时、整库、全量与增量边界</a></li>
+<li><a href="https://help.aliyun.com/zh/dataworks/user-guide/data-map/" target="_blank" rel="noreferrer">DataWorks 数据地图：搜索、详情、预览、血缘和资产分类</a></li>
+<li><a href="https://help.aliyun.com/zh/dataworks/user-guide/data-governance-agent" target="_blank" rel="noreferrer">DataWorks 数据治理 Agent：扫描、治理计划、Diff、确认与复检</a></li>
+<li><a href="https://help.aliyun.com/zh/dataworks/billing-of-dataworks-advanced-editions" target="_blank" rel="noreferrer">DataWorks 版本能力与增值模块边界</a></li>
+</ul>
+<h3>华为云能力边界</h3>
+<ul>
+<li><a href="https://support.huaweicloud.com/usermanual-dataartsinsight/dataartsinsight_03_0302.html" target="_blank" rel="noreferrer">DataArts Insight 创建智能分析助手</a></li>
+<li><a href="https://support.huaweicloud.com/api-dataartsinsight/dataartsinsight_api_0008.html" target="_blank" rel="noreferrer">DataArts Insight API 概览</a></li>
+<li><a href="https://support.huaweicloud.com/highcode-agentarts/agentarts_10_022.html" target="_blank" rel="noreferrer">AgentArts Gateway</a></li>
+<li><a href="https://support.huaweicloud.com/ops-agentarts/agentarts_14_0021.html" target="_blank" rel="noreferrer">AgentArts Trace 数据回流</a></li>
+<li><a href="https://support.huaweicloud.com/intl/zh-cn/api-das/das_01_0007.html" target="_blank" rel="noreferrer">DAS API 概览</a></li>
+</ul>
+<hr>
+<h2>21. 最终建议</h2>
+<ol>
+<li><strong>先锁产品能力组合，不先锁架构。</strong> 统一采用 C0–C7 能力地图；首期集中数据接入与资产化、智能问数与基础分析、数据知识构建、数据库洞察四条主线，任何模块都必须说明服务哪项客户能力。</li>
+<li><strong>不要自研 Agent Loop，也不要采购其他云厂商 Agent 产品。</strong> 用现成 CLI/SDK Harness，通过统一 Adapter 接入。</li>
+<li><strong>技术上立即用方案二形态起步。</strong> 一台 ECS、一个主 Harness、一个 DB + CSV/Parquet、两周约 18–20 个 <code>di</code> Tool、一个资产/知识/语义包、一个统一对话 Web，跑通“接入—资产—问数—查库”纵向故事。</li>
+<li><strong>组织上给方案一 2–4 周明确 Gate。</strong> 条件成立就把同一能力内核升级成公司级产品；不成立就由数据库部门继续拥有数据库洞察与数据库问数闭环。</li>
+<li><strong>主选暂不拍脑袋。</strong> OpenCode 是文档初筛领先者，Pi 是极简备选，Hermes/DeepSeek Harness 各有特长；第 7 天必须用同题结果选出一主一备。</li>
+<li><strong>把主要投资放在能力深度和数据资产。</strong> 接入路径与 Pipeline、Profile/质量/敏感/血缘、数据产品/知识网络、问数分析、数据库证据、CLI/MCP、权限、Eval、Artifact/Evidence，而不是重复做聊天 UI。</li>
+<li><strong>首期可以无 HA，但不能无安全和证据。</strong> Runner 隔离、凭据不入 Agent、最终用户权限、查询预算、取消、审计和可复算结果必须从第一天存在。</li>
+</ol>
+<p>如果这七项落实，华为云的领先路径不是模仿 Genie 的外观，而是让用户从同一个入口用一句话接入和准备数据、从已有库生成数据产品、持续治理、问数据、做分析、建知识和查数据库，并让任意合格 Harness 都能安全调用这些权威能力。</p>
+<hr>
+<p><a id="appendix-a-atomic"></a></p>
+<h2>附录 A. <code>di</code> CLI/MCP：C0–C7 产品能力背后的统一原子执行面</h2>
+<h3>A.1 一套实现，两种 Agent 接口</h3>
+<ul>
+<li>CLI 是本地与 Harness 最容易发现、调试、录制和回放的主接口；</li>
+<li>MCP 是远端 Agent、工具发现与结构化调用接口；</li>
+<li>二者共享同一个 service implementation、schema、error code、policy 和 audit，不写两套逻辑；</li>
+<li>Skill 负责“何时、按什么顺序调用”，不重复列出所有 API；</li>
+<li>每个命令默认输出稳定 JSON，<code>--human</code> 只用于开发者调试。</li>
+</ul>
+<p>统一返回：</p>
+<pre><code class="language-json">{
+  &quot;spec_version&quot;: &quot;di.tool/v1&quot;,
+  &quot;ok&quot;: true,
+  &quot;data&quot;: {},
+  &quot;evidence&quot;: [{&quot;id&quot;: &quot;ev...&quot;, &quot;kind&quot;: &quot;query&quot;}],
+  &quot;warnings&quot;: [],
+  &quot;error&quot;: null,
+  &quot;trace_id&quot;: &quot;tr...&quot;
+}
+</code></pre>
+<p>错误至少区分：<code>AUTH_DENIED</code>、<code>RESOURCE_NOT_FOUND</code>、<code>AMBIGUOUS_SEMANTIC</code>、<code>UNSAFE_SQL</code>、<code>BUDGET_EXCEEDED</code>、<code>SOURCE_STALE</code>、<code>QUERY_TIMEOUT</code>、<code>QUERY_CANCELLED</code>、<code>UNSUPPORTED_ENGINE</code>、<code>RETRYABLE_UPSTREAM</code>。Agent 只能对明确可重试错误重试。</p>
+<h3>A.2 原子能力目录</h3>
+<p><code>P0</code> 表示三个月内核心；<code>P1</code> 表示 Beta 后增强。风险为 <code>读/算/写</code>，不是实现难度。</p>
+<table>
+<thead>
+<tr>
+<th>域</th>
+<th>CLI（占位）</th>
+<th>MCP Tool</th>
+<th>风险</th>
+<th>阶段</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>身份</td>
+<td><code>di auth whoami</code></td>
+<td><code>di.auth.whoami</code></td>
+<td>读</td>
+<td>P0</td>
+<td>返回主体、租户、委托和有效期</td>
+</tr>
+<tr>
+<td>身份</td>
+<td><code>di context open</code></td>
+<td><code>di.context.open</code></td>
+<td>读</td>
+<td>P0</td>
+<td>绑定 workspace/source/instance/use-case</td>
+</tr>
+<tr>
+<td>身份</td>
+<td><code>di policy check</code></td>
+<td><code>di.policy.check</code></td>
+<td>读</td>
+<td>P0</td>
+<td>在调用前解释允许/拒绝及约束</td>
+</tr>
+<tr>
+<td>身份</td>
+<td><code>di capability list</code></td>
+<td><code>di.capability.list</code></td>
+<td>读</td>
+<td>P0</td>
+<td>按引擎/区域/版本返回真实能力清单</td>
+</tr>
+<tr>
+<td>身份</td>
+<td><code>di budget get</code></td>
+<td><code>di.budget.get</code></td>
+<td>读</td>
+<td>P0</td>
+<td>返回查询、Token、时间与工件预算</td>
+</tr>
+<tr>
+<td>数据源</td>
+<td><code>di source list</code></td>
+<td><code>di.source.list</code></td>
+<td>读</td>
+<td>P0</td>
+<td>列出当前主体可见数据源</td>
+</tr>
+<tr>
+<td>数据源</td>
+<td><code>di source register</code></td>
+<td><code>di.source.register</code></td>
+<td>写</td>
+<td>P0</td>
+<td>创建凭据引用和用途受限的数据源；凭据不进入 Agent</td>
+</tr>
+<tr>
+<td>数据源</td>
+<td><code>di source test</code></td>
+<td><code>di.source.test</code></td>
+<td>读</td>
+<td>P0</td>
+<td>验证连通、权限、方言和延迟</td>
+</tr>
+<tr>
+<td>数据源</td>
+<td><code>di source freshness</code></td>
+<td><code>di.source.freshness</code></td>
+<td>读</td>
+<td>P0</td>
+<td>返回更新时间、复制/CDC 水位</td>
+</tr>
+<tr>
+<td>接入</td>
+<td><code>di ingest assess</code></td>
+<td><code>di.ingest.assess</code></td>
+<td>算</td>
+<td>P0</td>
+<td>比较直查、一次导入、定时和 CDC 的前提/代价/风险</td>
+</tr>
+<tr>
+<td>接入</td>
+<td><code>di ingest plan</code></td>
+<td><code>di.ingest.plan</code></td>
+<td>算</td>
+<td>P0</td>
+<td>生成表选择、字段映射、目标、调度和预算计划</td>
+</tr>
+<tr>
+<td>接入</td>
+<td><code>di ingest preview</code></td>
+<td><code>di.ingest.preview</code></td>
+<td>读</td>
+<td>P0</td>
+<td>Dry-run Schema/类型/坏数/敏感/目标影响</td>
+</tr>
+<tr>
+<td>接入</td>
+<td><code>di ingest publish</code></td>
+<td><code>di.ingest.publish</code></td>
+<td>写</td>
+<td>P0</td>
+<td>经确认发布版本化 Pipeline；返回 pipeline_id</td>
+</tr>
+<tr>
+<td>接入</td>
+<td><code>di ingest status</code></td>
+<td><code>di.ingest.status</code></td>
+<td>读</td>
+<td>P0</td>
+<td>返回阶段、吞吐、延迟、水位、费用与错误</td>
+</tr>
+<tr>
+<td>接入</td>
+<td><code>di ingest stop</code></td>
+<td><code>di.ingest.stop</code></td>
+<td>写</td>
+<td>P0</td>
+<td>幂等停止指定 Pipeline，不删除目标数据</td>
+</tr>
+<tr>
+<td>接入</td>
+<td><code>di ingest verify</code></td>
+<td><code>di.ingest.verify</code></td>
+<td>读</td>
+<td>P0</td>
+<td>从源/目标核验行数、校验和、水位和 Schema</td>
+</tr>
+<tr>
+<td>接入</td>
+<td><code>di file profile</code></td>
+<td><code>di.file.profile</code></td>
+<td>读</td>
+<td>P0</td>
+<td>推断文件格式/Schema/编码并输出坏行与新列</td>
+</tr>
+<tr>
+<td>目录</td>
+<td><code>di catalog search</code></td>
+<td><code>di.catalog.search</code></td>
+<td>读</td>
+<td>P0</td>
+<td>搜索表、字段、指标、仪表板与描述</td>
+</tr>
+<tr>
+<td>目录</td>
+<td><code>di schema inspect</code></td>
+<td><code>di.schema.inspect</code></td>
+<td>读</td>
+<td>P0</td>
+<td>列/类型/约束/主外键/注释</td>
+</tr>
+<tr>
+<td>目录</td>
+<td><code>di stats inspect</code></td>
+<td><code>di.stats.inspect</code></td>
+<td>读</td>
+<td>P0</td>
+<td>基数、空值、分布和统计更新时间</td>
+</tr>
+<tr>
+<td>目录</td>
+<td><code>di sample values</code></td>
+<td><code>di.sample.values</code></td>
+<td>读</td>
+<td>P0</td>
+<td>受限抽样或枚举；继承列权限</td>
+</tr>
+<tr>
+<td>目录</td>
+<td><code>di lineage trace</code></td>
+<td><code>di.lineage.trace</code></td>
+<td>读</td>
+<td>P0</td>
+<td>上下游依赖与来源；区分采集和推断</td>
+</tr>
+<tr>
+<td>目录</td>
+<td><code>di impact analyze</code></td>
+<td><code>di.impact.analyze</code></td>
+<td>算</td>
+<td>P1</td>
+<td>变更对指标、Query、报表的影响</td>
+</tr>
+<tr>
+<td>语义</td>
+<td><code>di semantic resolve</code></td>
+<td><code>di.semantic.resolve</code></td>
+<td>算</td>
+<td>P0</td>
+<td>将业务词映射实体/指标/字段</td>
+</tr>
+<tr>
+<td>语义</td>
+<td><code>di metric get</code></td>
+<td><code>di.metric.get</code></td>
+<td>读</td>
+<td>P0</td>
+<td>指标公式、粒度、过滤、Owner、版本</td>
+</tr>
+<tr>
+<td>语义</td>
+<td><code>di join plan</code></td>
+<td><code>di.join.plan</code></td>
+<td>算</td>
+<td>P0</td>
+<td>返回允许 Join、方向、基数和风险</td>
+</tr>
+<tr>
+<td>语义</td>
+<td><code>di synonym resolve</code></td>
+<td><code>di.synonym.resolve</code></td>
+<td>算</td>
+<td>P0</td>
+<td>同义词与歧义候选</td>
+</tr>
+<tr>
+<td>语义</td>
+<td><code>di enum values</code></td>
+<td><code>di.enum.values</code></td>
+<td>读</td>
+<td>P0</td>
+<td>状态、地区等受控枚举</td>
+</tr>
+<tr>
+<td>语义</td>
+<td><code>di verified search</code></td>
+<td><code>di.verified.search</code></td>
+<td>读</td>
+<td>P0</td>
+<td>搜索已验证问法/SQL/结果测试</td>
+</tr>
+<tr>
+<td>语义</td>
+<td><code>di semantic validate</code></td>
+<td><code>di.semantic.validate</code></td>
+<td>算</td>
+<td>P0</td>
+<td>校验指标、Join、循环和引用</td>
+</tr>
+<tr>
+<td>语义</td>
+<td><code>di semantic diff</code></td>
+<td><code>di.semantic.diff</code></td>
+<td>读</td>
+<td>P1</td>
+<td>比较语义版本及影响</td>
+</tr>
+<tr>
+<td>知识</td>
+<td><code>di knowledge scan</code></td>
+<td><code>di.knowledge.scan</code></td>
+<td>读</td>
+<td>P0</td>
+<td>扫描 Schema、约束、文档、血缘和已有资产</td>
+</tr>
+<tr>
+<td>知识</td>
+<td><code>di knowledge draft</code></td>
+<td><code>di.knowledge.draft</code></td>
+<td>算</td>
+<td>P0</td>
+<td>生成实体、指标、关系、Join、规则和 Verified 候选</td>
+</tr>
+<tr>
+<td>知识</td>
+<td><code>di knowledge validate</code></td>
+<td><code>di.knowledge.validate</code></td>
+<td>算</td>
+<td>P0</td>
+<td>检查冲突、重复、循环、基数、公式、权限和敏感字段</td>
+</tr>
+<tr>
+<td>知识</td>
+<td><code>di knowledge graph</code></td>
+<td><code>di.knowledge.graph</code></td>
+<td>读</td>
+<td>P0</td>
+<td>返回受控知识网络视图及状态/证据</td>
+</tr>
+<tr>
+<td>知识</td>
+<td><code>di knowledge review</code></td>
+<td><code>di.knowledge.review</code></td>
+<td>写</td>
+<td>P0</td>
+<td>接受、修改、拒绝或分派候选，不直接发布</td>
+</tr>
+<tr>
+<td>知识</td>
+<td><code>di knowledge publish</code></td>
+<td><code>di.knowledge.publish</code></td>
+<td>写</td>
+<td>P1</td>
+<td>经策略和 Owner 审批后发布不可变版本</td>
+</tr>
+<tr>
+<td>知识</td>
+<td><code>di knowledge diff</code></td>
+<td><code>di.knowledge.diff</code></td>
+<td>读</td>
+<td>P1</td>
+<td>比较知识版本和来源变化</td>
+</tr>
+<tr>
+<td>知识</td>
+<td><code>di knowledge impact</code></td>
+<td><code>di.knowledge.impact</code></td>
+<td>算</td>
+<td>P1</td>
+<td>评估对问数、分析、报表、策略和 Gold 的影响</td>
+</tr>
+<tr>
+<td>知识</td>
+<td><code>di knowledge rollback</code></td>
+<td><code>di.knowledge.rollback</code></td>
+<td>写</td>
+<td>P1</td>
+<td>回退服务指针到已验证版本并保留审计</td>
+</tr>
+<tr>
+<td>SQL</td>
+<td><code>di sql normalize</code></td>
+<td><code>di.sql.normalize</code></td>
+<td>算</td>
+<td>P0</td>
+<td>方言标准化、参数化和 hash</td>
+</tr>
+<tr>
+<td>SQL</td>
+<td><code>di sql validate</code></td>
+<td><code>di.sql.validate</code></td>
+<td>算</td>
+<td>P0</td>
+<td>AST、只读性、对象/列/函数权限</td>
+</tr>
+<tr>
+<td>SQL</td>
+<td><code>di sql prepare</code></td>
+<td><code>di.sql.prepare</code></td>
+<td>算</td>
+<td>P0</td>
+<td>绑定参数，不拼接用户文本</td>
+</tr>
+<tr>
+<td>SQL</td>
+<td><code>di sql explain</code></td>
+<td><code>di.sql.explain</code></td>
+<td>读</td>
+<td>P0</td>
+<td>获取计划但不执行查询主体</td>
+</tr>
+<tr>
+<td>SQL</td>
+<td><code>di sql estimate</code></td>
+<td><code>di.sql.estimate</code></td>
+<td>算</td>
+<td>P0</td>
+<td>扫描量、行数、耗时和风险预算</td>
+</tr>
+<tr>
+<td>SQL</td>
+<td><code>di sql execute</code></td>
+<td><code>di.sql.execute</code></td>
+<td>读</td>
+<td>P0</td>
+<td>只读执行，返回 query_id</td>
+</tr>
+<tr>
+<td>SQL</td>
+<td><code>di sql status</code></td>
+<td><code>di.sql.status</code></td>
+<td>读</td>
+<td>P0</td>
+<td>查询执行状态</td>
+</tr>
+<tr>
+<td>SQL</td>
+<td><code>di sql cancel</code></td>
+<td><code>di.sql.cancel</code></td>
+<td>写</td>
+<td>P0</td>
+<td>取消指定 query_id；幂等</td>
+</tr>
+<tr>
+<td>SQL</td>
+<td><code>di result fetch</code></td>
+<td><code>di.result.fetch</code></td>
+<td>读</td>
+<td>P0</td>
+<td>分页/限量取结果</td>
+</tr>
+<tr>
+<td>SQL</td>
+<td><code>di result profile</code></td>
+<td><code>di.result.profile</code></td>
+<td>算</td>
+<td>P0</td>
+<td>空值、分布、异常、时间范围</td>
+</tr>
+<tr>
+<td>SQL</td>
+<td><code>di result compare</code></td>
+<td><code>di.result.compare</code></td>
+<td>算</td>
+<td>P0</td>
+<td>与基线/上期/Gold Result 比较</td>
+</tr>
+<tr>
+<td>SQL</td>
+<td><code>di sql replay</code></td>
+<td><code>di.sql.replay</code></td>
+<td>读</td>
+<td>P1</td>
+<td>在固定快照和版本上复算</td>
+</tr>
+<tr>
+<td>诊断</td>
+<td><code>di db snapshot</code></td>
+<td><code>di.db.snapshot</code></td>
+<td>读</td>
+<td>P0</td>
+<td>实例配置、版本、拓扑、健康快照</td>
+</tr>
+<tr>
+<td>诊断</td>
+<td><code>di db top-sql</code></td>
+<td><code>di.db.top_sql</code></td>
+<td>读</td>
+<td>P0</td>
+<td>Top SQL、时间窗与负载贡献</td>
+</tr>
+<tr>
+<td>诊断</td>
+<td><code>di db sessions</code></td>
+<td><code>di.db.sessions</code></td>
+<td>读</td>
+<td>P0</td>
+<td>会话与状态；敏感文本去敏</td>
+</tr>
+<tr>
+<td>诊断</td>
+<td><code>di db locks</code></td>
+<td><code>di.db.locks</code></td>
+<td>读</td>
+<td>P0</td>
+<td>阻塞链、持有者和持续时间</td>
+</tr>
+<tr>
+<td>诊断</td>
+<td><code>di db waits</code></td>
+<td><code>di.db.waits</code></td>
+<td>读</td>
+<td>P0</td>
+<td>等待事件与时间序列</td>
+</tr>
+<tr>
+<td>诊断</td>
+<td><code>di db plan-diff</code></td>
+<td><code>di.db.plan_diff</code></td>
+<td>算</td>
+<td>P0</td>
+<td>当前/历史执行计划差异</td>
+</tr>
+<tr>
+<td>诊断</td>
+<td><code>di db metrics</code></td>
+<td><code>di.db.metrics</code></td>
+<td>读</td>
+<td>P0</td>
+<td>CPU/IO/内存/连接/复制等指标</td>
+</tr>
+<tr>
+<td>诊断</td>
+<td><code>di db timeline</code></td>
+<td><code>di.db.timeline</code></td>
+<td>算</td>
+<td>P0</td>
+<td>告警、变更、SQL、负载统一时间线</td>
+</tr>
+<tr>
+<td>诊断</td>
+<td><code>di db correlate</code></td>
+<td><code>di.db.correlate</code></td>
+<td>算</td>
+<td>P0</td>
+<td>指标、SQL、锁、变更相关性</td>
+</tr>
+<tr>
+<td>诊断</td>
+<td><code>di db advisory</code></td>
+<td><code>di.db.advisory</code></td>
+<td>算</td>
+<td>P0</td>
+<td>有证据的建议和风险，不直接执行</td>
+</tr>
+<tr>
+<td>诊断</td>
+<td><code>di db kill-session</code></td>
+<td><code>di.db.kill_session</code></td>
+<td>写</td>
+<td>P1</td>
+<td>高风险动作，审批、幂等、后验</td>
+</tr>
+<tr>
+<td>诊断</td>
+<td><code>di db apply-change</code></td>
+<td><code>di.db.apply_change</code></td>
+<td>写</td>
+<td>P1</td>
+<td>参数/索引等受控动作</td>
+</tr>
+<tr>
+<td>治理</td>
+<td><code>di classify scan</code></td>
+<td><code>di.classify.scan</code></td>
+<td>算</td>
+<td>P0</td>
+<td>输出敏感分类候选、样例证据与误报 Review 状态</td>
+</tr>
+<tr>
+<td>质量</td>
+<td><code>di quality rule-list</code></td>
+<td><code>di.quality.rule_list</code></td>
+<td>读</td>
+<td>P0</td>
+<td>可用和推荐的质量规则</td>
+</tr>
+<tr>
+<td>质量</td>
+<td><code>di quality run</code></td>
+<td><code>di.quality.run</code></td>
+<td>算</td>
+<td>P0</td>
+<td>在预算内执行质量检查并返回问题样例</td>
+</tr>
+<tr>
+<td>质量</td>
+<td><code>di anomaly detect</code></td>
+<td><code>di.anomaly.detect</code></td>
+<td>算</td>
+<td>P1</td>
+<td>指定指标/时间窗异常检测</td>
+</tr>
+<tr>
+<td>质量</td>
+<td><code>di change detect</code></td>
+<td><code>di.change.detect</code></td>
+<td>算</td>
+<td>P1</td>
+<td>Schema/语义/数据分布漂移</td>
+</tr>
+<tr>
+<td>工件</td>
+<td><code>di artifact table</code></td>
+<td><code>di.artifact.table</code></td>
+<td>算</td>
+<td>P0</td>
+<td>生成分页表格工件</td>
+</tr>
+<tr>
+<td>工件</td>
+<td><code>di artifact chart</code></td>
+<td><code>di.artifact.chart</code></td>
+<td>算</td>
+<td>P0</td>
+<td>生成受控图表 spec，不生成任意 JS</td>
+</tr>
+<tr>
+<td>工件</td>
+<td><code>di artifact sql</code></td>
+<td><code>di.artifact.sql</code></td>
+<td>算</td>
+<td>P0</td>
+<td>SQL、参数、计划与运行证据</td>
+</tr>
+<tr>
+<td>工件</td>
+<td><code>di artifact report</code></td>
+<td><code>di.artifact.report</code></td>
+<td>算</td>
+<td>P0</td>
+<td>组合报告与结论/推断分区</td>
+</tr>
+<tr>
+<td>工件</td>
+<td><code>di artifact evidence</code></td>
+<td><code>di.artifact.evidence</code></td>
+<td>读</td>
+<td>P0</td>
+<td>打包来源、版本、query_id、trace</td>
+</tr>
+<tr>
+<td>工件</td>
+<td><code>di artifact export</code></td>
+<td><code>di.artifact.export</code></td>
+<td>读</td>
+<td>P1</td>
+<td>CSV/PDF/PNG/JSON，继承 ACL</td>
+</tr>
+<tr>
+<td>工件</td>
+<td><code>di artifact share</code></td>
+<td><code>di.artifact.share</code></td>
+<td>写</td>
+<td>P1</td>
+<td>创建有期限、可撤销的分享</td>
+</tr>
+<tr>
+<td>动作</td>
+<td><code>di action plan</code></td>
+<td><code>di.action.plan</code></td>
+<td>算</td>
+<td>P1</td>
+<td>生成结构化动作草案</td>
+</tr>
+<tr>
+<td>动作</td>
+<td><code>di approval request</code></td>
+<td><code>di.approval.request</code></td>
+<td>写</td>
+<td>P1</td>
+<td>请求指定审批人/策略</td>
+</tr>
+<tr>
+<td>动作</td>
+<td><code>di action execute</code></td>
+<td><code>di.action.execute</code></td>
+<td>写</td>
+<td>P1</td>
+<td>使用幂等键执行已批动作</td>
+</tr>
+<tr>
+<td>动作</td>
+<td><code>di action verify</code></td>
+<td><code>di.action.verify</code></td>
+<td>读</td>
+<td>P1</td>
+<td>从权威系统验证后置状态</td>
+</tr>
+<tr>
+<td>动作</td>
+<td><code>di action compensate</code></td>
+<td><code>di.action.compensate</code></td>
+<td>写</td>
+<td>P1</td>
+<td>执行预定义补偿，不让模型自由回滚</td>
+</tr>
+<tr>
+<td>保证</td>
+<td><code>di trace get</code></td>
+<td><code>di.trace.get</code></td>
+<td>读</td>
+<td>P0</td>
+<td>获取跨 Harness/Tool/DB Trace</td>
+</tr>
+<tr>
+<td>保证</td>
+<td><code>di eval run</code></td>
+<td><code>di.eval.run</code></td>
+<td>算</td>
+<td>P0</td>
+<td>跑 Gold Task/SQL/权限评测</td>
+</tr>
+<tr>
+<td>保证</td>
+<td><code>di eval compare</code></td>
+<td><code>di.eval.compare</code></td>
+<td>算</td>
+<td>P0</td>
+<td>模型/Harness/Skill/语义版本对比</td>
+</tr>
+<tr>
+<td>保证</td>
+<td><code>di feedback add</code></td>
+<td><code>di.feedback.add</code></td>
+<td>写</td>
+<td>P0</td>
+<td>结构化反馈和原因标签</td>
+</tr>
+<tr>
+<td>保证</td>
+<td><code>di badcase create</code></td>
+<td><code>di.badcase.create</code></td>
+<td>写</td>
+<td>P0</td>
+<td>去敏后进入修复队列</td>
+</tr>
+<tr>
+<td>保证</td>
+<td><code>di task replay</code></td>
+<td><code>di.task.replay</code></td>
+<td>算</td>
+<td>P1</td>
+<td>在固定依赖上重放事件</td>
+</tr>
+<tr>
+<td>保证</td>
+<td><code>di audit search</code></td>
+<td><code>di.audit.search</code></td>
+<td>读</td>
+<td>P0</td>
+<td>按主体、工具、资源、Query 搜审计</td>
+</tr>
+</tbody></table>
+<h3>A.3 首月不要做近 90 个半成品</h3>
+<p>完整目录现有 88 项。首个纵向样例只实现约 18–20 个，支撑“接订单库/导文件 → 生成资产草稿 → 问数据 → 查数据库”；第 1 个月扩到 35–40 个，覆盖核心身份/接入/目录/语义/SQL/Artifact、最小质量/分类、5 个知识构建 Tool 和 8–10 个数据库诊断能力；三个月再按 Gold 与设计伙伴需求扩展。其余条目先稳定 schema 和错误语义，不承诺实现。</p>
+
+    </article>
+  </main>
+  <footer>
+    <div class="shell footer-content">
+      <div><strong>华为数据智能追赶产品计划（方案假设）</strong><p>由项目内 Markdown 源文件生成；UTF-8 静态页面，可离线阅读。</p></div>
+      <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">返回顶部 ↑</a>
+    </div>
+  </footer>
+</body>
+</html>

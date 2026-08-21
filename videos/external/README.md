@@ -29,6 +29,7 @@
 | Federation | [Lakehouse Federation](https://www.youtube.com/watch?v=vGyXpHTYgrQ) | Databricks | 公开演示 | 不搬数据访问外部数据库/仓库 | 链接已核验；正式使用前复看 UI/产品状态 |
 | 华为云 RDS MySQL | [RDS for MySQL 产品介绍](https://support.huaweicloud.com/video/mysql-zh.html) | 华为云 | 页面更新 2025-07-01 | 领导快速理解产品定位、优势和典型应用 | 官方页面 HTTP 200；正式播放前复看 |
 | 华为云 RDS 视频总览 | [RDS 视频帮助](https://support.huaweicloud.com/rds_video/index.html) | 华为云 | 页面更新 2025-05-15 | MySQL / PostgreSQL 官方视频入口 | 官方页面 HTTP 200；目录可能更新 |
+| 华为云 DataArts Insight | [DataArts Insight 视频帮助](https://support.huaweicloud.com/dataartsinsight_video/index.html) | 华为云 | 当前公开入口 | 理解 BI、分析和智能问数相关产品底座 | 只证明公开产品路径，不证明跨产品 Agent 闭环 |
 
 ## 已发现的独立候选
 
@@ -70,16 +71,16 @@
 
 这四段外部视频分别说明治理、联邦、CDC 和问答，不代表已经连接本项目账号之外的 RDS、PolarDB 或 TaurusDB。厂商数据库本身的 HA、只读节点和监控边界以对应官方产品文档为准。
 
-### 华为云 RDS 专题的播放组合
+### 华为产品决策专题的播放组合
 
-华为云 RDS 专题按“方案故事 → 官方底座 → 动手验证”组织，避免把一个产品视频包装成完整 Agent 方案：
+华为产品决策专题按“当前结论 → 官方底座 → 账号验证 → 历史回溯”组织，避免把一个产品视频包装成完整 Agent 方案：
 
-1. 先播本地 H1（约 127 秒、中文有声），讲海岚零售事故、双引擎架构、五个拟建产品面、六个 Gate 和建议 KPI；
-2. 领导版接华为云官方 [RDS for MySQL 产品介绍](https://support.huaweicloud.com/video/mysql-zh.html)，用官方叙事确认现有数据库服务的定位；
-3. 技术版分别打开 [RDS for MySQL 视频帮助](https://support.huaweicloud.com/rds-mysql_video/index.html) 和 [RDS for PostgreSQL 视频帮助](https://support.huaweicloud.com/rds-pg_video/index.html)，按当前目录选择操作内容；
-4. 需要实验时进入 [华为云数据库开发者中心](https://developer.huaweicloud.com/techfield/db.html)，选择 RDS 连接、快速入门或 DRS 迁移类课程。
+1. 先展示当前华为专题中的 Databricks 对标表、共享控制面、PG-first 业务故事和 G1–G6；
+2. 领导版按重点选择 [DataArts Insight 视频帮助](https://support.huaweicloud.com/dataartsinsight_video/index.html) 或 [RDS for PostgreSQL 视频帮助](https://support.huaweicloud.com/rds-pg_video/index.html)，确认现有产品底座；
+3. 技术版再进入目标账号验证对象、OBO、语义、Tool、Artifact 和 Trace，官方视频不能替代该步骤；
+4. 只有需要解释研究演进时再播本地 H1（约 127 秒、中文有声），并标明它是双引擎、五个服务和固定 90 天的 Phase 1 历史方案。
 
-这些华为云官方视频和课程只覆盖当前公开的产品定位、功能与操作材料，不证明 Policy Adapter、Semantic Contract、Query Gateway、Evidence Composer 或 Benchmark/Monitor 已作为统一产品存在。该闭环由本项目提出，并须在目标租户按 G0–G5 验收。
+这些华为云官方视频和课程只覆盖公开的产品定位、功能与操作材料，不证明 DataArts、AgentArts、RDS/DAS 已共享对象、OBO、策略、任务、Artifact、Trace 或 Eval。当前“双平面 + 共享控制面”由本项目提出，须在目标租户按 G1–G6 验证。
 
 ## 按模块的外部视频播放建议
 

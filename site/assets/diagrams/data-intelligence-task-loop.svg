@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">数据智能任务闭环的五个平面</title>
+  <desc id="desc">从统一会话和专业工作台进入，经过上下文、策略、执行与保障，形成可复算工件和受控动作。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#10252b"/>
+      <stop offset="1" stop-color="#183d44"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#e6533c"/>
+      <stop offset="1" stop-color="#f08b68"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#071317" flood-opacity=".28"/>
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#9de0cd"/>
+    </marker>
+    <style>
+      .zh { font-family: Inter, "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .small { font-size: 20px; fill: #88a1a6; }
+      .label { font-size: 21px; font-weight: 800; letter-spacing: 1px; fill: #e6533c; }
+      .title { font-size: 36px; font-weight: 800; fill: #142126; }
+      .body { font-size: 21px; fill: #526267; }
+      .dark-title { font-size: 36px; font-weight: 800; fill: #fff; }
+      .dark-body { font-size: 21px; fill: #b9cccf; }
+      .chip { font-size: 18px; font-weight: 700; fill: #24433f; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="900" rx="28" fill="url(#bg)"/>
+  <text x="74" y="82" class="zh" font-size="21" font-weight="800" letter-spacing="3" fill="#9de0cd">MARKET BASELINE · FIVE-PLANE TASK LOOP</text>
+  <text x="74" y="137" class="zh" font-size="42" font-weight="800" fill="#fff">竞争单元不再是“回答”，而是可信完成一次数据任务</text>
+  <text x="74" y="177" class="zh dark-body">每一层都必须拥有可引用对象、明确责任和可验证状态；聊天框只是入口。</text>
+
+  <g transform="translate(74 232)" filter="url(#shadow)">
+    <rect width="270" height="408" rx="24" fill="#fff"/>
+    <rect width="270" height="10" rx="5" fill="url(#accent)"/>
+    <text x="26" y="56" class="zh label">01 · 体验平面</text>
+    <text x="26" y="108" class="zh title">进入任务</text>
+    <text x="26" y="157" class="zh body">统一会话</text>
+    <text x="26" y="191" class="zh body">专业工作台</text>
+    <text x="26" y="225" class="zh body">Dashboard / SQL</text>
+    <text x="26" y="259" class="zh body">API / Tool / MCP</text>
+    <rect x="24" y="320" width="222" height="54" rx="14" fill="#ffe8df"/>
+    <text x="135" y="354" text-anchor="middle" class="zh chip">Intent + user context</text>
+  </g>
+
+  <path d="M355 436 H385" stroke="#9de0cd" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <g transform="translate(398 232)" filter="url(#shadow)">
+    <rect width="270" height="408" rx="24" fill="#fff"/>
+    <rect width="270" height="10" rx="5" fill="#5f88c7"/>
+    <text x="26" y="56" class="zh label" fill="#416da9">02 · 上下文平面</text>
+    <text x="26" y="108" class="zh title">理解对象</text>
+    <text x="26" y="157" class="zh body">Catalog / Owner</text>
+    <text x="26" y="191" class="zh body">Metric / Semantic</text>
+    <text x="26" y="225" class="zh body">历史与新鲜度</text>
+    <text x="26" y="259" class="zh body">业务与引擎上下文</text>
+    <rect x="24" y="320" width="222" height="54" rx="14" fill="#e7effb"/>
+    <text x="135" y="354" text-anchor="middle" class="zh chip">Canonical objects</text>
+  </g>
+
+  <path d="M679 436 H709" stroke="#9de0cd" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <g transform="translate(722 232)" filter="url(#shadow)">
+    <rect width="270" height="408" rx="24" fill="#fff"/>
+    <rect width="270" height="10" rx="5" fill="#8868b2"/>
+    <text x="26" y="56" class="zh label" fill="#76559f">03 · 策略平面</text>
+    <text x="26" y="108" class="zh title">决定能否做</text>
+    <text x="26" y="157" class="zh body">On-behalf-of</text>
+    <text x="26" y="191" class="zh body">RBAC / ABAC</text>
+    <text x="26" y="225" class="zh body">行列策略 / Purpose</text>
+    <text x="26" y="259" class="zh body">预算 / 风险 / 审批</text>
+    <rect x="24" y="320" width="222" height="54" rx="14" fill="#eee8f7"/>
+    <text x="135" y="354" text-anchor="middle" class="zh chip">Policy decision</text>
+  </g>
+
+  <path d="M1003 436 H1033" stroke="#9de0cd" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <g transform="translate(1046 232)" filter="url(#shadow)">
+    <rect width="270" height="408" rx="24" fill="#fff"/>
+    <rect width="270" height="10" rx="5" fill="#2e9277"/>
+    <text x="26" y="56" class="zh label" fill="#237961">04 · 执行平面</text>
+    <text x="26" y="108" class="zh title">受控执行</text>
+    <text x="26" y="157" class="zh body">SQL / Metric</text>
+    <text x="26" y="191" class="zh body">Query Governor</text>
+    <text x="26" y="225" class="zh body">Tools / Workflow</text>
+    <text x="26" y="259" class="zh body">Preview → Action</text>
+    <rect x="24" y="320" width="222" height="54" rx="14" fill="#ddf3ed"/>
+    <text x="135" y="354" text-anchor="middle" class="zh chip">Result + state</text>
+  </g>
+
+  <path d="M1327 436 H1357" stroke="#9de0cd" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <g transform="translate(1370 232)" filter="url(#shadow)">
+    <rect width="156" height="408" rx="24" fill="#eaf3f0"/>
+    <rect width="156" height="10" rx="5" fill="#9de0cd"/>
+    <text x="20" y="56" class="zh" font-size="19" font-weight="800" fill="#237961">05 · 保障</text>
+    <text x="20" y="108" class="zh" font-size="30" font-weight="800" fill="#142126">证明</text>
+    <text x="20" y="157" class="zh" font-size="19" fill="#526267">Artifact</text>
+    <text x="20" y="191" class="zh" font-size="19" fill="#526267">Trace</text>
+    <text x="20" y="225" class="zh" font-size="19" fill="#526267">Eval</text>
+    <text x="20" y="259" class="zh" font-size="19" fill="#526267">Audit</text>
+    <text x="20" y="293" class="zh" font-size="19" fill="#526267">Cost</text>
+    <text x="20" y="327" class="zh" font-size="19" fill="#526267">Feedback</text>
+  </g>
+
+  <g transform="translate(74 688)">
+    <rect width="1452" height="136" rx="22" fill="#0a1d21" stroke="#31525a"/>
+    <text x="32" y="45" class="zh" font-size="20" font-weight="800" fill="#9de0cd">完成态输出</text>
+    <text x="32" y="91" class="zh" font-size="29" font-weight="800" fill="#fff">答案 + SQL/指标 + 来源 + 可保存工件 + 下一步动作 + 全链路证据</text>
+    <text x="1124" y="46" class="zh small">SQL 是证据之一</text>
+    <text x="1124" y="82" class="zh" font-size="22" font-weight="800" fill="#f08b68">不是完整产品结果</text>
+  </g>
+</svg>

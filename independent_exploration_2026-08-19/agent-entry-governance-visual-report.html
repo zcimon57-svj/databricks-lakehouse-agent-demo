@@ -77,6 +77,11 @@
       font-size: .88rem; white-space: nowrap;
     }
     .nav-scroll a:hover, .nav-scroll a.active { color: var(--blue); background: #eaf0ff; }
+    .nav-scroll a.nav-priority {
+      color: #fff; background: var(--blue); font-weight: 850;
+      box-shadow: 0 5px 14px rgba(36, 99, 235, .2);
+    }
+    .nav-scroll a.nav-priority:hover { color: #fff; background: #174eb9; }
     .print-btn {
       border: 1px solid var(--line); background: white; color: var(--ink); border-radius: 10px;
       padding: .55rem .78rem; cursor: pointer; white-space: nowrap;
@@ -228,6 +233,15 @@
       display: inline-flex; align-items: center; justify-content: center; gap: .4rem; padding: .68rem .85rem;
       color: white; background: var(--navy); border-radius: 10px; text-decoration: none; font-size: .78rem; font-weight: 850; white-space: nowrap;
     }
+    .entry-atlas-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .55rem; }
+    .atlas-button.capability-button { background: var(--blue); }
+    .capability-jump {
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      margin-bottom: 1rem; padding: 1rem 1.15rem; border-left: 5px solid var(--blue);
+      border-radius: 0 15px 15px 0; background: #eaf0ff;
+    }
+    .capability-jump p { margin: 0; color: var(--ink-soft); font-size: .83rem; }
+    .capability-jump strong { color: var(--navy); }
     .entry-atlas-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .85rem; }
     .entry-card {
       overflow: hidden; display: flex; flex-direction: column; min-width: 0;
@@ -382,6 +396,11 @@
     .final-item { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.13); border-radius: 13px; padding: .9rem; }
     .final-item strong { display: block; color: #76ede3; font-size: .8rem; }
     .final-item span { font-size: .78rem; color: #d8e6f5; }
+    .final-links { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: 1rem; }
+    .final-links a {
+      padding: .56rem .75rem; border: 1px solid rgba(255,255,255,.2); border-radius: 9px;
+      color: #fff; background: rgba(255,255,255,.08); text-decoration: none; font-size: .76rem; font-weight: 800;
+    }
 
     footer { margin-top: 4rem; background: #07182e; color: #b7c8da; }
     .footer-inner { width: min(var(--max), calc(100% - 2rem)); margin: auto; padding: 2rem 0; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font-size: .78rem; }
@@ -404,6 +423,8 @@
       .stats-grid { margin-top: -1rem; gap: .6rem; }
       .stat-card { padding: .9rem; }
       .verdict-grid, .huawei-bench, .seam-map, .arch-domains, .arch-control, .roadmap, .vendor-roadmap-grid, .scenario-grid, .evidence-list, .boundary-grid, .final-grid, .entry-atlas-grid, .entry-atlas-intro { grid-template-columns: 1fr; }
+      .entry-atlas-actions { justify-content: flex-start; }
+      .capability-jump { align-items: flex-start; flex-direction: column; }
       .roadmap::before { left: 19px; right: auto; top: 1rem; bottom: 1rem; width: 3px; height: auto; }
       .phase { padding: 0 0 0 3.3rem; }
       .phase-node { left: 19px; top: 1rem; translate: -50% 0; }
@@ -442,6 +463,7 @@
         <a href="#verdict">判断</a>
         <a href="#market">趋势</a>
         <a href="#entry-atlas">入口图鉴</a>
+        <a class="nav-priority" href="./vendor-entry-atlas.html#capabilities">能力全集</a>
         <a href="#capability-gap">能力差距</a>
         <a href="#scores">评分</a>
         <a href="#dimensions">十维</a>
@@ -469,7 +491,7 @@
           <a class="secondary" href="./vendor-entry-atlas.html#capabilities">查看 67 项能力全集</a>
           <a class="secondary" href="./vendor-entry-atlas.html">查看 11 家官方入口截图</a>
           <a class="secondary" href="./huawei-catch-up-plan.html">查看华为 Harness-first 方案</a>
-          <a class="secondary" href="./agent-entry-governance-deep-dive.md">打开完整 Markdown</a>
+          <a class="secondary" href="../site/details/agent-entry-governance-deep-dive.html">打开完整研究 HTML</a>
           <a class="secondary" href="./agent-entry-scorecard.csv">下载评分 CSV</a>
         </div>
       </div>
@@ -567,7 +589,10 @@
 
       <div class="entry-atlas-intro">
         <p><strong>为什么不拆 11 个子页面：</strong>同一评价标尺需要并排可见；主报告负责一屏扫描，集中式详册用 11 个锚点章节承载大图、首次任务路径、身份治理边界、强弱判断和官方视频，避免证据与导航碎片化。</p>
-        <a class="atlas-button" href="./vendor-entry-atlas.html#capabilities">打开能力全集、入口详册与视频 →</a>
+        <div class="entry-atlas-actions">
+          <a class="atlas-button capability-button" href="./vendor-entry-atlas.html#capabilities">打开 67 项能力全集 →</a>
+          <a class="atlas-button" href="./vendor-entry-atlas.html">打开 11 家入口详册与视频 →</a>
+        </div>
       </div>
 
       <div class="entry-atlas-grid">
@@ -600,6 +625,10 @@
         <div class="kicker">02C · 能力、数据源与落地责任</div>
         <h2>聊天框趋同之后，差距由 67 项细粒度能力共同决定</h2>
         <p>这里汇总支持范围、数据源与接入方式、首次使用前的准备、平台与客户的责任，以及从流程和架构推导的“准确性保障能力”和“获得可信答案的易用度”。完整 67×11 矩阵、12 类数据源说明和逐厂商责任卡放在集中式详册，主报告保留可讲清结论的摘要。</p>
+      </div>
+      <div class="capability-jump">
+        <p><strong>需要逐项核对，而不是只看摘要？</strong> 能力全集可按能力域、厂商和证据状态筛选，并包含 12 类数据源、首次使用前置、平台/客户责任卡与 CSV 下载。</p>
+        <a class="atlas-button capability-button" href="./vendor-entry-atlas.html#capabilities">进入 67 × 11 完整矩阵 →</a>
       </div>
       <div id="capability-main-summary"></div>
     </section>
@@ -785,7 +814,7 @@
         </div>
         <div class="evidence-list" id="evidenceList"></div>
         <div class="empty-state" id="evidenceEmpty">没有匹配的证据，请更换关键词。</div>
-        <p class="fine" style="margin-top:1rem">完整逐条事实、状态、边界和反证条件：<a href="./agent-entry-evidence-ledger.md">agent-entry-evidence-ledger.md</a></p>
+        <p class="fine" style="margin-top:1rem">完整逐条事实、状态、边界和反证条件：<a href="../site/details/agent-entry-evidence-ledger.html">证据账本 HTML</a></p>
       </article>
     </section>
 
@@ -799,6 +828,11 @@
           <div class="final-item"><strong>控制面</strong><span>身份、语义、工具策略、任务和 Trace 是共同真相源。</span></div>
           <div class="final-item"><strong>推进方式</strong><span>联合控制面优先；只有 Gate 证伪后，才决定哪些能力必须新建。</span></div>
         </div>
+        <div class="final-links">
+          <a href="./vendor-entry-atlas.html#capabilities">复查 67 项能力全集</a>
+          <a href="./vendor-entry-atlas.html#data-sources">复查 12 类数据源</a>
+          <a href="./huawei-catch-up-plan.html">展开华为方案</a>
+        </div>
       </div>
     </section>
   </main>
@@ -806,7 +840,7 @@
   <footer>
     <div class="footer-inner">
       <span>独立探索可视化 · 公开资料核验日 2026-08-19 · 无账号级验证</span>
-      <span><a href="./huawei-catch-up-plan.html">华为方案</a> · <a href="./agent-entry-governance-deep-dive.md">深度报告</a> · <a href="./agent-entry-scorecard.csv">评分 CSV</a> · <a href="./agent-entry-evidence-ledger.md">证据账本</a></span>
+      <span><a href="./vendor-entry-atlas.html#capabilities">能力全集</a> · <a href="./huawei-catch-up-plan.html">华为方案</a> · <a href="../site/details/agent-entry-governance-deep-dive.html">深度报告</a> · <a href="./agent-entry-scorecard.csv">评分 CSV</a> · <a href="../site/details/agent-entry-evidence-ledger.html">证据账本</a></span>
     </div>
   </footer>
 

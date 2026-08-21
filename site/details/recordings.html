@@ -9,10 +9,10 @@
   <link rel="stylesheet" href="../details.css">
 </head>
 <body class="detail-page">
-  <header class="detail-header">
+  <header class="detail-header" id="top">
     <nav class="detail-nav shell" aria-label="详情页导航">
       <a class="brand" href="../index.html#videos">← 返回视频模块</a>
-      <a href="../index.html">DBX Explore 首页</a>
+      <a href="../index.html">数据智能决策首页</a>
     </nav>
     <div class="shell detail-heading">
       <p class="eyebrow">RECORDINGS</p>
@@ -69,8 +69,8 @@
 <tr>
 <td><a href="../../videos/recordings/zh-voice/H1-huawei-rds-governed-agent.mp4">有声</a> · <a href="../../videos/recordings/H1-huawei-rds-governed-agent.mp4">无声</a></td>
 <td align="right">127.16s</td>
-<td>华为云 RDS 专项</td>
-<td>合成客户事故、RDS/DAS/DRS/DataArts 复用、五个新增服务、MySQL/PG 双切片、六个 Gate 与 KPI；架构建议，非华为云生产实调</td>
+<td>Phase 1 华为历史方案</td>
+<td>合成客户事故、五个新增服务、MySQL/PG 双切片、固定 90 天与 KPI；保留为研究演进材料，非当前结论、非华为云生产实调</td>
 <td><code>d81b30dc262132e7fa75b16cf5913dda1cd81c4a0a3b12fdb73b91923166a6f1</code></td>
 </tr>
 <tr>
@@ -137,16 +137,16 @@
 <td><code>57809da28269d29aab1a946ef1a55edfea8c60ff6a2f54e781b0833708cb5692</code></td>
 </tr>
 </tbody></table>
-<p>总时长约 9 分 39 秒。全部 14 段现在都有逐画面对齐的普通话解说；旧 9 段适合按模块短插播，G1/G2/G3 是 Genie 专题长讲，D1 是通用云数据库接入专题，H1 是华为云 RDS MySQL/PostgreSQL 落地专题。</p>
+<p>总时长约 9 分 39 秒。全部 14 段都有逐画面对齐的普通话解说；旧 9 段适合按模块短插播，G1/G2/G3 是 Genie 专题长讲，D1 是通用云数据库接入专题，H1 保留为 Phase 1 华为方案历史录屏。</p>
 <h2>建议演示顺序</h2>
 <ol>
 <li>播 M01，30 秒说明账号版本、入口和 Free Edition 边界。</li>
 <li>展示 <code>site/assets/diagrams/platform-data-paths.svg</code>，再播 M05→M02→M06→M07，讲清“接入→Delta→治理→任务→查询/应用”。</li>
-<li>播 C2 作为正确答案基线；快速汇报播 M09，Genie 专题改播 G1，强调自然语言最终仍落到受权限约束、可展开的 SQL。</li>
+<li>播 C2 作为正确答案基线；快速汇报播 M09，Genie 专题改播 G1，强调答案必须落到受治理执行和可复算工件，SQL 是证据之一。</li>
 <li>播 G2，展示实现面和真实 Benchmark：不能把真值错误、输出契约失败和评测器异常都算给模型。</li>
 <li>播 G3 并展示两张 Genie SVG，总结工作区、iframe、API 与多 Agent 的责任差异。</li>
 <li>播 D1 并展示两张云数据库 SVG，解释 RDS / PolarDB / TaurusDB 类产品要补的前置治理、语义、评测和三条接入路线。</li>
-<li>对华为云方向评审时接着播 H1，用客户故事串起 RDS、DAS、DRS、DataArts、双引擎切片和 90 天六个 Gate。</li>
+<li>对华为方向评审时先展示当前华为产品决策专题；只有需要回溯研究演进时再播 H1，并明确双引擎、五个服务和固定 90 天已被降级为历史假设。</li>
 <li>C3/C4 作为售后和运维的短版 SQL 证据；G1 已把二者放入同一个连续 Agent 会话。</li>
 </ol>
 <h2>领导版口述提纲</h2>

@@ -8,10 +8,18 @@ const projectRoot = resolve(import.meta.dirname, "..");
 
 const pages = [
   {
+    source: "docs/02-data-intelligence-decision-brief.md",
+    output: "site/details/data-intelligence-decision-brief.html",
+    pageTitle: "数据智能与数据库 Agent 产品决策 Brief（V2）",
+    eyebrow: "CURRENT DECISION CONTRACT",
+    backHref: "../index.html#gates",
+    backLabel: "返回决策首页",
+  },
+  {
     source: "docs/00-project-brief.md",
     output: "site/details/project-brief.html",
-    pageTitle: "项目研究约定",
-    eyebrow: "PROJECT BRIEF",
+    pageTitle: "Databricks 实测与演示约定（Phase 1）",
+    eyebrow: "PHASE 1 PROJECT BRIEF",
     backHref: "../index.html",
     backLabel: "返回演示首页",
   },
@@ -56,6 +64,14 @@ const pages = [
     backLabel: "返回 Genie 专题",
   },
   {
+    source: "docs/research/03-live-workspace-validation.md",
+    output: "site/details/live-workspace-validation.html",
+    pageTitle: "Databricks 真实工作区验证",
+    eyebrow: "LIVE WORKSPACE VALIDATION",
+    backHref: "../index.html#databricks",
+    backLabel: "返回 Databricks 实测",
+  },
+  {
     source: "docs/research/05-cloud-database-to-governed-data-agent.md",
     output: "site/details/cloud-database-agent-guide.html",
     pageTitle: "云数据库到治理型数据 Agent 完整指南",
@@ -66,12 +82,80 @@ const pages = [
   {
     source: "docs/research/06-huawei-cloud-rds-mysql-postgresql-governed-agent.md",
     output: "site/details/huawei-rds-agent-guide.html",
-    pageTitle: "华为云 RDS 受治理智能层落地手册",
-    eyebrow: "HUAWEI CLOUD RDS DELIVERY GUIDE",
+    pageTitle: "历史方案：华为云 RDS 双引擎 90 天落地手册",
+    eyebrow: "PHASE 1 HISTORICAL PROPOSAL",
     backHref: "../huawei-rds-agent.html",
-    backLabel: "返回华为云 RDS 专题",
+    backLabel: "返回华为产品决策专题",
+  },
+  {
+    source: "docs/research/07-huawei-rds-postgresql-phase1-scope-stories-product-modules.md",
+    output: "site/details/huawei-rds-postgresql-phase1.html",
+    pageTitle: "Phase 1 补充：华为 RDS PostgreSQL 范围、故事与模块",
+    eyebrow: "PHASE 1 RESEARCH INPUT",
+    backHref: "../huawei-rds-agent.html#benchmark",
+    backLabel: "返回当前华为决策专题",
+  },
+  {
+    source: "independent_exploration_2026-08-19/README.md",
+    output: "site/details/independent-research-index.html",
+    pageTitle: "11 家厂商独立探索索引",
+    eyebrow: "INDEPENDENT RESEARCH",
+    backHref: "../../independent_exploration_2026-08-19/agent-entry-governance-visual-report.html",
+    backLabel: "返回友商可视报告",
+  },
+  {
+    source: "independent_exploration_2026-08-19/independent-findings.md",
+    output: "site/details/independent-findings.html",
+    pageTitle: "独立探索综合结论",
+    eyebrow: "INDEPENDENT FINDINGS",
+    backHref: "../index.html#market",
+    backLabel: "返回决策首页",
+  },
+  {
+    source: "independent_exploration_2026-08-19/agent-entry-governance-deep-dive.md",
+    output: "site/details/agent-entry-governance-deep-dive.html",
+    pageTitle: "Agent 入口、治理与共享控制面深挖",
+    eyebrow: "ENTRY & GOVERNANCE DEEP DIVE",
+    backHref: "../../independent_exploration_2026-08-19/agent-entry-governance-visual-report.html",
+    backLabel: "返回友商可视报告",
+  },
+  {
+    source: "independent_exploration_2026-08-19/agent-entry-evidence-ledger.md",
+    output: "site/details/agent-entry-evidence-ledger.html",
+    pageTitle: "Agent 入口与治理证据账本",
+    eyebrow: "EVIDENCE LEDGER",
+    backHref: "../../independent_exploration_2026-08-19/agent-entry-governance-visual-report.html#evidence",
+    backLabel: "返回可视证据层",
+  },
+  {
+    source: "independent_exploration_2026-08-19/evidence-ledger.md",
+    output: "site/details/independent-evidence-ledger.html",
+    pageTitle: "11 家厂商独立探索基础证据账本",
+    eyebrow: "BASE EVIDENCE LEDGER",
+    backHref: "independent-research-index.html",
+    backLabel: "返回独立研究索引",
+  },
+  {
+    source: "independent_exploration_2026-08-19/unknowns-and-validation.md",
+    output: "site/details/unknowns-and-validation.html",
+    pageTitle: "华为产品决策 Unknown 与验证合同",
+    eyebrow: "UNKNOWNS & VALIDATION",
+    backHref: "../huawei-rds-agent.html#gates",
+    backLabel: "返回华为验证 Gate",
+  },
+  {
+    source: "independent_exploration_2026-08-19/huawei-catch-up-product-plan.md",
+    output: "site/details/huawei-catch-up-product-plan.html",
+    pageTitle: "华为数据智能追赶产品计划（方案假设）",
+    eyebrow: "PROPOSED PRODUCT PLAN",
+    backHref: "../huawei-rds-agent.html#materials",
+    backLabel: "返回华为方案材料",
   },
 ];
+
+const publishedSourceOutputs = new Map(
+  pages.map((page) => [resolve(projectRoot, page.source), resolve(projectRoot, page.output)]),
+);
 
 function escapeHtml(value) {
   return value
@@ -87,7 +171,8 @@ function rewriteRelativeUrl(rawUrl, sourceFile, outputFile) {
   const match = rawUrl.match(/^([^?#]*)([?#].*)?$/);
   if (!match || !match[1]) return rawUrl;
   const absoluteTarget = resolve(dirname(sourceFile), match[1]);
-  const fromOutput = relative(dirname(outputFile), absoluteTarget).replaceAll("\\", "/");
+  const publishedTarget = publishedSourceOutputs.get(absoluteTarget) ?? absoluteTarget;
+  const fromOutput = relative(dirname(outputFile), publishedTarget).replaceAll("\\", "/");
   return `${fromOutput || "."}${match[2] ?? ""}`;
 }
 
@@ -112,10 +197,10 @@ function template(page, renderedMarkdown) {
   <link rel="stylesheet" href="../details.css">
 </head>
 <body class="detail-page">
-  <header class="detail-header">
+  <header class="detail-header" id="top">
     <nav class="detail-nav shell" aria-label="详情页导航">
       <a class="brand" href="${escapeHtml(page.backHref)}">← ${escapeHtml(page.backLabel)}</a>
-      <a href="../index.html">DBX Explore 首页</a>
+      <a href="../index.html">数据智能决策首页</a>
     </nav>
     <div class="shell detail-heading">
       <p class="eyebrow">${escapeHtml(page.eyebrow)}</p>
